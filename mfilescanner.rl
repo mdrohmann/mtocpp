@@ -153,30 +153,87 @@ using std::istream;
      (IDENT
         %{tmp_string.assign(ts,p-ts);})
      . '.'
+     . (IDENT >(st_tok) %{tmp_p2 = p;} )
+     . [ \t]* . '=' . (^'=')
+    )
+    => {
+      fhold;
+      string s(tmp_p, tmp_p2 - tmp_p);
+      cout << tmp_string << "." << s << "=";
+      typedef DocuList :: iterator list_iterator;
+      typedef DocuListMap :: iterator map_iterator;
+      typedef DocuBlock :: iterator iterator;
+
+      // check wether first IDENT is a return value
+      iterator it = find(returnlist_.begin(), returnlist_.end(), tmp_string);
+      if(it != returnlist_.end())
+      {
+        // if it is a return value...
+        // ... check wether its found field is still missing a DocuBlock in the
+        // retval list.
+        bool missing = true;
+        map_iterator rvoit = retval_list_.find(tmp_string);
+        if(rvoit != retval_list_.end())
+        {
+          list_iterator lit = (*rvoit).second.find(s);
+          if(lit != (*rvoit).second.end())
+            missing = false;
+        }
+        if(missing)
+        {
+          retval_list_[tmp_string][s] = DocuBlock();
+        }
+      }
+    };
+
+    (
+     (IDENT
+        %{tmp_string.assign(ts,p-ts);})
+     . '.'
      . (IDENT
          >(st_tok)
        )
     )
-    {
+    => {
       string s(tmp_p, p - tmp_p+1);
       cout << tmp_string << "." << s;
+      typedef DocuList :: iterator list_iterator;
       typedef DocuListMap :: iterator map_iterator;
-      typedef DocuList :: iterator iterator;
-      map_iterator moit = optional_list_.find(tmp_string);
-      if(moit != optional_list_.end())
+      typedef DocuBlock :: iterator iterator;
+
+      // check wether first IDENT is a parameter
+      iterator it = find(paramlist_.begin(), paramlist_.end(), tmp_string);
+      if(it != paramlist_.end())
       {
-        iterator oit = (*moit).second.find(s);
-        if(oit == (*moit).second.end())
+        // if it is a parameter ...
+        // ... check wether its found field is still missing a DocuBlock in the
+        // return, optional and the required list.
+        bool missing = true;
+        map_iterator rvoit = retval_list_.find(tmp_string);
+        if(rvoit != retval_list_.end())
         {
-          (*moit).second[s] = DocuBlock();
+          list_iterator lit = (*rvoit).second.find(s);
+          if(lit != (*rvoit).second.end())
+            missing = false;
         }
-      }
-      else
-      {
-        map_iterator mrit = required_list_.find(tmp_string);
-        if(mrit != required_list_.end())
+        map_iterator moit = optional_list_.find(tmp_string);
+        if(moit != optional_list_.end())
         {
-          optional_list_[tmp_string][s] = DocuBlock();
+          list_iterator lit = (*moit).second.find(s);
+          if(lit != (*moit).second.end())
+            missing = false;
+        }
+        map_iterator roit = required_list_.find(tmp_string);
+        if(roit != required_list_.end())
+        {
+          list_iterator lit = (*roit).second.find(s);
+          if(lit != (*roit).second.end())
+            missing = false;
+        }
+        // in case it IS missing, add an empty field to the required block.
+        if(missing)
+        {
+          required_list_[tmp_string][s] = DocuBlock();
         }
       }
     };
@@ -265,7 +322,7 @@ using std::istream;
 
   # match an argument
   ( doc_begin . [ \t]*
-    . "'"? . ( ([A-Za-z][A-Za-z0-9_{}()[\].]*)  >{tmp_p3 = p;} %{tmp_p2 = p;} ) . "'"? . [ \t]* . ":" @(st_tok)
+    . "'"? . ( ([A-Za-z][A-Za-z0-9_{},()[\].]*)  >{tmp_p3 = p;} %{tmp_p2 = p;} ) . "'"? . [ \t]* . ":" @(st_tok)
     . ( default - '\n' )* . EOL
   )
     => {
@@ -348,6 +405,18 @@ using std::istream;
         fcall fill_list;
       };
 
+    # begin optional_list
+    ( doc_begin . [ \t]*
+      . /generated fields of /i
+      . (IDENT
+          >(st_tok)
+          %(string_tok) )
+      . [ \t]* . ':' . [ \t]* . EOL )
+      => {
+        clist_ = &(retval_list_[tmp_string]);
+        fcall fill_list;
+      };
+
     # begin parameter list
     ( doc_begin . [ \t]*
       . /arguments/i . [ \t]* . ':'
@@ -397,12 +466,12 @@ using std::istream;
   *|;
 
   doxyfunction_garble := |*
-    garbage = doc_begin . (default - [;)\n] )*;
+    garbage = doc_begin . ( (default - '\n' )* -- '...' );
 
-    ( garbage . EOL );
+    ( garbage . '...' . [\t ]* .  EOL );
 
-    ( garbage . [;)] . ( default - '\n' )* . EOL )
-      => { fgoto doxy_get_body; };
+    ( garbage . EOL )
+      => { fgoto doxy_get_brief; };
   *|;
 
 
@@ -440,7 +509,7 @@ using std::istream;
          . ( default - [;)\n.] )* .
          (
           ( [);] . (default - '\n')* . EOL )
-            @{ fgoto doxy_get_body; }
+            @{ fgoto doxy_get_brief; }
           |
           ( '...' . [ \t]* . EOL
             @{ fgoto doxyfunction_garble; }
@@ -749,17 +818,7 @@ void MFileScanner::end_function()
       // specify the @ingroup command
       cout << "* @ingroup ";
       bool not_first = false;
-      group_iterator git = groupset_.begin();
-      for(; git != groupset_.end(); ++git)
-      {
-        if(not_first)
-          cout << " ";
-        else
-          not_first = true;
-
-        cout << *git;
-      }
-      git = cscan_.groupset_.begin();
+      group_iterator git = cscan_.groupset_.begin();
       for(; git != cscan_.groupset_.end(); ++git)
       {
         if(not_first)
@@ -769,10 +828,11 @@ void MFileScanner::end_function()
 
         cout << *git;
       }
-      cout << "*/\n";
       groupset_.clear();
     }
+//    cout << "\n  " << "* @brief " << tempfname << " ";
     is_first_function_ = false;
+    cout << "*/\n";
   }
 //  cout << "/*";
 /*  if(! cscan_.groupset_.empty() )
@@ -902,6 +962,10 @@ void MFileScanner::end_function()
   // optional fields
   write_docu_listmap(optional_list_, "@par Optional fields of ", cscan_.field_docu_);
   optional_list_.clear();
+
+  // return fields
+  write_docu_listmap(retval_list_, "@par Generated fields of ", cscan_.field_docu_);
+  retval_list_.clear();
 
   // extra docu fields
   if(!docuextra_.empty() || ! cscan_.docuextra_.empty())
