@@ -100,7 +100,7 @@ using std::istream;
          string s(tmp_p, p - tmp_p);
          param_list_[s] = DocuBlock();
          paramlist_.push_back(s);
-         cout << "type " << s;
+         cout << "matlabtypesubstitute " << s;
        }
     )**;
 
@@ -298,7 +298,7 @@ using std::istream;
 
       # line not beginning with word 'function'
       ([ \t]*
-       . ( (default - [ \t\n%])+ - 'function' )
+       . ( (default - [ \r\t\n%])+ - 'function' )
        . ( WSOC | EOL )
       )
         => {
@@ -334,13 +334,13 @@ using std::istream;
   # expand the paragraph for last argument matched
   ( doc_begin . [ \t]*
     # at least one word (non white-space characters and no double-colon)
-    . ( default - [ \t:\n] )+ .
+    . ( default - [ \r\t:\n] )+ .
     # followed by something that is a white-space or a new-line, i.e *no*
     # double-colon
     (
      EOL
      |
-     [ \t]+ . (EOL | [^ \n\t:] . (default - '\n')* . EOL)
+     [ \t]+ . (EOL | [^ \r\n\t:] . (default - '\n')* . EOL)
      # [ \t] . (default - '\n')* . EOL
     )
   )
@@ -366,21 +366,6 @@ using std::istream;
 
   doxy_get_body := |*
 
-    # paragraph line with "see also" substituted by "@sa"
-    ( doc_begin
-      . (default - '\n')* . ( /see also/i %{tmp_p2 = p;} )
-      . (default - '\n')* . EOL
-    )
-      => {
-        string s, res;
-        s.assign(tmp_p, p - tmp_p + 1);
-        string::size_type size = string("see also").size();
-        string::size_type loc = tmp_p2 - tmp_p - size;
-        res = s.substr(0, loc) + "@sa" + s.substr(loc + size);
-        /*        cout << "*"; cout << res << "  "; */
-        docubody_.push_back(res);
-      };
-
     # begin required_list
     ( doc_begin . [ \t]*
       . /required fields of /i
@@ -390,6 +375,7 @@ using std::istream;
       => {
         //cout << tmp_string << '\n';
         clist_ = &(required_list_[tmp_string]);
+        docline = false;
         fcall fill_list;
       };
 
@@ -402,6 +388,7 @@ using std::istream;
       . [ \t]* . ':' . [ \t]* . EOL )
       => {
         clist_ = &(optional_list_[tmp_string]);
+        docline = false;
         fcall fill_list;
       };
 
@@ -414,6 +401,7 @@ using std::istream;
       . [ \t]* . ':' . [ \t]* . EOL )
       => {
         clist_ = &(retval_list_[tmp_string]);
+        docline = false;
         fcall fill_list;
       };
 
@@ -423,6 +411,7 @@ using std::istream;
       . [ \t]* . EOL )
       => {
         clist_ = &param_list_;
+        docline = false;
         fcall fill_list;
       };
 
@@ -432,20 +421,8 @@ using std::istream;
       . [ \t]* . EOL )
       => {
         clist_ = &return_list_;
+        docline = false;
         fcall fill_list;
-      };
-
-    # paragraph line
-    ( doc_begin
-      . ( (default - '\n')* -- ( /see also/i ) )#| (/required fields of [ \t]*/i . IDENT . [\t ]* . ':' . [\t ]* . EOL)
-                                             #| (/optional fields of [ \t]*/i . IDENT . [\t ]* . ':' . [\t ]* . EOL)
-                                             #| /arguments [ \t]*:[ \t]*\n/i
-                                             #| /return arguments[ \t]*:[\t ]*\n/i ) )
-      . [^ \t\n] . [ \t]* . EOL
-    )
-      => {
-        /*cout << "*"; cout.write(tmp_p, p - tmp_p+1) << "  ";*/
-        docubody_.push_back(string(tmp_p, p - tmp_p + 1));
       };
 
     # empty line
@@ -453,14 +430,134 @@ using std::istream;
       => {
         /*cout << "*\n  ";*/
         docubody_.push_back("\n");
+        docline = false;
       };
 
-    # end of comment block
-    ( [\t ]* . ( (default - '%') | EOL) )
+    # paragraph line
+    ( [ \t]* . '%' )
       => {
-        fhold;
+        if(!docline)
+        {
+          docline = true;
+          tmp_p = p;
+        }
+      };
+
+    # paragraph line with "see also" substituted by "@sa"
+    ( /see also/i )
+      => {
+        if(!docline)
+        {
+          p = ts-1;
+          fgoto funcbody;
+        }
+        string s;
+        s.assign(tmp_p+1, ts - tmp_p-1);
+        docubody_.push_back(s+"@sa ");
+        tmp_p = p+1;
+      };
+
+#    # type-writer words
+#    "'" . [A-Za-z_ ./[\]{}(),\$]* . "'" => {
+#      if(!docline)
+#      {
+#        p = ts-1;
+#        fgoto funcbody;
+#      }
+#      string s, s2;
+#      s.assign(tmp_p+1, ts - tmp_p-1);
+#      s2.assign(ts+1, te-ts-2);
+#      docubody_.push_back(s + "<tt>" + s2 + "</tt>");
+#      tmp_p = p;
+#    };
+#
+#    '``' => {
+#      if(!docline)
+#      {
+#        p = ts -1;
+#        fgoto funcbody;
+#      }
+#      string s;
+#      s.assign(tmp_p+1, ts - tmp_p-1);
+#      if(latex_begin)
+#      {
+#        docubody_.push_back(s + "@f[");
+#        latex_begin = false;
+#      } else {
+#        docubody_.push_back(s + "@f]");
+#        latex_begin = true;
+#      }
+#      tmp_p = p;
+#    };
+#
+#    '`' => {
+#      if(!docline)
+#      {
+#        p = ts-1;
+#        fgoto funcbody;
+#      }
+#      string s;
+#      s.assign(tmp_p+1, ts - tmp_p-1);
+#      if(latex_begin)
+#      {
+#        docubody_.push_back(s + "@f$");
+#        latex_begin = false;
+#      } else {
+#        docubody_.push_back(s + "@f$");
+#        latex_begin = true;
+#      }
+#      tmp_p = p;
+#    };
+#
+    # words
+#    ( default - [ \t:%'`\n] )+
+    ( default - [ \t:%\r\n] )+
+      => {
+        if(!docline)
+        {
+          p = ts-1;
+          fgoto funcbody;
+        }
+      };
+
+    # non-words/non-whitespace
+#    ([:'`]) => {
+    (':') => {
+        if(!docline)
+        {
+          p = ts-1;
+          fgoto funcbody;
+        }
+      };
+
+
+    # whitespace only
+    ( [ \t] );
+
+    # titled paragraph
+    ( ':' . [\t ]* . EOL ) =>
+    {
+        if(! docline)
+          fgoto funcbody;
+        else
+        {
+          docubody_.push_back("@par " + string(tmp_p+1, ts - tmp_p-1)+"\n");
+          docline = false;
+        }
+      };
+
+    # end of line
+    ( EOL )
+      => {
         // cout << "*/\n";
-        fgoto funcbody;
+        if(! docline)
+          fgoto funcbody;
+        else
+        {
+          int offset = ( latex_begin ? 0 : 1 );
+          docubody_.push_back(string(tmp_p+1, p - tmp_p - offset));
+          docline = false;
+        }
       };
 
   *|;
@@ -479,7 +576,7 @@ using std::istream;
 
     # read in one comment line
     ( doc_begin . [\t ]*
-      . (default - [\n\t ]) . (default - '\n')* . EOL
+      . (default - [\r\n\t ]) . (default - '\n')* . EOL
     )
       => {
         /* cout << "*"; cout.write(tmp_p, p - tmp_p+1); */
@@ -506,7 +603,7 @@ using std::istream;
   doxyheader := (
     '%' . [ \t]* .
        ( 'function'
-         . ( default - [;)\n.] )* .
+         . ( default - [;)\r\n.] )* .
          (
           ( [);] . (default - '\n')* . EOL )
             @{ fgoto doxy_get_brief; }
@@ -614,6 +711,29 @@ using std::istream;
 
   main := expect_function_or_script*;
 
+  doculine := |*
+  (any - ['`])* => { cout.write(ts, te-ts); };
+
+  ("'" . [A-Za-z_ ./[\]{}(),\$]* . "'") => {
+    cout << "<tt>"; cout.write(ts+1, te-ts-2) << "</tt>";
+  };
+
+  ('``') =>
+  {
+    if(latex_begin)
+    {
+      cout << "@f[";
+      latex_begin=false;
+    }
+    else
+    {
+      cout << "@f]";
+      latex_begin=true;
+    }
+  };
+
+  ('`') => { cout << "@f$"; };
+  *|;
 }%%
 
 
@@ -639,6 +759,8 @@ int MFileScanner :: execute()
     char *p = buf + have;
     char *tmp_p = p, *tmp_p2 = p, *tmp_p3 = p;
     string tmp_string;
+    bool docline = false;
+    bool latex_begin = true;
     int space = BUFSIZE - have;
 
     if ( space == 0 )
@@ -744,12 +866,71 @@ const string & MFileScanner::replace_underscore(std::string & s)
 
 void MFileScanner::write_docu_block(const DocuBlock & block)
 {
+  bool add_prefix = false;
+  bool latex_begin = true;
   for( unsigned int i = 0; i < block.size(); i += 1 )
   {
-    if(i != 0)
+    if(add_prefix)
       cout << "* ";
 
-    cout << block[i] << "  ";
+    add_prefix = false;
+    const string & s = block[i];
+    string::size_type j=0;
+    const char * tokens = "\'`\n";
+    for( string::size_type i = 0; j < s.size(); i=j )
+    {
+      j=s.find_first_of(tokens,i+1);
+      if(j==string::npos)
+        j=s.size();
+      if(s[i] == '\'')
+      {
+        if(j != s.size() && s[j] == '\'')
+        {
+          cout << "<tt>" << s.substr(i+1, j-i-1) << "</tt>";
+          ++j;
+        }
+        else
+          cout << s.substr(i,j-i);
+      }
+      else if(s[i] == '`')
+      {
+        string lout;
+        if(s[i+1] == '`')
+        {
+          if(latex_begin)
+            lout = "@f[";
+          else
+            lout = "@f]";
+          ++i;
+          j=s.find_first_of(tokens,i+1);
+          if(j==string::npos)
+            j=s.size();
+        }
+        else
+          lout = "@f$";
+        if(latex_begin)
+          latex_begin = false;
+        else
+          latex_begin = true;
+        ++i;
+        cout << lout << s.substr(i, j-i);
+      }
+      else if(s[i] == '\n')
+      {
+        cout << "\n  ";
+        if(latex_begin)
+          add_prefix = true;
+        else
+        {
+          cout << "  ";
+          add_prefix = false;
+        }
+      }
+      else
+      {
+        cout << s.substr(i,j-i);
+      }
+    }
   }
 }
 
@@ -761,7 +942,7 @@ void MFileScanner::write_docu_list(const DocuList & list,
   list_iterator lit = list.begin();
   for(; lit != list.end(); ++lit)
   {
-    cout << "* " << item_text << " " << (*lit).first << " ";
+    cout << "* " << item_text << " " << (*lit).first << "    ";
     const DocuBlock & block = (*lit).second;
     if(block.empty())
     {
@@ -893,7 +1074,7 @@ void MFileScanner::end_function()
         cout << ", ";
       else
         first = false;
-      cout << "type " << paramlist_[i];
+      cout << "matlabtypesubstitute " << paramlist_[i];
     }
     paramlist_.clear();
     cout << ")\n  ";
@@ -908,26 +1089,13 @@ void MFileScanner::end_function()
   }
   else
   {
-    bool not_first = false;
-    block_iterator hit = docuheader_.begin();
-    for(; hit != docuheader_.end(); ++hit)
+    if(! docuheader_.empty())
     {
-      if(not_first)
-        cout << "* ";
-      else
-        not_first = true;
-
-      cout << *hit << "  ";
+      write_docu_block(docuheader_);
     }
-    hit = cscan_.docuheader_.begin();
-    for(; hit != cscan_.docuheader_.end(); ++hit)
+    if(! cscan_.docuheader_.empty())
     {
-      if(not_first)
-        cout << "* ";
-      else
-        not_first = true;
-
-      cout << *hit << "  ";
+      write_docu_block(cscan_.docuheader_);
     }
   }
   docuheader_.clear();
@@ -935,17 +1103,17 @@ void MFileScanner::end_function()
   // specify the @details part
 
   // standard body definitions
-  if(!docubody_.empty() || !cscan_.docubody_.empty())
+  if(!docubody_.empty())
   {
-    cout << "*\n  ";
-    block_iterator bit = docubody_.begin();
-    for(; bit != docubody_.end(); ++bit)
-      cout << "* " << *bit << "  ";
-    bit = cscan_.docubody_.begin();
-    for(; bit != cscan_.docubody_.end(); ++bit)
-      cout << "* " << *bit << "  ";
+    cout << "*\n  * ";
+    write_docu_block(docubody_);
   }
   docubody_.clear();
+  if(!cscan_.docubody_.empty())
+  {
+    cout << "*\n  * ";
+    write_docu_block(cscan_.docubody_);
+  }
   // parameters
   if(!param_list_.empty())
   {
@@ -973,15 +1141,10 @@ void MFileScanner::end_function()
   retval_list_.clear();
 
   // extra docu fields
-  if(!docuextra_.empty() || ! cscan_.docuextra_.empty())
+  if(! cscan_.docuextra_.empty())
   {
-    cout << "*\n  ";
-    block_iterator bit = docuextra_.begin();
-    for(; bit != docuextra_.end(); ++bit)
-      cout << "* " << *bit << "  ";
-    bit = cscan_.docuextra_.begin();
-    for(; bit != cscan_.docuextra_.end(); ++bit)
-      cout << "* " << *bit << "  ";
+    cout << "*\n  * ";
+    write_docu_block(cscan_.docuextra_);
   }
   if( new_syntax_ )
   {
@@ -1031,7 +1194,6 @@ int main(int argc, char ** argv)
   if(found!=string::npos)
     filename = filename.substr(cwd.size()+1);
   MFileScanner scanner(*fcin, filename, latex_output);
-  cerr << "************" << filename << endl;
   scanner.execute();
   return 0;
 }

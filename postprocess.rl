@@ -50,9 +50,11 @@ using std::endl;
 
    ('noret::substitute') => {fout << "function ";};
 
-   (any - [\n <>()[\]{}:_\t])+ => { fout.write(ts, te-ts); };
+   ('matlabtypesubstitute') => {fout << " ";};
 
-   ([\n <>()[\]{}\t:_]) => {fout << *ts;};
+   (any - [\n <>()[\]{}\&:_\t])+ => { fout.write(ts, te-ts); };
+
+   ([\n <>()[\]{}\t:_\&]) => {fout << *ts;};
    *|;
 }%%
 
