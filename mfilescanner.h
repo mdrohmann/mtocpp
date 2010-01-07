@@ -21,7 +21,7 @@ public:
   typedef std :: set< std :: string >                                GroupSet;
 
 public:
-  MFileScanner (std::istream & fin, const std::string & filename);
+  MFileScanner (std::istream & fin, const std::string & filename, bool latex_output);
 
   int execute();
 
@@ -46,6 +46,7 @@ private:
 private:
   std::istream & fin_;
   const std::string  filename_;
+  bool latex_output_;
   ConfFileScanner cscan_;
   char         buf[BUFSIZE];
   int          line            , col;

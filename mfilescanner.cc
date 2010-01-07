@@ -43,8 +43,8 @@ static const int MFileScanner_en_main = 314;
 
 
 
-MFileScanner :: MFileScanner(istream & fin, const std::string & filename) :
-  fin_(fin), filename_(filename), cscan_(filename_),
+MFileScanner :: MFileScanner(istream & fin, const std::string & filename, bool latex_output) :
+  fin_(fin), filename_(filename), latex_output_(latex_output), cscan_(filename_),
   line(1),
   ts(0), have(0), top(0),
   opt(false), new_syntax_(false), is_script_(false), is_first_function_(true)
@@ -7075,8 +7075,35 @@ void MFileScanner::end_function()
     string::size_type found = tempfname.rfind("/");
     if(found != string::npos)
       tempfname = tempfname.substr(found+1);
-    cout << "/** @file " << escape_chars(tempfname) << "\n  ";
-    if((! groupset_.empty() || ! cscan_.groupset_.empty() ))
+    if(! latex_output_ )
+    {
+      cout << "/** @file " << escape_chars(tempfname) << "\n  ";
+      if((! groupset_.empty() || ! cscan_.groupset_.empty() ))
+      {
+        // specify the @ingroup command
+        cout << "* @ingroup ";
+        bool not_first = false;
+        group_iterator git = cscan_.groupset_.begin();
+        for(; git != cscan_.groupset_.end(); ++git)
+        {
+          if(not_first)
+            cout << " ";
+          else
+            not_first = true;
+
+          cout << *git;
+        }
+        groupset_.clear();
+      }
+      //    cout << "\n  " << "* @brief " << tempfname << " ";
+      is_first_function_ = false;
+      cout << "*/\n";
+    }
+  }
+  cout << "/*";
+  if(latex_output_)
+  {
+    if(! cscan_.groupset_.empty() )
     {
       // specify the @ingroup command
       cout << "* @ingroup ";
@@ -7091,31 +7118,9 @@ void MFileScanner::end_function()
 
         cout << *git;
       }
-      groupset_.clear();
     }
-//    cout << "\n  " << "* @brief " << tempfname << " ";
-    is_first_function_ = false;
-    cout << "*/\n";
+    cout << "\n  ";
   }
-//  cout << "/*";
-/*  if(! cscan_.groupset_.empty() )
-  {
-    // specify the @ingroup command
-    cout << "/"<<"** @package ";
-    bool not_first = false;
-    group_iterator git = cscan_.groupset_.begin();
-    for(; git != cscan_.groupset_.end(); ++git)
-    {
-      if(not_first)
-        cout << " ";
-      else
-        not_first = true;
-
-      cout << *git;
-    }*/
-//    cout << "\n  * test*/\n  ";
-//  }
-  cout << "/*";
   // specify the @fn part
   cout << "* @fn ";
   if(returnlist_.size() == 0)
@@ -7274,6 +7279,12 @@ int main(int argc, char ** argv)
     filename = "stdin";
   }
 
+  bool latex_output = false;
+  if(argc == 3)
+  {
+    latex_output = (strncmp(argv[2],"1",1)==0) ? true : false;
+  }
+
   char buf[1000];
   getcwd(buf, 1000);
 
@@ -7282,7 +7293,7 @@ int main(int argc, char ** argv)
   found = filename.find(cwd);
   if(found!=string::npos)
     filename = filename.substr(cwd.size()+1);
-  MFileScanner scanner(*fcin, filename);
+  MFileScanner scanner(*fcin, filename, latex_output);
   cerr << "************" << filename << endl;
   scanner.execute();
   return 0;
