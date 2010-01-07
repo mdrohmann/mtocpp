@@ -58,6 +58,7 @@ private:
   bool         new_syntax_;
   DocuListMap  required_list_;
   DocuListMap  optional_list_;
+  DocuListMap  retval_list_;
   DocuList     param_list_;
   DocuList     return_list_;
   DocuBlock    returnlist_;
