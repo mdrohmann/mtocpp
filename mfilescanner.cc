@@ -6251,14 +6251,17 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
     const string & s = block[i];
     string::size_type j=0;
     const char * tokens = "\'`\n";
+    bool last_char_escaped = false;
     for( string::size_type i = 0; j < s.size(); i=j )
     {
       j=s.find_first_of(tokens,i+1);
       if(j==string::npos)
         j=s.size();
+      if(s[j-1] == '\\')
+        --j;
       if(s[i] == '\'')
       {
-        if(j != s.size() && s[j] == '\'')
+        if(j != s.size() && s[j] == '\'' && !last_char_escaped)
         {
           cout << "<tt>" << s.substr(i+1, j-i-1) << "</tt>";
           ++j;
@@ -6269,24 +6272,31 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
       else if(s[i] == '`')
       {
         string lout;
-        if(s[i+1] == '`')
+        if(!last_char_escaped)
         {
-          if(latex_begin)
-            lout = "@f[";
+          if(s[i+1] == '`')
+          {
+            if(latex_begin)
+              lout = "@f[";
+            else
+              lout = "@f]";
+            ++i;
+            j=s.find_first_of(tokens,i+1);
+            if(j==string::npos)
+              j=s.size();
+          }
           else
-            lout = "@f]";
+            lout = "@f$";
+          if(latex_begin)
+            latex_begin = false;
+          else
+            latex_begin = true;
           ++i;
-          j=s.find_first_of(tokens,i+1);
-          if(j==string::npos)
-            j=s.size();
         }
         else
-          lout = "@f$";
-        if(latex_begin)
-          latex_begin = false;
-        else
-          latex_begin = true;
-        ++i;
+        {
+          lout = "";
+        }
         cout << lout << s.substr(i, j-i);
       }
       else if(s[i] == '\n')
@@ -6304,6 +6314,13 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
       {
         cout << s.substr(i,j-i);
       }
+      if(s[j-1] != '\\' && s[j] == '\\')
+      {
+        ++j;
+        last_char_escaped = true;
+      }
+      else
+        last_char_escaped = false;
     }
   }
 }
