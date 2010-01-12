@@ -36,7 +36,8 @@ private:
 
   void write_docu_list(const DocuList & list,
                        const std::string & item_text,
-                       const DocuList & alternative);
+                       const DocuList & alternative,
+                       const std::string separator);
 
   void write_docu_listmap(const DocuListMap & listmap,
                           const std::string & text,

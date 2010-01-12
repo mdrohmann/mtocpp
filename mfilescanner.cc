@@ -6242,6 +6242,7 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
 {
   bool add_prefix = false;
   bool latex_begin = true;
+  bool not_verbatim = true;
   for( unsigned int i = 0; i < block.size(); i += 1 )
   {
     if(add_prefix)
@@ -6250,16 +6251,24 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
     add_prefix = false;
     const string & s = block[i];
     string::size_type j=0;
-    const char * tokens = "\'`\n";
+    const char * tokens = "\'`@\n";
     bool last_char_escaped = false;
     for( string::size_type i = 0; j < s.size(); i=j )
     {
       j=s.find_first_of(tokens,i+1);
       if(j==string::npos)
         j=s.size();
-      if(s[j-1] == '\\')
+      if(s[j-1] == '\\' && not_verbatim)
         --j;
-      if(s[i] == '\'')
+      if(s[i] == '@')
+      {
+        if(s.substr(i+1,4) == "code" || s.substr(i+1,8) == "verbatim")
+          not_verbatim = false;
+        else if(s.substr(i+1,7) == "endcode" || s.substr(i+1,11) == "endverbatim")
+          not_verbatim = true;
+        cout << s.substr(i,j-i);
+      }
+      else if(s[i] == '\'' && not_verbatim)
       {
         if(j != s.size() && s[j] == '\'' && !last_char_escaped)
         {
@@ -6269,7 +6278,7 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
         else
           cout << s.substr(i,j-i);
       }
-      else if(s[i] == '`')
+      else if(s[i] == '`' && not_verbatim)
       {
         string lout;
         if(!last_char_escaped)
@@ -6316,24 +6325,26 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
       }
       if(s[j-1] != '\\' && s[j] == '\\')
       {
-        ++j;
         last_char_escaped = true;
       }
       else
         last_char_escaped = false;
+      if(s[j] == '\\')
+        ++j;
     }
   }
 }
 
 void MFileScanner::write_docu_list(const DocuList & list,
                                    const string & item_text,
-                                   const DocuList & alternative)
+                                   const DocuList & alternative,
+                                   const string separator = string())
 {
   typedef DocuList :: const_iterator list_iterator;
   list_iterator lit = list.begin();
   for(; lit != list.end(); ++lit)
   {
-    cout << "* " << item_text << " " << (*lit).first << "    ";
+    cout << "* " << item_text << " " << (*lit).first << separator << "    ";
     const DocuBlock & block = (*lit).second;
     if(block.empty())
     {
@@ -6364,8 +6375,9 @@ void MFileScanner::write_docu_listmap(const DocuListMap & listmap,
       cout << "*\n  ";
       cout << "* " << text << (*mit).first << ":\n  ";
       map_iterator amit = altlistmap.find((*mit).first);
-      write_docu_list((*mit).second, "@arg \\c", ( amit != altlistmap.end() ? (*amit).second : DocuList() ));
+      write_docu_list((*mit).second, "@arg \\c", ( amit != altlistmap.end() ? (*amit).second : DocuList() ), "&nbsp;&mdash;&nbsp;");
     }
+    cout << "* </TABLE>\n  ";
 
   }
 }
