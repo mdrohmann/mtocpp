@@ -24,6 +24,8 @@ using std::endl;
 
   IDENT = [A-Z\\a-z\-_][A-Z\\a-z0-9\-_]*;
 
+  IDENT_WO_US = [A-Z\\a-z\-][A-Z\\a-z0-9\-]*;
+
   action echo {
     fout << fpc;
     cout << fpc;
@@ -43,6 +45,14 @@ using std::endl;
     '::' => { fout <<", "; };
   *|;
 
+  mtocsubst:= |*
+    '_';
+
+    (IDENT_WO_US);
+
+    '_tsbus_cotm' => { fgoto main; };
+  *|;
+
   main:= |*
    ('rets::substitutestart::') => { fout << "function ["; fgoto retvals; };
 
@@ -50,11 +60,13 @@ using std::endl;
 
    ('noret::substitute') => {fout << "function ";};
 
+   ('mtoc_subst_') => { fgoto mtocsubst; };
+
    ('matlabtypesubstitute') => {fout << " ";};
 
-   (any - [\n <>()[\]{}\&:_\t])+ => { fout.write(ts, te-ts); };
+   (any - [\n <>()[\]{}\&:;_\t])+ => { fout.write(ts, te-ts); };
 
-   ([\n <>()[\]{}\t:_\&]) => {fout << *ts;};
+   ([\n <>()[\]{}\t:;_\&]) => {fout << *ts;};
    *|;
 }%%
 

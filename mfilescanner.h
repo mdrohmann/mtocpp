@@ -49,6 +49,7 @@ private:
   const std::string  filename_;
   bool latex_output_;
   ConfFileScanner cscan_;
+  std::string  fnname_;
   char         buf[BUFSIZE];
   int          line            , col;
   char        *ts              , *te;
