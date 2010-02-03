@@ -269,7 +269,13 @@ using std::istream;
     (IDENT)
       => { cout.write(ts, te-ts); };
 
-    (default - '\n')
+    ('{')
+      => { cout << '['; };
+
+    ('}')
+      => { cout << ']'; };
+
+    (default - [\n{}])
       => { cout << fc; };
 
     EOL
@@ -651,6 +657,8 @@ using std::istream;
                    cout << "noret::substitute ";
                    opt=false;
                  }
+                 if(!is_first_function_)
+                   cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
                  cout << cfuncname_ << '(';
                  })
            . paramlist
@@ -660,7 +668,13 @@ using std::istream;
              cout << " {\n";
              fgoto expect_doxyblock;
            }
-        | (';'? . EOL) @{ cout << "void " << cfuncname_ << "() {\n"; fgoto expect_doxyblock; }
+        | (';'? . EOL) @{
+                         cout << "noret::substitute ";
+                         if(!is_first_function_)
+                           cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
+                         cout << cfuncname_ << "() {\n";
+                         fgoto expect_doxyblock;
+                        }
         )
       );
 
@@ -671,7 +685,10 @@ using std::istream;
          found = -1;
        string funcname = filename_.substr(found+1, filename_.size()-3-found);
        cfuncname_.assign( funcname );
-       cout << "void " << funcname << "() {\n";
+       cout << "noret::substitute ";
+       if(!is_first_function_)
+         cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
+       cout << funcname << "() {\n";
        is_script_ = true;
        fhold;
        fgoto expect_doxyblock;
@@ -738,11 +755,24 @@ using std::istream;
 
 
 MFileScanner :: MFileScanner(istream & fin, const std::string & filename, bool latex_output) :
-  fin_(fin), filename_(filename), latex_output_(latex_output), cscan_(filename_),
+  fin_(fin), filename_(filename),
+  latex_output_(latex_output), cscan_(filename_),
+  fnname_(filename),
   line(1),
   ts(0), have(0), top(0),
   opt(false), new_syntax_(false), is_script_(false), is_first_function_(true)
 {
+  string::size_type found = fnname_.rfind("/");
+  if(found != string::npos)
+    fnname_ = fnname_.substr(found+1);
+  for( std::string::size_type i = 0; i < fnname_.size(); ++i )
+  {
+    if(fnname_[i] == '@')
+      fnname_[i] = '_';
+    else if(fnname_[i] == '.')
+      fnname_[i] = '_';
+  }
+
   cscan_.execute();
 };
 
@@ -1003,7 +1033,7 @@ void MFileScanner::write_docu_listmap(const DocuListMap & listmap,
       map_iterator amit = altlistmap.find((*mit).first);
       write_docu_list((*mit).second, "@arg \\c", ( amit != altlistmap.end() ? (*amit).second : DocuList() ), "&nbsp;&mdash;&nbsp;");
     }
-    cout << "* </TABLE>\n  ";
+//    cout << "* </TABLE>\n  ";
 
   }
 }
@@ -1019,12 +1049,12 @@ void MFileScanner::end_function()
   if(is_first_function_)
   {
     string tempfname(filename_);
-    string::size_type found = tempfname.rfind("/");
-    if(found != string::npos)
-      tempfname = tempfname.substr(found+1);
+//    string::size_type found = tempfname.rfind("/");
+//    if(found != string::npos)
+//      tempfname = tempfname.substr(found+1);
     if(! latex_output_ )
     {
-      cout << "/** @file " << escape_chars(tempfname) << "\n  ";
+      cout << "/** @file \"" << tempfname << "\"\n  ";
       if((! groupset_.empty() || ! cscan_.groupset_.empty() ))
       {
         // specify the @ingroup command
@@ -1043,7 +1073,6 @@ void MFileScanner::end_function()
         groupset_.clear();
       }
       //    cout << "\n  " << "* @brief " << tempfname << " ";
-      is_first_function_ = false;
       cout << "*/\n";
     }
   }
@@ -1091,6 +1120,8 @@ void MFileScanner::end_function()
   returnlist_.clear();
 
   bool first = true;
+  if(!is_first_function_)
+    cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
   cout << cfuncname_;
   if(paramlist_.size() == 0)
     cout << "\n  ";
@@ -1100,7 +1131,7 @@ void MFileScanner::end_function()
     for(unsigned int i=0; i < paramlist_.size(); ++i)
     {
       if(!first)
-        cout << ", ";
+        cout << ",";
       else
         first = false;
       cout << "matlabtypesubstitute " << paramlist_[i];
@@ -1181,6 +1212,7 @@ void MFileScanner::end_function()
   }
   docuextra_.clear();
   cout << "*/\n";
+  is_first_function_ = false;
 }
 
 int main(int argc, char ** argv)
