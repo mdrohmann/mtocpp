@@ -1248,7 +1248,8 @@ int main(int argc, char ** argv)
   }
 
   char buf[1000];
-  getcwd(buf, 1000);
+  char * dummy = getcwd(buf, 1000);
+  dummy = 0;
 
   string::size_type found = 0;
   string cwd(buf);
