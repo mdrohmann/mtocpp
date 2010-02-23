@@ -1,10 +1,10 @@
-
 #line 1 "mfilescanner.rl"
 #include "mfilescanner.h"
 
 #include <cstring>
 #include <cstdlib>
 #include <iostream>
+#include <algorithm>
 extern "C" {
 #include <unistd.h>
 }
@@ -39,8 +39,7 @@ static const int MFileScanner_en_funct = 223;
 static const int MFileScanner_en_main = 289;
 static const int MFileScanner_en_doculine = 334;
 
-
-#line 754 "mfilescanner.rl"
+#line 755 "mfilescanner.rl"
 
 
 
@@ -71,7 +70,7 @@ int MFileScanner :: execute()
   std::ios::sync_with_stdio(false);
 
   
-#line 75 "mfilescanner.cc"
+#line 74 "mfilescanner.cc"
 	{
 	cs = MFileScanner_start;
 	top = 0;
@@ -79,8 +78,7 @@ int MFileScanner :: execute()
 	te = 0;
 	act = 0;
 	}
-
-#line 784 "mfilescanner.rl"
+#line 785 "mfilescanner.rl"
 
   /* Do the first read. */
   bool done = false;
@@ -138,7 +136,7 @@ int MFileScanner :: execute()
     }
 
     
-#line 142 "mfilescanner.cc"
+#line 140 "mfilescanner.cc"
 	{
 	if ( p == pe )
 		goto _test_eof;
@@ -492,33 +490,33 @@ _resume:
 	switch ( cs )
 	{
 tr13:
-#line 718 "mfilescanner.rl"
+#line 719 "mfilescanner.rl"
 	{
     p=tmp_p;
     {goto st223;}
     }
 	goto st289;
 st289:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
 	if ( ++p == pe )
 		goto _test_eof289;
 case 289:
-#line 508 "mfilescanner.cc"
+#line 506 "mfilescanner.cc"
 	goto tr415;
 tr2:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
 	goto st1;
 tr415:
-#line 712 "mfilescanner.rl"
+#line 713 "mfilescanner.rl"
 	{ p--; tmp_p = p; }
 	goto st1;
 st1:
 	if ( ++p == pe )
 		goto _test_eof1;
 case 1:
-#line 522 "mfilescanner.cc"
+#line 520 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st1;
 		case 10: goto tr2;
@@ -529,14 +527,14 @@ case 1:
 	}
 	goto tr0;
 tr0:
-#line 723 "mfilescanner.rl"
+#line 724 "mfilescanner.rl"
 	{
     p=tmp_p;
     {goto st222;}
   }
 	goto st0;
 tr15:
-#line 37 "mfilescanner.rl"
+#line 38 "mfilescanner.rl"
 	{
     cout << "*/\n";
     p--;
@@ -544,20 +542,20 @@ tr15:
   }
 	goto st0;
 tr267:
-#line 622 "mfilescanner.rl"
+#line 623 "mfilescanner.rl"
 	{
         p = tmp_p - 2;
         {goto st328;}
       }
 	goto st0;
 tr283:
-#line 636 "mfilescanner.rl"
+#line 637 "mfilescanner.rl"
 	{
     p--;
     {goto st313;}
   }
 	goto st0;
-#line 561 "mfilescanner.cc"
+#line 559 "mfilescanner.cc"
 st0:
 cs = 0;
 	goto _out;
@@ -637,12 +635,12 @@ case 11:
 		goto tr13;
 	goto tr0;
 st206:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
 	if ( ++p == pe )
 		goto _test_eof206;
 case 206:
-#line 646 "mfilescanner.cc"
+#line 644 "mfilescanner.cc"
 	if ( (*p) == 37 )
 		goto st207;
 	goto st0;
@@ -728,22 +726,22 @@ case 216:
 	}
 	goto st216;
 tr278:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 615 "mfilescanner.rl"
+#line 616 "mfilescanner.rl"
 	{ {goto st328;} }
 	goto st330;
 tr281:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 618 "mfilescanner.rl"
+#line 619 "mfilescanner.rl"
 	{ {goto st327;} }
 	goto st330;
 st330:
 	if ( ++p == pe )
 		goto _test_eof330;
 case 330:
-#line 747 "mfilescanner.cc"
+#line 745 "mfilescanner.cc"
 	goto tr267;
 st217:
 	if ( ++p == pe )
@@ -778,12 +776,12 @@ case 220:
 		goto tr281;
 	goto tr267;
 st221:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
 	if ( ++p == pe )
 		goto _test_eof221;
 case 221:
-#line 787 "mfilescanner.cc"
+#line 785 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st221;
 		case 32: goto st221;
@@ -791,9 +789,9 @@ case 221:
 	}
 	goto tr283;
 tr285:
-#line 74 "mfilescanner.rl"
+#line 75 "mfilescanner.rl"
 	{ tmp_p = p + 1; }
-#line 631 "mfilescanner.rl"
+#line 632 "mfilescanner.rl"
 	{
         //cout << "/*";
         p--;
@@ -804,20 +802,20 @@ st331:
 	if ( ++p == pe )
 		goto _test_eof331;
 case 331:
-#line 808 "mfilescanner.cc"
+#line 806 "mfilescanner.cc"
 	goto tr283;
 st222:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
 	if ( ++p == pe )
 		goto _test_eof222;
 case 222:
-#line 816 "mfilescanner.cc"
+#line 814 "mfilescanner.cc"
 	if ( (*p) == 0 )
 		goto st0;
 	goto tr286;
 tr286:
-#line 682 "mfilescanner.rl"
+#line 683 "mfilescanner.rl"
 	{
        string :: size_type found = filename_.rfind("/");
        if(found == string :: npos)
@@ -837,16 +835,16 @@ st332:
 	if ( ++p == pe )
 		goto _test_eof332;
 case 332:
-#line 841 "mfilescanner.cc"
+#line 839 "mfilescanner.cc"
 	goto st0;
 tr288:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
 	goto st223;
 tr296:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 50 "mfilescanner.rl"
+#line 51 "mfilescanner.rl"
 	{
     /*    cout << p << "x" << tmp_p << endl;*/
     cout.write(tmp_p, p-tmp_p+1);
@@ -854,12 +852,12 @@ tr296:
   }
 	goto st223;
 st223:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
 	if ( ++p == pe )
 		goto _test_eof223;
 case 223:
-#line 863 "mfilescanner.cc"
+#line 861 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st223;
 		case 10: goto tr288;
@@ -898,18 +896,18 @@ case 226:
 	}
 	goto tr293;
 tr293:
-#line 68 "mfilescanner.rl"
+#line 69 "mfilescanner.rl"
 	{ cout << "/*"; tmp_p = p; }
 	goto st227;
 tr294:
-#line 66 "mfilescanner.rl"
+#line 67 "mfilescanner.rl"
 	{ cout << "/**"; tmp_p = p+1; }
 	goto st227;
 st227:
 	if ( ++p == pe )
 		goto _test_eof227;
 case 227:
-#line 913 "mfilescanner.cc"
+#line 911 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr296;
@@ -965,13 +963,13 @@ case 234:
 		goto st235;
 	goto st0;
 tr312:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
 	goto st235;
 tr309:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 78 "mfilescanner.rl"
+#line 79 "mfilescanner.rl"
 	{
         cout << "/* ";
         cout.write(tmp_p, p - tmp_p) << "*/\n";
@@ -981,7 +979,7 @@ st235:
 	if ( ++p == pe )
 		goto _test_eof235;
 case 235:
-#line 985 "mfilescanner.cc"
+#line 983 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st235;
 		case 32: goto st235;
@@ -997,14 +995,14 @@ case 235:
 		goto tr306;
 	goto st0;
 tr304:
-#line 85 "mfilescanner.rl"
+#line 86 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	goto st236;
 st236:
 	if ( ++p == pe )
 		goto _test_eof236;
 case 236:
-#line 1008 "mfilescanner.cc"
+#line 1006 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr309;
@@ -1043,14 +1041,14 @@ case 240:
 		goto tr312;
 	goto st0;
 tr306:
-#line 58 "mfilescanner.rl"
+#line 59 "mfilescanner.rl"
 	{ tmp_p = p; }
 	goto st241;
 st241:
 	if ( ++p == pe )
 		goto _test_eof241;
 case 241:
-#line 1054 "mfilescanner.cc"
+#line 1052 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr314;
 		case 10: goto tr315;
@@ -1073,30 +1071,30 @@ case 241:
 		goto st241;
 	goto st0;
 tr314:
-#line 126 "mfilescanner.rl"
+#line 127 "mfilescanner.rl"
 	{
              string s(tmp_p, p - tmp_p);
              returnlist_.push_back(s);
              return_list_[s] = DocuBlock();
              cout << "ret::substitutestart::" << s << "::retsubstituteend ";
            }
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
-#line 646 "mfilescanner.rl"
+#line 647 "mfilescanner.rl"
 	{
             cfuncname_.assign(tmp_p, p - tmp_p);
             is_script_ = false;
           }
 	goto st242;
 tr323:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st242;
 st242:
 	if ( ++p == pe )
 		goto _test_eof242;
 case 242:
-#line 1100 "mfilescanner.cc"
+#line 1098 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr323;
 		case 10: goto tr324;
@@ -1110,14 +1108,14 @@ case 242:
 	}
 	goto st0;
 tr315:
-#line 646 "mfilescanner.rl"
+#line 647 "mfilescanner.rl"
 	{
             cfuncname_.assign(tmp_p, p - tmp_p);
             is_script_ = false;
           }
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 671 "mfilescanner.rl"
+#line 672 "mfilescanner.rl"
 	{
                          cout << "noret::substitute ";
                          if(!is_first_function_)
@@ -1127,9 +1125,9 @@ tr315:
                         }
 	goto st333;
 tr324:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 671 "mfilescanner.rl"
+#line 672 "mfilescanner.rl"
 	{
                          cout << "noret::substitute ";
                          if(!is_first_function_)
@@ -1139,9 +1137,9 @@ tr324:
                         }
 	goto st333;
 tr344:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 667 "mfilescanner.rl"
+#line 668 "mfilescanner.rl"
 	{
              cout << " {\n";
              {goto st221;}
@@ -1151,10 +1149,10 @@ st333:
 	if ( ++p == pe )
 		goto _test_eof333;
 case 333:
-#line 1155 "mfilescanner.cc"
+#line 1153 "mfilescanner.cc"
 	goto st0;
 tr316:
-#line 646 "mfilescanner.rl"
+#line 647 "mfilescanner.rl"
 	{
             cfuncname_.assign(tmp_p, p - tmp_p);
             is_script_ = false;
@@ -1164,48 +1162,48 @@ st243:
 	if ( ++p == pe )
 		goto _test_eof243;
 case 243:
-#line 1168 "mfilescanner.cc"
+#line 1166 "mfilescanner.cc"
 	if ( (*p) == 10 )
 		goto tr324;
 	goto st0;
 tr326:
-#line 85 "mfilescanner.rl"
+#line 86 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	goto st244;
 tr317:
-#line 646 "mfilescanner.rl"
+#line 647 "mfilescanner.rl"
 	{
             cfuncname_.assign(tmp_p, p - tmp_p);
             is_script_ = false;
           }
-#line 85 "mfilescanner.rl"
+#line 86 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	goto st244;
 st244:
 	if ( ++p == pe )
 		goto _test_eof244;
 case 244:
-#line 1189 "mfilescanner.cc"
+#line 1187 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr332;
 	}
 	goto st244;
 tr381:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
 	goto st245;
 tr332:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 78 "mfilescanner.rl"
+#line 79 "mfilescanner.rl"
 	{
         cout << "/* ";
         cout.write(tmp_p, p - tmp_p) << "*/\n";
       }
 	goto st245;
 tr392:
-#line 646 "mfilescanner.rl"
+#line 647 "mfilescanner.rl"
 	{
             cfuncname_.assign(tmp_p, p - tmp_p);
             is_script_ = false;
@@ -1215,7 +1213,7 @@ st245:
 	if ( ++p == pe )
 		goto _test_eof245;
 case 245:
-#line 1219 "mfilescanner.cc"
+#line 1217 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st245;
 		case 10: goto tr324;
@@ -1228,25 +1226,25 @@ case 245:
 	}
 	goto st0;
 tr356:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
 	goto st246;
 tr342:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 78 "mfilescanner.rl"
+#line 79 "mfilescanner.rl"
 	{
         cout << "/* ";
         cout.write(tmp_p, p - tmp_p) << "*/\n";
       }
 	goto st246;
 tr318:
-#line 646 "mfilescanner.rl"
+#line 647 "mfilescanner.rl"
 	{
             cfuncname_.assign(tmp_p, p - tmp_p);
             is_script_ = false;
           }
-#line 654 "mfilescanner.rl"
+#line 655 "mfilescanner.rl"
 	{
                  if(!opt)
                  {
@@ -1259,11 +1257,11 @@ tr318:
                  }
 	goto st246;
 tr335:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st246;
 tr327:
-#line 654 "mfilescanner.rl"
+#line 655 "mfilescanner.rl"
 	{
                  if(!opt)
                  {
@@ -1276,18 +1274,18 @@ tr327:
                  }
 	goto st246;
 tr365:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 78 "mfilescanner.rl"
+#line 79 "mfilescanner.rl"
 	{
         cout << "/* ";
         cout.write(tmp_p, p - tmp_p) << "*/\n";
       }
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st246;
 tr372:
-#line 99 "mfilescanner.rl"
+#line 100 "mfilescanner.rl"
 	{
          string s(tmp_p, p - tmp_p);
          param_list_[s] = DocuBlock();
@@ -1296,21 +1294,21 @@ tr372:
        }
 	goto st246;
 tr373:
-#line 99 "mfilescanner.rl"
+#line 100 "mfilescanner.rl"
 	{
          string s(tmp_p, p - tmp_p);
          param_list_[s] = DocuBlock();
          paramlist_.push_back(s);
          cout << "matlabtypesubstitute " << s;
        }
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st246;
 st246:
 	if ( ++p == pe )
 		goto _test_eof246;
 case 246:
-#line 1314 "mfilescanner.cc"
+#line 1312 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st246;
 		case 10: goto tr335;
@@ -1329,63 +1327,63 @@ case 246:
 		goto tr340;
 	goto st0;
 tr336:
-#line 85 "mfilescanner.rl"
+#line 86 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	goto st247;
 tr374:
-#line 99 "mfilescanner.rl"
+#line 100 "mfilescanner.rl"
 	{
          string s(tmp_p, p - tmp_p);
          param_list_[s] = DocuBlock();
          paramlist_.push_back(s);
          cout << "matlabtypesubstitute " << s;
        }
-#line 85 "mfilescanner.rl"
+#line 86 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	goto st247;
 st247:
 	if ( ++p == pe )
 		goto _test_eof247;
 case 247:
-#line 1351 "mfilescanner.cc"
+#line 1349 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr342;
 	}
 	goto st247;
 tr352:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
 	goto st248;
 tr349:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 78 "mfilescanner.rl"
+#line 79 "mfilescanner.rl"
 	{
         cout << "/* ";
         cout.write(tmp_p, p - tmp_p) << "*/\n";
       }
 	goto st248;
 tr337:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st248;
 tr375:
-#line 99 "mfilescanner.rl"
+#line 100 "mfilescanner.rl"
 	{
          string s(tmp_p, p - tmp_p);
          param_list_[s] = DocuBlock();
          paramlist_.push_back(s);
          cout << "matlabtypesubstitute " << s;
        }
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st248;
 st248:
 	if ( ++p == pe )
 		goto _test_eof248;
 case 248:
-#line 1389 "mfilescanner.cc"
+#line 1387 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st248;
 		case 10: goto tr344;
@@ -1404,14 +1402,14 @@ case 249:
 		goto tr344;
 	goto st0;
 tr346:
-#line 85 "mfilescanner.rl"
+#line 86 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	goto st250;
 st250:
 	if ( ++p == pe )
 		goto _test_eof250;
 case 250:
-#line 1415 "mfilescanner.cc"
+#line 1413 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr349;
@@ -1450,7 +1448,7 @@ case 254:
 		goto tr352;
 	goto st0;
 tr376:
-#line 99 "mfilescanner.rl"
+#line 100 "mfilescanner.rl"
 	{
          string s(tmp_p, p - tmp_p);
          param_list_[s] = DocuBlock();
@@ -1462,7 +1460,7 @@ st255:
 	if ( ++p == pe )
 		goto _test_eof255;
 case 255:
-#line 1466 "mfilescanner.cc"
+#line 1464 "mfilescanner.cc"
 	if ( (*p) == 46 )
 		goto st256;
 	goto st0;
@@ -1492,28 +1490,28 @@ case 258:
 		goto tr356;
 	goto st0;
 tr358:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st259;
 tr362:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 78 "mfilescanner.rl"
+#line 79 "mfilescanner.rl"
 	{
         cout << "/* ";
         cout.write(tmp_p, p - tmp_p) << "*/\n";
       }
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st259;
 tr370:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st259;
 tr378:
-#line 99 "mfilescanner.rl"
+#line 100 "mfilescanner.rl"
 	{
          string s(tmp_p, p - tmp_p);
          param_list_[s] = DocuBlock();
@@ -1525,7 +1523,7 @@ st259:
 	if ( ++p == pe )
 		goto _test_eof259;
 case 259:
-#line 1529 "mfilescanner.cc"
+#line 1527 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 37: goto tr359;
 		case 41: goto tr337;
@@ -1534,20 +1532,20 @@ case 259:
 	}
 	goto tr358;
 tr361:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st260;
 tr359:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
-#line 85 "mfilescanner.rl"
+#line 86 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	goto st260;
 st260:
 	if ( ++p == pe )
 		goto _test_eof260;
 case 260:
-#line 1551 "mfilescanner.cc"
+#line 1549 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr358;
 		case 10: goto tr362;
@@ -1557,14 +1555,14 @@ case 260:
 	}
 	goto tr361;
 tr363:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st261;
 st261:
 	if ( ++p == pe )
 		goto _test_eof261;
 case 261:
-#line 1568 "mfilescanner.cc"
+#line 1566 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st261;
@@ -1576,14 +1574,14 @@ case 261:
 	}
 	goto st247;
 tr360:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st262;
 st262:
 	if ( ++p == pe )
 		goto _test_eof262;
 case 262:
-#line 1587 "mfilescanner.cc"
+#line 1585 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 37: goto tr359;
 		case 41: goto tr337;
@@ -1592,14 +1590,14 @@ case 262:
 	}
 	goto tr358;
 tr367:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st263;
 st263:
 	if ( ++p == pe )
 		goto _test_eof263;
 case 263:
-#line 1603 "mfilescanner.cc"
+#line 1601 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 37: goto tr359;
 		case 41: goto tr337;
@@ -1608,14 +1606,14 @@ case 263:
 	}
 	goto tr358;
 tr368:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st264;
 st264:
 	if ( ++p == pe )
 		goto _test_eof264;
 case 264:
-#line 1619 "mfilescanner.cc"
+#line 1617 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr369;
 		case 10: goto tr370;
@@ -1628,14 +1626,14 @@ case 264:
 	}
 	goto tr358;
 tr369:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st265;
 st265:
 	if ( ++p == pe )
 		goto _test_eof265;
 case 265:
-#line 1639 "mfilescanner.cc"
+#line 1637 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr369;
 		case 10: goto tr370;
@@ -1648,14 +1646,14 @@ case 265:
 	}
 	goto tr358;
 tr371:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st266;
 st266:
 	if ( ++p == pe )
 		goto _test_eof266;
 case 266:
-#line 1659 "mfilescanner.cc"
+#line 1657 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 10: goto tr370;
 		case 37: goto tr359;
@@ -1665,14 +1663,14 @@ case 266:
 	}
 	goto tr358;
 tr340:
-#line 58 "mfilescanner.rl"
+#line 59 "mfilescanner.rl"
 	{ tmp_p = p; }
 	goto st267;
 st267:
 	if ( ++p == pe )
 		goto _test_eof267;
 case 267:
-#line 1676 "mfilescanner.cc"
+#line 1674 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr372;
 		case 10: goto tr373;
@@ -1694,7 +1692,7 @@ case 267:
 		goto st267;
 	goto st0;
 tr319:
-#line 646 "mfilescanner.rl"
+#line 647 "mfilescanner.rl"
 	{
             cfuncname_.assign(tmp_p, p - tmp_p);
             is_script_ = false;
@@ -1704,7 +1702,7 @@ st268:
 	if ( ++p == pe )
 		goto _test_eof268;
 case 268:
-#line 1708 "mfilescanner.cc"
+#line 1706 "mfilescanner.cc"
 	if ( (*p) == 46 )
 		goto st269;
 	goto st0;
@@ -1734,7 +1732,7 @@ case 271:
 		goto tr381;
 	goto st0;
 tr321:
-#line 646 "mfilescanner.rl"
+#line 647 "mfilescanner.rl"
 	{
             cfuncname_.assign(tmp_p, p - tmp_p);
             is_script_ = false;
@@ -1744,49 +1742,49 @@ st272:
 	if ( ++p == pe )
 		goto _test_eof272;
 case 272:
-#line 1748 "mfilescanner.cc"
+#line 1746 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 10: goto tr324;
 		case 13: goto st243;
 	}
 	goto st0;
 tr322:
-#line 126 "mfilescanner.rl"
+#line 127 "mfilescanner.rl"
 	{
              string s(tmp_p, p - tmp_p);
              returnlist_.push_back(s);
              return_list_[s] = DocuBlock();
              cout << "ret::substitutestart::" << s << "::retsubstituteend ";
            }
-#line 643 "mfilescanner.rl"
+#line 644 "mfilescanner.rl"
 	{opt=true;}
 	goto st273;
 tr330:
-#line 643 "mfilescanner.rl"
+#line 644 "mfilescanner.rl"
 	{opt=true;}
 	goto st273;
 tr387:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 78 "mfilescanner.rl"
+#line 79 "mfilescanner.rl"
 	{
         cout << "/* ";
         cout.write(tmp_p, p - tmp_p) << "*/\n";
       }
-#line 643 "mfilescanner.rl"
+#line 644 "mfilescanner.rl"
 	{opt=true;}
 	goto st273;
 tr390:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 643 "mfilescanner.rl"
+#line 644 "mfilescanner.rl"
 	{opt=true;}
 	goto st273;
 st273:
 	if ( ++p == pe )
 		goto _test_eof273;
 case 273:
-#line 1790 "mfilescanner.cc"
+#line 1788 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr330;
 		case 32: goto tr330;
@@ -1801,14 +1799,14 @@ case 273:
 		goto tr385;
 	goto st0;
 tr383:
-#line 85 "mfilescanner.rl"
+#line 86 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	goto st274;
 st274:
 	if ( ++p == pe )
 		goto _test_eof274;
 case 274:
-#line 1812 "mfilescanner.cc"
+#line 1810 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr387;
@@ -1847,14 +1845,14 @@ case 278:
 		goto tr390;
 	goto st0;
 tr385:
-#line 58 "mfilescanner.rl"
+#line 59 "mfilescanner.rl"
 	{ tmp_p = p; }
 	goto st279;
 st279:
 	if ( ++p == pe )
 		goto _test_eof279;
 case 279:
-#line 1858 "mfilescanner.cc"
+#line 1856 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr392;
 		case 10: goto tr315;
@@ -1876,28 +1874,28 @@ case 279:
 		goto st279;
 	goto st0;
 tr404:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
 	goto st280;
 tr307:
-#line 133 "mfilescanner.rl"
+#line 134 "mfilescanner.rl"
 	{cout << "rets::substitutestart::";}
 	goto st280;
 tr401:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 78 "mfilescanner.rl"
+#line 79 "mfilescanner.rl"
 	{
         cout << "/* ";
         cout.write(tmp_p, p - tmp_p) << "*/\n";
       }
 	goto st280;
 tr396:
-#line 109 "mfilescanner.rl"
+#line 110 "mfilescanner.rl"
 	{ cout << "::"; }
 	goto st280;
 tr406:
-#line 111 "mfilescanner.rl"
+#line 112 "mfilescanner.rl"
 	{
             string s(tmp_p, p - tmp_p);
             returnlist_.push_back(s);
@@ -1906,21 +1904,21 @@ tr406:
           }
 	goto st280;
 tr408:
-#line 111 "mfilescanner.rl"
+#line 112 "mfilescanner.rl"
 	{
             string s(tmp_p, p - tmp_p);
             returnlist_.push_back(s);
             return_list_[s] = DocuBlock();
             cout << s;
           }
-#line 109 "mfilescanner.rl"
+#line 110 "mfilescanner.rl"
 	{ cout << "::"; }
 	goto st280;
 st280:
 	if ( ++p == pe )
 		goto _test_eof280;
 case 280:
-#line 1924 "mfilescanner.cc"
+#line 1922 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 32: goto st280;
 		case 37: goto tr395;
@@ -1939,32 +1937,32 @@ case 280:
 		goto tr398;
 	goto st0;
 tr395:
-#line 85 "mfilescanner.rl"
+#line 86 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	goto st281;
 tr407:
-#line 111 "mfilescanner.rl"
+#line 112 "mfilescanner.rl"
 	{
             string s(tmp_p, p - tmp_p);
             returnlist_.push_back(s);
             return_list_[s] = DocuBlock();
             cout << s;
           }
-#line 85 "mfilescanner.rl"
+#line 86 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	goto st281;
 st281:
 	if ( ++p == pe )
 		goto _test_eof281;
 case 281:
-#line 1961 "mfilescanner.cc"
+#line 1959 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr401;
 	}
 	goto st281;
 tr409:
-#line 111 "mfilescanner.rl"
+#line 112 "mfilescanner.rl"
 	{
             string s(tmp_p, p - tmp_p);
             returnlist_.push_back(s);
@@ -1976,7 +1974,7 @@ st282:
 	if ( ++p == pe )
 		goto _test_eof282;
 case 282:
-#line 1980 "mfilescanner.cc"
+#line 1978 "mfilescanner.cc"
 	if ( (*p) == 46 )
 		goto st283;
 	goto st0;
@@ -2006,14 +2004,14 @@ case 285:
 		goto tr404;
 	goto st0;
 tr398:
-#line 58 "mfilescanner.rl"
+#line 59 "mfilescanner.rl"
 	{ tmp_p = p; }
 	goto st286;
 st286:
 	if ( ++p == pe )
 		goto _test_eof286;
 case 286:
-#line 2017 "mfilescanner.cc"
+#line 2015 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 32: goto tr406;
 		case 37: goto tr407;
@@ -2035,29 +2033,29 @@ case 286:
 		goto st286;
 	goto st0;
 tr412:
-#line 56 "mfilescanner.rl"
+#line 57 "mfilescanner.rl"
 	{ cout << (*p); }
 	goto st287;
 tr399:
-#line 135 "mfilescanner.rl"
+#line 136 "mfilescanner.rl"
 	{cout << "::retssubstituteend ";}
 	goto st287;
 tr411:
-#line 111 "mfilescanner.rl"
+#line 112 "mfilescanner.rl"
 	{
             string s(tmp_p, p - tmp_p);
             returnlist_.push_back(s);
             return_list_[s] = DocuBlock();
             cout << s;
           }
-#line 135 "mfilescanner.rl"
+#line 136 "mfilescanner.rl"
 	{cout << "::retssubstituteend ";}
 	goto st287;
 st287:
 	if ( ++p == pe )
 		goto _test_eof287;
 case 287:
-#line 2061 "mfilescanner.cc"
+#line 2059 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr412;
 		case 32: goto tr412;
@@ -2065,62 +2063,62 @@ case 287:
 	}
 	goto st0;
 tr16:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 35 "mfilescanner.rl"
+#line 36 "mfilescanner.rl"
 	{ cout.write(tmp_p, p - tmp_p+1); }
 	goto st290;
 st290:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
 	if ( ++p == pe )
 		goto _test_eof290;
 case 290:
-#line 2080 "mfilescanner.cc"
+#line 2078 "mfilescanner.cc"
 	if ( (*p) == 37 )
 		goto tr416;
 	goto tr15;
 tr416:
-#line 33 "mfilescanner.rl"
+#line 34 "mfilescanner.rl"
 	{ tmp_p = p+1; cout << " *"; }
 	goto st12;
 st12:
 	if ( ++p == pe )
 		goto _test_eof12;
 case 12:
-#line 2092 "mfilescanner.cc"
+#line 2090 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr15;
 		case 10: goto tr16;
 	}
 	goto st12;
 tr17:
-#line 279 "mfilescanner.rl"
+#line 280 "mfilescanner.rl"
 	{{p = ((te))-1;}{ cout << (*p); }}
 	goto st291;
 tr19:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 78 "mfilescanner.rl"
+#line 79 "mfilescanner.rl"
 	{
         cout << "/* ";
         cout.write(tmp_p, p - tmp_p) << "*/\n";
       }
-#line 150 "mfilescanner.rl"
+#line 151 "mfilescanner.rl"
 	{te = p+1;}
 	goto st291;
 tr21:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 148 "mfilescanner.rl"
+#line 149 "mfilescanner.rl"
 	{te = p+1;{ cout.write(ts, te-ts); }}
 	goto st291;
 tr23:
-#line 270 "mfilescanner.rl"
+#line 271 "mfilescanner.rl"
 	{{p = ((te))-1;}{ cout.write(ts, te-ts); }}
 	goto st291;
 tr25:
-#line 197 "mfilescanner.rl"
+#line 198 "mfilescanner.rl"
 	{{p = ((te))-1;}{
       string s(tmp_p, p - tmp_p+1);
       cout << tmp_string << "." << s;
@@ -2166,7 +2164,7 @@ tr25:
     }}
 	goto st291;
 tr28:
-#line 159 "mfilescanner.rl"
+#line 160 "mfilescanner.rl"
 	{te = p+1;{
       p--;
       string s(tmp_p, tmp_p2 - tmp_p);
@@ -2198,9 +2196,9 @@ tr28:
     }}
 	goto st291;
 tr40:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 255 "mfilescanner.rl"
+#line 256 "mfilescanner.rl"
 	{te = p+1;{
         string s;
         if(tmp_string.empty())
@@ -2216,37 +2214,37 @@ tr40:
       }}
 	goto st291;
 tr417:
-#line 279 "mfilescanner.rl"
+#line 280 "mfilescanner.rl"
 	{te = p+1;{ cout << (*p); }}
 	goto st291;
 tr419:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 282 "mfilescanner.rl"
+#line 283 "mfilescanner.rl"
 	{te = p+1;{ cout << (*p); {goto st313;} }}
 	goto st291;
 tr425:
-#line 273 "mfilescanner.rl"
+#line 274 "mfilescanner.rl"
 	{te = p+1;{ cout << '['; }}
 	goto st291;
 tr426:
-#line 276 "mfilescanner.rl"
+#line 277 "mfilescanner.rl"
 	{te = p+1;{ cout << ']'; }}
 	goto st291;
 tr427:
-#line 145 "mfilescanner.rl"
+#line 146 "mfilescanner.rl"
 	{te = p;p--;{ cout.write(ts, te-ts); }}
 	goto st291;
 tr428:
-#line 279 "mfilescanner.rl"
+#line 280 "mfilescanner.rl"
 	{te = p;p--;{ cout << (*p); }}
 	goto st291;
 tr430:
-#line 270 "mfilescanner.rl"
+#line 271 "mfilescanner.rl"
 	{te = p;p--;{ cout.write(ts, te-ts); }}
 	goto st291;
 tr432:
-#line 197 "mfilescanner.rl"
+#line 198 "mfilescanner.rl"
 	{te = p;p--;{
       string s(tmp_p, p - tmp_p+1);
       cout << tmp_string << "." << s;
@@ -2292,14 +2290,14 @@ tr432:
     }}
 	goto st291;
 st291:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
 	if ( ++p == pe )
 		goto _test_eof291;
 case 291:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = p;}
-#line 2303 "mfilescanner.cc"
+#line 2301 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st292;
@@ -2336,16 +2334,16 @@ case 293:
 		goto tr419;
 	goto tr428;
 tr421:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
-#line 150 "mfilescanner.rl"
+#line 151 "mfilescanner.rl"
 	{ tmp_p = p + 1; }
 	goto st294;
 st294:
 	if ( ++p == pe )
 		goto _test_eof294;
 case 294:
-#line 2349 "mfilescanner.cc"
+#line 2347 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr428;
 		case 10: goto tr19;
@@ -2361,14 +2359,14 @@ case 13:
 	}
 	goto st13;
 tr422:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st295;
 st295:
 	if ( ++p == pe )
 		goto _test_eof295;
 case 295:
-#line 2372 "mfilescanner.cc"
+#line 2370 "mfilescanner.cc"
 	if ( (*p) == 46 )
 		goto st14;
 	goto tr428;
@@ -2398,14 +2396,14 @@ case 16:
 		goto tr21;
 	goto tr17;
 tr423:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st296;
 st296:
 	if ( ++p == pe )
 		goto _test_eof296;
 case 296:
-#line 2409 "mfilescanner.cc"
+#line 2407 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2420,16 +2418,16 @@ case 296:
 		goto tr423;
 	goto tr430;
 tr431:
-#line 154 "mfilescanner.rl"
+#line 155 "mfilescanner.rl"
 	{tmp_string.assign(ts,p-ts);}
-#line 191 "mfilescanner.rl"
+#line 192 "mfilescanner.rl"
 	{tmp_string.assign(ts,p-ts);}
 	goto st17;
 st17:
 	if ( ++p == pe )
 		goto _test_eof17;
 case 17:
-#line 2433 "mfilescanner.cc"
+#line 2431 "mfilescanner.cc"
 	if ( (*p) == 95 )
 		goto tr24;
 	if ( (*p) > 90 ) {
@@ -2439,20 +2437,20 @@ case 17:
 		goto tr24;
 	goto tr23;
 tr24:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
-#line 58 "mfilescanner.rl"
+#line 59 "mfilescanner.rl"
 	{ tmp_p = p; }
 	goto st297;
 tr434:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st297;
 st297:
 	if ( ++p == pe )
 		goto _test_eof297;
 case 297:
-#line 2456 "mfilescanner.cc"
+#line 2454 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr433;
 		case 32: goto tr433;
@@ -2469,14 +2467,14 @@ case 297:
 		goto tr434;
 	goto tr432;
 tr433:
-#line 156 "mfilescanner.rl"
+#line 157 "mfilescanner.rl"
 	{tmp_p2 = p;}
 	goto st18;
 st18:
 	if ( ++p == pe )
 		goto _test_eof18;
 case 18:
-#line 2480 "mfilescanner.cc"
+#line 2478 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st18;
 		case 32: goto st18;
@@ -2484,26 +2482,26 @@ case 18:
 	}
 	goto tr25;
 tr435:
-#line 156 "mfilescanner.rl"
+#line 157 "mfilescanner.rl"
 	{tmp_p2 = p;}
 	goto st19;
 st19:
 	if ( ++p == pe )
 		goto _test_eof19;
 case 19:
-#line 2495 "mfilescanner.cc"
+#line 2493 "mfilescanner.cc"
 	if ( (*p) == 61 )
 		goto tr25;
 	goto tr28;
 tr424:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st298;
 st298:
 	if ( ++p == pe )
 		goto _test_eof298;
 case 298:
-#line 2507 "mfilescanner.cc"
+#line 2505 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2519,14 +2517,14 @@ case 298:
 		goto tr423;
 	goto tr430;
 tr436:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st299;
 st299:
 	if ( ++p == pe )
 		goto _test_eof299;
 case 299:
-#line 2530 "mfilescanner.cc"
+#line 2528 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2542,14 +2540,14 @@ case 299:
 		goto tr423;
 	goto tr430;
 tr437:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st300;
 st300:
 	if ( ++p == pe )
 		goto _test_eof300;
 case 300:
-#line 2553 "mfilescanner.cc"
+#line 2551 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2565,14 +2563,14 @@ case 300:
 		goto tr423;
 	goto tr430;
 tr438:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st301;
 st301:
 	if ( ++p == pe )
 		goto _test_eof301;
 case 301:
-#line 2576 "mfilescanner.cc"
+#line 2574 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr439;
@@ -2587,14 +2585,14 @@ case 301:
 		goto tr423;
 	goto tr430;
 tr439:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st302;
 st302:
 	if ( ++p == pe )
 		goto _test_eof302;
 case 302:
-#line 2598 "mfilescanner.cc"
+#line 2596 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2610,14 +2608,14 @@ case 302:
 		goto tr423;
 	goto tr430;
 tr440:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st303;
 st303:
 	if ( ++p == pe )
 		goto _test_eof303;
 case 303:
-#line 2621 "mfilescanner.cc"
+#line 2619 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2633,14 +2631,14 @@ case 303:
 		goto tr423;
 	goto tr430;
 tr441:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st304;
 st304:
 	if ( ++p == pe )
 		goto _test_eof304;
 case 304:
-#line 2644 "mfilescanner.cc"
+#line 2642 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2656,14 +2654,14 @@ case 304:
 		goto tr423;
 	goto tr430;
 tr442:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st305;
 st305:
 	if ( ++p == pe )
 		goto _test_eof305;
 case 305:
-#line 2667 "mfilescanner.cc"
+#line 2665 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2679,14 +2677,14 @@ case 305:
 		goto tr423;
 	goto tr430;
 tr443:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st306;
 st306:
 	if ( ++p == pe )
 		goto _test_eof306;
 case 306:
-#line 2690 "mfilescanner.cc"
+#line 2688 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2702,14 +2700,14 @@ case 306:
 		goto tr423;
 	goto tr430;
 tr444:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st307;
 st307:
 	if ( ++p == pe )
 		goto _test_eof307;
 case 307:
-#line 2713 "mfilescanner.cc"
+#line 2711 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2725,14 +2723,14 @@ case 307:
 		goto tr423;
 	goto tr430;
 tr445:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st308;
 st308:
 	if ( ++p == pe )
 		goto _test_eof308;
 case 308:
-#line 2736 "mfilescanner.cc"
+#line 2734 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2748,14 +2746,14 @@ case 308:
 		goto tr423;
 	goto tr430;
 tr446:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st309;
 st309:
 	if ( ++p == pe )
 		goto _test_eof309;
 case 309:
-#line 2759 "mfilescanner.cc"
+#line 2757 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2771,14 +2769,14 @@ case 309:
 		goto tr423;
 	goto tr430;
 tr447:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st310;
 st310:
 	if ( ++p == pe )
 		goto _test_eof310;
 case 310:
-#line 2782 "mfilescanner.cc"
+#line 2780 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2794,14 +2792,14 @@ case 310:
 		goto tr423;
 	goto tr430;
 tr448:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st311;
 st311:
 	if ( ++p == pe )
 		goto _test_eof311;
 case 311:
-#line 2805 "mfilescanner.cc"
+#line 2803 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr431;
 		case 95: goto tr423;
@@ -2817,14 +2815,14 @@ case 311:
 		goto tr423;
 	goto tr430;
 tr449:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st312;
 st312:
 	if ( ++p == pe )
 		goto _test_eof312;
 case 312:
-#line 2828 "mfilescanner.cc"
+#line 2826 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st20;
 		case 32: goto st20;
@@ -2873,34 +2871,34 @@ case 22:
 	}
 	goto tr33;
 tr33:
-#line 58 "mfilescanner.rl"
+#line 59 "mfilescanner.rl"
 	{ tmp_p = p; }
 	goto st23;
 st23:
 	if ( ++p == pe )
 		goto _test_eof23;
 case 23:
-#line 2884 "mfilescanner.cc"
+#line 2882 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 10: goto tr23;
 		case 39: goto tr36;
 	}
 	goto st23;
 tr34:
-#line 58 "mfilescanner.rl"
+#line 59 "mfilescanner.rl"
 	{ tmp_p = p; }
-#line 62 "mfilescanner.rl"
+#line 63 "mfilescanner.rl"
 	{ tmp_string.assign(tmp_p, p-tmp_p); }
 	goto st24;
 tr36:
-#line 62 "mfilescanner.rl"
+#line 63 "mfilescanner.rl"
 	{ tmp_string.assign(tmp_p, p-tmp_p); }
 	goto st24;
 st24:
 	if ( ++p == pe )
 		goto _test_eof24;
 case 24:
-#line 2904 "mfilescanner.cc"
+#line 2902 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st24;
 		case 32: goto st24;
@@ -2918,14 +2916,14 @@ case 25:
 	}
 	goto tr23;
 tr31:
-#line 244 "mfilescanner.rl"
+#line 245 "mfilescanner.rl"
 	{tmp_string.assign("");}
 	goto st26;
 st26:
 	if ( ++p == pe )
 		goto _test_eof26;
 case 26:
-#line 2929 "mfilescanner.cc"
+#line 2927 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st26;
 		case 10: goto tr40;
@@ -2941,52 +2939,52 @@ case 27:
 		goto tr40;
 	goto tr23;
 tr45:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 310 "mfilescanner.rl"
+#line 311 "mfilescanner.rl"
 	{te = p+1;{
           p = ts-1;
           {goto st291;}
         }}
 	goto st313;
 tr50:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 78 "mfilescanner.rl"
+#line 79 "mfilescanner.rl"
 	{
         cout << "/* ";
         cout.write(tmp_p, p - tmp_p) << "*/\n";
       }
-#line 310 "mfilescanner.rl"
+#line 311 "mfilescanner.rl"
 	{te = p+1;{
           p = ts-1;
           {goto st291;}
         }}
 	goto st313;
 tr54:
-#line 310 "mfilescanner.rl"
+#line 311 "mfilescanner.rl"
 	{{p = ((te))-1;}{
           p = ts-1;
           {goto st291;}
         }}
 	goto st313;
 tr56:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 303 "mfilescanner.rl"
+#line 304 "mfilescanner.rl"
 	{te = p+1;{ cout << '\n'; }}
 	goto st313;
 tr63:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 296 "mfilescanner.rl"
+#line 297 "mfilescanner.rl"
 	{te = p+1;{
           cout.write(tmp_p, p - tmp_p+1);
           {stack[top++] = 313; goto st290;}
         }}
 	goto st313;
 tr71:
-#line 317 "mfilescanner.rl"
+#line 318 "mfilescanner.rl"
 	{te = p+1;{
         p = ts-1;
         end_function();
@@ -2994,34 +2992,34 @@ tr71:
       }}
 	goto st313;
 tr101:
-#line 290 "mfilescanner.rl"
+#line 291 "mfilescanner.rl"
 	{te = p+1;{
           new_syntax_ = true;
           cout << "*/\n"; //cout << "add to special group */\n";
         }}
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
 	goto st313;
 tr450:
-#line 323 "mfilescanner.rl"
+#line 324 "mfilescanner.rl"
 	{te = p+1;}
 	goto st313;
 tr452:
-#line 310 "mfilescanner.rl"
+#line 311 "mfilescanner.rl"
 	{te = p;p--;{
           p = ts-1;
           {goto st291;}
         }}
 	goto st313;
 st313:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
 	if ( ++p == pe )
 		goto _test_eof313;
 case 313:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = p;}
-#line 3025 "mfilescanner.cc"
+#line 3023 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr450;
 		case 9: goto st35;
@@ -3063,14 +3061,14 @@ case 29:
 		goto tr45;
 	goto st0;
 tr47:
-#line 85 "mfilescanner.rl"
+#line 86 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	goto st30;
 st30:
 	if ( ++p == pe )
 		goto _test_eof30;
 case 30:
-#line 3074 "mfilescanner.cc"
+#line 3072 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr50;
@@ -3119,14 +3117,14 @@ case 33:
 	}
 	goto st28;
 tr53:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st315;
 st315:
 	if ( ++p == pe )
 		goto _test_eof315;
 case 315:
-#line 3130 "mfilescanner.cc"
+#line 3128 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr53;
 		case 10: goto tr45;
@@ -3172,18 +3170,18 @@ case 37:
 	}
 	goto tr60;
 tr60:
-#line 68 "mfilescanner.rl"
+#line 69 "mfilescanner.rl"
 	{ cout << "/*"; tmp_p = p; }
 	goto st38;
 tr61:
-#line 66 "mfilescanner.rl"
+#line 67 "mfilescanner.rl"
 	{ cout << "/**"; tmp_p = p+1; }
 	goto st38;
 st38:
 	if ( ++p == pe )
 		goto _test_eof38;
 case 38:
-#line 3187 "mfilescanner.cc"
+#line 3185 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr63;
@@ -3318,14 +3316,14 @@ case 47:
 	}
 	goto tr60;
 tr72:
-#line 68 "mfilescanner.rl"
+#line 69 "mfilescanner.rl"
 	{ cout << "/*"; tmp_p = p; }
 	goto st48;
 st48:
 	if ( ++p == pe )
 		goto _test_eof48;
 case 48:
-#line 3329 "mfilescanner.cc"
+#line 3327 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr63;
@@ -3612,7 +3610,7 @@ case 76:
 	}
 	goto st38;
 tr102:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{	switch( act ) {
 	case 0:
 	{{goto st0;}}
@@ -3628,15 +3626,15 @@ tr102:
 	}
 	goto st316;
 tr105:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 361 "mfilescanner.rl"
+#line 362 "mfilescanner.rl"
 	{te = p+1;{ /*cout << "empty line\n";*/ {cs = stack[--top];goto _again;} }}
 	goto st316;
 tr110:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 353 "mfilescanner.rl"
+#line 354 "mfilescanner.rl"
 	{te = p+1;{
       string s(tmp_p, p - tmp_p + 1);
       (*clist_)[tmp_string].push_back(s);
@@ -3644,9 +3642,9 @@ tr110:
     }}
 	goto st316;
 tr120:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 334 "mfilescanner.rl"
+#line 335 "mfilescanner.rl"
 	{te = p+1;{
       tmp_string.assign(tmp_p3, tmp_p2 - tmp_p3);
       //    std::cout << tmp_string << '\n';
@@ -3654,7 +3652,7 @@ tr120:
     }}
 	goto st316;
 tr454:
-#line 365 "mfilescanner.rl"
+#line 366 "mfilescanner.rl"
 	{te = p+1;{
       p =ts-1;
       // cout << "*/\n";
@@ -3662,9 +3660,9 @@ tr454:
     }}
 	goto st316;
 tr456:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 365 "mfilescanner.rl"
+#line 366 "mfilescanner.rl"
 	{te = p+1;{
       p =ts-1;
       // cout << "*/\n";
@@ -3672,7 +3670,7 @@ tr456:
     }}
 	goto st316;
 tr459:
-#line 365 "mfilescanner.rl"
+#line 366 "mfilescanner.rl"
 	{te = p;p--;{
       p =ts-1;
       // cout << "*/\n";
@@ -3680,16 +3678,16 @@ tr459:
     }}
 	goto st316;
 st316:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{act = 0;}
 	if ( ++p == pe )
 		goto _test_eof316;
 case 316:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = p;}
-#line 3693 "mfilescanner.cc"
+#line 3691 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr455;
@@ -3700,16 +3698,16 @@ case 316:
 	}
 	goto tr454;
 tr455:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
-#line 365 "mfilescanner.rl"
+#line 366 "mfilescanner.rl"
 	{act = 21;}
 	goto st317;
 st317:
 	if ( ++p == pe )
 		goto _test_eof317;
 case 317:
-#line 3713 "mfilescanner.cc"
+#line 3711 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr459;
 		case 9: goto tr455;
@@ -3727,14 +3725,14 @@ case 318:
 		goto tr456;
 	goto tr459;
 tr458:
-#line 74 "mfilescanner.rl"
+#line 75 "mfilescanner.rl"
 	{ tmp_p = p + 1; }
 	goto st77;
 st77:
 	if ( ++p == pe )
 		goto _test_eof77;
 case 77:
-#line 3738 "mfilescanner.cc"
+#line 3736 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr102;
 		case 9: goto st77;
@@ -3817,14 +3815,14 @@ case 83:
 		goto tr108;
 	goto st78;
 tr108:
-#line 331 "mfilescanner.rl"
+#line 332 "mfilescanner.rl"
 	{tmp_p3 = p;}
 	goto st84;
 st84:
 	if ( ++p == pe )
 		goto _test_eof84;
 case 84:
-#line 3828 "mfilescanner.cc"
+#line 3826 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr102;
 		case 9: goto tr113;
@@ -3852,14 +3850,14 @@ case 84:
 		goto st84;
 	goto st78;
 tr113:
-#line 331 "mfilescanner.rl"
+#line 332 "mfilescanner.rl"
 	{tmp_p2 = p;}
 	goto st85;
 st85:
 	if ( ++p == pe )
 		goto _test_eof85;
 case 85:
-#line 3863 "mfilescanner.cc"
+#line 3861 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st85;
 		case 10: goto tr110;
@@ -3869,34 +3867,34 @@ case 85:
 	}
 	goto st80;
 tr118:
-#line 58 "mfilescanner.rl"
+#line 59 "mfilescanner.rl"
 	{ tmp_p = p; }
 	goto st86;
 tr116:
-#line 331 "mfilescanner.rl"
+#line 332 "mfilescanner.rl"
 	{tmp_p2 = p;}
-#line 58 "mfilescanner.rl"
+#line 59 "mfilescanner.rl"
 	{ tmp_p = p; }
 	goto st86;
 st86:
 	if ( ++p == pe )
 		goto _test_eof86;
 case 86:
-#line 3886 "mfilescanner.cc"
+#line 3884 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr102;
 		case 10: goto tr120;
 	}
 	goto st86;
 tr114:
-#line 331 "mfilescanner.rl"
+#line 332 "mfilescanner.rl"
 	{tmp_p2 = p;}
 	goto st87;
 st87:
 	if ( ++p == pe )
 		goto _test_eof87;
 case 87:
-#line 3900 "mfilescanner.cc"
+#line 3898 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr102;
 		case 9: goto st85;
@@ -3907,11 +3905,11 @@ case 87:
 	}
 	goto st78;
 tr121:
-#line 541 "mfilescanner.rl"
+#line 542 "mfilescanner.rl"
 	{{p = ((te))-1;}}
 	goto st319;
 tr124:
-#line 444 "mfilescanner.rl"
+#line 445 "mfilescanner.rl"
 	{{p = ((te))-1;}{
         if(!docline)
         {
@@ -3921,9 +3919,9 @@ tr124:
       }}
 	goto st319;
 tr126:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 436 "mfilescanner.rl"
+#line 437 "mfilescanner.rl"
 	{te = p+1;{
         /*cout << "*\n  ";*/
         docubody_.push_back("\n");
@@ -3931,9 +3929,9 @@ tr126:
       }}
 	goto st319;
 tr141:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 418 "mfilescanner.rl"
+#line 419 "mfilescanner.rl"
 	{te = p+1;{
         clist_ = &param_list_;
         docline = false;
@@ -3941,9 +3939,9 @@ tr141:
       }}
 	goto st319;
 tr168:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 408 "mfilescanner.rl"
+#line 409 "mfilescanner.rl"
 	{te = p+1;{
         clist_ = &(retval_list_[tmp_string]);
         docline = false;
@@ -3951,9 +3949,9 @@ tr168:
       }}
 	goto st319;
 tr194:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 395 "mfilescanner.rl"
+#line 396 "mfilescanner.rl"
 	{te = p+1;{
         clist_ = &(optional_list_[tmp_string]);
         docline = false;
@@ -3961,9 +3959,9 @@ tr194:
       }}
 	goto st319;
 tr221:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 381 "mfilescanner.rl"
+#line 382 "mfilescanner.rl"
 	{te = p+1;{
         //cout << tmp_string << '\n';
         clist_ = &(required_list_[tmp_string]);
@@ -3972,9 +3970,9 @@ tr221:
       }}
 	goto st319;
 tr237:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 428 "mfilescanner.rl"
+#line 429 "mfilescanner.rl"
 	{te = p+1;{
         clist_ = &return_list_;
         docline = false;
@@ -3982,9 +3980,9 @@ tr237:
       }}
 	goto st319;
 tr239:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 557 "mfilescanner.rl"
+#line 558 "mfilescanner.rl"
 	{te = p+1;{
         // cout << "*/\n";
         if(! docline)
@@ -3998,7 +3996,7 @@ tr239:
       }}
 	goto st319;
 tr240:
-#line 531 "mfilescanner.rl"
+#line 532 "mfilescanner.rl"
 	{{p = ((te))-1;}{
         if(!docline)
         {
@@ -4008,9 +4006,9 @@ tr240:
       }}
 	goto st319;
 tr242:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 545 "mfilescanner.rl"
+#line 546 "mfilescanner.rl"
 	{te = p+1;{
         if(! docline)
           {goto st313;}
@@ -4022,7 +4020,7 @@ tr242:
       }}
 	goto st319;
 tr244:
-#line 521 "mfilescanner.rl"
+#line 522 "mfilescanner.rl"
 	{{p = ((te))-1;}{
         if(!docline)
         {
@@ -4032,7 +4030,7 @@ tr244:
       }}
 	goto st319;
 tr248:
-#line 454 "mfilescanner.rl"
+#line 455 "mfilescanner.rl"
 	{te = p+1;{
         if(!docline)
         {
@@ -4046,7 +4044,7 @@ tr248:
       }}
 	goto st319;
 tr465:
-#line 521 "mfilescanner.rl"
+#line 522 "mfilescanner.rl"
 	{te = p;p--;{
         if(!docline)
         {
@@ -4056,11 +4054,11 @@ tr465:
       }}
 	goto st319;
 tr466:
-#line 541 "mfilescanner.rl"
+#line 542 "mfilescanner.rl"
 	{te = p;p--;}
 	goto st319;
 tr467:
-#line 444 "mfilescanner.rl"
+#line 445 "mfilescanner.rl"
 	{te = p;p--;{
         if(!docline)
         {
@@ -4070,7 +4068,7 @@ tr467:
       }}
 	goto st319;
 tr468:
-#line 531 "mfilescanner.rl"
+#line 532 "mfilescanner.rl"
 	{te = p;p--;{
         if(!docline)
         {
@@ -4080,14 +4078,14 @@ tr468:
       }}
 	goto st319;
 st319:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
 	if ( ++p == pe )
 		goto _test_eof319;
 case 319:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = p;}
-#line 4091 "mfilescanner.cc"
+#line 4089 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr461;
@@ -4115,14 +4113,14 @@ case 320:
 		goto tr465;
 	goto st320;
 tr461:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st321;
 st321:
 	if ( ++p == pe )
 		goto _test_eof321;
 case 321:
-#line 4126 "mfilescanner.cc"
+#line 4124 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st88;
 		case 32: goto st88;
@@ -4140,16 +4138,16 @@ case 88:
 	}
 	goto tr121;
 tr123:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
-#line 74 "mfilescanner.rl"
+#line 75 "mfilescanner.rl"
 	{ tmp_p = p + 1; }
 	goto st322;
 st322:
 	if ( ++p == pe )
 		goto _test_eof322;
 case 322:
-#line 4153 "mfilescanner.cc"
+#line 4151 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st89;
 		case 10: goto tr126;
@@ -4469,14 +4467,14 @@ case 121:
 		goto tr162;
 	goto tr124;
 tr162:
-#line 58 "mfilescanner.rl"
+#line 59 "mfilescanner.rl"
 	{ tmp_p = p; }
 	goto st122;
 st122:
 	if ( ++p == pe )
 		goto _test_eof122;
 case 122:
-#line 4480 "mfilescanner.cc"
+#line 4478 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr163;
 		case 32: goto tr163;
@@ -4493,14 +4491,14 @@ case 122:
 		goto st122;
 	goto tr124;
 tr163:
-#line 62 "mfilescanner.rl"
+#line 63 "mfilescanner.rl"
 	{ tmp_string.assign(tmp_p, p-tmp_p); }
 	goto st123;
 st123:
 	if ( ++p == pe )
 		goto _test_eof123;
 case 123:
-#line 4504 "mfilescanner.cc"
+#line 4502 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st123;
 		case 32: goto st123;
@@ -4508,14 +4506,14 @@ case 123:
 	}
 	goto tr124;
 tr165:
-#line 62 "mfilescanner.rl"
+#line 63 "mfilescanner.rl"
 	{ tmp_string.assign(tmp_p, p-tmp_p); }
 	goto st124;
 st124:
 	if ( ++p == pe )
 		goto _test_eof124;
 case 124:
-#line 4519 "mfilescanner.cc"
+#line 4517 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st124;
 		case 10: goto tr168;
@@ -4699,14 +4697,14 @@ case 144:
 		goto tr188;
 	goto tr124;
 tr188:
-#line 58 "mfilescanner.rl"
+#line 59 "mfilescanner.rl"
 	{ tmp_p = p; }
 	goto st145;
 st145:
 	if ( ++p == pe )
 		goto _test_eof145;
 case 145:
-#line 4710 "mfilescanner.cc"
+#line 4708 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr189;
 		case 32: goto tr189;
@@ -4723,14 +4721,14 @@ case 145:
 		goto st145;
 	goto tr124;
 tr189:
-#line 62 "mfilescanner.rl"
+#line 63 "mfilescanner.rl"
 	{ tmp_string.assign(tmp_p, p-tmp_p); }
 	goto st146;
 st146:
 	if ( ++p == pe )
 		goto _test_eof146;
 case 146:
-#line 4734 "mfilescanner.cc"
+#line 4732 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st146;
 		case 32: goto st146;
@@ -4738,14 +4736,14 @@ case 146:
 	}
 	goto tr124;
 tr191:
-#line 62 "mfilescanner.rl"
+#line 63 "mfilescanner.rl"
 	{ tmp_string.assign(tmp_p, p-tmp_p); }
 	goto st147;
 st147:
 	if ( ++p == pe )
 		goto _test_eof147;
 case 147:
-#line 4749 "mfilescanner.cc"
+#line 4747 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st147;
 		case 10: goto tr194;
@@ -4931,14 +4929,14 @@ case 167:
 		goto tr215;
 	goto tr124;
 tr215:
-#line 58 "mfilescanner.rl"
+#line 59 "mfilescanner.rl"
 	{ tmp_p = p; }
 	goto st168;
 st168:
 	if ( ++p == pe )
 		goto _test_eof168;
 case 168:
-#line 4942 "mfilescanner.cc"
+#line 4940 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr216;
 		case 32: goto tr216;
@@ -4955,14 +4953,14 @@ case 168:
 		goto st168;
 	goto tr124;
 tr216:
-#line 62 "mfilescanner.rl"
+#line 63 "mfilescanner.rl"
 	{ tmp_string.assign(tmp_p, p-tmp_p); }
 	goto st169;
 st169:
 	if ( ++p == pe )
 		goto _test_eof169;
 case 169:
-#line 4966 "mfilescanner.cc"
+#line 4964 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st169;
 		case 32: goto st169;
@@ -4970,14 +4968,14 @@ case 169:
 	}
 	goto tr124;
 tr218:
-#line 62 "mfilescanner.rl"
+#line 63 "mfilescanner.rl"
 	{ tmp_string.assign(tmp_p, p-tmp_p); }
 	goto st170;
 st170:
 	if ( ++p == pe )
 		goto _test_eof170;
 case 170:
-#line 4981 "mfilescanner.cc"
+#line 4979 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st170;
 		case 10: goto tr221;
@@ -5143,14 +5141,14 @@ case 188:
 		goto tr239;
 	goto st0;
 tr463:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st323;
 st323:
 	if ( ++p == pe )
 		goto _test_eof323;
 case 323:
-#line 5154 "mfilescanner.cc"
+#line 5152 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st189;
 		case 10: goto tr242;
@@ -5209,14 +5207,14 @@ case 325:
 		goto tr465;
 	goto st320;
 tr470:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
 	goto st326;
 st326:
 	if ( ++p == pe )
 		goto _test_eof326;
 case 326:
-#line 5220 "mfilescanner.cc"
+#line 5218 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr465;
 		case 13: goto tr465;
@@ -5264,26 +5262,26 @@ case 194:
 	}
 	goto tr244;
 tr252:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 577 "mfilescanner.rl"
+#line 578 "mfilescanner.rl"
 	{te = p+1;{ {goto st328;} }}
 	goto st327;
 tr257:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 574 "mfilescanner.rl"
+#line 575 "mfilescanner.rl"
 	{te = p+1;}
 	goto st327;
 st327:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
 	if ( ++p == pe )
 		goto _test_eof327;
 case 327:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = p;}
-#line 5287 "mfilescanner.cc"
+#line 5285 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto st195;
 		case 32: goto st195;
@@ -5301,14 +5299,14 @@ case 195:
 	}
 	goto st0;
 tr250:
-#line 74 "mfilescanner.rl"
+#line 75 "mfilescanner.rl"
 	{ tmp_p = p + 1; }
 	goto st196;
 st196:
 	if ( ++p == pe )
 		goto _test_eof196;
 case 196:
-#line 5312 "mfilescanner.cc"
+#line 5310 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr252;
@@ -5378,7 +5376,7 @@ case 202:
 	}
 	goto st0;
 tr260:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{	switch( act ) {
 	case 0:
 	{{goto st0;}}
@@ -5394,25 +5392,25 @@ tr260:
 	}
 	goto st328;
 tr263:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 594 "mfilescanner.rl"
+#line 595 "mfilescanner.rl"
 	{te = p+1;{
         /*cout << "*\n";*/
         {goto st319;}
       }}
 	goto st328;
 tr265:
-#line 28 "mfilescanner.rl"
+#line 29 "mfilescanner.rl"
 	{line++;}
-#line 587 "mfilescanner.rl"
+#line 588 "mfilescanner.rl"
 	{te = p+1;{
         /* cout << "*"; cout.write(tmp_p, p - tmp_p+1); */
         docuheader_.push_back(string(tmp_p, p - tmp_p+1));
       }}
 	goto st328;
 tr472:
-#line 601 "mfilescanner.rl"
+#line 602 "mfilescanner.rl"
 	{te = p+1;{
         p--;
         //cout << "*/\n";
@@ -5420,7 +5418,7 @@ tr472:
       }}
 	goto st328;
 tr475:
-#line 601 "mfilescanner.rl"
+#line 602 "mfilescanner.rl"
 	{te = p;p--;{
         p--;
         //cout << "*/\n";
@@ -5428,16 +5426,16 @@ tr475:
       }}
 	goto st328;
 st328:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{act = 0;}
 	if ( ++p == pe )
 		goto _test_eof328;
 case 328:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = p;}
-#line 5441 "mfilescanner.cc"
+#line 5439 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr473;
 		case 32: goto tr473;
@@ -5445,16 +5443,16 @@ case 328:
 	}
 	goto tr472;
 tr473:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{te = p+1;}
-#line 601 "mfilescanner.rl"
+#line 602 "mfilescanner.rl"
 	{act = 39;}
 	goto st329;
 st329:
 	if ( ++p == pe )
 		goto _test_eof329;
 case 329:
-#line 5458 "mfilescanner.cc"
+#line 5456 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr473;
 		case 32: goto tr473;
@@ -5462,14 +5460,14 @@ case 329:
 	}
 	goto tr472;
 tr474:
-#line 74 "mfilescanner.rl"
+#line 75 "mfilescanner.rl"
 	{ tmp_p = p + 1; }
 	goto st203;
 st203:
 	if ( ++p == pe )
 		goto _test_eof203;
 case 203:
-#line 5473 "mfilescanner.cc"
+#line 5471 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr260;
 		case 9: goto st203;
@@ -5495,21 +5493,21 @@ case 205:
 		goto tr263;
 	goto tr260;
 tr414:
-#line 734 "mfilescanner.rl"
+#line 735 "mfilescanner.rl"
 	{te = p+1;{
     cout << "<tt>"; cout.write(ts+1, te-ts-2) << "</tt>";
   }}
 	goto st334;
 tr478:
-#line 732 "mfilescanner.rl"
+#line 733 "mfilescanner.rl"
 	{te = p;p--;{ cout.write(ts, te-ts); }}
 	goto st334;
 tr479:
-#line 752 "mfilescanner.rl"
+#line 753 "mfilescanner.rl"
 	{te = p;p--;{ cout << "@f$"; }}
 	goto st334;
 tr480:
-#line 739 "mfilescanner.rl"
+#line 740 "mfilescanner.rl"
 	{te = p+1;{
     if(latex_begin)
     {
@@ -5524,14 +5522,14 @@ tr480:
   }}
 	goto st334;
 st334:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = 0;}
 	if ( ++p == pe )
 		goto _test_eof334;
 case 334:
-#line 1 "NONE"
+#line 1 "mfilescanner.rl"
 	{ts = p;}
-#line 5535 "mfilescanner.cc"
+#line 5533 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 39: goto st288;
 		case 96: goto st336;
@@ -6092,7 +6090,7 @@ case 336:
 	case 335: goto tr478;
 	case 336: goto tr479;
 	case 12: 
-#line 37 "mfilescanner.rl"
+#line 38 "mfilescanner.rl"
 	{
     cout << "*/\n";
     p--;
@@ -6166,7 +6164,7 @@ case 336:
 	case 287: 
 	case 313: 
 	case 333: 
-#line 44 "mfilescanner.rl"
+#line 45 "mfilescanner.rl"
 	{
     /*    cout << "EOF\n";*/
     end_function();
@@ -6186,14 +6184,14 @@ case 336:
 	case 218: 
 	case 219: 
 	case 220: 
-#line 622 "mfilescanner.rl"
+#line 623 "mfilescanner.rl"
 	{
         p = tmp_p - 2;
         {goto st328;}
       }
 	break;
 	case 221: 
-#line 636 "mfilescanner.rl"
+#line 637 "mfilescanner.rl"
 	{
     p--;
     {goto st313;}
@@ -6210,20 +6208,19 @@ case 336:
 	case 9: 
 	case 10: 
 	case 11: 
-#line 723 "mfilescanner.rl"
+#line 724 "mfilescanner.rl"
 	{
     p=tmp_p;
     {goto st222;}
   }
 	break;
-#line 6220 "mfilescanner.cc"
+#line 6218 "mfilescanner.cc"
 	}
 	}
 
 	_out: {}
 	}
-
-#line 841 "mfilescanner.rl"
+#line 842 "mfilescanner.rl"
 
     /* Check if we failed. */
     if ( cs == MFileScanner_error )
@@ -6633,7 +6630,8 @@ int main(int argc, char ** argv)
   }
 
   char buf[1000];
-  getcwd(buf, 1000);
+  char * dummy = getcwd(buf, 1000);
+  dummy = 0;
 
   string::size_type found = 0;
   string cwd(buf);
