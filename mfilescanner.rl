@@ -733,7 +733,11 @@ using std::istream;
   (any - ['`])* => { cout.write(ts, te-ts); };
 
   ("'" . [A-Za-z_ ./[\]{}(),\$]* . "'") => {
-    cout << "<tt>"; cout.write(ts+1, te-ts-2) << "</tt>";
+    if(!latex_begin)
+      cout << "<tt>";
+    cout.write(ts+1, te-ts-2);
+    if(!latex_begin)
+      cout << "</tt>";
   };
 
   ('``') =>
@@ -915,7 +919,7 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
       j=s.find_first_of(tokens,i+1);
       if(j==string::npos)
         j=s.size();
-      if(s[j-1] == '\\' && not_verbatim)
+      if(s[j-1] == '\\' && not_verbatim && latex_begin)
         --j;
       if(s[i] == '@')
       {
@@ -925,7 +929,7 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
           not_verbatim = true;
         cout << s.substr(i,j-i);
       }
-      else if(s[i] == '\'' && not_verbatim)
+      else if(s[i] == '\'' && not_verbatim && latex_begin)
       {
         if(j != s.size() && s[j] == '\'' && !last_char_escaped)
         {
