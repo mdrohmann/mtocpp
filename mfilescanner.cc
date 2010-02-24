@@ -39,7 +39,7 @@ static const int MFileScanner_en_funct = 223;
 static const int MFileScanner_en_main = 289;
 static const int MFileScanner_en_doculine = 334;
 
-#line 755 "mfilescanner.rl"
+#line 759 "mfilescanner.rl"
 
 
 
@@ -78,7 +78,7 @@ int MFileScanner :: execute()
 	te = 0;
 	act = 0;
 	}
-#line 785 "mfilescanner.rl"
+#line 789 "mfilescanner.rl"
 
   /* Do the first read. */
   bool done = false;
@@ -5495,7 +5495,11 @@ case 205:
 tr414:
 #line 735 "mfilescanner.rl"
 	{te = p+1;{
-    cout << "<tt>"; cout.write(ts+1, te-ts-2) << "</tt>";
+    if(!latex_begin)
+      cout << "<tt>";
+    cout.write(ts+1, te-ts-2);
+    if(!latex_begin)
+      cout << "</tt>";
   }}
 	goto st334;
 tr478:
@@ -5503,11 +5507,11 @@ tr478:
 	{te = p;p--;{ cout.write(ts, te-ts); }}
 	goto st334;
 tr479:
-#line 753 "mfilescanner.rl"
+#line 757 "mfilescanner.rl"
 	{te = p;p--;{ cout << "@f$"; }}
 	goto st334;
 tr480:
-#line 740 "mfilescanner.rl"
+#line 744 "mfilescanner.rl"
 	{te = p+1;{
     if(latex_begin)
     {
@@ -5529,7 +5533,7 @@ st334:
 case 334:
 #line 1 "mfilescanner.rl"
 	{ts = p;}
-#line 5533 "mfilescanner.cc"
+#line 5537 "mfilescanner.cc"
 	switch( (*p) ) {
 		case 39: goto st288;
 		case 96: goto st336;
@@ -6214,13 +6218,13 @@ case 336:
     {goto st222;}
   }
 	break;
-#line 6218 "mfilescanner.cc"
+#line 6222 "mfilescanner.cc"
 	}
 	}
 
 	_out: {}
 	}
-#line 842 "mfilescanner.rl"
+#line 846 "mfilescanner.rl"
 
     /* Check if we failed. */
     if ( cs == MFileScanner_error )
@@ -6297,7 +6301,7 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
       j=s.find_first_of(tokens,i+1);
       if(j==string::npos)
         j=s.size();
-      if(s[j-1] == '\\' && not_verbatim)
+      if(s[j-1] == '\\' && not_verbatim && latex_begin)
         --j;
       if(s[i] == '@')
       {
@@ -6307,7 +6311,7 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
           not_verbatim = true;
         cout << s.substr(i,j-i);
       }
-      else if(s[i] == '\'' && not_verbatim)
+      else if(s[i] == '\'' && not_verbatim && latex_begin)
       {
         if(j != s.size() && s[j] == '\'' && !last_char_escaped)
         {
