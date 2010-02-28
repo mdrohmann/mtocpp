@@ -464,58 +464,6 @@ using std::istream;
         tmp_p = p+1;
       };
 
-#    # type-writer words
-#    "'" . [A-Za-z_ ./[\]{}(),\$]* . "'" => {
-#      if(!docline)
-#      {
-#        p = ts-1;
-#        fgoto funcbody;
-#      }
-#      string s, s2;
-#      s.assign(tmp_p+1, ts - tmp_p-1);
-#      s2.assign(ts+1, te-ts-2);
-#      docubody_.push_back(s + "<tt>" + s2 + "</tt>");
-#      tmp_p = p;
-#    };
-#
-#    '``' => {
-#      if(!docline)
-#      {
-#        p = ts -1;
-#        fgoto funcbody;
-#      }
-#      string s;
-#      s.assign(tmp_p+1, ts - tmp_p-1);
-#      if(latex_begin)
-#      {
-#        docubody_.push_back(s + "@f[");
-#        latex_begin = false;
-#      } else {
-#        docubody_.push_back(s + "@f]");
-#        latex_begin = true;
-#      }
-#      tmp_p = p;
-#    };
-#
-#    '`' => {
-#      if(!docline)
-#      {
-#        p = ts-1;
-#        fgoto funcbody;
-#      }
-#      string s;
-#      s.assign(tmp_p+1, ts - tmp_p-1);
-#      if(latex_begin)
-#      {
-#        docubody_.push_back(s + "@f$");
-#        latex_begin = false;
-#      } else {
-#        docubody_.push_back(s + "@f$");
-#        latex_begin = true;
-#      }
-#      tmp_p = p;
-#    };
-#
     # words
 #    ( default - [ \t:%'`\n] )+
     ( default - [ \t:%\r\n] )+
@@ -542,7 +490,7 @@ using std::istream;
     ( [ \t] );
 
     # titled paragraph
-    ( ':' . [\t ]* . EOL ) =>
+    ( ':' . EOL ) =>
     {
         if(! docline)
           fgoto funcbody;
