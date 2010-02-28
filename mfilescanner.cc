@@ -6230,7 +6230,7 @@ case 336:
     if ( cs == MFileScanner_error )
     {
       /* Machine failed before finding a token. */
-      cerr << "PARSE ERROR in line " << line << endl;
+      cerr << std::string(filename_) << ": PARSE ERROR in line " << line << endl;
       exit(-1);
     }
 
