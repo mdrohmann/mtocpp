@@ -1,4 +1,3 @@
-
 #line 1 "confscanner.rl"
 #include "confscanner.h"
 
@@ -16,7 +15,7 @@ using std::set;
 using std::ifstream;
 
 
-#line 20 "confscanner.cc"
+#line 19 "confscanner.cc"
 static const int ConfFileScanner_start = 879;
 static const int ConfFileScanner_first_final = 879;
 static const int ConfFileScanner_error = 0;
@@ -25,7 +24,6 @@ static const int ConfFileScanner_en_garbling = 22;
 static const int ConfFileScanner_en_docu_block_line = 884;
 static const int ConfFileScanner_en_rules = 886;
 static const int ConfFileScanner_en_main = 879;
-
 
 #line 278 "confscanner.rl"
 
@@ -131,7 +129,7 @@ ConfFileScanner
 const char * ConfFileScanner ::
 set_conffile()
 {
-  conffile_ = "sample.conf";
+  conffile_ = "doxygen/mtoc.conf";
   return conffile_.c_str();
 }
 
@@ -141,12 +139,11 @@ int ConfFileScanner :: execute()
   std::ios::sync_with_stdio(false);
 
   
-#line 145 "confscanner.cc"
+#line 143 "confscanner.cc"
 	{
 	cs = ConfFileScanner_start;
 	top = 0;
 	}
-
 #line 391 "confscanner.rl"
 
   /* Do the first read. */
@@ -186,7 +183,7 @@ int ConfFileScanner :: execute()
     }
 
     
-#line 190 "confscanner.cc"
+#line 187 "confscanner.cc"
 	{
 	if ( p == pe )
 		goto _test_eof;
@@ -1191,7 +1188,7 @@ st879:
 	if ( ++p == pe )
 		goto _test_eof879;
 case 879:
-#line 1195 "confscanner.cc"
+#line 1192 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st879;
 		case 10: goto tr0;
@@ -1245,7 +1242,7 @@ st5:
 	if ( ++p == pe )
 		goto _test_eof5;
 case 5:
-#line 1249 "confscanner.cc"
+#line 1246 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr6;
 		case 10: goto tr7;
@@ -1283,7 +1280,7 @@ st6:
 	if ( ++p == pe )
 		goto _test_eof6;
 case 6:
-#line 1287 "confscanner.cc"
+#line 1284 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st6;
 		case 10: goto tr13;
@@ -1303,7 +1300,7 @@ st7:
 	if ( ++p == pe )
 		goto _test_eof7;
 case 7:
-#line 1307 "confscanner.cc"
+#line 1304 "confscanner.cc"
 	if ( (*p) == 10 )
 		goto tr13;
 	goto st0;
@@ -1317,7 +1314,7 @@ st8:
 	if ( ++p == pe )
 		goto _test_eof8;
 case 8:
-#line 1321 "confscanner.cc"
+#line 1318 "confscanner.cc"
 	if ( (*p) == 35 )
 		goto st0;
 	goto tr17;
@@ -1331,7 +1328,7 @@ st9:
 	if ( ++p == pe )
 		goto _test_eof9;
 case 9:
-#line 1335 "confscanner.cc"
+#line 1332 "confscanner.cc"
 	if ( (*p) == 61 )
 		goto st10;
 	goto st0;
@@ -1347,7 +1344,7 @@ st10:
 	if ( ++p == pe )
 		goto _test_eof10;
 case 10:
-#line 1351 "confscanner.cc"
+#line 1348 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st10;
@@ -1379,7 +1376,7 @@ st11:
 	if ( ++p == pe )
 		goto _test_eof11;
 case 11:
-#line 1383 "confscanner.cc"
+#line 1380 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st13;
@@ -1418,7 +1415,7 @@ st12:
 	if ( ++p == pe )
 		goto _test_eof12;
 case 12:
-#line 1422 "confscanner.cc"
+#line 1419 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st13;
@@ -1455,7 +1452,7 @@ st13:
 	if ( ++p == pe )
 		goto _test_eof13;
 case 13:
-#line 1459 "confscanner.cc"
+#line 1456 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st13;
@@ -1482,7 +1479,7 @@ st14:
 	if ( ++p == pe )
 		goto _test_eof14;
 case 14:
-#line 1486 "confscanner.cc"
+#line 1483 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st13;
@@ -1509,7 +1506,7 @@ st15:
 	if ( ++p == pe )
 		goto _test_eof15;
 case 15:
-#line 1513 "confscanner.cc"
+#line 1510 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr35;
 		case 9: goto tr35;
@@ -1528,7 +1525,7 @@ st880:
 	if ( ++p == pe )
 		goto _test_eof880;
 case 880:
-#line 1532 "confscanner.cc"
+#line 1529 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st13;
@@ -1559,7 +1556,7 @@ st16:
 	if ( ++p == pe )
 		goto _test_eof16;
 case 16:
-#line 1563 "confscanner.cc"
+#line 1560 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr35;
 		case 9: goto tr35;
@@ -1580,7 +1577,7 @@ st17:
 	if ( ++p == pe )
 		goto _test_eof17;
 case 17:
-#line 1584 "confscanner.cc"
+#line 1581 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st13;
@@ -1629,7 +1626,7 @@ st18:
 	if ( ++p == pe )
 		goto _test_eof18;
 case 18:
-#line 1633 "confscanner.cc"
+#line 1630 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st18;
@@ -1653,7 +1650,7 @@ st19:
 	if ( ++p == pe )
 		goto _test_eof19;
 case 19:
-#line 1657 "confscanner.cc"
+#line 1654 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st13;
@@ -1676,7 +1673,7 @@ st20:
 	if ( ++p == pe )
 		goto _test_eof20;
 case 20:
-#line 1680 "confscanner.cc"
+#line 1677 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr45;
 		case 9: goto tr45;
@@ -1695,7 +1692,7 @@ st881:
 	if ( ++p == pe )
 		goto _test_eof881;
 case 881:
-#line 1699 "confscanner.cc"
+#line 1696 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st18;
@@ -1717,7 +1714,7 @@ st21:
 	if ( ++p == pe )
 		goto _test_eof21;
 case 21:
-#line 1721 "confscanner.cc"
+#line 1718 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr49;
 		case 9: goto tr45;
@@ -1736,7 +1733,7 @@ st882:
 	if ( ++p == pe )
 		goto _test_eof882;
 case 882:
-#line 1740 "confscanner.cc"
+#line 1737 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st10;
@@ -1765,7 +1762,7 @@ st883:
 	if ( ++p == pe )
 		goto _test_eof883;
 case 883:
-#line 1769 "confscanner.cc"
+#line 1766 "confscanner.cc"
 	goto st0;
 tr53:
 #line 158 "confscanner.rl"
@@ -1831,7 +1828,7 @@ st884:
 	if ( ++p == pe )
 		goto _test_eof884;
 case 884:
-#line 1835 "confscanner.cc"
+#line 1832 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr1761;
@@ -1846,7 +1843,7 @@ st885:
 	if ( ++p == pe )
 		goto _test_eof885;
 case 885:
-#line 1850 "confscanner.cc"
+#line 1847 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 10: goto tr1761;
@@ -1926,7 +1923,7 @@ st886:
 	if ( ++p == pe )
 		goto _test_eof886;
 case 886:
-#line 1930 "confscanner.cc"
+#line 1927 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st886;
 		case 10: goto tr56;
@@ -1994,7 +1991,7 @@ st31:
 	if ( ++p == pe )
 		goto _test_eof31;
 case 31:
-#line 1998 "confscanner.cc"
+#line 1995 "confscanner.cc"
 	if ( (*p) == 114 )
 		goto st32;
 	goto st0;
@@ -2050,7 +2047,7 @@ st36:
 	if ( ++p == pe )
 		goto _test_eof36;
 case 36:
-#line 2054 "confscanner.cc"
+#line 2051 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st36;
 		case 10: goto tr73;
@@ -2083,7 +2080,7 @@ st39:
 	if ( ++p == pe )
 		goto _test_eof39;
 case 39:
-#line 2087 "confscanner.cc"
+#line 2084 "confscanner.cc"
 	if ( (*p) == 61 )
 		goto st40;
 	goto st0;
@@ -2099,7 +2096,7 @@ st40:
 	if ( ++p == pe )
 		goto _test_eof40;
 case 40:
-#line 2103 "confscanner.cc"
+#line 2100 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st40;
 		case 10: goto tr79;
@@ -2185,7 +2182,7 @@ st44:
 	if ( ++p == pe )
 		goto _test_eof44;
 case 44:
-#line 2189 "confscanner.cc"
+#line 2186 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st44;
 		case 10: goto tr86;
@@ -2215,7 +2212,7 @@ st45:
 	if ( ++p == pe )
 		goto _test_eof45;
 case 45:
-#line 2219 "confscanner.cc"
+#line 2216 "confscanner.cc"
 	if ( (*p) == 10 )
 		goto tr86;
 	goto st0;
@@ -2239,7 +2236,7 @@ st46:
 	if ( ++p == pe )
 		goto _test_eof46;
 case 46:
-#line 2243 "confscanner.cc"
+#line 2240 "confscanner.cc"
 	if ( (*p) == 35 )
 		goto st0;
 	goto tr90;
@@ -2258,7 +2255,7 @@ st48:
 	if ( ++p == pe )
 		goto _test_eof48;
 case 48:
-#line 2262 "confscanner.cc"
+#line 2259 "confscanner.cc"
 	if ( (*p) == 111 )
 		goto st49;
 	goto st0;
@@ -2277,7 +2274,7 @@ st50:
 	if ( ++p == pe )
 		goto _test_eof50;
 case 50:
-#line 2281 "confscanner.cc"
+#line 2278 "confscanner.cc"
 	if ( (*p) == 120 )
 		goto st51;
 	goto st0;
@@ -2310,7 +2307,7 @@ st54:
 	if ( ++p == pe )
 		goto _test_eof54;
 case 54:
-#line 2314 "confscanner.cc"
+#line 2311 "confscanner.cc"
 	if ( (*p) == 105 )
 		goto st55;
 	goto st0;
@@ -2369,7 +2366,7 @@ st60:
 	if ( ++p == pe )
 		goto _test_eof60;
 case 60:
-#line 2373 "confscanner.cc"
+#line 2370 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st60;
 		case 10: goto tr103;
@@ -2402,7 +2399,7 @@ st63:
 	if ( ++p == pe )
 		goto _test_eof63;
 case 63:
-#line 2406 "confscanner.cc"
+#line 2403 "confscanner.cc"
 	if ( (*p) == 61 )
 		goto st64;
 	goto st0;
@@ -2418,7 +2415,7 @@ st64:
 	if ( ++p == pe )
 		goto _test_eof64;
 case 64:
-#line 2422 "confscanner.cc"
+#line 2419 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st64;
 		case 10: goto tr109;
@@ -2459,7 +2456,7 @@ st67:
 	if ( ++p == pe )
 		goto _test_eof67;
 case 67:
-#line 2463 "confscanner.cc"
+#line 2460 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st67;
 		case 10: goto tr115;
@@ -2495,7 +2492,7 @@ st70:
 	if ( ++p == pe )
 		goto _test_eof70;
 case 70:
-#line 2499 "confscanner.cc"
+#line 2496 "confscanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr120;
 		case 95: goto st70;
@@ -2519,7 +2516,7 @@ st71:
 	if ( ++p == pe )
 		goto _test_eof71;
 case 71:
-#line 2523 "confscanner.cc"
+#line 2520 "confscanner.cc"
 	if ( (*p) > 90 ) {
 		if ( 97 <= (*p) && (*p) <= 122 )
 			goto tr122;
@@ -2534,7 +2531,7 @@ st72:
 	if ( ++p == pe )
 		goto _test_eof72;
 case 72:
-#line 2538 "confscanner.cc"
+#line 2535 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr123;
 		case 10: goto tr124;
@@ -2581,7 +2578,7 @@ st73:
 	if ( ++p == pe )
 		goto _test_eof73;
 case 73:
-#line 2585 "confscanner.cc"
+#line 2582 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st73;
 		case 10: goto tr130;
@@ -2602,7 +2599,7 @@ st74:
 	if ( ++p == pe )
 		goto _test_eof74;
 case 74:
-#line 2606 "confscanner.cc"
+#line 2603 "confscanner.cc"
 	if ( (*p) == 10 )
 		goto tr130;
 	goto st0;
@@ -2617,7 +2614,7 @@ st75:
 	if ( ++p == pe )
 		goto _test_eof75;
 case 75:
-#line 2621 "confscanner.cc"
+#line 2618 "confscanner.cc"
 	if ( (*p) == 35 )
 		goto st0;
 	goto tr134;
@@ -2632,7 +2629,7 @@ st76:
 	if ( ++p == pe )
 		goto _test_eof76;
 case 76:
-#line 2636 "confscanner.cc"
+#line 2633 "confscanner.cc"
 	if ( (*p) == 62 )
 		goto st77;
 	goto st0;
@@ -2648,7 +2645,7 @@ st77:
 	if ( ++p == pe )
 		goto _test_eof77;
 case 77:
-#line 2652 "confscanner.cc"
+#line 2649 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st77;
 		case 10: goto tr136;
@@ -2700,7 +2697,7 @@ st81:
 	if ( ++p == pe )
 		goto _test_eof81;
 case 81:
-#line 2704 "confscanner.cc"
+#line 2701 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st81;
 		case 10: goto tr143;
@@ -2740,7 +2737,7 @@ st85:
 	if ( ++p == pe )
 		goto _test_eof85;
 case 85:
-#line 2744 "confscanner.cc"
+#line 2741 "confscanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr148;
 		case 95: goto st85;
@@ -2764,7 +2761,7 @@ st86:
 	if ( ++p == pe )
 		goto _test_eof86;
 case 86:
-#line 2768 "confscanner.cc"
+#line 2765 "confscanner.cc"
 	if ( (*p) > 90 ) {
 		if ( 97 <= (*p) && (*p) <= 122 )
 			goto tr150;
@@ -2779,7 +2776,7 @@ st87:
 	if ( ++p == pe )
 		goto _test_eof87;
 case 87:
-#line 2783 "confscanner.cc"
+#line 2780 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr151;
 		case 10: goto tr152;
@@ -2850,7 +2847,7 @@ st88:
 	if ( ++p == pe )
 		goto _test_eof88;
 case 88:
-#line 2854 "confscanner.cc"
+#line 2851 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st88;
 		case 10: goto tr158;
@@ -2882,7 +2879,7 @@ st89:
 	if ( ++p == pe )
 		goto _test_eof89;
 case 89:
-#line 2886 "confscanner.cc"
+#line 2883 "confscanner.cc"
 	if ( (*p) == 10 )
 		goto tr158;
 	goto st0;
@@ -2908,7 +2905,7 @@ st90:
 	if ( ++p == pe )
 		goto _test_eof90;
 case 90:
-#line 2912 "confscanner.cc"
+#line 2909 "confscanner.cc"
 	if ( (*p) == 35 )
 		goto st0;
 	goto tr162;
@@ -2934,7 +2931,7 @@ st91:
 	if ( ++p == pe )
 		goto _test_eof91;
 case 91:
-#line 2938 "confscanner.cc"
+#line 2935 "confscanner.cc"
 	if ( (*p) == 62 )
 		goto st40;
 	goto st0;
@@ -2946,7 +2943,7 @@ st92:
 	if ( ++p == pe )
 		goto _test_eof92;
 case 92:
-#line 2950 "confscanner.cc"
+#line 2947 "confscanner.cc"
 	if ( (*p) == 97 )
 		goto st93;
 	goto st0;
@@ -3011,7 +3008,7 @@ st98:
 	if ( ++p == pe )
 		goto _test_eof98;
 case 98:
-#line 3015 "confscanner.cc"
+#line 3012 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st98;
 		case 10: goto tr170;
@@ -3044,7 +3041,7 @@ st101:
 	if ( ++p == pe )
 		goto _test_eof101;
 case 101:
-#line 3048 "confscanner.cc"
+#line 3045 "confscanner.cc"
 	if ( (*p) == 61 )
 		goto st102;
 	goto st0;
@@ -3060,7 +3057,7 @@ st102:
 	if ( ++p == pe )
 		goto _test_eof102;
 case 102:
-#line 3064 "confscanner.cc"
+#line 3061 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st102;
 		case 10: goto tr176;
@@ -3101,7 +3098,7 @@ st105:
 	if ( ++p == pe )
 		goto _test_eof105;
 case 105:
-#line 3105 "confscanner.cc"
+#line 3102 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st105;
 		case 10: goto tr182;
@@ -3137,7 +3134,7 @@ st108:
 	if ( ++p == pe )
 		goto _test_eof108;
 case 108:
-#line 3141 "confscanner.cc"
+#line 3138 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr187;
 		case 10: goto tr188;
@@ -3192,7 +3189,7 @@ st109:
 	if ( ++p == pe )
 		goto _test_eof109;
 case 109:
-#line 3196 "confscanner.cc"
+#line 3193 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st109;
 		case 10: goto tr194;
@@ -3217,7 +3214,7 @@ st110:
 	if ( ++p == pe )
 		goto _test_eof110;
 case 110:
-#line 3221 "confscanner.cc"
+#line 3218 "confscanner.cc"
 	if ( (*p) == 10 )
 		goto tr194;
 	goto st0;
@@ -3236,7 +3233,7 @@ st111:
 	if ( ++p == pe )
 		goto _test_eof111;
 case 111:
-#line 3240 "confscanner.cc"
+#line 3237 "confscanner.cc"
 	if ( (*p) == 35 )
 		goto st0;
 	goto tr198;
@@ -3255,7 +3252,7 @@ st112:
 	if ( ++p == pe )
 		goto _test_eof112;
 case 112:
-#line 3259 "confscanner.cc"
+#line 3256 "confscanner.cc"
 	if ( (*p) == 62 )
 		goto st113;
 	goto st0;
@@ -3271,7 +3268,7 @@ st113:
 	if ( ++p == pe )
 		goto _test_eof113;
 case 113:
-#line 3275 "confscanner.cc"
+#line 3272 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st113;
 		case 10: goto tr200;
@@ -3323,7 +3320,7 @@ st117:
 	if ( ++p == pe )
 		goto _test_eof117;
 case 117:
-#line 3327 "confscanner.cc"
+#line 3324 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st117;
 		case 10: goto tr207;
@@ -3363,7 +3360,7 @@ st121:
 	if ( ++p == pe )
 		goto _test_eof121;
 case 121:
-#line 3367 "confscanner.cc"
+#line 3364 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr212;
 		case 10: goto tr213;
@@ -3390,7 +3387,7 @@ st122:
 	if ( ++p == pe )
 		goto _test_eof122;
 case 122:
-#line 3394 "confscanner.cc"
+#line 3391 "confscanner.cc"
 	if ( (*p) == 101 )
 		goto st123;
 	goto st0;
@@ -3457,7 +3454,7 @@ st130:
 	if ( ++p == pe )
 		goto _test_eof130;
 case 130:
-#line 3461 "confscanner.cc"
+#line 3458 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st130;
 		case 10: goto tr226;
@@ -3493,7 +3490,7 @@ st133:
 	if ( ++p == pe )
 		goto _test_eof133;
 case 133:
-#line 3497 "confscanner.cc"
+#line 3494 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st133;
@@ -3543,7 +3540,7 @@ st134:
 	if ( ++p == pe )
 		goto _test_eof134;
 case 134:
-#line 3547 "confscanner.cc"
+#line 3544 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -3622,7 +3619,7 @@ st135:
 	if ( ++p == pe )
 		goto _test_eof135;
 case 135:
-#line 3626 "confscanner.cc"
+#line 3623 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st135;
@@ -3646,7 +3643,7 @@ st136:
 	if ( ++p == pe )
 		goto _test_eof136;
 case 136:
-#line 3650 "confscanner.cc"
+#line 3647 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -3718,7 +3715,7 @@ st137:
 	if ( ++p == pe )
 		goto _test_eof137;
 case 137:
-#line 3722 "confscanner.cc"
+#line 3719 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st135;
 		case 10: goto tr250;
@@ -3766,7 +3763,7 @@ st140:
 	if ( ++p == pe )
 		goto _test_eof140;
 case 140:
-#line 3770 "confscanner.cc"
+#line 3767 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -3791,7 +3788,7 @@ st141:
 	if ( ++p == pe )
 		goto _test_eof141;
 case 141:
-#line 3795 "confscanner.cc"
+#line 3792 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr253;
 		case 9: goto tr256;
@@ -3889,7 +3886,7 @@ st887:
 	if ( ++p == pe )
 		goto _test_eof887;
 case 887:
-#line 3893 "confscanner.cc"
+#line 3890 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st888;
 		case 10: goto tr1746;
@@ -3982,7 +3979,7 @@ st888:
 	if ( ++p == pe )
 		goto _test_eof888;
 case 888:
-#line 3986 "confscanner.cc"
+#line 3983 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st888;
@@ -4016,7 +4013,7 @@ st142:
 	if ( ++p == pe )
 		goto _test_eof142;
 case 142:
-#line 4020 "confscanner.cc"
+#line 4017 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -4047,7 +4044,7 @@ st143:
 	if ( ++p == pe )
 		goto _test_eof143;
 case 143:
-#line 4051 "confscanner.cc"
+#line 4048 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr262;
 		case 9: goto tr263;
@@ -4078,7 +4075,7 @@ st889:
 	if ( ++p == pe )
 		goto _test_eof889;
 case 889:
-#line 4082 "confscanner.cc"
+#line 4079 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1779;
@@ -4101,7 +4098,7 @@ st144:
 	if ( ++p == pe )
 		goto _test_eof144;
 case 144:
-#line 4105 "confscanner.cc"
+#line 4102 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -4175,7 +4172,7 @@ st148:
 	if ( ++p == pe )
 		goto _test_eof148;
 case 148:
-#line 4179 "confscanner.cc"
+#line 4176 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -4272,7 +4269,7 @@ st153:
 	if ( ++p == pe )
 		goto _test_eof153;
 case 153:
-#line 4276 "confscanner.cc"
+#line 4273 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr281;
@@ -4353,7 +4350,7 @@ st154:
 	if ( ++p == pe )
 		goto _test_eof154;
 case 154:
-#line 4357 "confscanner.cc"
+#line 4354 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st154;
@@ -4386,7 +4383,7 @@ st155:
 	if ( ++p == pe )
 		goto _test_eof155;
 case 155:
-#line 4390 "confscanner.cc"
+#line 4387 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -4417,7 +4414,7 @@ st156:
 	if ( ++p == pe )
 		goto _test_eof156;
 case 156:
-#line 4421 "confscanner.cc"
+#line 4418 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr295;
 		case 9: goto tr296;
@@ -4448,7 +4445,7 @@ st157:
 	if ( ++p == pe )
 		goto _test_eof157;
 case 157:
-#line 4452 "confscanner.cc"
+#line 4449 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr281;
@@ -4476,7 +4473,7 @@ st158:
 	if ( ++p == pe )
 		goto _test_eof158;
 case 158:
-#line 4480 "confscanner.cc"
+#line 4477 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -4501,7 +4498,7 @@ st159:
 	if ( ++p == pe )
 		goto _test_eof159;
 case 159:
-#line 4505 "confscanner.cc"
+#line 4502 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr302;
@@ -4581,7 +4578,7 @@ st160:
 	if ( ++p == pe )
 		goto _test_eof160;
 case 160:
-#line 4585 "confscanner.cc"
+#line 4582 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st160;
@@ -4613,7 +4610,7 @@ st161:
 	if ( ++p == pe )
 		goto _test_eof161;
 case 161:
-#line 4617 "confscanner.cc"
+#line 4614 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -4633,7 +4630,7 @@ st162:
 	if ( ++p == pe )
 		goto _test_eof162;
 case 162:
-#line 4637 "confscanner.cc"
+#line 4634 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -4683,7 +4680,7 @@ st164:
 	if ( ++p == pe )
 		goto _test_eof164;
 case 164:
-#line 4687 "confscanner.cc"
+#line 4684 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr315;
@@ -4785,7 +4782,7 @@ st165:
 	if ( ++p == pe )
 		goto _test_eof165;
 case 165:
-#line 4789 "confscanner.cc"
+#line 4786 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st165;
@@ -4816,7 +4813,7 @@ st166:
 	if ( ++p == pe )
 		goto _test_eof166;
 case 166:
-#line 4820 "confscanner.cc"
+#line 4817 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -4847,7 +4844,7 @@ st167:
 	if ( ++p == pe )
 		goto _test_eof167;
 case 167:
-#line 4851 "confscanner.cc"
+#line 4848 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr325;
 		case 9: goto tr326;
@@ -4878,7 +4875,7 @@ st168:
 	if ( ++p == pe )
 		goto _test_eof168;
 case 168:
-#line 4882 "confscanner.cc"
+#line 4879 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr315;
@@ -4959,7 +4956,7 @@ st890:
 	if ( ++p == pe )
 		goto _test_eof890;
 case 890:
-#line 4963 "confscanner.cc"
+#line 4960 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st890;
@@ -4993,7 +4990,7 @@ st169:
 	if ( ++p == pe )
 		goto _test_eof169;
 case 169:
-#line 4997 "confscanner.cc"
+#line 4994 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -5024,7 +5021,7 @@ st170:
 	if ( ++p == pe )
 		goto _test_eof170;
 case 170:
-#line 5028 "confscanner.cc"
+#line 5025 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr334;
 		case 9: goto tr335;
@@ -5055,7 +5052,7 @@ st891:
 	if ( ++p == pe )
 		goto _test_eof891;
 case 891:
-#line 5059 "confscanner.cc"
+#line 5056 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1786;
@@ -5078,7 +5075,7 @@ st171:
 	if ( ++p == pe )
 		goto _test_eof171;
 case 171:
-#line 5082 "confscanner.cc"
+#line 5079 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -5143,7 +5140,7 @@ st174:
 	if ( ++p == pe )
 		goto _test_eof174;
 case 174:
-#line 5147 "confscanner.cc"
+#line 5144 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr342;
@@ -5212,7 +5209,7 @@ st175:
 	if ( ++p == pe )
 		goto _test_eof175;
 case 175:
-#line 5216 "confscanner.cc"
+#line 5213 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st175;
@@ -5244,7 +5241,7 @@ st176:
 	if ( ++p == pe )
 		goto _test_eof176;
 case 176:
-#line 5248 "confscanner.cc"
+#line 5245 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -5275,7 +5272,7 @@ st177:
 	if ( ++p == pe )
 		goto _test_eof177;
 case 177:
-#line 5279 "confscanner.cc"
+#line 5276 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr354;
 		case 9: goto tr355;
@@ -5306,7 +5303,7 @@ st178:
 	if ( ++p == pe )
 		goto _test_eof178;
 case 178:
-#line 5310 "confscanner.cc"
+#line 5307 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr342;
@@ -5342,7 +5339,7 @@ st179:
 	if ( ++p == pe )
 		goto _test_eof179;
 case 179:
-#line 5346 "confscanner.cc"
+#line 5343 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr361;
@@ -5410,7 +5407,7 @@ st180:
 	if ( ++p == pe )
 		goto _test_eof180;
 case 180:
-#line 5414 "confscanner.cc"
+#line 5411 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st180;
@@ -5445,7 +5442,7 @@ st181:
 	if ( ++p == pe )
 		goto _test_eof181;
 case 181:
-#line 5449 "confscanner.cc"
+#line 5446 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -5470,7 +5467,7 @@ st182:
 	if ( ++p == pe )
 		goto _test_eof182;
 case 182:
-#line 5474 "confscanner.cc"
+#line 5471 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr253;
 		case 9: goto tr372;
@@ -5505,7 +5502,7 @@ st183:
 	if ( ++p == pe )
 		goto _test_eof183;
 case 183:
-#line 5509 "confscanner.cc"
+#line 5506 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr377;
 		case 9: goto tr378;
@@ -5536,7 +5533,7 @@ st184:
 	if ( ++p == pe )
 		goto _test_eof184;
 case 184:
-#line 5540 "confscanner.cc"
+#line 5537 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr361;
@@ -5617,7 +5614,7 @@ st892:
 	if ( ++p == pe )
 		goto _test_eof892;
 case 892:
-#line 5621 "confscanner.cc"
+#line 5618 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st892;
@@ -5655,7 +5652,7 @@ st185:
 	if ( ++p == pe )
 		goto _test_eof185;
 case 185:
-#line 5659 "confscanner.cc"
+#line 5656 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -5690,7 +5687,7 @@ st186:
 	if ( ++p == pe )
 		goto _test_eof186;
 case 186:
-#line 5694 "confscanner.cc"
+#line 5691 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr386;
 		case 9: goto tr387;
@@ -5721,7 +5718,7 @@ st893:
 	if ( ++p == pe )
 		goto _test_eof893;
 case 893:
-#line 5725 "confscanner.cc"
+#line 5722 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1796;
@@ -5750,7 +5747,7 @@ st187:
 	if ( ++p == pe )
 		goto _test_eof187;
 case 187:
-#line 5754 "confscanner.cc"
+#line 5751 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -5824,7 +5821,7 @@ st191:
 	if ( ++p == pe )
 		goto _test_eof191;
 case 191:
-#line 5828 "confscanner.cc"
+#line 5825 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -5932,7 +5929,7 @@ st196:
 	if ( ++p == pe )
 		goto _test_eof196;
 case 196:
-#line 5936 "confscanner.cc"
+#line 5933 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr281;
@@ -6006,7 +6003,7 @@ st197:
 	if ( ++p == pe )
 		goto _test_eof197;
 case 197:
-#line 6010 "confscanner.cc"
+#line 6007 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st154;
 		case 10: goto tr408;
@@ -6045,7 +6042,7 @@ st200:
 	if ( ++p == pe )
 		goto _test_eof200;
 case 200:
-#line 6049 "confscanner.cc"
+#line 6046 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -6070,7 +6067,7 @@ st201:
 	if ( ++p == pe )
 		goto _test_eof201;
 case 201:
-#line 6074 "confscanner.cc"
+#line 6071 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr411;
 		case 9: goto tr413;
@@ -6120,7 +6117,7 @@ st894:
 	if ( ++p == pe )
 		goto _test_eof894;
 case 894:
-#line 6124 "confscanner.cc"
+#line 6121 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st895;
 		case 10: goto tr428;
@@ -6204,7 +6201,7 @@ st895:
 	if ( ++p == pe )
 		goto _test_eof895;
 case 895:
-#line 6208 "confscanner.cc"
+#line 6205 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st895;
@@ -6240,7 +6237,7 @@ st202:
 	if ( ++p == pe )
 		goto _test_eof202;
 case 202:
-#line 6244 "confscanner.cc"
+#line 6241 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -6271,7 +6268,7 @@ st203:
 	if ( ++p == pe )
 		goto _test_eof203;
 case 203:
-#line 6275 "confscanner.cc"
+#line 6272 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr419;
 		case 9: goto tr420;
@@ -6302,7 +6299,7 @@ st896:
 	if ( ++p == pe )
 		goto _test_eof896;
 case 896:
-#line 6306 "confscanner.cc"
+#line 6303 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1805;
@@ -6337,7 +6334,7 @@ st897:
 	if ( ++p == pe )
 		goto _test_eof897;
 case 897:
-#line 6341 "confscanner.cc"
+#line 6338 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1779;
@@ -6365,7 +6362,7 @@ st204:
 	if ( ++p == pe )
 		goto _test_eof204;
 case 204:
-#line 6369 "confscanner.cc"
+#line 6366 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -6390,7 +6387,7 @@ st205:
 	if ( ++p == pe )
 		goto _test_eof205;
 case 205:
-#line 6394 "confscanner.cc"
+#line 6391 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr425;
 		case 9: goto tr263;
@@ -6417,7 +6414,7 @@ st898:
 	if ( ++p == pe )
 		goto _test_eof898;
 case 898:
-#line 6421 "confscanner.cc"
+#line 6418 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1779;
@@ -6454,7 +6451,7 @@ st208:
 	if ( ++p == pe )
 		goto _test_eof208;
 case 208:
-#line 6458 "confscanner.cc"
+#line 6455 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -6490,7 +6487,7 @@ st209:
 	if ( ++p == pe )
 		goto _test_eof209;
 case 209:
-#line 6494 "confscanner.cc"
+#line 6491 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr302;
@@ -6563,7 +6560,7 @@ st210:
 	if ( ++p == pe )
 		goto _test_eof210;
 case 210:
-#line 6567 "confscanner.cc"
+#line 6564 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st160;
 		case 10: goto tr433;
@@ -6601,7 +6598,7 @@ st213:
 	if ( ++p == pe )
 		goto _test_eof213;
 case 213:
-#line 6605 "confscanner.cc"
+#line 6602 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -6673,7 +6670,7 @@ st216:
 	if ( ++p == pe )
 		goto _test_eof216;
 case 216:
-#line 6677 "confscanner.cc"
+#line 6674 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr315;
@@ -6770,7 +6767,7 @@ st217:
 	if ( ++p == pe )
 		goto _test_eof217;
 case 217:
-#line 6774 "confscanner.cc"
+#line 6771 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st165;
 		case 10: goto tr441;
@@ -6831,7 +6828,7 @@ st220:
 	if ( ++p == pe )
 		goto _test_eof220;
 case 220:
-#line 6835 "confscanner.cc"
+#line 6832 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -6879,7 +6876,7 @@ st221:
 	if ( ++p == pe )
 		goto _test_eof221;
 case 221:
-#line 6883 "confscanner.cc"
+#line 6880 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr444;
 		case 9: goto tr446;
@@ -6929,7 +6926,7 @@ st899:
 	if ( ++p == pe )
 		goto _test_eof899;
 case 899:
-#line 6933 "confscanner.cc"
+#line 6930 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st890;
 		case 10: goto tr450;
@@ -6970,7 +6967,7 @@ st224:
 	if ( ++p == pe )
 		goto _test_eof224;
 case 224:
-#line 6974 "confscanner.cc"
+#line 6971 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr436;
 		case 9: goto tr453;
@@ -7020,7 +7017,7 @@ st900:
 	if ( ++p == pe )
 		goto _test_eof900;
 case 900:
-#line 7024 "confscanner.cc"
+#line 7021 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st901;
 		case 10: goto tr464;
@@ -7103,7 +7100,7 @@ st901:
 	if ( ++p == pe )
 		goto _test_eof901;
 case 901:
-#line 7107 "confscanner.cc"
+#line 7104 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st901;
@@ -7138,7 +7135,7 @@ st225:
 	if ( ++p == pe )
 		goto _test_eof225;
 case 225:
-#line 7142 "confscanner.cc"
+#line 7139 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -7169,7 +7166,7 @@ st226:
 	if ( ++p == pe )
 		goto _test_eof226;
 case 226:
-#line 7173 "confscanner.cc"
+#line 7170 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr459;
 		case 9: goto tr460;
@@ -7200,7 +7197,7 @@ st902:
 	if ( ++p == pe )
 		goto _test_eof902;
 case 902:
-#line 7204 "confscanner.cc"
+#line 7201 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1821;
@@ -7238,7 +7235,7 @@ st229:
 	if ( ++p == pe )
 		goto _test_eof229;
 case 229:
-#line 7242 "confscanner.cc"
+#line 7239 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -7275,7 +7272,7 @@ st231:
 	if ( ++p == pe )
 		goto _test_eof231;
 case 231:
-#line 7279 "confscanner.cc"
+#line 7276 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -7344,7 +7341,7 @@ st235:
 	if ( ++p == pe )
 		goto _test_eof235;
 case 235:
-#line 7348 "confscanner.cc"
+#line 7345 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -7464,7 +7461,7 @@ st241:
 	if ( ++p == pe )
 		goto _test_eof241;
 case 241:
-#line 7468 "confscanner.cc"
+#line 7465 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr476;
@@ -7545,7 +7542,7 @@ st242:
 	if ( ++p == pe )
 		goto _test_eof242;
 case 242:
-#line 7549 "confscanner.cc"
+#line 7546 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st242;
@@ -7578,7 +7575,7 @@ st243:
 	if ( ++p == pe )
 		goto _test_eof243;
 case 243:
-#line 7582 "confscanner.cc"
+#line 7579 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -7609,7 +7606,7 @@ st244:
 	if ( ++p == pe )
 		goto _test_eof244;
 case 244:
-#line 7613 "confscanner.cc"
+#line 7610 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr490;
 		case 9: goto tr491;
@@ -7640,7 +7637,7 @@ st245:
 	if ( ++p == pe )
 		goto _test_eof245;
 case 245:
-#line 7644 "confscanner.cc"
+#line 7641 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr476;
@@ -7668,7 +7665,7 @@ st246:
 	if ( ++p == pe )
 		goto _test_eof246;
 case 246:
-#line 7672 "confscanner.cc"
+#line 7669 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -7693,7 +7690,7 @@ st247:
 	if ( ++p == pe )
 		goto _test_eof247;
 case 247:
-#line 7697 "confscanner.cc"
+#line 7694 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr498;
@@ -7778,7 +7775,7 @@ st248:
 	if ( ++p == pe )
 		goto _test_eof248;
 case 248:
-#line 7782 "confscanner.cc"
+#line 7779 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st248;
@@ -7815,7 +7812,7 @@ st249:
 	if ( ++p == pe )
 		goto _test_eof249;
 case 249:
-#line 7819 "confscanner.cc"
+#line 7816 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -7846,7 +7843,7 @@ st250:
 	if ( ++p == pe )
 		goto _test_eof250;
 case 250:
-#line 7850 "confscanner.cc"
+#line 7847 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr512;
 		case 9: goto tr513;
@@ -7877,7 +7874,7 @@ st251:
 	if ( ++p == pe )
 		goto _test_eof251;
 case 251:
-#line 7881 "confscanner.cc"
+#line 7878 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr498;
@@ -7907,7 +7904,7 @@ st252:
 	if ( ++p == pe )
 		goto _test_eof252;
 case 252:
-#line 7911 "confscanner.cc"
+#line 7908 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr519;
@@ -7991,7 +7988,7 @@ st253:
 	if ( ++p == pe )
 		goto _test_eof253;
 case 253:
-#line 7995 "confscanner.cc"
+#line 7992 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st253;
@@ -8027,7 +8024,7 @@ st254:
 	if ( ++p == pe )
 		goto _test_eof254;
 case 254:
-#line 8031 "confscanner.cc"
+#line 8028 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -8058,7 +8055,7 @@ st255:
 	if ( ++p == pe )
 		goto _test_eof255;
 case 255:
-#line 8062 "confscanner.cc"
+#line 8059 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr531;
 		case 9: goto tr532;
@@ -8089,7 +8086,7 @@ st256:
 	if ( ++p == pe )
 		goto _test_eof256;
 case 256:
-#line 8093 "confscanner.cc"
+#line 8090 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr519;
@@ -8120,7 +8117,7 @@ st257:
 	if ( ++p == pe )
 		goto _test_eof257;
 case 257:
-#line 8124 "confscanner.cc"
+#line 8121 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -8152,7 +8149,7 @@ st258:
 	if ( ++p == pe )
 		goto _test_eof258;
 case 258:
-#line 8156 "confscanner.cc"
+#line 8153 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -8177,7 +8174,7 @@ st259:
 	if ( ++p == pe )
 		goto _test_eof259;
 case 259:
-#line 8181 "confscanner.cc"
+#line 8178 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr541;
@@ -8280,7 +8277,7 @@ st260:
 	if ( ++p == pe )
 		goto _test_eof260;
 case 260:
-#line 8284 "confscanner.cc"
+#line 8281 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st260;
@@ -8312,7 +8309,7 @@ st261:
 	if ( ++p == pe )
 		goto _test_eof261;
 case 261:
-#line 8316 "confscanner.cc"
+#line 8313 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -8343,7 +8340,7 @@ st262:
 	if ( ++p == pe )
 		goto _test_eof262;
 case 262:
-#line 8347 "confscanner.cc"
+#line 8344 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr554;
 		case 9: goto tr555;
@@ -8374,7 +8371,7 @@ st263:
 	if ( ++p == pe )
 		goto _test_eof263;
 case 263:
-#line 8378 "confscanner.cc"
+#line 8375 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr559;
@@ -8402,7 +8399,7 @@ st264:
 	if ( ++p == pe )
 		goto _test_eof264;
 case 264:
-#line 8406 "confscanner.cc"
+#line 8403 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -8423,7 +8420,7 @@ st265:
 	if ( ++p == pe )
 		goto _test_eof265;
 case 265:
-#line 8427 "confscanner.cc"
+#line 8424 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr563;
@@ -8503,7 +8500,7 @@ st266:
 	if ( ++p == pe )
 		goto _test_eof266;
 case 266:
-#line 8507 "confscanner.cc"
+#line 8504 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st266;
@@ -8535,7 +8532,7 @@ st267:
 	if ( ++p == pe )
 		goto _test_eof267;
 case 267:
-#line 8539 "confscanner.cc"
+#line 8536 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -8555,7 +8552,7 @@ st268:
 	if ( ++p == pe )
 		goto _test_eof268;
 case 268:
-#line 8559 "confscanner.cc"
+#line 8556 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -8601,7 +8598,7 @@ st270:
 	if ( ++p == pe )
 		goto _test_eof270;
 case 270:
-#line 8605 "confscanner.cc"
+#line 8602 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr576;
@@ -8682,7 +8679,7 @@ st271:
 	if ( ++p == pe )
 		goto _test_eof271;
 case 271:
-#line 8686 "confscanner.cc"
+#line 8683 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st271;
@@ -8715,7 +8712,7 @@ st272:
 	if ( ++p == pe )
 		goto _test_eof272;
 case 272:
-#line 8719 "confscanner.cc"
+#line 8716 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -8746,7 +8743,7 @@ st273:
 	if ( ++p == pe )
 		goto _test_eof273;
 case 273:
-#line 8750 "confscanner.cc"
+#line 8747 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr588;
 		case 9: goto tr589;
@@ -8777,7 +8774,7 @@ st274:
 	if ( ++p == pe )
 		goto _test_eof274;
 case 274:
-#line 8781 "confscanner.cc"
+#line 8778 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr576;
@@ -8860,7 +8857,7 @@ st903:
 	if ( ++p == pe )
 		goto _test_eof903;
 case 903:
-#line 8864 "confscanner.cc"
+#line 8861 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st903;
@@ -8896,7 +8893,7 @@ st275:
 	if ( ++p == pe )
 		goto _test_eof275;
 case 275:
-#line 8900 "confscanner.cc"
+#line 8897 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -8927,7 +8924,7 @@ st276:
 	if ( ++p == pe )
 		goto _test_eof276;
 case 276:
-#line 8931 "confscanner.cc"
+#line 8928 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr597;
 		case 9: goto tr598;
@@ -8958,7 +8955,7 @@ st904:
 	if ( ++p == pe )
 		goto _test_eof904;
 case 904:
-#line 8962 "confscanner.cc"
+#line 8959 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1828;
@@ -9035,7 +9032,7 @@ st277:
 	if ( ++p == pe )
 		goto _test_eof277;
 case 277:
-#line 9039 "confscanner.cc"
+#line 9036 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st271;
 		case 10: goto tr601;
@@ -9074,7 +9071,7 @@ st280:
 	if ( ++p == pe )
 		goto _test_eof280;
 case 280:
-#line 9078 "confscanner.cc"
+#line 9075 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -9099,7 +9096,7 @@ st281:
 	if ( ++p == pe )
 		goto _test_eof281;
 case 281:
-#line 9103 "confscanner.cc"
+#line 9100 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr604;
 		case 9: goto tr589;
@@ -9126,7 +9123,7 @@ st282:
 	if ( ++p == pe )
 		goto _test_eof282;
 case 282:
-#line 9130 "confscanner.cc"
+#line 9127 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr576;
@@ -9178,7 +9175,7 @@ st905:
 	if ( ++p == pe )
 		goto _test_eof905;
 case 905:
-#line 9182 "confscanner.cc"
+#line 9179 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st903;
 		case 10: goto tr610;
@@ -9226,7 +9223,7 @@ st285:
 	if ( ++p == pe )
 		goto _test_eof285;
 case 285:
-#line 9230 "confscanner.cc"
+#line 9227 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr613;
 		case 9: goto tr614;
@@ -9257,7 +9254,7 @@ st286:
 	if ( ++p == pe )
 		goto _test_eof286;
 case 286:
-#line 9261 "confscanner.cc"
+#line 9258 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr563;
@@ -9339,7 +9336,7 @@ st906:
 	if ( ++p == pe )
 		goto _test_eof906;
 case 906:
-#line 9343 "confscanner.cc"
+#line 9340 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st906;
@@ -9374,7 +9371,7 @@ st287:
 	if ( ++p == pe )
 		goto _test_eof287;
 case 287:
-#line 9378 "confscanner.cc"
+#line 9375 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -9405,7 +9402,7 @@ st288:
 	if ( ++p == pe )
 		goto _test_eof288;
 case 288:
-#line 9409 "confscanner.cc"
+#line 9406 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr622;
 		case 9: goto tr623;
@@ -9436,7 +9433,7 @@ st907:
 	if ( ++p == pe )
 		goto _test_eof907;
 case 907:
-#line 9440 "confscanner.cc"
+#line 9437 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1837;
@@ -9512,7 +9509,7 @@ st289:
 	if ( ++p == pe )
 		goto _test_eof289;
 case 289:
-#line 9516 "confscanner.cc"
+#line 9513 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st266;
 		case 10: goto tr626;
@@ -9550,7 +9547,7 @@ st292:
 	if ( ++p == pe )
 		goto _test_eof292;
 case 292:
-#line 9554 "confscanner.cc"
+#line 9551 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -9575,7 +9572,7 @@ st293:
 	if ( ++p == pe )
 		goto _test_eof293;
 case 293:
-#line 9579 "confscanner.cc"
+#line 9576 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr629;
 		case 9: goto tr614;
@@ -9602,7 +9599,7 @@ st294:
 	if ( ++p == pe )
 		goto _test_eof294;
 case 294:
-#line 9606 "confscanner.cc"
+#line 9603 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr563;
@@ -9653,7 +9650,7 @@ st908:
 	if ( ++p == pe )
 		goto _test_eof908;
 case 908:
-#line 9657 "confscanner.cc"
+#line 9654 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st906;
 		case 10: goto tr635;
@@ -9750,7 +9747,7 @@ st909:
 	if ( ++p == pe )
 		goto _test_eof909;
 case 909:
-#line 9754 "confscanner.cc"
+#line 9751 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st909;
@@ -9785,7 +9782,7 @@ st297:
 	if ( ++p == pe )
 		goto _test_eof297;
 case 297:
-#line 9789 "confscanner.cc"
+#line 9786 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -9816,7 +9813,7 @@ st298:
 	if ( ++p == pe )
 		goto _test_eof298;
 case 298:
-#line 9820 "confscanner.cc"
+#line 9817 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr639;
 		case 9: goto tr640;
@@ -9847,7 +9844,7 @@ st910:
 	if ( ++p == pe )
 		goto _test_eof910;
 case 910:
-#line 9851 "confscanner.cc"
+#line 9848 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1846;
@@ -9939,7 +9936,7 @@ st299:
 	if ( ++p == pe )
 		goto _test_eof299;
 case 299:
-#line 9943 "confscanner.cc"
+#line 9940 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st260;
 		case 10: goto tr643;
@@ -9991,7 +9988,7 @@ st302:
 	if ( ++p == pe )
 		goto _test_eof302;
 case 302:
-#line 9995 "confscanner.cc"
+#line 9992 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -10030,7 +10027,7 @@ st303:
 	if ( ++p == pe )
 		goto _test_eof303;
 case 303:
-#line 10034 "confscanner.cc"
+#line 10031 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr646;
 		case 9: goto tr555;
@@ -10050,7 +10047,7 @@ st304:
 	if ( ++p == pe )
 		goto _test_eof304;
 case 304:
-#line 10054 "confscanner.cc"
+#line 10051 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr559;
@@ -10078,7 +10075,7 @@ st305:
 	if ( ++p == pe )
 		goto _test_eof305;
 case 305:
-#line 10082 "confscanner.cc"
+#line 10079 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr559;
@@ -10129,7 +10126,7 @@ st911:
 	if ( ++p == pe )
 		goto _test_eof911;
 case 911:
-#line 10133 "confscanner.cc"
+#line 10130 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st909;
 		case 10: goto tr656;
@@ -10226,7 +10223,7 @@ st912:
 	if ( ++p == pe )
 		goto _test_eof912;
 case 912:
-#line 10230 "confscanner.cc"
+#line 10227 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st912;
@@ -10265,7 +10262,7 @@ st308:
 	if ( ++p == pe )
 		goto _test_eof308;
 case 308:
-#line 10269 "confscanner.cc"
+#line 10266 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -10296,7 +10293,7 @@ st309:
 	if ( ++p == pe )
 		goto _test_eof309;
 case 309:
-#line 10300 "confscanner.cc"
+#line 10297 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr660;
 		case 9: goto tr661;
@@ -10327,7 +10324,7 @@ st913:
 	if ( ++p == pe )
 		goto _test_eof913;
 case 913:
-#line 10331 "confscanner.cc"
+#line 10328 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1857;
@@ -10357,7 +10354,7 @@ st310:
 	if ( ++p == pe )
 		goto _test_eof310;
 case 310:
-#line 10361 "confscanner.cc"
+#line 10358 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -10442,7 +10439,7 @@ st313:
 	if ( ++p == pe )
 		goto _test_eof313;
 case 313:
-#line 10446 "confscanner.cc"
+#line 10443 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -10580,7 +10577,7 @@ st317:
 	if ( ++p == pe )
 		goto _test_eof317;
 case 317:
-#line 10584 "confscanner.cc"
+#line 10581 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st175;
 		case 10: goto tr670;
@@ -10618,7 +10615,7 @@ st320:
 	if ( ++p == pe )
 		goto _test_eof320;
 case 320:
-#line 10622 "confscanner.cc"
+#line 10619 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -10643,7 +10640,7 @@ st321:
 	if ( ++p == pe )
 		goto _test_eof321;
 case 321:
-#line 10647 "confscanner.cc"
+#line 10644 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr673;
 		case 9: goto tr355;
@@ -10680,7 +10677,7 @@ st914:
 	if ( ++p == pe )
 		goto _test_eof914;
 case 914:
-#line 10684 "confscanner.cc"
+#line 10681 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st915;
 		case 10: goto tr684;
@@ -10763,7 +10760,7 @@ st915:
 	if ( ++p == pe )
 		goto _test_eof915;
 case 915:
-#line 10767 "confscanner.cc"
+#line 10764 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st915;
@@ -10798,7 +10795,7 @@ st322:
 	if ( ++p == pe )
 		goto _test_eof322;
 case 322:
-#line 10802 "confscanner.cc"
+#line 10799 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -10829,7 +10826,7 @@ st323:
 	if ( ++p == pe )
 		goto _test_eof323;
 case 323:
-#line 10833 "confscanner.cc"
+#line 10830 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr680;
 		case 9: goto tr681;
@@ -10860,7 +10857,7 @@ st916:
 	if ( ++p == pe )
 		goto _test_eof916;
 case 916:
-#line 10864 "confscanner.cc"
+#line 10861 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1866;
@@ -11088,7 +11085,7 @@ st331:
 	if ( ++p == pe )
 		goto _test_eof331;
 case 331:
-#line 11092 "confscanner.cc"
+#line 11089 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st331;
@@ -11121,7 +11118,7 @@ st332:
 	if ( ++p == pe )
 		goto _test_eof332;
 case 332:
-#line 11125 "confscanner.cc"
+#line 11122 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -11152,7 +11149,7 @@ st333:
 	if ( ++p == pe )
 		goto _test_eof333;
 case 333:
-#line 11156 "confscanner.cc"
+#line 11153 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr704;
 		case 9: goto tr705;
@@ -11183,7 +11180,7 @@ st334:
 	if ( ++p == pe )
 		goto _test_eof334;
 case 334:
-#line 11187 "confscanner.cc"
+#line 11184 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr690;
@@ -11211,7 +11208,7 @@ st335:
 	if ( ++p == pe )
 		goto _test_eof335;
 case 335:
-#line 11215 "confscanner.cc"
+#line 11212 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -11236,7 +11233,7 @@ st336:
 	if ( ++p == pe )
 		goto _test_eof336;
 case 336:
-#line 11240 "confscanner.cc"
+#line 11237 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr711;
@@ -11320,7 +11317,7 @@ st337:
 	if ( ++p == pe )
 		goto _test_eof337;
 case 337:
-#line 11324 "confscanner.cc"
+#line 11321 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st337;
@@ -11356,7 +11353,7 @@ st338:
 	if ( ++p == pe )
 		goto _test_eof338;
 case 338:
-#line 11360 "confscanner.cc"
+#line 11357 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -11387,7 +11384,7 @@ st339:
 	if ( ++p == pe )
 		goto _test_eof339;
 case 339:
-#line 11391 "confscanner.cc"
+#line 11388 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr723;
 		case 9: goto tr724;
@@ -11418,7 +11415,7 @@ st340:
 	if ( ++p == pe )
 		goto _test_eof340;
 case 340:
-#line 11422 "confscanner.cc"
+#line 11419 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr711;
@@ -11449,7 +11446,7 @@ st341:
 	if ( ++p == pe )
 		goto _test_eof341;
 case 341:
-#line 11453 "confscanner.cc"
+#line 11450 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr730;
@@ -11507,7 +11504,7 @@ st342:
 	if ( ++p == pe )
 		goto _test_eof342;
 case 342:
-#line 11511 "confscanner.cc"
+#line 11508 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -11555,7 +11552,7 @@ st343:
 	if ( ++p == pe )
 		goto _test_eof343;
 case 343:
-#line 11559 "confscanner.cc"
+#line 11556 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr444;
 		case 9: goto tr326;
@@ -11582,7 +11579,7 @@ st344:
 	if ( ++p == pe )
 		goto _test_eof344;
 case 344:
-#line 11586 "confscanner.cc"
+#line 11583 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr315;
@@ -11614,7 +11611,7 @@ st345:
 	if ( ++p == pe )
 		goto _test_eof345;
 case 345:
-#line 11618 "confscanner.cc"
+#line 11615 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -11700,7 +11697,7 @@ st917:
 	if ( ++p == pe )
 		goto _test_eof917;
 case 917:
-#line 11704 "confscanner.cc"
+#line 11701 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st917;
@@ -11739,7 +11736,7 @@ st346:
 	if ( ++p == pe )
 		goto _test_eof346;
 case 346:
-#line 11743 "confscanner.cc"
+#line 11740 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -11770,7 +11767,7 @@ st347:
 	if ( ++p == pe )
 		goto _test_eof347;
 case 347:
-#line 11774 "confscanner.cc"
+#line 11771 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr744;
 		case 9: goto tr745;
@@ -11801,7 +11798,7 @@ st918:
 	if ( ++p == pe )
 		goto _test_eof918;
 case 918:
-#line 11805 "confscanner.cc"
+#line 11802 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1875;
@@ -11831,7 +11828,7 @@ st348:
 	if ( ++p == pe )
 		goto _test_eof348;
 case 348:
-#line 11835 "confscanner.cc"
+#line 11832 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr730;
@@ -11916,7 +11913,7 @@ st351:
 	if ( ++p == pe )
 		goto _test_eof351;
 case 351:
-#line 11920 "confscanner.cc"
+#line 11917 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr730;
@@ -12097,7 +12094,7 @@ st355:
 	if ( ++p == pe )
 		goto _test_eof355;
 case 355:
-#line 12101 "confscanner.cc"
+#line 12098 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st355;
@@ -12129,7 +12126,7 @@ st356:
 	if ( ++p == pe )
 		goto _test_eof356;
 case 356:
-#line 12133 "confscanner.cc"
+#line 12130 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -12160,7 +12157,7 @@ st357:
 	if ( ++p == pe )
 		goto _test_eof357;
 case 357:
-#line 12164 "confscanner.cc"
+#line 12161 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr764;
 		case 9: goto tr765;
@@ -12191,7 +12188,7 @@ st358:
 	if ( ++p == pe )
 		goto _test_eof358;
 case 358:
-#line 12195 "confscanner.cc"
+#line 12192 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr769;
@@ -12273,7 +12270,7 @@ st919:
 	if ( ++p == pe )
 		goto _test_eof919;
 case 919:
-#line 12277 "confscanner.cc"
+#line 12274 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st919;
@@ -12308,7 +12305,7 @@ st359:
 	if ( ++p == pe )
 		goto _test_eof359;
 case 359:
-#line 12312 "confscanner.cc"
+#line 12309 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -12339,7 +12336,7 @@ st360:
 	if ( ++p == pe )
 		goto _test_eof360;
 case 360:
-#line 12343 "confscanner.cc"
+#line 12340 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr774;
 		case 9: goto tr775;
@@ -12370,7 +12367,7 @@ st920:
 	if ( ++p == pe )
 		goto _test_eof920;
 case 920:
-#line 12374 "confscanner.cc"
+#line 12371 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1882;
@@ -12447,7 +12444,7 @@ st361:
 	if ( ++p == pe )
 		goto _test_eof361;
 case 361:
-#line 12451 "confscanner.cc"
+#line 12448 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st355;
 		case 10: goto tr778;
@@ -12509,7 +12506,7 @@ st364:
 	if ( ++p == pe )
 		goto _test_eof364;
 case 364:
-#line 12513 "confscanner.cc"
+#line 12510 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -12557,7 +12554,7 @@ st365:
 	if ( ++p == pe )
 		goto _test_eof365;
 case 365:
-#line 12561 "confscanner.cc"
+#line 12558 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr781;
 		case 9: goto tr765;
@@ -12588,7 +12585,7 @@ st366:
 	if ( ++p == pe )
 		goto _test_eof366;
 case 366:
-#line 12592 "confscanner.cc"
+#line 12589 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr769;
@@ -12626,7 +12623,7 @@ st921:
 	if ( ++p == pe )
 		goto _test_eof921;
 case 921:
-#line 12630 "confscanner.cc"
+#line 12627 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st919;
 		case 10: goto tr789;
@@ -12865,7 +12862,7 @@ st374:
 	if ( ++p == pe )
 		goto _test_eof374;
 case 374:
-#line 12869 "confscanner.cc"
+#line 12866 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st374;
@@ -12898,7 +12895,7 @@ st375:
 	if ( ++p == pe )
 		goto _test_eof375;
 case 375:
-#line 12902 "confscanner.cc"
+#line 12899 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -12929,7 +12926,7 @@ st376:
 	if ( ++p == pe )
 		goto _test_eof376;
 case 376:
-#line 12933 "confscanner.cc"
+#line 12930 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr805;
 		case 9: goto tr806;
@@ -12960,7 +12957,7 @@ st377:
 	if ( ++p == pe )
 		goto _test_eof377;
 case 377:
-#line 12964 "confscanner.cc"
+#line 12961 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr810;
@@ -13043,7 +13040,7 @@ st922:
 	if ( ++p == pe )
 		goto _test_eof922;
 case 922:
-#line 13047 "confscanner.cc"
+#line 13044 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st922;
@@ -13079,7 +13076,7 @@ st378:
 	if ( ++p == pe )
 		goto _test_eof378;
 case 378:
-#line 13083 "confscanner.cc"
+#line 13080 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -13110,7 +13107,7 @@ st379:
 	if ( ++p == pe )
 		goto _test_eof379;
 case 379:
-#line 13114 "confscanner.cc"
+#line 13111 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr815;
 		case 9: goto tr816;
@@ -13141,7 +13138,7 @@ st923:
 	if ( ++p == pe )
 		goto _test_eof923;
 case 923:
-#line 13145 "confscanner.cc"
+#line 13142 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1891;
@@ -13230,7 +13227,7 @@ st380:
 	if ( ++p == pe )
 		goto _test_eof380;
 case 380:
-#line 13234 "confscanner.cc"
+#line 13231 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st374;
 		case 10: goto tr819;
@@ -13265,7 +13262,7 @@ st383:
 	if ( ++p == pe )
 		goto _test_eof383;
 case 383:
-#line 13269 "confscanner.cc"
+#line 13266 "confscanner.cc"
 	if ( (*p) == 61 )
 		goto st384;
 	goto st0;
@@ -13281,7 +13278,7 @@ st384:
 	if ( ++p == pe )
 		goto _test_eof384;
 case 384:
-#line 13285 "confscanner.cc"
+#line 13282 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st384;
 		case 10: goto tr825;
@@ -13317,7 +13314,7 @@ st387:
 	if ( ++p == pe )
 		goto _test_eof387;
 case 387:
-#line 13321 "confscanner.cc"
+#line 13318 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr830;
 		case 10: goto tr831;
@@ -13357,7 +13354,7 @@ st388:
 	if ( ++p == pe )
 		goto _test_eof388;
 case 388:
-#line 13361 "confscanner.cc"
+#line 13358 "confscanner.cc"
 	if ( (*p) > 90 ) {
 		if ( 97 <= (*p) && (*p) <= 122 )
 			goto tr828;
@@ -13400,7 +13397,7 @@ st389:
 	if ( ++p == pe )
 		goto _test_eof389;
 case 389:
-#line 13404 "confscanner.cc"
+#line 13401 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -13448,7 +13445,7 @@ st390:
 	if ( ++p == pe )
 		goto _test_eof390;
 case 390:
-#line 13452 "confscanner.cc"
+#line 13449 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr824;
 		case 9: goto tr806;
@@ -13468,7 +13465,7 @@ st391:
 	if ( ++p == pe )
 		goto _test_eof391;
 case 391:
-#line 13472 "confscanner.cc"
+#line 13469 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr810;
@@ -13497,7 +13494,7 @@ st392:
 	if ( ++p == pe )
 		goto _test_eof392;
 case 392:
-#line 13501 "confscanner.cc"
+#line 13498 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr810;
@@ -13536,7 +13533,7 @@ st924:
 	if ( ++p == pe )
 		goto _test_eof924;
 case 924:
-#line 13540 "confscanner.cc"
+#line 13537 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st922;
 		case 10: goto tr844;
@@ -13626,7 +13623,7 @@ st395:
 	if ( ++p == pe )
 		goto _test_eof395;
 case 395:
-#line 13630 "confscanner.cc"
+#line 13627 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st337;
 		case 10: goto tr846;
@@ -13668,7 +13665,7 @@ st398:
 	if ( ++p == pe )
 		goto _test_eof398;
 case 398:
-#line 13672 "confscanner.cc"
+#line 13669 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -13693,7 +13690,7 @@ st399:
 	if ( ++p == pe )
 		goto _test_eof399;
 case 399:
-#line 13697 "confscanner.cc"
+#line 13694 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr849;
 		case 9: goto tr724;
@@ -13720,7 +13717,7 @@ st400:
 	if ( ++p == pe )
 		goto _test_eof400;
 case 400:
-#line 13724 "confscanner.cc"
+#line 13721 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr711;
@@ -13775,7 +13772,7 @@ st925:
 	if ( ++p == pe )
 		goto _test_eof925;
 case 925:
-#line 13779 "confscanner.cc"
+#line 13776 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st917;
 		case 10: goto tr855;
@@ -13815,7 +13812,7 @@ st403:
 	if ( ++p == pe )
 		goto _test_eof403;
 case 403:
-#line 13819 "confscanner.cc"
+#line 13816 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr830;
 		case 10: goto tr831;
@@ -13892,7 +13889,7 @@ st406:
 	if ( ++p == pe )
 		goto _test_eof406;
 case 406:
-#line 13896 "confscanner.cc"
+#line 13893 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr830;
 		case 10: goto tr831;
@@ -14032,7 +14029,7 @@ st410:
 	if ( ++p == pe )
 		goto _test_eof410;
 case 410:
-#line 14036 "confscanner.cc"
+#line 14033 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st410;
 		case 10: goto tr868;
@@ -14063,7 +14060,7 @@ st411:
 	if ( ++p == pe )
 		goto _test_eof411;
 case 411:
-#line 14067 "confscanner.cc"
+#line 14064 "confscanner.cc"
 	if ( (*p) == 10 )
 		goto tr868;
 	goto st0;
@@ -14087,7 +14084,7 @@ st412:
 	if ( ++p == pe )
 		goto _test_eof412;
 case 412:
-#line 14091 "confscanner.cc"
+#line 14088 "confscanner.cc"
 	if ( (*p) == 35 )
 		goto st0;
 	goto tr871;
@@ -14258,7 +14255,7 @@ st418:
 	if ( ++p == pe )
 		goto _test_eof418;
 case 418:
-#line 14262 "confscanner.cc"
+#line 14259 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st418;
 		case 10: goto tr881;
@@ -14290,7 +14287,7 @@ st419:
 	if ( ++p == pe )
 		goto _test_eof419;
 case 419:
-#line 14294 "confscanner.cc"
+#line 14291 "confscanner.cc"
 	if ( (*p) == 10 )
 		goto tr881;
 	goto st0;
@@ -14314,7 +14311,7 @@ st420:
 	if ( ++p == pe )
 		goto _test_eof420;
 case 420:
-#line 14318 "confscanner.cc"
+#line 14315 "confscanner.cc"
 	if ( (*p) == 35 )
 		goto st0;
 	goto tr884;
@@ -14387,7 +14384,7 @@ st926:
 	if ( ++p == pe )
 		goto _test_eof926;
 case 926:
-#line 14391 "confscanner.cc"
+#line 14388 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st926;
@@ -14423,7 +14420,7 @@ st421:
 	if ( ++p == pe )
 		goto _test_eof421;
 case 421:
-#line 14427 "confscanner.cc"
+#line 14424 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -14454,7 +14451,7 @@ st422:
 	if ( ++p == pe )
 		goto _test_eof422;
 case 422:
-#line 14458 "confscanner.cc"
+#line 14455 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr887;
 		case 9: goto tr888;
@@ -14485,7 +14482,7 @@ st927:
 	if ( ++p == pe )
 		goto _test_eof927;
 case 927:
-#line 14489 "confscanner.cc"
+#line 14486 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1904;
@@ -14562,7 +14559,7 @@ st423:
 	if ( ++p == pe )
 		goto _test_eof423;
 case 423:
-#line 14566 "confscanner.cc"
+#line 14563 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st331;
 		case 10: goto tr891;
@@ -14601,7 +14598,7 @@ st426:
 	if ( ++p == pe )
 		goto _test_eof426;
 case 426:
-#line 14605 "confscanner.cc"
+#line 14602 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -14626,7 +14623,7 @@ st427:
 	if ( ++p == pe )
 		goto _test_eof427;
 case 427:
-#line 14630 "confscanner.cc"
+#line 14627 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr894;
 		case 9: goto tr705;
@@ -14646,7 +14643,7 @@ st428:
 	if ( ++p == pe )
 		goto _test_eof428;
 case 428:
-#line 14650 "confscanner.cc"
+#line 14647 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr690;
@@ -14675,7 +14672,7 @@ st429:
 	if ( ++p == pe )
 		goto _test_eof429;
 case 429:
-#line 14679 "confscanner.cc"
+#line 14676 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr690;
@@ -14727,7 +14724,7 @@ st928:
 	if ( ++p == pe )
 		goto _test_eof928;
 case 928:
-#line 14731 "confscanner.cc"
+#line 14728 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st926;
 		case 10: goto tr900;
@@ -14816,7 +14813,7 @@ st432:
 	if ( ++p == pe )
 		goto _test_eof432;
 case 432:
-#line 14820 "confscanner.cc"
+#line 14817 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st253;
 		case 10: goto tr902;
@@ -14858,7 +14855,7 @@ st435:
 	if ( ++p == pe )
 		goto _test_eof435;
 case 435:
-#line 14862 "confscanner.cc"
+#line 14859 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -14883,7 +14880,7 @@ st436:
 	if ( ++p == pe )
 		goto _test_eof436;
 case 436:
-#line 14887 "confscanner.cc"
+#line 14884 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr905;
 		case 9: goto tr532;
@@ -14910,7 +14907,7 @@ st437:
 	if ( ++p == pe )
 		goto _test_eof437;
 case 437:
-#line 14914 "confscanner.cc"
+#line 14911 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr519;
@@ -14965,7 +14962,7 @@ st929:
 	if ( ++p == pe )
 		goto _test_eof929;
 case 929:
-#line 14969 "confscanner.cc"
+#line 14966 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st912;
 		case 10: goto tr911;
@@ -15005,7 +15002,7 @@ st440:
 	if ( ++p == pe )
 		goto _test_eof440;
 case 440:
-#line 15009 "confscanner.cc"
+#line 15006 "confscanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr120;
 		case 95: goto st70;
@@ -15064,7 +15061,7 @@ st443:
 	if ( ++p == pe )
 		goto _test_eof443;
 case 443:
-#line 15068 "confscanner.cc"
+#line 15065 "confscanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr120;
 		case 95: goto st70;
@@ -15247,7 +15244,7 @@ st452:
 	if ( ++p == pe )
 		goto _test_eof452;
 case 452:
-#line 15251 "confscanner.cc"
+#line 15248 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st452;
 		case 10: goto tr924;
@@ -15286,7 +15283,7 @@ st455:
 	if ( ++p == pe )
 		goto _test_eof455;
 case 455:
-#line 15290 "confscanner.cc"
+#line 15287 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -15318,7 +15315,7 @@ st456:
 	if ( ++p == pe )
 		goto _test_eof456;
 case 456:
-#line 15322 "confscanner.cc"
+#line 15319 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -15343,7 +15340,7 @@ st457:
 	if ( ++p == pe )
 		goto _test_eof457;
 case 457:
-#line 15347 "confscanner.cc"
+#line 15344 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr931;
@@ -15464,7 +15461,7 @@ st458:
 	if ( ++p == pe )
 		goto _test_eof458;
 case 458:
-#line 15468 "confscanner.cc"
+#line 15465 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st458;
@@ -15496,7 +15493,7 @@ st459:
 	if ( ++p == pe )
 		goto _test_eof459;
 case 459:
-#line 15500 "confscanner.cc"
+#line 15497 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -15527,7 +15524,7 @@ st460:
 	if ( ++p == pe )
 		goto _test_eof460;
 case 460:
-#line 15531 "confscanner.cc"
+#line 15528 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr944;
 		case 9: goto tr945;
@@ -15558,7 +15555,7 @@ st461:
 	if ( ++p == pe )
 		goto _test_eof461;
 case 461:
-#line 15562 "confscanner.cc"
+#line 15559 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr949;
@@ -15597,7 +15594,7 @@ st462:
 	if ( ++p == pe )
 		goto _test_eof462;
 case 462:
-#line 15601 "confscanner.cc"
+#line 15598 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -15679,7 +15676,7 @@ st930:
 	if ( ++p == pe )
 		goto _test_eof930;
 case 930:
-#line 15683 "confscanner.cc"
+#line 15680 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st930;
@@ -15714,7 +15711,7 @@ st463:
 	if ( ++p == pe )
 		goto _test_eof463;
 case 463:
-#line 15718 "confscanner.cc"
+#line 15715 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -15745,7 +15742,7 @@ st464:
 	if ( ++p == pe )
 		goto _test_eof464;
 case 464:
-#line 15749 "confscanner.cc"
+#line 15746 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr954;
 		case 9: goto tr955;
@@ -15776,7 +15773,7 @@ st931:
 	if ( ++p == pe )
 		goto _test_eof931;
 case 931:
-#line 15780 "confscanner.cc"
+#line 15777 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1917;
@@ -15888,7 +15885,7 @@ st465:
 	if ( ++p == pe )
 		goto _test_eof465;
 case 465:
-#line 15892 "confscanner.cc"
+#line 15889 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st458;
 		case 10: goto tr958;
@@ -15958,7 +15955,7 @@ st468:
 	if ( ++p == pe )
 		goto _test_eof468;
 case 468:
-#line 15962 "confscanner.cc"
+#line 15959 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -16015,7 +16012,7 @@ st469:
 	if ( ++p == pe )
 		goto _test_eof469;
 case 469:
-#line 16019 "confscanner.cc"
+#line 16016 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr961;
 		case 9: goto tr945;
@@ -16035,7 +16032,7 @@ st470:
 	if ( ++p == pe )
 		goto _test_eof470;
 case 470:
-#line 16039 "confscanner.cc"
+#line 16036 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr949;
@@ -16063,7 +16060,7 @@ st471:
 	if ( ++p == pe )
 		goto _test_eof471;
 case 471:
-#line 16067 "confscanner.cc"
+#line 16064 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr949;
@@ -16114,7 +16111,7 @@ st932:
 	if ( ++p == pe )
 		goto _test_eof932;
 case 932:
-#line 16118 "confscanner.cc"
+#line 16115 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st930;
 		case 10: goto tr971;
@@ -16211,7 +16208,7 @@ st933:
 	if ( ++p == pe )
 		goto _test_eof933;
 case 933:
-#line 16215 "confscanner.cc"
+#line 16212 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st933;
@@ -16251,7 +16248,7 @@ st474:
 	if ( ++p == pe )
 		goto _test_eof474;
 case 474:
-#line 16255 "confscanner.cc"
+#line 16252 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -16282,7 +16279,7 @@ st475:
 	if ( ++p == pe )
 		goto _test_eof475;
 case 475:
-#line 16286 "confscanner.cc"
+#line 16283 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr975;
 		case 9: goto tr976;
@@ -16313,7 +16310,7 @@ st934:
 	if ( ++p == pe )
 		goto _test_eof934;
 case 934:
-#line 16317 "confscanner.cc"
+#line 16314 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1928;
@@ -16344,7 +16341,7 @@ st476:
 	if ( ++p == pe )
 		goto _test_eof476;
 case 476:
-#line 16348 "confscanner.cc"
+#line 16345 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -16429,7 +16426,7 @@ st479:
 	if ( ++p == pe )
 		goto _test_eof479;
 case 479:
-#line 16433 "confscanner.cc"
+#line 16430 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -16722,7 +16719,7 @@ st488:
 	if ( ++p == pe )
 		goto _test_eof488;
 case 488:
-#line 16726 "confscanner.cc"
+#line 16723 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st248;
 		case 10: goto tr989;
@@ -16765,7 +16762,7 @@ st491:
 	if ( ++p == pe )
 		goto _test_eof491;
 case 491:
-#line 16769 "confscanner.cc"
+#line 16766 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -16790,7 +16787,7 @@ st492:
 	if ( ++p == pe )
 		goto _test_eof492;
 case 492:
-#line 16794 "confscanner.cc"
+#line 16791 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr992;
 		case 9: goto tr513;
@@ -16817,7 +16814,7 @@ st493:
 	if ( ++p == pe )
 		goto _test_eof493;
 case 493:
-#line 16821 "confscanner.cc"
+#line 16818 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr498;
@@ -16873,7 +16870,7 @@ st935:
 	if ( ++p == pe )
 		goto _test_eof935;
 case 935:
-#line 16877 "confscanner.cc"
+#line 16874 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st933;
 		case 10: goto tr998;
@@ -16914,7 +16911,7 @@ st496:
 	if ( ++p == pe )
 		goto _test_eof496;
 case 496:
-#line 16918 "confscanner.cc"
+#line 16915 "confscanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr148;
 		case 95: goto st85;
@@ -16973,7 +16970,7 @@ st499:
 	if ( ++p == pe )
 		goto _test_eof499;
 case 499:
-#line 16977 "confscanner.cc"
+#line 16974 "confscanner.cc"
 	switch( (*p) ) {
 		case 46: goto tr148;
 		case 95: goto st85;
@@ -17213,7 +17210,7 @@ st936:
 	if ( ++p == pe )
 		goto _test_eof936;
 case 936:
-#line 17217 "confscanner.cc"
+#line 17214 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st936;
@@ -17249,7 +17246,7 @@ st508:
 	if ( ++p == pe )
 		goto _test_eof508;
 case 508:
-#line 17253 "confscanner.cc"
+#line 17250 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -17280,7 +17277,7 @@ st509:
 	if ( ++p == pe )
 		goto _test_eof509;
 case 509:
-#line 17284 "confscanner.cc"
+#line 17281 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1012;
 		case 9: goto tr1013;
@@ -17311,7 +17308,7 @@ st937:
 	if ( ++p == pe )
 		goto _test_eof937;
 case 937:
-#line 17315 "confscanner.cc"
+#line 17312 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1939;
@@ -17388,7 +17385,7 @@ st510:
 	if ( ++p == pe )
 		goto _test_eof510;
 case 510:
-#line 17392 "confscanner.cc"
+#line 17389 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st242;
 		case 10: goto tr1016;
@@ -17427,7 +17424,7 @@ st513:
 	if ( ++p == pe )
 		goto _test_eof513;
 case 513:
-#line 17431 "confscanner.cc"
+#line 17428 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -17452,7 +17449,7 @@ st514:
 	if ( ++p == pe )
 		goto _test_eof514;
 case 514:
-#line 17456 "confscanner.cc"
+#line 17453 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1019;
 		case 9: goto tr1021;
@@ -17502,7 +17499,7 @@ st938:
 	if ( ++p == pe )
 		goto _test_eof938;
 case 938:
-#line 17506 "confscanner.cc"
+#line 17503 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st936;
 		case 10: goto tr1025;
@@ -17539,7 +17536,7 @@ st517:
 	if ( ++p == pe )
 		goto _test_eof517;
 case 517:
-#line 17543 "confscanner.cc"
+#line 17540 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -17571,7 +17568,7 @@ st518:
 	if ( ++p == pe )
 		goto _test_eof518;
 case 518:
-#line 17575 "confscanner.cc"
+#line 17572 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr498;
@@ -17602,7 +17599,7 @@ st519:
 	if ( ++p == pe )
 		goto _test_eof519;
 case 519:
-#line 17606 "confscanner.cc"
+#line 17603 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -17627,7 +17624,7 @@ st520:
 	if ( ++p == pe )
 		goto _test_eof520;
 case 520:
-#line 17631 "confscanner.cc"
+#line 17628 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr992;
 		case 9: goto tr1032;
@@ -17658,7 +17655,7 @@ st521:
 	if ( ++p == pe )
 		goto _test_eof521;
 case 521:
-#line 17662 "confscanner.cc"
+#line 17659 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr519;
@@ -17688,7 +17685,7 @@ st522:
 	if ( ++p == pe )
 		goto _test_eof522;
 case 522:
-#line 17692 "confscanner.cc"
+#line 17689 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -17713,7 +17710,7 @@ st523:
 	if ( ++p == pe )
 		goto _test_eof523;
 case 523:
-#line 17717 "confscanner.cc"
+#line 17714 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr905;
 		case 9: goto tr1040;
@@ -17733,7 +17730,7 @@ st524:
 	if ( ++p == pe )
 		goto _test_eof524;
 case 524:
-#line 17737 "confscanner.cc"
+#line 17734 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -17765,7 +17762,7 @@ st525:
 	if ( ++p == pe )
 		goto _test_eof525;
 case 525:
-#line 17769 "confscanner.cc"
+#line 17766 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -17790,7 +17787,7 @@ st526:
 	if ( ++p == pe )
 		goto _test_eof526;
 case 526:
-#line 17794 "confscanner.cc"
+#line 17791 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr541;
@@ -17839,7 +17836,7 @@ st527:
 	if ( ++p == pe )
 		goto _test_eof527;
 case 527:
-#line 17843 "confscanner.cc"
+#line 17840 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -17878,7 +17875,7 @@ st528:
 	if ( ++p == pe )
 		goto _test_eof528;
 case 528:
-#line 17882 "confscanner.cc"
+#line 17879 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr646;
 		case 9: goto tr1052;
@@ -17909,7 +17906,7 @@ st529:
 	if ( ++p == pe )
 		goto _test_eof529;
 case 529:
-#line 17913 "confscanner.cc"
+#line 17910 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr559;
@@ -17933,7 +17930,7 @@ st530:
 	if ( ++p == pe )
 		goto _test_eof530;
 case 530:
-#line 17937 "confscanner.cc"
+#line 17934 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -17965,7 +17962,7 @@ st531:
 	if ( ++p == pe )
 		goto _test_eof531;
 case 531:
-#line 17969 "confscanner.cc"
+#line 17966 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr563;
@@ -17991,7 +17988,7 @@ st532:
 	if ( ++p == pe )
 		goto _test_eof532;
 case 532:
-#line 17995 "confscanner.cc"
+#line 17992 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -18063,7 +18060,7 @@ st535:
 	if ( ++p == pe )
 		goto _test_eof535;
 case 535:
-#line 18067 "confscanner.cc"
+#line 18064 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr576;
@@ -18090,7 +18087,7 @@ st536:
 	if ( ++p == pe )
 		goto _test_eof536;
 case 536:
-#line 18094 "confscanner.cc"
+#line 18091 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -18115,7 +18112,7 @@ st537:
 	if ( ++p == pe )
 		goto _test_eof537;
 case 537:
-#line 18119 "confscanner.cc"
+#line 18116 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr604;
 		case 9: goto tr1069;
@@ -18140,7 +18137,7 @@ st538:
 	if ( ++p == pe )
 		goto _test_eof538;
 case 538:
-#line 18144 "confscanner.cc"
+#line 18141 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr629;
 		case 9: goto tr1074;
@@ -18160,7 +18157,7 @@ st539:
 	if ( ++p == pe )
 		goto _test_eof539;
 case 539:
-#line 18164 "confscanner.cc"
+#line 18161 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -18192,7 +18189,7 @@ st540:
 	if ( ++p == pe )
 		goto _test_eof540;
 case 540:
-#line 18196 "confscanner.cc"
+#line 18193 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -18217,7 +18214,7 @@ st541:
 	if ( ++p == pe )
 		goto _test_eof541;
 case 541:
-#line 18221 "confscanner.cc"
+#line 18218 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr931;
@@ -18284,7 +18281,7 @@ st542:
 	if ( ++p == pe )
 		goto _test_eof542;
 case 542:
-#line 18288 "confscanner.cc"
+#line 18285 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -18341,7 +18338,7 @@ st543:
 	if ( ++p == pe )
 		goto _test_eof543;
 case 543:
-#line 18345 "confscanner.cc"
+#line 18342 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr961;
 		case 9: goto tr1086;
@@ -18372,7 +18369,7 @@ st544:
 	if ( ++p == pe )
 		goto _test_eof544;
 case 544:
-#line 18376 "confscanner.cc"
+#line 18373 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr949;
@@ -18407,7 +18404,7 @@ st545:
 	if ( ++p == pe )
 		goto _test_eof545;
 case 545:
-#line 18411 "confscanner.cc"
+#line 18408 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -18428,7 +18425,7 @@ st546:
 	if ( ++p == pe )
 		goto _test_eof546;
 case 546:
-#line 18432 "confscanner.cc"
+#line 18429 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -18554,7 +18551,7 @@ st552:
 	if ( ++p == pe )
 		goto _test_eof552;
 case 552:
-#line 18558 "confscanner.cc"
+#line 18555 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1099;
@@ -18635,7 +18632,7 @@ st553:
 	if ( ++p == pe )
 		goto _test_eof553;
 case 553:
-#line 18639 "confscanner.cc"
+#line 18636 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st553;
@@ -18668,7 +18665,7 @@ st554:
 	if ( ++p == pe )
 		goto _test_eof554;
 case 554:
-#line 18672 "confscanner.cc"
+#line 18669 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -18699,7 +18696,7 @@ st555:
 	if ( ++p == pe )
 		goto _test_eof555;
 case 555:
-#line 18703 "confscanner.cc"
+#line 18700 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1113;
 		case 9: goto tr1114;
@@ -18730,7 +18727,7 @@ st556:
 	if ( ++p == pe )
 		goto _test_eof556;
 case 556:
-#line 18734 "confscanner.cc"
+#line 18731 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1099;
@@ -18758,7 +18755,7 @@ st557:
 	if ( ++p == pe )
 		goto _test_eof557;
 case 557:
-#line 18762 "confscanner.cc"
+#line 18759 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -18783,7 +18780,7 @@ st558:
 	if ( ++p == pe )
 		goto _test_eof558;
 case 558:
-#line 18787 "confscanner.cc"
+#line 18784 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1121;
@@ -18868,7 +18865,7 @@ st559:
 	if ( ++p == pe )
 		goto _test_eof559;
 case 559:
-#line 18872 "confscanner.cc"
+#line 18869 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st559;
@@ -18905,7 +18902,7 @@ st560:
 	if ( ++p == pe )
 		goto _test_eof560;
 case 560:
-#line 18909 "confscanner.cc"
+#line 18906 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -18936,7 +18933,7 @@ st561:
 	if ( ++p == pe )
 		goto _test_eof561;
 case 561:
-#line 18940 "confscanner.cc"
+#line 18937 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1135;
 		case 9: goto tr1136;
@@ -18967,7 +18964,7 @@ st562:
 	if ( ++p == pe )
 		goto _test_eof562;
 case 562:
-#line 18971 "confscanner.cc"
+#line 18968 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1121;
@@ -18997,7 +18994,7 @@ st563:
 	if ( ++p == pe )
 		goto _test_eof563;
 case 563:
-#line 19001 "confscanner.cc"
+#line 18998 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1142;
@@ -19081,7 +19078,7 @@ st564:
 	if ( ++p == pe )
 		goto _test_eof564;
 case 564:
-#line 19085 "confscanner.cc"
+#line 19082 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st564;
@@ -19117,7 +19114,7 @@ st565:
 	if ( ++p == pe )
 		goto _test_eof565;
 case 565:
-#line 19121 "confscanner.cc"
+#line 19118 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -19148,7 +19145,7 @@ st566:
 	if ( ++p == pe )
 		goto _test_eof566;
 case 566:
-#line 19152 "confscanner.cc"
+#line 19149 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1154;
 		case 9: goto tr1155;
@@ -19179,7 +19176,7 @@ st567:
 	if ( ++p == pe )
 		goto _test_eof567;
 case 567:
-#line 19183 "confscanner.cc"
+#line 19180 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1142;
@@ -19210,7 +19207,7 @@ st568:
 	if ( ++p == pe )
 		goto _test_eof568;
 case 568:
-#line 19214 "confscanner.cc"
+#line 19211 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1161;
@@ -19317,7 +19314,7 @@ st569:
 	if ( ++p == pe )
 		goto _test_eof569;
 case 569:
-#line 19321 "confscanner.cc"
+#line 19318 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st569;
@@ -19349,7 +19346,7 @@ st570:
 	if ( ++p == pe )
 		goto _test_eof570;
 case 570:
-#line 19353 "confscanner.cc"
+#line 19350 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -19380,7 +19377,7 @@ st571:
 	if ( ++p == pe )
 		goto _test_eof571;
 case 571:
-#line 19384 "confscanner.cc"
+#line 19381 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1174;
 		case 9: goto tr1175;
@@ -19411,7 +19408,7 @@ st572:
 	if ( ++p == pe )
 		goto _test_eof572;
 case 572:
-#line 19415 "confscanner.cc"
+#line 19412 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1179;
@@ -19443,7 +19440,7 @@ st573:
 	if ( ++p == pe )
 		goto _test_eof573;
 case 573:
-#line 19447 "confscanner.cc"
+#line 19444 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -19464,7 +19461,7 @@ st574:
 	if ( ++p == pe )
 		goto _test_eof574;
 case 574:
-#line 19468 "confscanner.cc"
+#line 19465 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1183;
@@ -19544,7 +19541,7 @@ st575:
 	if ( ++p == pe )
 		goto _test_eof575;
 case 575:
-#line 19548 "confscanner.cc"
+#line 19545 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st575;
@@ -19576,7 +19573,7 @@ st576:
 	if ( ++p == pe )
 		goto _test_eof576;
 case 576:
-#line 19580 "confscanner.cc"
+#line 19577 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -19596,7 +19593,7 @@ st577:
 	if ( ++p == pe )
 		goto _test_eof577;
 case 577:
-#line 19600 "confscanner.cc"
+#line 19597 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -19642,7 +19639,7 @@ st579:
 	if ( ++p == pe )
 		goto _test_eof579;
 case 579:
-#line 19646 "confscanner.cc"
+#line 19643 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1196;
@@ -19723,7 +19720,7 @@ st580:
 	if ( ++p == pe )
 		goto _test_eof580;
 case 580:
-#line 19727 "confscanner.cc"
+#line 19724 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st580;
@@ -19756,7 +19753,7 @@ st581:
 	if ( ++p == pe )
 		goto _test_eof581;
 case 581:
-#line 19760 "confscanner.cc"
+#line 19757 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -19787,7 +19784,7 @@ st582:
 	if ( ++p == pe )
 		goto _test_eof582;
 case 582:
-#line 19791 "confscanner.cc"
+#line 19788 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1206;
 		case 9: goto tr1207;
@@ -19818,7 +19815,7 @@ st583:
 	if ( ++p == pe )
 		goto _test_eof583;
 case 583:
-#line 19822 "confscanner.cc"
+#line 19819 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1196;
@@ -19901,7 +19898,7 @@ st939:
 	if ( ++p == pe )
 		goto _test_eof939;
 case 939:
-#line 19905 "confscanner.cc"
+#line 19902 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st939;
@@ -19937,7 +19934,7 @@ st584:
 	if ( ++p == pe )
 		goto _test_eof584;
 case 584:
-#line 19941 "confscanner.cc"
+#line 19938 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -19968,7 +19965,7 @@ st585:
 	if ( ++p == pe )
 		goto _test_eof585;
 case 585:
-#line 19972 "confscanner.cc"
+#line 19969 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1215;
 		case 9: goto tr1216;
@@ -19999,7 +19996,7 @@ st940:
 	if ( ++p == pe )
 		goto _test_eof940;
 case 940:
-#line 20003 "confscanner.cc"
+#line 20000 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1948;
@@ -20076,7 +20073,7 @@ st586:
 	if ( ++p == pe )
 		goto _test_eof586;
 case 586:
-#line 20080 "confscanner.cc"
+#line 20077 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st580;
 		case 10: goto tr1219;
@@ -20115,7 +20112,7 @@ st589:
 	if ( ++p == pe )
 		goto _test_eof589;
 case 589:
-#line 20119 "confscanner.cc"
+#line 20116 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -20140,7 +20137,7 @@ st590:
 	if ( ++p == pe )
 		goto _test_eof590;
 case 590:
-#line 20144 "confscanner.cc"
+#line 20141 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1222;
 		case 9: goto tr1207;
@@ -20167,7 +20164,7 @@ st591:
 	if ( ++p == pe )
 		goto _test_eof591;
 case 591:
-#line 20171 "confscanner.cc"
+#line 20168 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1196;
@@ -20219,7 +20216,7 @@ st941:
 	if ( ++p == pe )
 		goto _test_eof941;
 case 941:
-#line 20223 "confscanner.cc"
+#line 20220 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st939;
 		case 10: goto tr1228;
@@ -20267,7 +20264,7 @@ st594:
 	if ( ++p == pe )
 		goto _test_eof594;
 case 594:
-#line 20271 "confscanner.cc"
+#line 20268 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1231;
 		case 9: goto tr1232;
@@ -20298,7 +20295,7 @@ st595:
 	if ( ++p == pe )
 		goto _test_eof595;
 case 595:
-#line 20302 "confscanner.cc"
+#line 20299 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1183;
@@ -20380,7 +20377,7 @@ st942:
 	if ( ++p == pe )
 		goto _test_eof942;
 case 942:
-#line 20384 "confscanner.cc"
+#line 20381 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st942;
@@ -20415,7 +20412,7 @@ st596:
 	if ( ++p == pe )
 		goto _test_eof596;
 case 596:
-#line 20419 "confscanner.cc"
+#line 20416 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -20446,7 +20443,7 @@ st597:
 	if ( ++p == pe )
 		goto _test_eof597;
 case 597:
-#line 20450 "confscanner.cc"
+#line 20447 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1240;
 		case 9: goto tr1241;
@@ -20477,7 +20474,7 @@ st943:
 	if ( ++p == pe )
 		goto _test_eof943;
 case 943:
-#line 20481 "confscanner.cc"
+#line 20478 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1957;
@@ -20553,7 +20550,7 @@ st598:
 	if ( ++p == pe )
 		goto _test_eof598;
 case 598:
-#line 20557 "confscanner.cc"
+#line 20554 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st575;
 		case 10: goto tr1244;
@@ -20591,7 +20588,7 @@ st601:
 	if ( ++p == pe )
 		goto _test_eof601;
 case 601:
-#line 20595 "confscanner.cc"
+#line 20592 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -20616,7 +20613,7 @@ st602:
 	if ( ++p == pe )
 		goto _test_eof602;
 case 602:
-#line 20620 "confscanner.cc"
+#line 20617 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1247;
 		case 9: goto tr1232;
@@ -20643,7 +20640,7 @@ st603:
 	if ( ++p == pe )
 		goto _test_eof603;
 case 603:
-#line 20647 "confscanner.cc"
+#line 20644 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1183;
@@ -20694,7 +20691,7 @@ st944:
 	if ( ++p == pe )
 		goto _test_eof944;
 case 944:
-#line 20698 "confscanner.cc"
+#line 20695 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st942;
 		case 10: goto tr1253;
@@ -20791,7 +20788,7 @@ st945:
 	if ( ++p == pe )
 		goto _test_eof945;
 case 945:
-#line 20795 "confscanner.cc"
+#line 20792 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st945;
@@ -20826,7 +20823,7 @@ st606:
 	if ( ++p == pe )
 		goto _test_eof606;
 case 606:
-#line 20830 "confscanner.cc"
+#line 20827 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -20857,7 +20854,7 @@ st607:
 	if ( ++p == pe )
 		goto _test_eof607;
 case 607:
-#line 20861 "confscanner.cc"
+#line 20858 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1257;
 		case 9: goto tr1258;
@@ -20888,7 +20885,7 @@ st946:
 	if ( ++p == pe )
 		goto _test_eof946;
 case 946:
-#line 20892 "confscanner.cc"
+#line 20889 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1966;
@@ -20984,7 +20981,7 @@ st608:
 	if ( ++p == pe )
 		goto _test_eof608;
 case 608:
-#line 20988 "confscanner.cc"
+#line 20985 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st569;
 		case 10: goto tr1261;
@@ -21040,7 +21037,7 @@ st611:
 	if ( ++p == pe )
 		goto _test_eof611;
 case 611:
-#line 21044 "confscanner.cc"
+#line 21041 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -21083,7 +21080,7 @@ st612:
 	if ( ++p == pe )
 		goto _test_eof612;
 case 612:
-#line 21087 "confscanner.cc"
+#line 21084 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1264;
 		case 9: goto tr1175;
@@ -21103,7 +21100,7 @@ st613:
 	if ( ++p == pe )
 		goto _test_eof613;
 case 613:
-#line 21107 "confscanner.cc"
+#line 21104 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1179;
@@ -21131,7 +21128,7 @@ st614:
 	if ( ++p == pe )
 		goto _test_eof614;
 case 614:
-#line 21135 "confscanner.cc"
+#line 21132 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1179;
@@ -21182,7 +21179,7 @@ st947:
 	if ( ++p == pe )
 		goto _test_eof947;
 case 947:
-#line 21186 "confscanner.cc"
+#line 21183 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st945;
 		case 10: goto tr1274;
@@ -21279,7 +21276,7 @@ st948:
 	if ( ++p == pe )
 		goto _test_eof948;
 case 948:
-#line 21283 "confscanner.cc"
+#line 21280 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st948;
@@ -21318,7 +21315,7 @@ st617:
 	if ( ++p == pe )
 		goto _test_eof617;
 case 617:
-#line 21322 "confscanner.cc"
+#line 21319 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -21349,7 +21346,7 @@ st618:
 	if ( ++p == pe )
 		goto _test_eof618;
 case 618:
-#line 21353 "confscanner.cc"
+#line 21350 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1278;
 		case 9: goto tr1279;
@@ -21380,7 +21377,7 @@ st949:
 	if ( ++p == pe )
 		goto _test_eof949;
 case 949:
-#line 21384 "confscanner.cc"
+#line 21381 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1977;
@@ -21410,7 +21407,7 @@ st619:
 	if ( ++p == pe )
 		goto _test_eof619;
 case 619:
-#line 21414 "confscanner.cc"
+#line 21411 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1161;
@@ -21495,7 +21492,7 @@ st622:
 	if ( ++p == pe )
 		goto _test_eof622;
 case 622:
-#line 21499 "confscanner.cc"
+#line 21496 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1161;
@@ -21670,7 +21667,7 @@ st626:
 	if ( ++p == pe )
 		goto _test_eof626;
 case 626:
-#line 21674 "confscanner.cc"
+#line 21671 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st626;
@@ -21702,7 +21699,7 @@ st627:
 	if ( ++p == pe )
 		goto _test_eof627;
 case 627:
-#line 21706 "confscanner.cc"
+#line 21703 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -21733,7 +21730,7 @@ st628:
 	if ( ++p == pe )
 		goto _test_eof628;
 case 628:
-#line 21737 "confscanner.cc"
+#line 21734 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1300;
 		case 9: goto tr1301;
@@ -21764,7 +21761,7 @@ st629:
 	if ( ++p == pe )
 		goto _test_eof629;
 case 629:
-#line 21768 "confscanner.cc"
+#line 21765 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1305;
@@ -21796,7 +21793,7 @@ st630:
 	if ( ++p == pe )
 		goto _test_eof630;
 case 630:
-#line 21800 "confscanner.cc"
+#line 21797 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr361;
@@ -21845,7 +21842,7 @@ st631:
 	if ( ++p == pe )
 		goto _test_eof631;
 case 631:
-#line 21849 "confscanner.cc"
+#line 21846 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st180;
@@ -21876,7 +21873,7 @@ st632:
 	if ( ++p == pe )
 		goto _test_eof632;
 case 632:
-#line 21880 "confscanner.cc"
+#line 21877 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -21907,7 +21904,7 @@ st633:
 	if ( ++p == pe )
 		goto _test_eof633;
 case 633:
-#line 21911 "confscanner.cc"
+#line 21908 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1312;
 		case 9: goto tr378;
@@ -21968,7 +21965,7 @@ st950:
 	if ( ++p == pe )
 		goto _test_eof950;
 case 950:
-#line 21972 "confscanner.cc"
+#line 21969 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st892;
@@ -22002,7 +21999,7 @@ st634:
 	if ( ++p == pe )
 		goto _test_eof634;
 case 634:
-#line 22006 "confscanner.cc"
+#line 22003 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -22033,7 +22030,7 @@ st635:
 	if ( ++p == pe )
 		goto _test_eof635;
 case 635:
-#line 22037 "confscanner.cc"
+#line 22034 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1318;
 		case 9: goto tr387;
@@ -22064,7 +22061,7 @@ st951:
 	if ( ++p == pe )
 		goto _test_eof951;
 case 951:
-#line 22068 "confscanner.cc"
+#line 22065 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1796;
@@ -22093,7 +22090,7 @@ st636:
 	if ( ++p == pe )
 		goto _test_eof636;
 case 636:
-#line 22097 "confscanner.cc"
+#line 22094 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -22158,7 +22155,7 @@ st639:
 	if ( ++p == pe )
 		goto _test_eof639;
 case 639:
-#line 22162 "confscanner.cc"
+#line 22159 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr342;
@@ -22184,7 +22181,7 @@ st640:
 	if ( ++p == pe )
 		goto _test_eof640;
 case 640:
-#line 22188 "confscanner.cc"
+#line 22185 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -22209,7 +22206,7 @@ st641:
 	if ( ++p == pe )
 		goto _test_eof641;
 case 641:
-#line 22213 "confscanner.cc"
+#line 22210 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr673;
 		case 9: goto tr355;
@@ -22304,7 +22301,7 @@ st646:
 	if ( ++p == pe )
 		goto _test_eof646;
 case 646:
-#line 22308 "confscanner.cc"
+#line 22305 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr690;
@@ -22331,7 +22328,7 @@ st647:
 	if ( ++p == pe )
 		goto _test_eof647;
 case 647:
-#line 22335 "confscanner.cc"
+#line 22332 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -22356,7 +22353,7 @@ st648:
 	if ( ++p == pe )
 		goto _test_eof648;
 case 648:
-#line 22360 "confscanner.cc"
+#line 22357 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr894;
 		case 9: goto tr1338;
@@ -22376,7 +22373,7 @@ st649:
 	if ( ++p == pe )
 		goto _test_eof649;
 case 649:
-#line 22380 "confscanner.cc"
+#line 22377 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -22408,7 +22405,7 @@ st650:
 	if ( ++p == pe )
 		goto _test_eof650;
 case 650:
-#line 22412 "confscanner.cc"
+#line 22409 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr711;
@@ -22438,7 +22435,7 @@ st651:
 	if ( ++p == pe )
 		goto _test_eof651;
 case 651:
-#line 22442 "confscanner.cc"
+#line 22439 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -22463,7 +22460,7 @@ st652:
 	if ( ++p == pe )
 		goto _test_eof652;
 case 652:
-#line 22467 "confscanner.cc"
+#line 22464 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr849;
 		case 9: goto tr1346;
@@ -22483,7 +22480,7 @@ st653:
 	if ( ++p == pe )
 		goto _test_eof653;
 case 653:
-#line 22487 "confscanner.cc"
+#line 22484 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr730;
@@ -22525,7 +22522,7 @@ st654:
 	if ( ++p == pe )
 		goto _test_eof654;
 case 654:
-#line 22529 "confscanner.cc"
+#line 22526 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -22579,7 +22576,7 @@ st952:
 	if ( ++p == pe )
 		goto _test_eof952;
 case 952:
-#line 22583 "confscanner.cc"
+#line 22580 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1779;
@@ -22607,7 +22604,7 @@ st655:
 	if ( ++p == pe )
 		goto _test_eof655;
 case 655:
-#line 22611 "confscanner.cc"
+#line 22608 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -22632,7 +22629,7 @@ st656:
 	if ( ++p == pe )
 		goto _test_eof656;
 case 656:
-#line 22636 "confscanner.cc"
+#line 22633 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr425;
 		case 9: goto tr1356;
@@ -22667,7 +22664,7 @@ st657:
 	if ( ++p == pe )
 		goto _test_eof657;
 case 657:
-#line 22671 "confscanner.cc"
+#line 22668 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1183;
@@ -22693,7 +22690,7 @@ st658:
 	if ( ++p == pe )
 		goto _test_eof658;
 case 658:
-#line 22697 "confscanner.cc"
+#line 22694 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -22765,7 +22762,7 @@ st661:
 	if ( ++p == pe )
 		goto _test_eof661;
 case 661:
-#line 22769 "confscanner.cc"
+#line 22766 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1196;
@@ -22792,7 +22789,7 @@ st662:
 	if ( ++p == pe )
 		goto _test_eof662;
 case 662:
-#line 22796 "confscanner.cc"
+#line 22793 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -22817,7 +22814,7 @@ st663:
 	if ( ++p == pe )
 		goto _test_eof663;
 case 663:
-#line 22821 "confscanner.cc"
+#line 22818 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1222;
 		case 9: goto tr1368;
@@ -22848,7 +22845,7 @@ st664:
 	if ( ++p == pe )
 		goto _test_eof664;
 case 664:
-#line 22852 "confscanner.cc"
+#line 22849 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1142;
@@ -22925,7 +22922,7 @@ st665:
 	if ( ++p == pe )
 		goto _test_eof665;
 case 665:
-#line 22929 "confscanner.cc"
+#line 22926 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st564;
 		case 10: goto tr1375;
@@ -22967,7 +22964,7 @@ st668:
 	if ( ++p == pe )
 		goto _test_eof668;
 case 668:
-#line 22971 "confscanner.cc"
+#line 22968 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -22992,7 +22989,7 @@ st669:
 	if ( ++p == pe )
 		goto _test_eof669;
 case 669:
-#line 22996 "confscanner.cc"
+#line 22993 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1378;
 		case 9: goto tr1380;
@@ -23042,7 +23039,7 @@ st953:
 	if ( ++p == pe )
 		goto _test_eof953;
 case 953:
-#line 23046 "confscanner.cc"
+#line 23043 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st948;
 		case 10: goto tr1384;
@@ -23082,7 +23079,7 @@ st672:
 	if ( ++p == pe )
 		goto _test_eof672;
 case 672:
-#line 23086 "confscanner.cc"
+#line 23083 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr187;
 		case 10: goto tr188;
@@ -23156,7 +23153,7 @@ st675:
 	if ( ++p == pe )
 		goto _test_eof675;
 case 675:
-#line 23160 "confscanner.cc"
+#line 23157 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr187;
 		case 10: goto tr188;
@@ -23281,7 +23278,7 @@ st679:
 	if ( ++p == pe )
 		goto _test_eof679;
 case 679:
-#line 23285 "confscanner.cc"
+#line 23282 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st679;
 		case 10: goto tr1398;
@@ -23306,7 +23303,7 @@ st680:
 	if ( ++p == pe )
 		goto _test_eof680;
 case 680:
-#line 23310 "confscanner.cc"
+#line 23307 "confscanner.cc"
 	if ( (*p) == 10 )
 		goto tr1398;
 	goto st0;
@@ -23325,7 +23322,7 @@ st681:
 	if ( ++p == pe )
 		goto _test_eof681;
 case 681:
-#line 23329 "confscanner.cc"
+#line 23326 "confscanner.cc"
 	if ( (*p) == 35 )
 		goto st0;
 	goto tr1402;
@@ -23344,7 +23341,7 @@ st682:
 	if ( ++p == pe )
 		goto _test_eof682;
 case 682:
-#line 23348 "confscanner.cc"
+#line 23345 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st133;
@@ -23365,7 +23362,7 @@ st683:
 	if ( ++p == pe )
 		goto _test_eof683;
 case 683:
-#line 23369 "confscanner.cc"
+#line 23366 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1403;
 		case 9: goto tr378;
@@ -23402,7 +23399,7 @@ st954:
 	if ( ++p == pe )
 		goto _test_eof954;
 case 954:
-#line 23406 "confscanner.cc"
+#line 23403 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st954;
@@ -23425,7 +23422,7 @@ st684:
 	if ( ++p == pe )
 		goto _test_eof684;
 case 684:
-#line 23429 "confscanner.cc"
+#line 23426 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1405;
 		case 9: goto tr387;
@@ -23588,7 +23585,7 @@ st690:
 	if ( ++p == pe )
 		goto _test_eof690;
 case 690:
-#line 23592 "confscanner.cc"
+#line 23589 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st690;
 		case 10: goto tr1416;
@@ -23614,7 +23611,7 @@ st691:
 	if ( ++p == pe )
 		goto _test_eof691;
 case 691:
-#line 23618 "confscanner.cc"
+#line 23615 "confscanner.cc"
 	if ( (*p) == 10 )
 		goto tr1416;
 	goto st0;
@@ -23633,7 +23630,7 @@ st692:
 	if ( ++p == pe )
 		goto _test_eof692;
 case 692:
-#line 23637 "confscanner.cc"
+#line 23634 "confscanner.cc"
 	if ( (*p) == 35 )
 		goto st0;
 	goto tr1420;
@@ -23652,7 +23649,7 @@ st693:
 	if ( ++p == pe )
 		goto _test_eof693;
 case 693:
-#line 23656 "confscanner.cc"
+#line 23653 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st384;
 		case 10: goto tr825;
@@ -23675,7 +23672,7 @@ st694:
 	if ( ++p == pe )
 		goto _test_eof694;
 case 694:
-#line 23679 "confscanner.cc"
+#line 23676 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1161;
@@ -23728,7 +23725,7 @@ st695:
 	if ( ++p == pe )
 		goto _test_eof695;
 case 695:
-#line 23732 "confscanner.cc"
+#line 23729 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -23771,7 +23768,7 @@ st696:
 	if ( ++p == pe )
 		goto _test_eof696;
 case 696:
-#line 23775 "confscanner.cc"
+#line 23772 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1264;
 		case 9: goto tr1426;
@@ -23802,7 +23799,7 @@ st697:
 	if ( ++p == pe )
 		goto _test_eof697;
 case 697:
-#line 23806 "confscanner.cc"
+#line 23803 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1179;
@@ -23830,7 +23827,7 @@ st698:
 	if ( ++p == pe )
 		goto _test_eof698;
 case 698:
-#line 23834 "confscanner.cc"
+#line 23831 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -23856,7 +23853,7 @@ st699:
 	if ( ++p == pe )
 		goto _test_eof699;
 case 699:
-#line 23860 "confscanner.cc"
+#line 23857 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1247;
 		case 9: goto tr1435;
@@ -23937,7 +23934,7 @@ st955:
 	if ( ++p == pe )
 		goto _test_eof955;
 case 955:
-#line 23941 "confscanner.cc"
+#line 23938 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st955;
@@ -23972,7 +23969,7 @@ st700:
 	if ( ++p == pe )
 		goto _test_eof700;
 case 700:
-#line 23976 "confscanner.cc"
+#line 23973 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -24003,7 +24000,7 @@ st701:
 	if ( ++p == pe )
 		goto _test_eof701;
 case 701:
-#line 24007 "confscanner.cc"
+#line 24004 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1441;
 		case 9: goto tr1442;
@@ -24034,7 +24031,7 @@ st956:
 	if ( ++p == pe )
 		goto _test_eof956;
 case 956:
-#line 24038 "confscanner.cc"
+#line 24035 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr2004;
@@ -24106,7 +24103,7 @@ st702:
 	if ( ++p == pe )
 		goto _test_eof702;
 case 702:
-#line 24110 "confscanner.cc"
+#line 24107 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st626;
 		case 10: goto tr1445;
@@ -24162,7 +24159,7 @@ st705:
 	if ( ++p == pe )
 		goto _test_eof705;
 case 705:
-#line 24166 "confscanner.cc"
+#line 24163 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -24205,7 +24202,7 @@ st706:
 	if ( ++p == pe )
 		goto _test_eof706;
 case 706:
-#line 24209 "confscanner.cc"
+#line 24206 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1448;
 		case 9: goto tr1301;
@@ -24236,7 +24233,7 @@ st707:
 	if ( ++p == pe )
 		goto _test_eof707;
 case 707:
-#line 24240 "confscanner.cc"
+#line 24237 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1305;
@@ -24274,7 +24271,7 @@ st957:
 	if ( ++p == pe )
 		goto _test_eof957;
 case 957:
-#line 24278 "confscanner.cc"
+#line 24275 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st955;
 		case 10: goto tr1457;
@@ -24506,7 +24503,7 @@ st715:
 	if ( ++p == pe )
 		goto _test_eof715;
 case 715:
-#line 24510 "confscanner.cc"
+#line 24507 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st715;
@@ -24539,7 +24536,7 @@ st716:
 	if ( ++p == pe )
 		goto _test_eof716;
 case 716:
-#line 24543 "confscanner.cc"
+#line 24540 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -24570,7 +24567,7 @@ st717:
 	if ( ++p == pe )
 		goto _test_eof717;
 case 717:
-#line 24574 "confscanner.cc"
+#line 24571 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1475;
 		case 9: goto tr1476;
@@ -24601,7 +24598,7 @@ st718:
 	if ( ++p == pe )
 		goto _test_eof718;
 case 718:
-#line 24605 "confscanner.cc"
+#line 24602 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1480;
@@ -24634,7 +24631,7 @@ st719:
 	if ( ++p == pe )
 		goto _test_eof719;
 case 719:
-#line 24638 "confscanner.cc"
+#line 24635 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr711;
@@ -24721,7 +24718,7 @@ st958:
 	if ( ++p == pe )
 		goto _test_eof958;
 case 958:
-#line 24725 "confscanner.cc"
+#line 24722 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st958;
@@ -24757,7 +24754,7 @@ st720:
 	if ( ++p == pe )
 		goto _test_eof720;
 case 720:
-#line 24761 "confscanner.cc"
+#line 24758 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -24788,7 +24785,7 @@ st721:
 	if ( ++p == pe )
 		goto _test_eof721;
 case 721:
-#line 24792 "confscanner.cc"
+#line 24789 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1485;
 		case 9: goto tr1486;
@@ -24819,7 +24816,7 @@ st959:
 	if ( ++p == pe )
 		goto _test_eof959;
 case 959:
-#line 24823 "confscanner.cc"
+#line 24820 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr2013;
@@ -24903,7 +24900,7 @@ st722:
 	if ( ++p == pe )
 		goto _test_eof722;
 case 722:
-#line 24907 "confscanner.cc"
+#line 24904 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st715;
 		case 10: goto tr1489;
@@ -24960,7 +24957,7 @@ st725:
 	if ( ++p == pe )
 		goto _test_eof725;
 case 725:
-#line 24964 "confscanner.cc"
+#line 24961 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -25003,7 +25000,7 @@ st726:
 	if ( ++p == pe )
 		goto _test_eof726;
 case 726:
-#line 25007 "confscanner.cc"
+#line 25004 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1492;
 		case 9: goto tr1476;
@@ -25023,7 +25020,7 @@ st727:
 	if ( ++p == pe )
 		goto _test_eof727;
 case 727:
-#line 25027 "confscanner.cc"
+#line 25024 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1480;
@@ -25052,7 +25049,7 @@ st728:
 	if ( ++p == pe )
 		goto _test_eof728;
 case 728:
-#line 25056 "confscanner.cc"
+#line 25053 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1480;
@@ -25091,7 +25088,7 @@ st960:
 	if ( ++p == pe )
 		goto _test_eof960;
 case 960:
-#line 25095 "confscanner.cc"
+#line 25092 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st958;
 		case 10: goto tr1502;
@@ -25133,7 +25130,7 @@ st731:
 	if ( ++p == pe )
 		goto _test_eof731;
 case 731:
-#line 25137 "confscanner.cc"
+#line 25134 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -25158,7 +25155,7 @@ st732:
 	if ( ++p == pe )
 		goto _test_eof732;
 case 732:
-#line 25162 "confscanner.cc"
+#line 25159 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1378;
 		case 9: goto tr1155;
@@ -25185,7 +25182,7 @@ st733:
 	if ( ++p == pe )
 		goto _test_eof733;
 case 733:
-#line 25189 "confscanner.cc"
+#line 25186 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1142;
@@ -25216,7 +25213,7 @@ st734:
 	if ( ++p == pe )
 		goto _test_eof734;
 case 734:
-#line 25220 "confscanner.cc"
+#line 25217 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1509;
@@ -25307,7 +25304,7 @@ st961:
 	if ( ++p == pe )
 		goto _test_eof961;
 case 961:
-#line 25311 "confscanner.cc"
+#line 25308 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st961;
@@ -25347,7 +25344,7 @@ st735:
 	if ( ++p == pe )
 		goto _test_eof735;
 case 735:
-#line 25351 "confscanner.cc"
+#line 25348 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -25378,7 +25375,7 @@ st736:
 	if ( ++p == pe )
 		goto _test_eof736;
 case 736:
-#line 25382 "confscanner.cc"
+#line 25379 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1517;
 		case 9: goto tr1518;
@@ -25409,7 +25406,7 @@ st962:
 	if ( ++p == pe )
 		goto _test_eof962;
 case 962:
-#line 25413 "confscanner.cc"
+#line 25410 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr2024;
@@ -25440,7 +25437,7 @@ st737:
 	if ( ++p == pe )
 		goto _test_eof737;
 case 737:
-#line 25444 "confscanner.cc"
+#line 25441 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1509;
@@ -25525,7 +25522,7 @@ st740:
 	if ( ++p == pe )
 		goto _test_eof740;
 case 740:
-#line 25529 "confscanner.cc"
+#line 25526 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1509;
@@ -25700,7 +25697,7 @@ st744:
 	if ( ++p == pe )
 		goto _test_eof744;
 case 744:
-#line 25704 "confscanner.cc"
+#line 25701 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st744;
@@ -25732,7 +25729,7 @@ st745:
 	if ( ++p == pe )
 		goto _test_eof745;
 case 745:
-#line 25736 "confscanner.cc"
+#line 25733 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -25763,7 +25760,7 @@ st746:
 	if ( ++p == pe )
 		goto _test_eof746;
 case 746:
-#line 25767 "confscanner.cc"
+#line 25764 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1539;
 		case 9: goto tr1540;
@@ -25794,7 +25791,7 @@ st747:
 	if ( ++p == pe )
 		goto _test_eof747;
 case 747:
-#line 25798 "confscanner.cc"
+#line 25795 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1544;
@@ -25826,7 +25823,7 @@ st748:
 	if ( ++p == pe )
 		goto _test_eof748;
 case 748:
-#line 25830 "confscanner.cc"
+#line 25827 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr361;
@@ -25908,7 +25905,7 @@ st963:
 	if ( ++p == pe )
 		goto _test_eof963;
 case 963:
-#line 25912 "confscanner.cc"
+#line 25909 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st963;
@@ -25943,7 +25940,7 @@ st749:
 	if ( ++p == pe )
 		goto _test_eof749;
 case 749:
-#line 25947 "confscanner.cc"
+#line 25944 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -25974,7 +25971,7 @@ st750:
 	if ( ++p == pe )
 		goto _test_eof750;
 case 750:
-#line 25978 "confscanner.cc"
+#line 25975 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1550;
 		case 9: goto tr1551;
@@ -26005,7 +26002,7 @@ st964:
 	if ( ++p == pe )
 		goto _test_eof964;
 case 964:
-#line 26009 "confscanner.cc"
+#line 26006 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr2031;
@@ -26077,7 +26074,7 @@ st751:
 	if ( ++p == pe )
 		goto _test_eof751;
 case 751:
-#line 26081 "confscanner.cc"
+#line 26078 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st744;
 		case 10: goto tr1554;
@@ -26117,7 +26114,7 @@ st754:
 	if ( ++p == pe )
 		goto _test_eof754;
 case 754:
-#line 26121 "confscanner.cc"
+#line 26118 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st133;
@@ -26161,7 +26158,7 @@ st755:
 	if ( ++p == pe )
 		goto _test_eof755;
 case 755:
-#line 26165 "confscanner.cc"
+#line 26162 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -26204,7 +26201,7 @@ st756:
 	if ( ++p == pe )
 		goto _test_eof756;
 case 756:
-#line 26208 "confscanner.cc"
+#line 26205 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1558;
 		case 9: goto tr1540;
@@ -26235,7 +26232,7 @@ st757:
 	if ( ++p == pe )
 		goto _test_eof757;
 case 757:
-#line 26239 "confscanner.cc"
+#line 26236 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1544;
@@ -26273,7 +26270,7 @@ st965:
 	if ( ++p == pe )
 		goto _test_eof965;
 case 965:
-#line 26277 "confscanner.cc"
+#line 26274 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st963;
 		case 10: goto tr1567;
@@ -26505,7 +26502,7 @@ st765:
 	if ( ++p == pe )
 		goto _test_eof765;
 case 765:
-#line 26509 "confscanner.cc"
+#line 26506 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st765;
@@ -26538,7 +26535,7 @@ st766:
 	if ( ++p == pe )
 		goto _test_eof766;
 case 766:
-#line 26542 "confscanner.cc"
+#line 26539 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -26569,7 +26566,7 @@ st767:
 	if ( ++p == pe )
 		goto _test_eof767;
 case 767:
-#line 26573 "confscanner.cc"
+#line 26570 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1585;
 		case 9: goto tr1586;
@@ -26600,7 +26597,7 @@ st768:
 	if ( ++p == pe )
 		goto _test_eof768;
 case 768:
-#line 26604 "confscanner.cc"
+#line 26601 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1590;
@@ -26633,7 +26630,7 @@ st769:
 	if ( ++p == pe )
 		goto _test_eof769;
 case 769:
-#line 26637 "confscanner.cc"
+#line 26634 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr711;
@@ -26720,7 +26717,7 @@ st966:
 	if ( ++p == pe )
 		goto _test_eof966;
 case 966:
-#line 26724 "confscanner.cc"
+#line 26721 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st966;
@@ -26756,7 +26753,7 @@ st770:
 	if ( ++p == pe )
 		goto _test_eof770;
 case 770:
-#line 26760 "confscanner.cc"
+#line 26757 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -26787,7 +26784,7 @@ st771:
 	if ( ++p == pe )
 		goto _test_eof771;
 case 771:
-#line 26791 "confscanner.cc"
+#line 26788 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1595;
 		case 9: goto tr1596;
@@ -26818,7 +26815,7 @@ st967:
 	if ( ++p == pe )
 		goto _test_eof967;
 case 967:
-#line 26822 "confscanner.cc"
+#line 26819 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr2040;
@@ -26902,7 +26899,7 @@ st772:
 	if ( ++p == pe )
 		goto _test_eof772;
 case 772:
-#line 26906 "confscanner.cc"
+#line 26903 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st765;
 		case 10: goto tr1599;
@@ -26943,7 +26940,7 @@ st775:
 	if ( ++p == pe )
 		goto _test_eof775;
 case 775:
-#line 26947 "confscanner.cc"
+#line 26944 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st384;
 		case 10: goto tr825;
@@ -26989,7 +26986,7 @@ st776:
 	if ( ++p == pe )
 		goto _test_eof776;
 case 776:
-#line 26993 "confscanner.cc"
+#line 26990 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -27032,7 +27029,7 @@ st777:
 	if ( ++p == pe )
 		goto _test_eof777;
 case 777:
-#line 27036 "confscanner.cc"
+#line 27033 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1603;
 		case 9: goto tr1586;
@@ -27052,7 +27049,7 @@ st778:
 	if ( ++p == pe )
 		goto _test_eof778;
 case 778:
-#line 27056 "confscanner.cc"
+#line 27053 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1590;
@@ -27081,7 +27078,7 @@ st779:
 	if ( ++p == pe )
 		goto _test_eof779;
 case 779:
-#line 27085 "confscanner.cc"
+#line 27082 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1590;
@@ -27120,7 +27117,7 @@ st968:
 	if ( ++p == pe )
 		goto _test_eof968;
 case 968:
-#line 27124 "confscanner.cc"
+#line 27121 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st966;
 		case 10: goto tr1613;
@@ -27209,7 +27206,7 @@ st782:
 	if ( ++p == pe )
 		goto _test_eof782;
 case 782:
-#line 27213 "confscanner.cc"
+#line 27210 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st559;
 		case 10: goto tr1615;
@@ -27252,7 +27249,7 @@ st785:
 	if ( ++p == pe )
 		goto _test_eof785;
 case 785:
-#line 27256 "confscanner.cc"
+#line 27253 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -27277,7 +27274,7 @@ st786:
 	if ( ++p == pe )
 		goto _test_eof786;
 case 786:
-#line 27281 "confscanner.cc"
+#line 27278 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1618;
 		case 9: goto tr1136;
@@ -27304,7 +27301,7 @@ st787:
 	if ( ++p == pe )
 		goto _test_eof787;
 case 787:
-#line 27308 "confscanner.cc"
+#line 27305 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1121;
@@ -27360,7 +27357,7 @@ st969:
 	if ( ++p == pe )
 		goto _test_eof969;
 case 969:
-#line 27364 "confscanner.cc"
+#line 27361 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st961;
 		case 10: goto tr1624;
@@ -27401,7 +27398,7 @@ st790:
 	if ( ++p == pe )
 		goto _test_eof790;
 case 790:
-#line 27405 "confscanner.cc"
+#line 27402 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr212;
 		case 10: goto tr213;
@@ -27475,7 +27472,7 @@ st793:
 	if ( ++p == pe )
 		goto _test_eof793;
 case 793:
-#line 27479 "confscanner.cc"
+#line 27476 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto tr212;
 		case 10: goto tr213;
@@ -27600,7 +27597,7 @@ st797:
 	if ( ++p == pe )
 		goto _test_eof797;
 case 797:
-#line 27604 "confscanner.cc"
+#line 27601 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st797;
 		case 10: goto tr1638;
@@ -27625,7 +27622,7 @@ st798:
 	if ( ++p == pe )
 		goto _test_eof798;
 case 798:
-#line 27629 "confscanner.cc"
+#line 27626 "confscanner.cc"
 	if ( (*p) == 10 )
 		goto tr1638;
 	goto st0;
@@ -27644,7 +27641,7 @@ st799:
 	if ( ++p == pe )
 		goto _test_eof799;
 case 799:
-#line 27648 "confscanner.cc"
+#line 27645 "confscanner.cc"
 	if ( (*p) == 35 )
 		goto st0;
 	goto tr1641;
@@ -27799,7 +27796,7 @@ st805:
 	if ( ++p == pe )
 		goto _test_eof805;
 case 805:
-#line 27803 "confscanner.cc"
+#line 27800 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st805;
 		case 10: goto tr1652;
@@ -27825,7 +27822,7 @@ st806:
 	if ( ++p == pe )
 		goto _test_eof806;
 case 806:
-#line 27829 "confscanner.cc"
+#line 27826 "confscanner.cc"
 	if ( (*p) == 10 )
 		goto tr1652;
 	goto st0;
@@ -27844,7 +27841,7 @@ st807:
 	if ( ++p == pe )
 		goto _test_eof807;
 case 807:
-#line 27848 "confscanner.cc"
+#line 27845 "confscanner.cc"
 	if ( (*p) == 35 )
 		goto st0;
 	goto tr1655;
@@ -27917,7 +27914,7 @@ st970:
 	if ( ++p == pe )
 		goto _test_eof970;
 case 970:
-#line 27921 "confscanner.cc"
+#line 27918 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto st970;
@@ -27953,7 +27950,7 @@ st808:
 	if ( ++p == pe )
 		goto _test_eof808;
 case 808:
-#line 27957 "confscanner.cc"
+#line 27954 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -27984,7 +27981,7 @@ st809:
 	if ( ++p == pe )
 		goto _test_eof809;
 case 809:
-#line 27988 "confscanner.cc"
+#line 27985 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1658;
 		case 9: goto tr1659;
@@ -28015,7 +28012,7 @@ st971:
 	if ( ++p == pe )
 		goto _test_eof971;
 case 971:
-#line 28019 "confscanner.cc"
+#line 28016 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr2053;
@@ -28092,7 +28089,7 @@ st810:
 	if ( ++p == pe )
 		goto _test_eof810;
 case 810:
-#line 28096 "confscanner.cc"
+#line 28093 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st553;
 		case 10: goto tr1662;
@@ -28131,7 +28128,7 @@ st813:
 	if ( ++p == pe )
 		goto _test_eof813;
 case 813:
-#line 28135 "confscanner.cc"
+#line 28132 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -28156,7 +28153,7 @@ st814:
 	if ( ++p == pe )
 		goto _test_eof814;
 case 814:
-#line 28160 "confscanner.cc"
+#line 28157 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1665;
 		case 9: goto tr1667;
@@ -28206,7 +28203,7 @@ st972:
 	if ( ++p == pe )
 		goto _test_eof972;
 case 972:
-#line 28210 "confscanner.cc"
+#line 28207 "confscanner.cc"
 	switch( (*p) ) {
 		case 9: goto st970;
 		case 10: goto tr1671;
@@ -28243,7 +28240,7 @@ st817:
 	if ( ++p == pe )
 		goto _test_eof817;
 case 817:
-#line 28247 "confscanner.cc"
+#line 28244 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -28275,7 +28272,7 @@ st818:
 	if ( ++p == pe )
 		goto _test_eof818;
 case 818:
-#line 28279 "confscanner.cc"
+#line 28276 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1121;
@@ -28306,7 +28303,7 @@ st819:
 	if ( ++p == pe )
 		goto _test_eof819;
 case 819:
-#line 28310 "confscanner.cc"
+#line 28307 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -28331,7 +28328,7 @@ st820:
 	if ( ++p == pe )
 		goto _test_eof820;
 case 820:
-#line 28335 "confscanner.cc"
+#line 28332 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1618;
 		case 9: goto tr1677;
@@ -28351,7 +28348,7 @@ st821:
 	if ( ++p == pe )
 		goto _test_eof821;
 case 821:
-#line 28355 "confscanner.cc"
+#line 28352 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1509;
@@ -28381,7 +28378,7 @@ st822:
 	if ( ++p == pe )
 		goto _test_eof822;
 case 822:
-#line 28385 "confscanner.cc"
+#line 28382 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -28541,7 +28538,7 @@ st831:
 	if ( ++p == pe )
 		goto _test_eof831;
 case 831:
-#line 28545 "confscanner.cc"
+#line 28542 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1694;
 		case 9: goto tr1695;
@@ -28572,7 +28569,7 @@ st832:
 	if ( ++p == pe )
 		goto _test_eof832;
 case 832:
-#line 28576 "confscanner.cc"
+#line 28573 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr302;
@@ -28598,7 +28595,7 @@ st833:
 	if ( ++p == pe )
 		goto _test_eof833;
 case 833:
-#line 28602 "confscanner.cc"
+#line 28599 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -28623,7 +28620,7 @@ st834:
 	if ( ++p == pe )
 		goto _test_eof834;
 case 834:
-#line 28627 "confscanner.cc"
+#line 28624 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr436;
 		case 9: goto tr1695;
@@ -28650,7 +28647,7 @@ st835:
 	if ( ++p == pe )
 		goto _test_eof835;
 case 835:
-#line 28654 "confscanner.cc"
+#line 28651 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr302;
@@ -28676,7 +28673,7 @@ st836:
 	if ( ++p == pe )
 		goto _test_eof836;
 case 836:
-#line 28680 "confscanner.cc"
+#line 28677 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -28701,7 +28698,7 @@ st837:
 	if ( ++p == pe )
 		goto _test_eof837;
 case 837:
-#line 28705 "confscanner.cc"
+#line 28702 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr411;
 		case 9: goto tr296;
@@ -28728,7 +28725,7 @@ st838:
 	if ( ++p == pe )
 		goto _test_eof838;
 case 838:
-#line 28732 "confscanner.cc"
+#line 28729 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr281;
@@ -28750,7 +28747,7 @@ st839:
 	if ( ++p == pe )
 		goto _test_eof839;
 case 839:
-#line 28754 "confscanner.cc"
+#line 28751 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -28787,7 +28784,7 @@ st841:
 	if ( ++p == pe )
 		goto _test_eof841;
 case 841:
-#line 28791 "confscanner.cc"
+#line 28788 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -28856,7 +28853,7 @@ st845:
 	if ( ++p == pe )
 		goto _test_eof845;
 case 845:
-#line 28860 "confscanner.cc"
+#line 28857 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -28965,7 +28962,7 @@ st851:
 	if ( ++p == pe )
 		goto _test_eof851;
 case 851:
-#line 28969 "confscanner.cc"
+#line 28966 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr476;
@@ -28992,7 +28989,7 @@ st852:
 	if ( ++p == pe )
 		goto _test_eof852;
 case 852:
-#line 28996 "confscanner.cc"
+#line 28993 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -29017,7 +29014,7 @@ st853:
 	if ( ++p == pe )
 		goto _test_eof853;
 case 853:
-#line 29021 "confscanner.cc"
+#line 29018 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1019;
 		case 9: goto tr491;
@@ -29044,7 +29041,7 @@ st854:
 	if ( ++p == pe )
 		goto _test_eof854;
 case 854:
-#line 29048 "confscanner.cc"
+#line 29045 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr476;
@@ -29066,7 +29063,7 @@ st855:
 	if ( ++p == pe )
 		goto _test_eof855;
 case 855:
-#line 29070 "confscanner.cc"
+#line 29067 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -29181,7 +29178,7 @@ st861:
 	if ( ++p == pe )
 		goto _test_eof861;
 case 861:
-#line 29185 "confscanner.cc"
+#line 29182 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1099;
@@ -29208,7 +29205,7 @@ st862:
 	if ( ++p == pe )
 		goto _test_eof862;
 case 862:
-#line 29212 "confscanner.cc"
+#line 29209 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -29233,7 +29230,7 @@ st863:
 	if ( ++p == pe )
 		goto _test_eof863;
 case 863:
-#line 29237 "confscanner.cc"
+#line 29234 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1665;
 		case 9: goto tr1114;
@@ -29260,7 +29257,7 @@ st864:
 	if ( ++p == pe )
 		goto _test_eof864;
 case 864:
-#line 29264 "confscanner.cc"
+#line 29261 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr1099;
@@ -29282,7 +29279,7 @@ st865:
 	if ( ++p == pe )
 		goto _test_eof865;
 case 865:
-#line 29286 "confscanner.cc"
+#line 29283 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -29392,7 +29389,7 @@ st872:
 	if ( ++p == pe )
 		goto _test_eof872;
 case 872:
-#line 29396 "confscanner.cc"
+#line 29393 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -29423,7 +29420,7 @@ st873:
 	if ( ++p == pe )
 		goto _test_eof873;
 case 873:
-#line 29427 "confscanner.cc"
+#line 29424 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto tr1749;
 		case 9: goto tr256;
@@ -29454,7 +29451,7 @@ st874:
 	if ( ++p == pe )
 		goto _test_eof874;
 case 874:
-#line 29458 "confscanner.cc"
+#line 29455 "confscanner.cc"
 	switch( (*p) ) {
 		case 0: goto st0;
 		case 9: goto tr236;
@@ -30471,7 +30468,6 @@ case 878:
 	_test_eof: {}
 	_out: {}
 	}
-
 #line 429 "confscanner.rl"
 
     /* Check if we failed. */
