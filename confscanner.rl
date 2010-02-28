@@ -378,7 +378,7 @@ ConfFileScanner
 const char * ConfFileScanner ::
 set_conffile()
 {
-  conffile_ = "sample.conf";
+  conffile_ = "doxygen/mtoc.conf";
   return conffile_.c_str();
 }
 
