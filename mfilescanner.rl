@@ -414,7 +414,7 @@ using std::istream;
 
     # begin parameter list
     ( doc_begin . [ \t]*
-      . /arguments/i . [ \t]* . ':'
+      . /parameters/i . [ \t]* . ':'
       . [ \t]* . EOL )
       => {
         clist_ = &param_list_;
@@ -424,7 +424,7 @@ using std::istream;
 
     # begin return list
     ( doc_begin . [ \t]*
-      . /return arguments/i . [ \t]* . ':'
+      . /return values/i . [ \t]* . ':'
       . [ \t]* . EOL )
       => {
         clist_ = &return_list_;
