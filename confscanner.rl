@@ -69,6 +69,8 @@ using std::ifstream;
       clistmap_ = &field_docu_;
   }
 
+  # add line of a block to the cblock structure which can be one of
+  # docublock, docuheader, docuextra or clist[] or clistmap[][]
   action add_block_line
   {
     if(match_at_level_[level_])
@@ -94,6 +96,7 @@ using std::ifstream;
     }
   }
 
+  # set the cblock pointer to clist_[value]
   action set_block_from_list
   {
     if(match_at_level_[level_])
@@ -104,6 +107,7 @@ using std::ifstream;
     }
   }
 
+  # set the cblock pointer to clist_[value1][value2]
   action set_block_from_listmap
   {
     string s(tmp_p, p-tmp_p);
@@ -118,24 +122,32 @@ using std::ifstream;
     globlist_stack_.back().push_back(tmp_string);
   }
 
+  # end of file
   EOF = 0;
 
+  # end of line (CRLF, LF)
   EOL = '\r'? . '\n';
 
+  # any not end of file character
   default = ^0;
 
+  # identifier
   IDENT = [A-Z]+;
 
+  # matlab identifier
   MIDENT = [A-Za-z][A-Za-z0-9_]*;
 
+  # glob expression
   GLOB = (default - [\n \t;\{])+;
 
+  # swallow till the end of line
   garbling := (default - '\n')* . EOL @{line++;fret;};
 
   add_param_docu_block = ('brief'|'doc'|'extra');
   add_param_docu_list = ('params'|'return');
   add_param_docu_list_map = ('fields');
 
+  # matlab white space or comment
   MWSOC = (
            [ \t]
            | EOL @{line++;}
@@ -143,10 +155,13 @@ using std::ifstream;
           );
 #  MWSOC = ( [ \t\n]);
 
+  # equal sign or += sign
   EQ = ('+'? @{arg_to_be_added_ = true;} . '=');
 
+  # end of a rule sign
   ENDRULE = ';' @{arg_to_be_added_ = false;};
 
+  # line in documentation block
   docu_block_line :=
     (
      ( ( default - ["\n] )+ >{ if(opt) { tmp_p = p; } } )
@@ -158,6 +173,7 @@ using std::ifstream;
      ('"'{1,2} . (default - ["\n])) @{ fhold; opt=false; }
     )**;
 
+  # begin documentation block
   docu_block = ('"""'
                 @{
                 opt=true;
@@ -167,6 +183,7 @@ using std::ifstream;
                 }
                );
 
+  # documentation list item (something like key => value)
   docu_list_item =
     (
      ( MIDENT
@@ -316,21 +333,6 @@ bool ConfFileScanner :: check_glob_rec(int l, const string & s)
   string :: size_type found;
   if(l == level_+1)
     return true;
-/*  if(l == level_)
-  {*/
-    /* true if all leading directories in path or the whole path string are
-     * matched by pattern
-     */
-/*    found = s.rfind("/");
-    if(found != string::npos)
-    {
-      str = s.substr(0, found);
-      if(check_for_match(l, str.c_str()))
-        return true;
-    }
-    // else: try to match complete string
-    return check_for_match(l, s.c_str());
-  }*/
 
   found = s.find("/"); // try to match dir in path
   while(found != string :: npos)
