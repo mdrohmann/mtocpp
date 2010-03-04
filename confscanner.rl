@@ -161,15 +161,19 @@ using std::ifstream;
   # end of a rule sign
   ENDRULE = ';' @{arg_to_be_added_ = false;};
 
-  # line in documentation block
+  # add line in a documentation block
   docu_block_line :=
     (
+     # default action (just copy text to tmp_p)
      ( ( default - ["\n] )+ >{ if(opt) { tmp_p = p; } } )
      |
+     # end line in documenation block (calls add_block_line)
      EOL @(add_block_line) @{line++;}
      |
+     # end of documentation block (calls add_block_line)
      '"""' @(add_block_line) @{fret;}
      |
+     # ignore quotes (less than 3 in a row)
      ('"'{1,2} . (default - ["\n])) @{ fhold; opt=false; }
     )**;
 
@@ -253,18 +257,23 @@ using std::ifstream;
     # add rule
     ('add(' %{/*cerr << "add:" << '\n';*/ tmp_p = p;}
      . (
+        # add documentation block (brief, docu, extra)
         ((add_param_docu_block
             %(set_docu_block)
          )
          . ')' . MWSOC* . EQ
          . MWSOC* . docu_block . MWSOC* . ENDRULE )
         |
+        # add documentation list (documentation block for a parameter or a
+        # parameter or a return value)
         ((add_param_docu_list
             %(set_docu_list)
          )
          . ')' . MWSOC* . EQ
          . MWSOC* :> docu_list . MWSOC* . ENDRULE )
         |
+        # add a map of documentation lists (documentation blocks for structure
+        # fields of parameters or return values)
         ((add_param_docu_list_map
             %(set_docu_list_map)
          )
@@ -273,13 +282,16 @@ using std::ifstream;
        )
     )
     |
-    # go level down
+    # go level down (end of a glob match block)
     ('}') @{ go_level_down(); fret; }
     )*;
 
+  # main parser (first entry point) This block comprises variable definitions.
   main := (
+           # ignored characters
            MWSOC
            | (
+              # variable definitions (not yet implemented)
               (IDENT
                  >(st_tok)
                  %(string_tok)
@@ -290,6 +302,7 @@ using std::ifstream;
               . ';'
              )
            |
+           # end variable definitions
            '##' . [ \t]* . EOL @{ line++; /*cerr<<"-> rules\n";*/ fgoto rules; }
           )**;
 }%%
