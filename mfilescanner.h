@@ -21,7 +21,8 @@ public:
   typedef std :: set< std :: string >                                GroupSet;
 
 public:
-  MFileScanner (std::istream & fin, const std::string & filename, bool latex_output);
+  MFileScanner (std::istream & fin, const std::string & filename, const
+                std::string & conffilename, bool latex_output);
 
   int execute();
 
