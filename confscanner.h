@@ -27,7 +27,7 @@ private:
 
 
 public:
-  ConfFileScanner(const std::string & filename);
+  ConfFileScanner(const std::string & filename, const std::string & conffilename);
 
   int execute();
 
@@ -41,7 +41,7 @@ public:
   GroupSet           groupset_;
 
 private:
-  const char * set_conffile();
+  const char * get_conffile();
 
   void check_glob_level_up();
 
