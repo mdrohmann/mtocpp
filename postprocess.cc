@@ -24,32 +24,34 @@ static const int PostProcess_en_retvals = 124;
 static const int PostProcess_en_mtocsubst = 127;
 static const int PostProcess_en_main = 91;
 
-#line 72 "postprocess.rl"
+#line 90 "postprocess.rl"
 
 
 class PostProcess
 {
 
 public:
+  // constructor
   PostProcess(const string & filename) :
     filename_(filename),
     line(1),
     ts(0), te(0), have(0)
   { }
 
+  // run postprocessor
   int execute()
   {
     std::ios::sync_with_stdio(false);
 
     
-#line 46 "postprocess.cc"
+#line 48 "postprocess.cc"
 	{
 	cs = PostProcess_start;
 	ts = 0;
 	te = 0;
 	act = 0;
 	}
-#line 89 "postprocess.rl"
+#line 109 "postprocess.rl"
 
     ifstream is;
     try
@@ -89,34 +91,34 @@ public:
     char *eof = pe;
 
     
-#line 93 "postprocess.cc"
+#line 95 "postprocess.cc"
 	{
 	if ( p == pe )
 		goto _test_eof;
 	switch ( cs )
 	{
 tr0:
-#line 68 "postprocess.rl"
+#line 85 "postprocess.rl"
 	{{p = ((te))-1;}{ fout.write(ts, te-ts); }}
 	goto st91;
 tr6:
-#line 64 "postprocess.rl"
+#line 79 "postprocess.rl"
 	{te = p+1;{ {goto st127;} }}
 	goto st91;
 tr17:
-#line 62 "postprocess.rl"
+#line 76 "postprocess.rl"
 	{te = p+1;{fout << "function ";}}
 	goto st91;
 tr35:
-#line 60 "postprocess.rl"
+#line 73 "postprocess.rl"
 	{te = p+1;{ fout << "function "; {goto st124;} }}
 	goto st91;
 tr53:
-#line 58 "postprocess.rl"
+#line 70 "postprocess.rl"
 	{te = p+1;{ fout << "function ["; {goto st124;} }}
 	goto st91;
 tr96:
-#line 70 "postprocess.rl"
+#line 88 "postprocess.rl"
 	{te = p+1;{fout << *ts;}}
 	goto st91;
 tr100:
@@ -132,7 +134,7 @@ tr100:
 	}
 	goto st91;
 tr101:
-#line 68 "postprocess.rl"
+#line 85 "postprocess.rl"
 	{te = p;p--;{ fout.write(ts, te-ts); }}
 	goto st91;
 st91:
@@ -143,7 +145,7 @@ st91:
 case 91:
 #line 1 "postprocess.rl"
 	{ts = p;}
-#line 147 "postprocess.cc"
+#line 149 "postprocess.cc"
 	switch( (*p) ) {
 		case 32: goto tr96;
 		case 38: goto tr96;
@@ -169,20 +171,20 @@ case 91:
 tr95:
 #line 1 "postprocess.rl"
 	{te = p+1;}
-#line 68 "postprocess.rl"
+#line 85 "postprocess.rl"
 	{act = 13;}
 	goto st92;
 tr121:
 #line 1 "postprocess.rl"
 	{te = p+1;}
-#line 66 "postprocess.rl"
+#line 82 "postprocess.rl"
 	{act = 12;}
 	goto st92;
 st92:
 	if ( ++p == pe )
 		goto _test_eof92;
 case 92:
-#line 186 "postprocess.cc"
+#line 188 "postprocess.cc"
 	switch( (*p) ) {
 		case 32: goto tr100;
 		case 38: goto tr100;
@@ -715,7 +717,7 @@ st114:
 	if ( ++p == pe )
 		goto _test_eof114;
 case 114:
-#line 719 "postprocess.cc"
+#line 721 "postprocess.cc"
 	switch( (*p) ) {
 		case 32: goto tr101;
 		case 38: goto tr101;
@@ -881,7 +883,7 @@ st119:
 	if ( ++p == pe )
 		goto _test_eof119;
 case 119:
-#line 885 "postprocess.cc"
+#line 887 "postprocess.cc"
 	switch( (*p) ) {
 		case 32: goto tr101;
 		case 38: goto tr101;
@@ -1035,7 +1037,7 @@ st122:
 	if ( ++p == pe )
 		goto _test_eof122;
 case 122:
-#line 1039 "postprocess.cc"
+#line 1041 "postprocess.cc"
 	switch( (*p) ) {
 		case 32: goto tr101;
 		case 38: goto tr101;
@@ -1191,7 +1193,7 @@ st123:
 	if ( ++p == pe )
 		goto _test_eof123;
 case 123:
-#line 1195 "postprocess.cc"
+#line 1197 "postprocess.cc"
 	switch( (*p) ) {
 		case 32: goto tr101;
 		case 38: goto tr101;
@@ -1339,23 +1341,23 @@ case 53:
 		goto tr53;
 	goto tr0;
 tr56:
-#line 46 "postprocess.rl"
+#line 56 "postprocess.rl"
 	{{p = ((te))-1;}{ fout <<", "; }}
 	goto st124;
 tr73:
-#line 42 "postprocess.rl"
+#line 50 "postprocess.rl"
 	{te = p+1;{ fout << "] ="; {goto st91;} }}
 	goto st124;
 tr84:
-#line 44 "postprocess.rl"
+#line 53 "postprocess.rl"
 	{te = p+1;{ fout << " ="; {goto st91;} }}
 	goto st124;
 tr137:
-#line 40 "postprocess.rl"
+#line 47 "postprocess.rl"
 	{te = p;p--;{ fout.write(ts, te - ts); }}
 	goto st124;
 tr138:
-#line 46 "postprocess.rl"
+#line 56 "postprocess.rl"
 	{te = p;p--;{ fout <<", "; }}
 	goto st124;
 st124:
@@ -1366,7 +1368,7 @@ st124:
 case 124:
 #line 1 "postprocess.rl"
 	{ts = p;}
-#line 1370 "postprocess.cc"
+#line 1372 "postprocess.cc"
 	switch( (*p) ) {
 		case 45: goto st125;
 		case 58: goto st54;
@@ -1415,7 +1417,7 @@ st126:
 	if ( ++p == pe )
 		goto _test_eof126;
 case 126:
-#line 1419 "postprocess.cc"
+#line 1421 "postprocess.cc"
 	if ( (*p) == 114 )
 		goto st55;
 	goto tr138;
@@ -1611,19 +1613,19 @@ case 81:
 		goto tr84;
 	goto tr56;
 tr85:
-#line 50 "postprocess.rl"
+#line 61 "postprocess.rl"
 	{{p = ((te))-1;}}
 	goto st127;
 tr94:
-#line 54 "postprocess.rl"
+#line 65 "postprocess.rl"
 	{te = p+1;{ {goto st91;} }}
 	goto st127;
 tr142:
-#line 52 "postprocess.rl"
+#line 63 "postprocess.rl"
 	{te = p;p--;}
 	goto st127;
 tr143:
-#line 50 "postprocess.rl"
+#line 61 "postprocess.rl"
 	{te = p;p--;}
 	goto st127;
 st127:
@@ -1634,7 +1636,7 @@ st127:
 case 127:
 #line 1 "postprocess.rl"
 	{ts = p;}
-#line 1638 "postprocess.cc"
+#line 1640 "postprocess.cc"
 	switch( (*p) ) {
 		case 45: goto st128;
 		case 92: goto st128;
@@ -1671,7 +1673,7 @@ st129:
 	if ( ++p == pe )
 		goto _test_eof129;
 case 129:
-#line 1675 "postprocess.cc"
+#line 1677 "postprocess.cc"
 	if ( (*p) == 116 )
 		goto st82;
 	goto tr143;
@@ -2003,7 +2005,7 @@ case 90:
 
 	_out: {}
 	}
-#line 128 "postprocess.rl"
+#line 148 "postprocess.rl"
 
     /* Check if we failed. */
     if ( cs == PostProcess_error )

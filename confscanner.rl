@@ -17,18 +17,20 @@ using std::ifstream;
   machine ConfFileScanner;
   write data;
 
-  action st_tok { /*cerr << "st_tok" << line << "\n";*/ tmp_p = p; }
+  # store current char pointer p in tmp_p
+  action st_tok { tmp_p = p; }
 
+  # assign a string token to tmp_string variable
   action string_tok {
     tmp_string.assign(tmp_p, p-tmp_p);
   }
 
+  # add groupname to groupset_ if glob expression matches
   action group_add
   {
-//    cerr << "in group add: " << endl;
+    // check wether glob expression matches
     if(match_at_level_[level_])
     {
-//      cerr << "do it" << endl;
       tmp_string.assign(tmp_p, p-tmp_p);
       // clear groupset_ first, if we did not use '+='
       if(!arg_to_be_added_)
@@ -38,6 +40,8 @@ using std::ifstream;
     }
   }
 
+  # set cblock_ to selected documentation block as specified in an expression
+  # "add(specifier)"
   action set_docu_block
   {
     tmp_string.assign(tmp_p, p-tmp_p);
@@ -49,6 +53,8 @@ using std::ifstream;
       cblock_ = &docuextra_;
   }
 
+  # set clist_ to selected documentation block list as specified in an
+  # expression "add(params)" or "add(return)"
   action set_docu_list
   {
     tmp_string.assign(tmp_p, p-tmp_p);
@@ -62,6 +68,8 @@ using std::ifstream;
       clist_ = &return_list_;
   }
 
+  # set clistmap_ to selected documentation block list map as specified in an
+  # expression "add(fields)"
   action set_docu_list_map
   {
     tmp_string.assign(tmp_p, p-tmp_p);
@@ -73,6 +81,7 @@ using std::ifstream;
   # docublock, docuheader, docuextra or clist[] or clistmap[][]
   action add_block_line
   {
+    // check wether glob expression matches
     if(match_at_level_[level_])
     {
       tmp_string.assign(tmp_p, p-tmp_p);
@@ -99,6 +108,7 @@ using std::ifstream;
   # set the cblock pointer to clist_[value]
   action set_block_from_list
   {
+    // check wether glob expression matches
     if(match_at_level_[level_])
     {
       tmp_string.assign(tmp_p, p-tmp_p);
@@ -143,8 +153,11 @@ using std::ifstream;
   # swallow till the end of line
   garbling := (default - '\n')* . EOL @{line++;fret;};
 
+  # parameter values for single documentation blocks
   add_param_docu_block = ('brief'|'doc'|'extra');
+  # parameter values for lists of documentation blocks
   add_param_docu_list = ('params'|'return');
+  # parameter values for a map of lists of documentation blocks
   add_param_docu_list_map = ('fields');
 
   # matlab white space or comment
@@ -197,6 +210,7 @@ using std::ifstream;
      . '=>' . MWSOC* . docu_block
     );
 
+  # a list of documentation block lists
   docu_list = (
     (
      '('
@@ -207,12 +221,15 @@ using std::ifstream;
     docu_list_item
   );
 
+  # documentation list map item
   docu_list_map_item =
     (
+     # matlab identifier (structure)
      (MIDENT
        >{tmp_p = p;/* cerr << "dlmi\n";*/} %(string_tok)
      )
      . '.'
+     # matlab identifer (fieldname)
      .(MIDENT
        >{tmp_p = p;/* cerr << "dlmi2\n";*/} %(set_block_from_listmap)
       )
@@ -220,6 +237,7 @@ using std::ifstream;
      . '=>' . MWSOC* . docu_block
     );
 
+  # a map of documentation block lists
   docu_list_map = (
     (
      '('
@@ -230,19 +248,24 @@ using std::ifstream;
     docu_list_map_item
   );
 
+  # list of file matching words
   globlist =
     (GLOB >{/*cerr << "glob_list";*/ tmp_p = p;} %(reg_glob))
     . (MWSOC* . [ \t]+ . MWSOC*
         . (GLOB >{/*cerr << "glob list2";*/ tmp_p = p;} %(reg_glob)))*;
 
+  # list of group names
   grouplist = (
+     # matlab identifier (group name)
     ((MIDENT >(st_tok)
              %(group_add))
      . ',')*
+     # matlab identifier (group name)
     .(MIDENT >(st_tok)
       %(group_add))
     );
 
+  # specify all possible rules
   rules := (
     # glob list
     ('glob' .MWSOC* . '=' . MWSOC* . globlist . MWSOC* . '{')
@@ -307,6 +330,7 @@ using std::ifstream;
           )**;
 }%%
 
+// this method is called when a glob ... {} block ends
 void ConfFileScanner :: go_level_down()
 {
   globlist_stack_.pop_back();
@@ -314,36 +338,37 @@ void ConfFileScanner :: go_level_down()
   level_--;
 }
 
+// checks wether the string ist matched by a glob from the globlist_stack_ at
+// level \a l
 bool ConfFileScanner :: check_for_match(int l, const char * str,
                                         bool match_path_sep)
 {
   typedef GlobList :: iterator iterator;
+  // get globlist at stack level \a l
   GlobList & gl = globlist_stack_[l];
-  /*  cerr << "globlist at level" << l << "\n  ";
-  for(unsigned int i = 0; i < gl.size(); ++i)
-  {
-    cerr << gl[i] << " ";
-  }
-  cerr << endl;*/
+
   iterator endit = gl.end();
   int flags = (match_path_sep? FNM_PATHNAME : 0);
-  // cerr << "checking for match at level " << l <<" of string " << str << ":" << endl;
+  // iterate over all globs
   for( iterator it = gl.begin(); it != endit; it++ )
   {
-    // cerr << "with pattern: " << (*it).c_str() << endl;
+    // check wether str matches glob
     if(fnmatch((*it).c_str(), str, flags) == 0)
     {
-      // cerr << "SUCCESS!" << endl;
       return true;
     }
   }
   return false;
 }
 
+// check recursively wether file named \a s is matched by a glob from the
+// globlist_stack_
 bool ConfFileScanner :: check_glob_rec(int l, const string & s)
 {
   string str;
   string :: size_type found;
+  // exit condition (if filename ist matched up to level level_+1 the check was
+  // successful.
   if(l == level_+1)
     return true;
 
@@ -351,14 +376,15 @@ bool ConfFileScanner :: check_glob_rec(int l, const string & s)
   while(found != string :: npos)
   {
     str = s.substr(0, found);
-//    cerr << str << endl;
+    // first try to match the prepended path by a glob at this level, ...
     if(check_for_match(l, str.c_str())
+        // ... then try to match the rest of the substring at a higher level.
         && check_glob_rec(l+1, s.substr(found+1)))
       return true;
 
     found = s.find("/", found+1); // try to match more dirs
   }
-  if(l == level_) // try also to match the entire string
+  if(l == level_) // try also to match the entire string at this level
   {
     if(check_for_match(l, s.c_str()))
       return true;
@@ -367,39 +393,49 @@ bool ConfFileScanner :: check_glob_rec(int l, const string & s)
   return false;
 }
 
+// this method is called after a glob ... = {} block begins
+// and sets the match_at_level_ structure for the active file named 
+// \a filename_
 void ConfFileScanner :: check_glob_level_up()
 {
+  // update match_at_level_
   match_at_level_[level_+1] = check_glob_rec(0, filename_);
-/*  cerr << "going one level up, match at this level is: "
-       << (match_at_level_[level_+1] ? "true" : "false");
-  cerr << endl;*/
 
+  // add empty glob list
   globlist_stack_.push_back(GlobList());
   level_++;
 }
 
+// constructor
 ConfFileScanner
-:: ConfFileScanner(const std::string & filename)
+:: ConfFileScanner(const std::string & filename, const std::string & conffilename)
  : line(1), have(0), top(0), opt(true),
    filename_(filename),
-   confistream_(set_conffile()),
+   conffile_(conffilename == "" ? "doxygen/mtoc.conf" : conffilename),
+   confistream_(get_conffile()),
    level_(0),
    arg_to_be_added_(false)
 {
+  if ( (confistream_.rdstate() & ifstream::failbit ) != 0 )
+  {
+    cerr << "Error opening configuration file '" << conffilename << "'\n";
+    exit(-2);
+  }
   globlist_stack_.push_back(GlobList());
+  // at level 0 every file is matched ( no glob checking )
   match_at_level_[0] = true;
 }
 
+// returns the name of the configuration file
 const char * ConfFileScanner ::
-set_conffile()
+get_conffile()
 {
-  conffile_ = "doxygen/mtoc.conf";
   return conffile_.c_str();
 }
 
+// run the conffile scanner
 int ConfFileScanner :: execute()
 {
-  //cerr << "execute\n";
   std::ios::sync_with_stdio(false);
 
   %% write init;
@@ -410,7 +446,9 @@ int ConfFileScanner :: execute()
   {
     char *p = buf + have;
     char *tmp_p = p;// *tmp_p2 = p;
+    // string for temporary tokens
     string tmp_string;
+    // spare space in buffer
     int space = BUFSIZE - have;
 
     if ( space == 0 )
@@ -420,6 +458,7 @@ int ConfFileScanner :: execute()
       exit(1);
     }
 
+    // read configuration file chunk in buffer
     confistream_.read( p, space );
     int len = confistream_.gcount();
     char *pe = p + len;

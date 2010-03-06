@@ -17,14 +17,19 @@ using std::endl;
   machine PostProcess;
   write data;
 
+  # end of file character
   EOF = 0;
 
+  # all but end of file character
   default = ^0;
 
+  # end of line
   EOL = ('\r'? . '\n') @{line++;};
 
+  # matlab identifier
   IDENT = [A-Z\\a-z\-_][A-Z\\a-z0-9\-_]*;
 
+  # matlab ifdentifier without underscore characters
   IDENT_WO_US = [A-Z\\a-z\-][A-Z\\a-z0-9\-]*;
 
   action echo {
@@ -36,16 +41,22 @@ using std::endl;
 
   action echo_tok { fout.write(tmp_p, p - tmp_p); cout.write(tmp_p, p-tmp_p); }
 
+  # reconstruct return values
   retvals:= |*
+    # matlab identifier (1 return value)
     (IDENT) => { fout.write(ts, te - ts); };
 
+    # end list of return values
     '::retssubstituteend' => { fout << "] ="; fgoto main; };
 
+    # end of return value
     '::retsubstituteend' => { fout << " ="; fgoto main; };
 
+    # return value separator
     '::' => { fout <<", "; };
   *|;
 
+  # function name
   mtocsubst:= |*
     '_';
 
@@ -55,18 +66,25 @@ using std::endl;
   *|;
 
   main:= |*
+   # list of return values
    ('rets::substitutestart::') => { fout << "function ["; fgoto retvals; };
 
+   # one return value
    ('ret::substitutestart::') => { fout << "function "; fgoto retvals; };
 
+   # no return values
    ('noret::substitute') => {fout << "function ";};
 
+   # function name
    ('mtoc_subst_') => { fgoto mtocsubst; };
 
+   # matlab is typeless, so discard the type
    ('matlabtypesubstitute') => {fout << " ";};
 
+   # a word
    (any - [\n <>()[\]{}\&:;_\t])+ => { fout.write(ts, te-ts); };
 
+   # word separators
    ([\n <>()[\]{}\t:;_\&]) => {fout << *ts;};
    *|;
 }%%
@@ -75,12 +93,14 @@ class PostProcess
 {
 
 public:
+  // constructor
   PostProcess(const string & filename) :
     filename_(filename),
     line(1),
     ts(0), te(0), have(0)
   { }
 
+  // run postprocessor
   int execute()
   {
     std::ios::sync_with_stdio(false);
