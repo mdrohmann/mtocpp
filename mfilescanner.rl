@@ -68,6 +68,20 @@ using std::istream;
 
   action string_tok { tmp_string.assign(tmp_p, p-tmp_p); }
 
+#  action end_of_doxybody_in_class {
+#    if(class_part_ == Header)
+#    {
+#        end_of_class_doc();
+#        fgoto classbody;
+#    } else if(class_part_ == Method)
+#        fgoto funcbody;
+#    else if(class_part_ == Property)
+#    {
+#        end_of_property_doc();
+#        fgoto property;
+#    }
+#  }
+
   # comment in function body that might also be added to the doxygen block for
   # the function description
   is_doxy_comment =
@@ -83,6 +97,9 @@ using std::istream;
 
   # comment block in function body
   comment_block = [ \t]* . '%' . is_doxy_comment;
+
+  # an empty line
+  empty_line = [\t ]* . EOL;
 
   # documentation line begin
   doc_begin = [\t ]* . '%' @{ tmp_p = p + 1; };
@@ -120,18 +137,22 @@ using std::istream;
      (IDENT)
        >st_tok
        %{
-         string s(tmp_p, p - tmp_p);
-         // add an empty docu block for parameter \a s
-         param_list_[s] = DocuBlock();
-         paramlist_.push_back(s);
-         cout << "matlabtypesubstitute " << s;
+         // do not print this pointer
+         if(!paramlist_.empty() || !is_class_ || class_part_ != Method)
+         {
+           string s(tmp_p, p - tmp_p);
+           // add an empty docu block for parameter \a s
+           param_list_[s] = DocuBlock();
+           paramlist_.push_back(s);
+           cout << "matlabtypesubstitute " << s;
+         }
        }
     )**;
 
   # return parameter list for functions
   lparamlist =
     ( (WSOC | [\n])+
-      | ',' @{ cout << "::"; }
+      | ','
       # matlab identifier (return value)
       | ( IDENT > st_tok
           %{
@@ -139,7 +160,6 @@ using std::istream;
             returnlist_.push_back(s);
             // add an empty docu block for return value \a s
             return_list_[s] = DocuBlock();
-            cout << s;
           }
         )
     )**;
@@ -157,12 +177,11 @@ using std::istream;
              returnlist_.push_back(s);
              // add an empty docu block for single return value \a s
              return_list_[s] = DocuBlock();
-             cout << "ret::substitutestart::" << s << "::retsubstituteend ";
            }
         )
-        | ( '[' @{cout << "rets::substitutestart::";}
+        | ( '['
           . lparamlist
-          . ']' @{cout << "::retssubstituteend ";}
+          . ']'
           )
       )
       . ([ \t]*
@@ -353,9 +372,9 @@ using std::istream;
       ([ \t]* . EOL)
         => { cout << '\n'; };
 
-      # line not beginning with word 'function'
+      # line not beginning with words 'function' or 'end'
       ([ \t]*
-       . ( (default - [ \r\t\n%])+ - 'function' )
+       . ( (default - [ \r\t\n%])+ - ('function'|'end') )
        . ( WSOC | EOL )
       )
         => {
@@ -363,6 +382,24 @@ using std::istream;
           // further parse the function body line
           fgoto funcline;
         };
+
+      # line only containing word 'end'
+      ([ \t]* . 'end' . WSOC . EOL)
+          => {
+              if(is_class_ && class_part_ == Method)
+              {
+                tmp_string.assign(ts,te-ts);
+                if(tmp_string.find("e") == funcindent_)
+                {
+                  end_function();
+                  fgoto classbody;
+                }
+              }
+              // else
+              p=ts-1;
+              // further parse the function body line
+              fgoto funcline;
+          };
 
       # line beginning with word 'function'
       ([ \t]*. 'function ')
@@ -559,7 +596,24 @@ using std::istream;
       => {
         // cout << "*/\n";
         if(! docline)
-          fgoto funcbody;
+        {
+          if(is_class_)
+          {
+            if(class_part_ == Header)
+            {
+              end_of_class_doc();
+              fgoto classbody;
+            } else if(class_part_ == Method)
+              fgoto funcbody;
+            else if(class_part_ == Property)
+            {
+              end_of_property_doc();
+              fgoto property;
+            }
+            else
+              fgoto funcbody;
+          }
+        }
         else
         {
           int offset = ( latex_begin ? 0 : 1 );
@@ -605,7 +659,22 @@ using std::istream;
       => {
         fhold;
         //cout << "*/\n";
-        fgoto funcbody;
+        if(is_class_)
+        {
+          if(class_part_ == Header)
+          {
+            end_of_class_doc();
+            fgoto classbody;
+          } else if(class_part_ == Method)
+            fgoto funcbody;
+          else if(class_part_ == Property)
+          {
+            end_of_property_doc();
+            fgoto property;
+          }
+        }
+        else
+          fgoto funcbody;
       };
 
   *|;
@@ -630,6 +699,196 @@ using std::istream;
       }
    );
 
+  paramaccess =
+    ('SetAccess' . WSOC* . '=' . WSOC
+      . ( 'public'
+            %{ access_.full = Public;
+               access_.set = Public;
+             }
+        | 'protected'
+            %{ access_.full =
+                 (access_.get == Public ? Public : Protected );
+               access_.set = Protected;
+             }
+        | 'private'
+            %{ access_.full = access_.get;
+               access_.set = Private;
+             }
+        )
+     | 'GetAccess' . WSOC* . '=' . WSOC
+      . ( 'public'
+            %{ access_.full = Public;
+               access_.get = Public;
+             }
+        | 'protected'
+            %{ access_.full =
+                 (access_.set == Public ? Public : Protected );
+               access_.get = Protected;
+             }
+        | 'private'
+            %{ access_.full = access_.set;
+               access_.get = Private;
+             }
+        )
+     | 'Access' . WSOC* . '=' . WSOC
+      . ( 'public'
+            %{ access_.full = Public;
+               access_.get = Public;
+               access_.set = Public;
+             }
+        | 'protected'
+            %{ access_.full = Protected;
+               access_.get = Protected;
+               access_.set = Protected;
+             }
+        | 'private'
+            %{ access_.full = Private;
+               access_.get = Private;
+               access_.set = Private;
+             }
+        )
+      );
+
+  methodparam =
+   (
+    paramaccess
+    | ( ( 'Abstract' . [^,)]* )
+        @{
+           methodparams_.abstr = true;
+         } )
+    | ( ( 'Static' . [^,)]* )
+        @{
+           methodparams_.statical = true;
+         } )
+    | ( ('Hidden'|'Sealed')
+         . [^,)]* )
+   );
+
+  propertyparam =
+   (
+    paramaccess
+    | ( ( 'Constant' . [^,)]* )
+        @{
+           propertyparams_.constant = true;
+         } )
+     | ( ('Transient'|'Dependent'|'Hidden'|'SetObservable'|'Abstract')
+         . [^,)]* )
+   );
+
+  methodparams =
+   (
+    '(' . WSOC*
+    . methodparam
+    . ( WSOC* . ',' . WSOC* . methodparam )
+   );
+
+  propertyparams =
+   (
+    '(' . WSOC*
+    . propertyparam
+    . ( WSOC* . ',' . WSOC* . propertyparam )
+   );
+
+  events := (
+    ( ([ \t]* .  'e') >st_tok
+      . 'nd' . [ \t;]* . EOL
+        @{ tmp_string.assign(tmp_p, p - tmp_p);
+                if(tmp_string.find("e") == eventindent_)
+                  { fgoto classbody; }
+              }
+      | (default* - 'end') . EOL )*
+   );
+
+  methods := (
+    WSOC* . methodparams? . EOL
+    . (
+        empty_line
+      | ([ \t]* . 'f' ) >st_tok
+      @{
+        tmp_string.assign(tmp_p, p - tmp_p);
+        funcindent_ = tmp_string.find("f");
+        fhold;
+        fgoto funct;
+       }
+      )* >{
+            print_access_specifier(access_.full);
+          }
+    . [ \t]* . 'end' .';'?
+      @{
+         fgoto classbody;
+       }
+   );
+
+   prop = ( ( [ \t]* . IDENT >st_tok
+                 @{
+            string s(tmp_p, p - tmp_p);
+            property_list_.push_back(s);
+            cout << propertyparams_.ccprefix() << " " << s;
+            }
+          )
+        . ( [^;]* . ';') >st_tok %echo_tok . [ \t]* .
+        ( '%' %st_tok . ( default - [\r\n] )*
+          . EOL @{
+            cout << "\n/** @var " << property_list_.back() << "\n" << " * ";
+            cout.write(tmp_p, p-tmp_p);
+            cout << "*/";
+          } | EOL @{ cout << "\n";} ) @{ fgoto properties; }
+      );
+
+  property := ( prop* );
+
+  properties := (
+    WSOC* . propertyparams? . EOL
+    . (
+        # needs to be fixed!
+        ([ \t]* . '%' . (default - [\r\n])* . EOL )*
+        . (prop | empty_line
+      )* >{
+            print_access_specifier(access_.full);
+          }
+    . [ \t]* . 'end' .';'?
+      @{
+         fgoto classbody;
+       }) );
+
+  classbody := |*
+
+    # a comment block
+    (comment_block)
+      => {
+        cout.write(tmp_p, p - tmp_p+1);
+        fcall in_comment_block;
+      };
+
+    (WSOC*) => {};
+
+    ('end') => {
+      fgoto main;
+    };
+
+    ('properties')
+      => {
+        propertyparams_ = PropParams();
+        access_ = AccessStruct();
+        class_part_ = Property;
+        fgoto properties;
+      };
+    ('methods')
+      => {
+        methodparams_ = MethodParams();
+        access_ = AccessStruct();
+        class_part_ = Method;
+        fgoto methods;
+      };
+    ([ \t]* . 'events')
+      => {
+        std::string tmp_string(ts, te-ts);
+        eventindent_ = tmp_string.find("e");
+        class_part_ = Event;
+        fgoto events;
+      };
+  *|;
+
   # after function declaration expect a documentation block or the function
   # body
   expect_doxyblock :=
@@ -640,10 +899,26 @@ using std::istream;
         p--;
         fgoto doxyheader;
       }
-  ) $!{
+  )
+ $!{
     fhold;
-    fgoto funcbody;
-  };
+    if(is_class_)
+    {
+      if(class_part_ == Header)
+      {
+        end_of_class_doc();
+        fgoto classbody;
+      } else if(class_part_ == Method)
+        fgoto funcbody;
+      else if(class_part_ == Property)
+      {
+        end_of_property_doc();
+        fgoto property;
+      }
+    }
+    else
+      fgoto funcbody;
+ };
 
   # function declaration
   funcdef = (
@@ -651,7 +926,8 @@ using std::istream;
       # return values (if found opt = true)
       (lparams)? @{opt=true;} .
       # matlab identifier (function name stored in cfuncname_)
-      ( IDENT
+      ( ('get.' @{is_getter_ = true;} | 'set.' @{is_setter_=true;} )? .
+        IDENT
           >st_tok
           %{
             cfuncname_.assign(tmp_p, p - tmp_p);
@@ -662,30 +938,62 @@ using std::istream;
       . (
            ('('
                  @{
+                 if(is_getter_ || is_setter_)
+                 {
+                  cout << "/*\n";
+                 }
+                 if(is_class_ && class_part_ == Method)
+                   cout << methodparams_.ccprefix();
+
                  // no return values?
                  if(!opt)
                  {
                    cout << "noret::substitute ";
                    opt=false;
                  }
+                 else
+                 {
+                   // do we have a constructor?
+                   if(is_class_ && (cfuncname_ == classname_))
+                     returnlist_.clear();
+                   else{
+                     if(returnlist_.size() == 1)
+                       cout << "ret::substitutestart::" << returnlist_[0] << "::retsubstituteend ";
+                     else
+                     {
+                       cout << "rets::substitutestart::";
+                       for(size_t i=0; i<returnlist_.size(); ++i)
+                       {
+                         cout << returnlist_[i] << "::";
+                       }
+                       cout << "retssubstituteend ";
+                     }
+                   }
+                 }
                  if(!is_first_function_)
                    cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
                  cout << cfuncname_ << '(';
-                 })
+                 }
+                 )
            # parameter list
            . paramlist
            . (')' @echo) . ( WSOC | ';' )*
            . EOL
            @{
-             cout << " {\n";
+             if(is_class_ && class_part_ == Method)
+               cout << methodparams_.ccpostfix() << "\n";
+             else
+               cout << " {\n";
              // check for documentation block
              fgoto expect_doxyblock;
            }
-        # no parameter list => script
+        # no parameter list && first function => script
         | (';'? . EOL) @{
-                         cout << "noret::substitute ";
+
                          if(!is_first_function_)
                            cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
+                         else
+                           cout << "noret::substitute ";
                          cout << cfuncname_ << "() {\n";
                          fgoto expect_doxyblock;
                         }
@@ -720,31 +1028,93 @@ using std::istream;
   ) $eof( end_of_file )
   ;
 
-  expect_function_or_script =
+  classparams =
+      '(' . [^)]* . ')';
+
+  superclass =
+    ( IDENT
+      > st_tok
+          %{
+             cout << "public ";
+             cout.write(tmp_p, p - tmp_p);
+           } );
+
+  superclasses = (
+      '<' @{ cout << "\n  :"; } . WSOC* . superclass . WSOC*
+          . (',' @{ cout << ",\n   "; } . WSOC* . superclass)* );
+
+  classdef = (
+      WSOC* .
+      # matlab identifier (class name stored in classname_)
+      ( IDENT
+          >st_tok
+          %{
+            classname_.assign(tmp_p, p - tmp_p);
+            is_class_ = true;
+            cout << "class " << classname_;
+          }
+      )
+      . WSOC*
+      . classparams?
+      . WSOC*
+      . superclasses?
+      . WSOC*
+      EOL
+      @{
+        cout << " {\n";
+        fgoto expect_doxyblock;
+      } );
+
+  class :=
   (
-    # either we find a function definition with a possibly preceding comment
-    # block or we have a script
+    (
+      comment_block @in_c_block
+      | [ \t]*. EOL
+    )*
+    . [\t]* . 'classdef'
+    . classdef
+  )
+  ;
+
+  expect_function_script_or_class =
+  (
+    # either we find a function or classdef definition with a possibly
+    # preceding comment block or we have a script
     any @{ fhold; tmp_p = p; } .
     (
       [ \t]*. '%' . (any - '\n')* . EOL
       | [ \t]*. EOL
     )*
-    . [\t]* . 'function'
-    @{
-    p=tmp_p;
-    fgoto funct;
-    }
-  )
+    . [\t]*
+    . ( 'function' @{
+                     p=tmp_p;
+                     fgoto funct;
+                    }
+      | 'classdef' @{
+                     p=tmp_p;
+                     fgoto classdef;
+                    }
+      )
   $!{
     p=tmp_p;
     fgoto script;
   }
+  )
   ;
 
-  main := expect_function_or_script*;
+  main := expect_function_script_or_class*;
 
 }%%
 
+void MFileScanner :: print_access_specifier(AccessEnum & access)
+{
+  if(access == Public)
+    cout << "public:\n";
+  else if(access == Protected)
+    cout << "protected:\n";
+  else if(access == Private)
+    cout << "private:\n";
+}
 
 // constructor
 MFileScanner :: MFileScanner(istream & fin, const std::string & filename,
@@ -754,7 +1124,12 @@ MFileScanner :: MFileScanner(istream & fin, const std::string & filename,
   fnname_(filename),
   line(1),
   ts(0), have(0), top(0),
-  opt(false), new_syntax_(false), is_script_(false), is_first_function_(true)
+  opt(false), new_syntax_(false),
+  is_script_(false), is_first_function_(true),
+  is_class_(false), is_setter_(false), is_getter_(false),
+  classname_(), funcindent_(0), eventindent_(0),
+  class_part_(Header),
+  access_(), propertyparams_(), methodparams_(), property_list_()
 {
   string::size_type found = fnname_.rfind("/");
   if(found != string::npos)
@@ -1053,111 +1428,32 @@ void MFileScanner::write_docu_listmap(const DocuListMap & listmap,
   }
 }
 
-// end a function and pretty print the documentation for this function
-void MFileScanner::end_function()
+void MFileScanner::end_of_class_doc()
 {
-  typedef GroupSet     :: iterator group_iterator;
-  typedef DocuBlock    :: iterator block_iterator;
-  typedef DocuList     :: iterator list_iterator;
-  typedef DocuListMap  :: iterator map_iterator;
-  // end function
-  cout << "}\n";
-  // is the first function?
-  if(is_first_function_)
-  {
-    string tempfname(filename_);
+  cout << "/** @class \"" << classname_ << "\"\n";
 
-    if(! latex_output_ )
-    {
-      // Then make a file documentation block
-      cout << "/** @file \"" << tempfname << "\"\n  ";
+  cout_ingroup();
 
-      // add @ingroup commands from the configuration file
-      if((! groupset_.empty() || ! cscan_.groupset_.empty() ))
-      {
-        cout << "* @ingroup ";
-        bool not_first = false;
-        group_iterator git = cscan_.groupset_.begin();
-        for(; git != cscan_.groupset_.end(); ++git)
-        {
-          if(not_first)
-            cout << " ";
-          else
-            not_first = true;
-
-          cout << *git;
-        }
-        groupset_.clear();
-      }
-      cout << "*/\n";
-    }
-  }
-  cout << "/*";
-  if(latex_output_)
-  {
-    if(! cscan_.groupset_.empty() )
-    {
-      // specify the @ingroup command
-      cout << "* @ingroup ";
-      bool not_first = false;
-      group_iterator git = cscan_.groupset_.begin();
-      for(; git != cscan_.groupset_.end(); ++git)
-      {
-        if(not_first)
-          cout << " ";
-        else
-          not_first = true;
-
-        cout << *git;
-      }
-    }
-    cout << "\n  ";
-  }
-  // specify the @fn part
-  cout << "* @fn ";
-  if(returnlist_.size() == 0)
-    cout << "noret::substitute ";
-  else if(returnlist_.size() == 1)
-  {
-    cout << "ret::substitutestart::" << returnlist_[0] << "::retsubstituteend ";
-  }
-  else
-  {
-    cout << "rets::substitutestart::";
-    for(unsigned int i = 0; i < returnlist_.size(); ++i)
-    {
-      if(i != 0)
-        cout << "::";
-
-      cout << returnlist_[i];
-    }
-    cout << "::retssubstituteend ";
-  }
-  returnlist_.clear();
-
-  bool first = true;
-  if(!is_first_function_)
-    cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
-  cout << cfuncname_;
-  if(paramlist_.size() == 0)
-    cout << "\n  ";
-  else
-  {
-    cout << "(";
-    for(unsigned int i=0; i < paramlist_.size(); ++i)
-    {
-      if(!first)
-        cout << ",";
-      else
-        first = false;
-      cout << "matlabtypesubstitute " << paramlist_[i];
-    }
-    paramlist_.clear();
-    cout << ")\n  ";
-  }
-
-  // specify the @brief part
   cout << "* @brief ";
+  cout_docuheader();
+  cout << "*\n  ";
+  cout_docubody();
+  cout << "*\n ";
+  cout_docuextra();
+}
+
+void MFileScanner::end_of_property_doc()
+{
+  cout << "/** @brief ";
+  cout_docuheader();
+  cout << "*\n  ";
+  cout_docubody();
+  cout << "*\n ";
+  cout_docuextra();
+}
+
+void MFileScanner::cout_docuheader()
+{
   if(docuheader_.empty() && cscan_.docuheader_.empty())
   {
     string s(cfuncname_);
@@ -1175,11 +1471,10 @@ void MFileScanner::end_function()
     }
   }
   docuheader_.clear();
-  cout << "*\n  ";
+}
 
-  // specify the @details part
-
-  // standard body definitions
+void MFileScanner :: cout_docubody()
+{
   if(!docubody_.empty())
   {
     cout << "*\n  * ";
@@ -1191,6 +1486,141 @@ void MFileScanner::end_function()
     cout << "*\n  * ";
     write_docu_block(cscan_.docubody_);
   }
+}
+
+void MFileScanner :: cout_docuextra()
+{
+  if(! cscan_.docuextra_.empty())
+  {
+    cout << "*\n  * ";
+    write_docu_block(cscan_.docuextra_);
+  }
+  docuextra_.clear();
+}
+
+void MFileScanner :: cout_ingroup()
+{
+  typedef GroupSet     :: iterator group_iterator;
+  // add @ingroup commands from the configuration file
+  if((! groupset_.empty() || ! cscan_.groupset_.empty() ))
+  {
+    cout << "* @ingroup ";
+    bool not_first = false;
+    group_iterator git = cscan_.groupset_.begin();
+    for(; git != cscan_.groupset_.end(); ++git)
+    {
+      if(not_first)
+        cout << " ";
+      else
+        not_first = true;
+
+      cout << *git;
+    }
+    groupset_.clear();
+  }
+}
+
+// end a function and pretty print the documentation for this function
+void MFileScanner::end_function()
+{
+  bool is_constructor = false;
+  bool is_method = false;
+  if(is_class_)
+  {
+    if(cfuncname_ == classname_)
+      is_constructor = true;
+    if(class_part_ == Method)
+      is_method = true;
+  }
+  // end function
+  cout << "}\n";
+  if(is_getter_ || is_setter_)
+    cout << "*/\n";
+  // is the first function?
+  if(is_first_function_)
+  {
+    if(! latex_output_ && ! is_class_)
+    {
+        // Then make a file documentation block
+        cout << "/** @file \"" << filename_ << "\"\n  ";
+
+      cout_ingroup();
+
+      cout << "*/\n";
+    }
+  }
+  cout << "/*";
+  if(latex_output_ && !is_class_)
+  {
+    cout_ingroup();
+    cout << "\n  ";
+  }
+  if(is_setter_ || is_getter_)
+  {
+    cout << "* @var " << cfuncname_ << "\n ";
+    string temp = (is_setter_ ? "Setter" : "Getter");
+    cout << "* @par " << temp << " is implemented \n * ";
+  }
+  else
+  {
+    // specify the @fn part
+    cout << "* @fn ";
+    if(returnlist_.size() == 0 && !is_constructor)
+      cout << "noret::substitute ";
+    else if(returnlist_.size() == 1)
+    {
+      cout << "ret::substitutestart::" << returnlist_[0] << "::retsubstituteend ";
+    }
+    else
+    {
+      cout << "rets::substitutestart::";
+      for(unsigned int i = 0; i < returnlist_.size(); ++i)
+      {
+        if(i != 0)
+          cout << "::";
+
+        cout << returnlist_[i];
+      }
+      cout << "::retssubstituteend ";
+    }
+    returnlist_.clear();
+
+    bool first = true;
+    if(!is_first_function_)
+      cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
+    cout << cfuncname_;
+    if(paramlist_.size() == 0)
+      cout << "\n  ";
+    else
+    {
+      cout << "(";
+      for(unsigned int i=0; i < paramlist_.size(); ++i)
+      {
+        if(!first)
+          cout << ",";
+        else
+          first = false;
+
+        if(is_method)
+          first = true;
+        else
+          cout << "matlabtypesubstitute " << paramlist_[i];
+      }
+      paramlist_.clear();
+      cout << ")\n  ";
+    }
+
+    // specify the @brief part
+    cout << "* @brief ";
+  }
+  cout_docuheader();
+  cout << "*\n  ";
+
+  // specify the @details part
+
+  // standard body definitions
+  cout_docubody();
+
   // parameters
   if(!param_list_.empty())
   {
@@ -1198,6 +1628,7 @@ void MFileScanner::end_function()
     write_docu_list(param_list_, "@param", cscan_.param_list_);
     param_list_.clear();
   }
+
   // return values
   if(!return_list_.empty())
   {
@@ -1205,6 +1636,7 @@ void MFileScanner::end_function()
     write_docu_list(return_list_, "@retval", cscan_.return_list_);
     return_list_.clear();
   }
+
   // required fields
   write_docu_listmap(required_list_, "@par Required fields of ", cscan_.field_docu_);
   required_list_.clear();
@@ -1218,18 +1650,14 @@ void MFileScanner::end_function()
   retval_list_.clear();
 
   // extra docu fields
-  if(! cscan_.docuextra_.empty())
-  {
-    cout << "*\n  * ";
-    write_docu_block(cscan_.docuextra_);
-  }
+  cout_docuextra();
   if( new_syntax_ )
   {
     cout << "* @synupdate Syntax needs to be updated! \n  ";
   }
-  docuextra_.clear();
   cout << "*/\n";
-  is_first_function_ = false;
+  if(!is_method)
+    is_first_function_ = false;
 }
 
 // main routine
