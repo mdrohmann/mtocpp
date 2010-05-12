@@ -1,0 +1,43 @@
+stack:
+
+
+fix 'properties'
+
+done:
+change in funcbody: check if end on right indentation level ends funcbody
+add properties
+add methods
+add events
+
+set indentation level on funcdef call in methods
+add constructor handling in funcdef
+add handling for 'this' pointer in funcdef
+
+add handling of getters and setters in funcdef
+
+
+add function end_of_class_doc()
+add function end_of_property_doc()
+update function end_function()
+
+add function end_of_class_doc() to header
+add function end_of_property_doc() to header
+add function cout_ingroup() to header
+add function cout_docuheader() to header
+add function cout_docubody() to header
+add function cout_docuextra() to header
+
+add AccessEnum
+
+add member is_class_
+add member is_setter_
+add member is_getter_
+add member classname_
+add member funcindent_
+add member eventindent_
+add member class_part_ = {Method, Header, Property}
+add member access_ of Type AccessStruct containing 3 AccessEnum's
+add member propertyparams_ of Type PropParams
+add member methodparams_ of Type MethodParams
+add member property_list_
+
