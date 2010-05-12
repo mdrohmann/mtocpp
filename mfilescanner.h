@@ -12,6 +12,72 @@
 // 160 KB
 #define BUFSIZE 10*16384
 
+typedef enum
+{
+  Public, Protected, Private
+} AccessEnum;
+
+typedef enum
+{
+  Header,
+  Method,
+  Property,
+  Event
+} ClassPart;
+
+struct AccessStruct
+{
+  AccessEnum full;
+  AccessEnum get;
+  AccessEnum set;
+
+public:
+  AccessStruct()
+    : full(Public), get(Public), set(Public) {};
+};
+
+struct PropParams
+{
+  bool constant;
+
+  std::string ccprefix()
+  {
+    if(constant)
+      return "static const matlabtypesubstitute";
+    else
+      return "matlabtypesubstitute";
+  }
+
+public:
+  PropParams()
+    : constant(false) {};
+};
+
+struct MethodParams
+{
+  bool abstr;
+  bool statical;
+
+  std::string ccprefix()
+  {
+    if(statical)
+      return "static ";
+    else
+      return "";
+  }
+  std::string ccpostfix()
+  {
+    if(abstr)
+      return " =0;";
+    else
+      return " {";
+  }
+
+public:
+  MethodParams()
+    : abstr(false), statical(false) {};
+};
+
 class MFileScanner
 {
 public:
@@ -29,6 +95,14 @@ public:
   void end_function();
 
 private:
+  void end_of_class_doc();
+  void print_access_specifier(AccessEnum & access);
+  void end_of_property_doc();
+
+  void cout_ingroup();
+  void cout_docuheader();
+  void cout_docubody();
+  void cout_docuextra();
   const std::string & replace_underscore(std::string & s);
 
   const std::string & escape_chars(std::string & s);
@@ -75,6 +149,18 @@ private:
   GroupSet     groupset_;
   bool         is_script_;
   bool         is_first_function_;
+  bool         is_class_;
+  bool         is_setter_;
+  bool         is_getter_;
+  std::string  classname_;
+  std::string::size_type funcindent_;
+  std::string::size_type eventindent_;
+  ClassPart    class_part_;
+  AccessStruct access_;
+  PropParams   propertyparams_;
+  MethodParams methodparams_;
+  std::vector<std::string> property_list_;
+
 };
 
 /* vim: set et sw=2: */
