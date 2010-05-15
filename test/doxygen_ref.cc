@@ -1,4 +1,4 @@
-ret::substitutestart::rv::retsubstituteend  doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,matlabtypesubstitute auto_param) {
+ ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,matlabtypesubstitute auto_param) {
 /* After the first non-comment line the function body begins:
 */
 
@@ -28,7 +28,8 @@ auto_param.auto_field;
 
 }
 /** @file "doxygen.m"
-  * @ingroup test*/
+  * @ingroup test
+  */
 /** @fn ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,matlabtypesubstitute auto_param)
   * @brief  Here comes a short description text
   *
@@ -163,7 +164,7 @@ rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cot
 */
 
 }
-/** @fn rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters
+/** @fn rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
   * @brief  function [d,e,f]=third_function_without_parameters
   *  a third (private) function in the test file without parameters
   *

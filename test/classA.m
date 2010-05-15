@@ -3,12 +3,14 @@ classdef classA < classB & classC
   %
   % bigger help for classA
 
-  properties (GetAccess = private, SetAccess = protected, Transient)
+  properties ( SetAccess = Private, GetAccess=Protected, Transient)
 
     mixed_access; % short help
 
     % longer help with default value
     mixed_access2 = 'test';
+
+
   end
 
   properties (Constant)
@@ -41,6 +43,7 @@ classdef classA < classB & classC
 
     function obj = classA(param1, param2)
       % bigger constructor
+    end
   end
 
   methods (Access = protected, Sealed)
@@ -54,18 +57,17 @@ classdef classA < classB & classC
   end
 
   methods (Static)
-    function [a,b] = static_method(c)
+    function [a,b] = static_method(this,c)
       % a static method
     end
   end
 
   methods (Abstract)
-    function [a] = abstract_method(d)
+    function [a] = abstract_method(this,d)
       % an abstract method
+    end
   end
 
-  events
-  end
 
 end
 
