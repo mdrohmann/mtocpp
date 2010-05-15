@@ -68,7 +68,7 @@ struct MethodParams
   std::string ccpostfix()
   {
     if(abstr)
-      return " =0;";
+      return " = 0;";
     else
       return " {";
   }
@@ -97,6 +97,7 @@ public:
 private:
   void end_of_class_doc();
   void print_access_specifier(AccessEnum & access);
+  void print_function_synopsis();
   void end_of_property_doc();
 
   void cout_ingroup();
