@@ -68,6 +68,8 @@ classdef classA < classB & classC
     end
   end
 
+  events
+  end
 
 end
 

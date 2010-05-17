@@ -4,20 +4,23 @@
 #include <cstdlib>
 #include <iostream>
 #include <algorithm>
+#include <iterator>
 extern "C" {
 #include <unistd.h>
 }
-
-#define DEBUG 1
 using std::cerr;
 using std::cout;
 using std::cin;
 using std::endl;
 using std::string;
 using std::vector;
+using std::list;
+using std::copy;
 using std::map;
 using std::set;
 using std::istream;
+using std::ostream_iterator;
+using std::ostringstream;
 
 %%{
   machine MFileScanner;
@@ -51,8 +54,12 @@ using std::istream;
   # executed when end of file ist reached
   action end_of_file
   {
-    cerr << "End of file reached!" << endl;
     end_function();
+    for(  list<string>::iterator it = namespaces_.begin();
+          it != namespaces_.end(); ++it)
+    {
+      cout << "}\n";
+    }
   }
 
   # executed when we reached a comment block
@@ -150,7 +157,9 @@ using std::istream;
          string s(tmp_p, p - tmp_p);
          bool addBlock = true;
          // do not print this pointer
-         if( is_class_ && class_part_ == Method && (cfuncname_ != classname_) ) {
+         if( is_class_ && ( ( class_part_ == Method
+                              && cfuncname_ != classname_ )
+           || class_part_ == AtMethod ) ) {
             if(paramlist_.empty()) {
               addBlock = false;
               paramlist_.push_back(string("this"));
@@ -423,7 +432,6 @@ using std::istream;
                 if(tmp_string.find("e") == funcindent_)
                 {
                   end_function();
-                  cerr << "2: goto methods" << endl;
                   fgoto methods;
                 }
               }
@@ -644,14 +652,13 @@ using std::istream;
             if(class_part_ == Header)
             {
               end_of_class_doc();
-              cerr << "3: goto classbody" << endl;
               fgoto classbody;
-            } else if(class_part_ == Method)
+            } else if(class_part_ == Method || class_part_ == AtMethod)
               fgoto funcbody;
             else if(class_part_ == Property)
             {
               end_of_property_doc();
-              fgoto property;
+              fgoto propertybody;
             }
           }
           else
@@ -716,9 +723,8 @@ using std::istream;
           if(class_part_ == Header)
           {
             end_of_class_doc();
-            cerr << "4: goto classbody" << endl;
             fgoto classbody;
-          } else if(class_part_ == Method)
+          } else if(class_part_ == Method || class_part_ == AtMethod)
           {
 #ifdef DEBUG
   cerr << "in_doxy_get_brief: method: goto funcbody" << endl;
@@ -728,7 +734,7 @@ using std::istream;
           else if(class_part_ == Property)
           {
             end_of_property_doc();
-            fgoto property;
+            fgoto propertybody;
           }
         }
         else
@@ -795,7 +801,7 @@ using std::istream;
              } )
         )
        )
-     | ( 'Access' @{ cerr << "access" << endl; }. WSOC* . '=' . WSOC*
+     | ( 'Access' . WSOC* . '=' . WSOC*
       . ( ( /public/i
             @{ access_.full = Public;
                access_.get = Public;
@@ -863,7 +869,6 @@ using std::istream;
         @{ tmp_string.assign(tmp_p, p - tmp_p);
                 if(tmp_string.find("e") == eventindent_)
                   {
-                  cerr << "5: goto classbody" << endl;
                   fgoto classbody;
                   }
               }
@@ -887,7 +892,6 @@ using std::istream;
        |
     (([ \t]* . ( 'end' .';'? ) )
       @{
-         cerr << "6: goto classbody" << endl;
          fgoto classbody;
        } ) )*
       );
@@ -914,20 +918,25 @@ using std::istream;
 
   property := ( prop* );
 
-  properties := (
-    WSOC* . propertyparams? . WSOC* . EOL @{cerr << "eol" << endl;}
-    . (
-        # needs to be fixed!
-        ( ([ \t]* . '%' . (default - '%' - '\n')* . EOL )*
-        . (prop | (empty_line) @{ cout << "\n";} )
-      )* >{
-            print_access_specifier(access_.full);
-          }
-    . [ \t]* . ( 'end' . ';'? )
+  propertybody = (
+    (prop)
+    |
+    ( (empty_line) @{ cout << "\n";} )
+    |
+    ( ([ \t]* . '%') @{ fhold; fgoto expect_doxyblock; } )
+    |
+    ( [ \t]* . ( 'end' . ';'? )
       @{
-        cerr << "back to classbody" << endl;
          fgoto classbody;
-       }) );
+       })
+    );
+
+  properties := ( (
+    WSOC* . propertyparams? . WSOC* . EOL @{
+        print_access_specifier(access_.full);
+        }
+    . propertybody* )
+      );
   #}}}2
 
   # class body {{{2
@@ -945,13 +954,16 @@ using std::istream;
     (EOL) => { cout << "\n"; };
 
     ('end' . [ \t]* ';'?) => {
-      cerr << "           END OF CLASS !!!!!!!!!!!!!!!!! " << endl;
       cout << "\n}\n";
+      for(  list<string>::iterator it = namespaces_.begin();
+            it != namespaces_.end(); ++it)
+      {
+        cout << "}\n";
+      }
     };
 
     ([ \t]* . 'properties')
       => {
-        cerr << "in properties..." << endl;
         propertyparams_ = PropParams();
         access_ = AccessStruct();
         class_part_ = Property;
@@ -992,14 +1004,13 @@ using std::istream;
       if(class_part_ == Header)
       {
         end_of_class_doc();
-        cerr << "1: goto classbody\n";
         fgoto classbody;
-      } else if(class_part_ == Method)
+      } else if(class_part_ == Method || class_part_ == AtMethod)
         fgoto funcbody;
       else if(class_part_ == Property)
       {
         end_of_property_doc();
-        fgoto property;
+        fgoto propertybody;
       }
     }
     else
@@ -1030,26 +1041,55 @@ using std::istream;
                  }
                  )
            # parameter list
-           . paramlist
-           . (')' @echo) . ( WSOC | ';' )*
+           . ( paramlist
+               %{
+                 if(paramlist_.size() == 1 && paramlist_[0] == "this")
+                 { paramlist_.clear(); }
+               }
+             )
+           . (')' @echo) . ( WSOC | ( ';'
+               @{ if(is_class_) { class_part_ = MethodDeclaration; } } ) )*
            . EOL
            @{
-             if(is_class_ && class_part_ == Method)
+             if(is_class_ && class_part_ == Method )
                cout << methodparams_.ccpostfix() << "\n";
+             else if(is_class_ && class_part_ == MethodDeclaration )
+             {
+              cout << ";\n";
+             }
              else
                cout << " {\n";
              // check for documentation block
-             fgoto expect_doxyblock;
+             if(is_class_ && class_part_ == MethodDeclaration)
+             {
+               class_part_ = Method;
+               clear_lists();
+               fgoto methods;
+             }
+             else
+               fgoto expect_doxyblock;
            }
         # no parameter list && first function => script
-        | (';'? . EOL) @{
+        | (( WSOC | ( ';' @{
+                if(is_class_) { class_part_ = MethodDeclaration; } } ) )* . EOL)
+            @{
                           print_function_synopsis();
-                         cout << "() {\n";
 #if DEBUG
   cerr << "in funcdef: no parameters: expect doxyblock" << endl;
 #endif
-                         fgoto expect_doxyblock;
-                        }
+                         if(is_class_ && class_part_ == MethodDeclaration)
+                         {
+                            cout << "();\n";
+                            class_part_ = Method;
+                            clear_lists();
+                            fgoto methods;
+                         }
+                         else
+                         {
+                           cout << "() {\n";
+                           fgoto expect_doxyblock;
+                         }
+             }
         )
       );
 
@@ -1134,7 +1174,7 @@ using std::istream;
   (
     # either we find a function or classdef definition with a possibly
     # preceding comment block or we have a script
-    any @{ fhold; tmp_p = p; } .
+    ( any @{ fhold; tmp_p = p; } .
     (
       [ \t]*. '%' . (any - '\n')* . EOL
       | [ \t]*. EOL
@@ -1148,9 +1188,11 @@ using std::istream;
                      p=tmp_p;
                      fgoto classdef;
                     }
-      )
+      ) )
   $!{
+#ifdef DEBUG
     cerr << "goto script" << endl;
+#endif
     p=tmp_p;
     fgoto script;
   }
@@ -1182,7 +1224,9 @@ void MFileScanner :: print_function_synopsis()
     if(is_class_ && (cfuncname_ == classname_))
       returnlist_.clear();
     else{
-      if(returnlist_.size() == 1)
+      if(returnlist_.size() == 0)
+        cout << "noret::substitute ";
+      else if(returnlist_.size() == 1)
         cout << "ret::substitutestart::" << returnlist_[0] << "::retsubstituteend ";
       else
       {
@@ -1195,7 +1239,9 @@ void MFileScanner :: print_function_synopsis()
       }
     }
   }
-  if(!is_first_function_)
+  if(is_class_ && class_part_ == AtMethod)
+    cout << namespace_string() << classname_ << "::";
+  else if(!is_first_function_)
     cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
   cout << cfuncname_;
 }
@@ -1215,7 +1261,7 @@ MFileScanner :: MFileScanner(istream & fin, const std::string & filename,
                              const std::string & conffilename, bool latex_output) :
   fin_(fin), filename_(filename),
   latex_output_(latex_output), cscan_(filename_, conffilename),
-  fnname_(filename),
+  fnname_(filename), namespaces_(),
   line(1),
   ts(0), have(0), top(0),
   opt(false), new_syntax_(false),
@@ -1225,7 +1271,41 @@ MFileScanner :: MFileScanner(istream & fin, const std::string & filename,
   class_part_(Header),
   access_(), propertyparams_(), methodparams_(), property_list_()
 {
-  string::size_type found = fnname_.rfind("/");
+  string::size_type found = fnname_.find_last_of('/');
+  std::string dirname;
+  if(found != string::npos)
+    dirname = filename.substr(0, found);
+
+  list<string> namespaces;
+  string classname;
+  string::size_type enddir = dirname.size();
+  while (true)
+  {
+    string::size_type ppos = dirname.find_last_of('/', enddir);
+    if(ppos == string::npos)
+      break;
+    string directory = dirname.substr(ppos+1, enddir-ppos);
+    if(directory[0] == '+')
+    {
+      namespaces_.push_front(directory.substr(1));
+    }
+    else if(directory[0] == '@')
+    {
+      classname_ = directory.substr(1);
+      is_class_ = true;
+      if(classname_
+          != fnname_.substr(fnname_.find_last_of('/')+1, classname_.size()))
+        class_part_ = AtMethod;
+    }
+    else
+      break;
+    enddir = ppos - 1;
+  }
+  for (list<string>::iterator it = namespaces_.begin();
+       it != namespaces_.end(); ++it)
+    cout << "namespace " << *it << "{\n";
+
+  found = fnname_.rfind("/");
   if(found != string::npos)
     fnname_ = fnname_.substr(found+1);
   for( std::string::size_type i = 0; i < fnname_.size(); ++i )
@@ -1308,6 +1388,8 @@ int MFileScanner :: execute()
     {
       /* Machine failed before finding a token. */
       cerr << std::string(filename_) << ": PARSE ERROR in line " << line << endl;
+      cerr << "next 100 characters to parse" << endl;
+      cerr.write(p, 100);
       exit(-1);
     }
 
@@ -1522,9 +1604,20 @@ void MFileScanner::write_docu_listmap(const DocuListMap & listmap,
   }
 }
 
+string MFileScanner::namespace_string()
+{
+  ostringstream oss;
+  for( list<string>::iterator it = namespaces_.begin();
+       it != namespaces_.end(); ++it)
+  {
+    oss << *it << ".";
+  }
+  return oss.str();
+}
+
 void MFileScanner::end_of_class_doc()
 {
-  cout << "/** @class \"" << classname_ << "\"\n  ";
+  cout << "/** @class \"" << namespace_string() << classname_ << "\"\n  ";
 
   cout_ingroup();
 
@@ -1617,6 +1710,17 @@ void MFileScanner :: cout_ingroup()
   cout << "\n  ";
 }
 
+void MFileScanner::clear_lists()
+{
+  paramlist_.clear();
+  returnlist_.clear();
+  param_list_.clear();
+  return_list_.clear();
+  required_list_.clear();
+  optional_list_.clear();
+  retval_list_.clear();
+}
+
 // end a function and pretty print the documentation for this function
 void MFileScanner::end_function()
 {
@@ -1624,6 +1728,8 @@ void MFileScanner::end_function()
   bool is_method = false;
   if(is_class_)
   {
+    if(class_part_ == Property)
+      return;
     if(cfuncname_ == classname_)
       is_constructor = true;
     if(class_part_ == Method)
@@ -1631,7 +1737,7 @@ void MFileScanner::end_function()
   }
   // end function
   if(!is_method || !methodparams_.abstr)
-  cout << "}\n";
+    cout << "}\n";
   if(is_getter_ || is_setter_)
     cout << "*/\n";
   // is the first function?
@@ -1685,7 +1791,9 @@ void MFileScanner::end_function()
     }
 
     bool first = true;
-    if(!is_first_function_)
+    if(is_class_ && class_part_ == AtMethod)
+      cout << namespace_string() << classname_ << "::";
+    else if(!is_first_function_)
       cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
     cout << cfuncname_;
     if(paramlist_.size() == 0)
@@ -1711,8 +1819,6 @@ void MFileScanner::end_function()
     // specify the @brief part
     cout << "* @brief ";
   }
-  returnlist_.clear();
-  paramlist_.clear();
   cout_docuheader();
   cout << "*\n  ";
 
@@ -1727,7 +1833,6 @@ void MFileScanner::end_function()
     cout << "*\n  ";
     write_docu_list(param_list_, "@param", cscan_.param_list_);
   }
-  param_list_.clear();
 
   // return values
   if(!return_list_.empty() && !is_constructor && !is_getter_ && !is_setter_)
@@ -1735,19 +1840,16 @@ void MFileScanner::end_function()
     cout << "*\n  ";
     write_docu_list(return_list_, "@retval", cscan_.return_list_);
   }
-  return_list_.clear();
 
   // required fields
   write_docu_listmap(required_list_, "@par Required fields of ", cscan_.field_docu_);
-  required_list_.clear();
 
   // optional fields
   write_docu_listmap(optional_list_, "@par Optional fields of ", cscan_.field_docu_);
-  optional_list_.clear();
 
   // return fields
   write_docu_listmap(retval_list_, "@par Generated fields of ", cscan_.field_docu_);
-  retval_list_.clear();
+  clear_lists();
 
   // extra docu fields
   cout_docuextra();
@@ -1808,11 +1910,13 @@ int main(int argc, char ** argv)
   string cwd(buf);
   found = filename.find(cwd);
   if(found!=string::npos)
+  {
     filename = filename.substr(cwd.size()+1);
+  }
   MFileScanner scanner(*fcin, filename, conffilename, latex_output);
   scanner.execute();
   return 0;
 }
 
-/* vim: set et sw=2 ft=ragel: */
+/* vim: set et sw=2 ft=ragel foldmethod=marker: */
 

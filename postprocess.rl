@@ -150,7 +150,7 @@ public:
     if ( cs == PostProcess_error )
     {
       /* Machine failed before finding a token. */
-      cerr << "PARSE ERROR in line " << line << endl;
+      cerr << filename_ << ": PARSE ERROR in line " << line << endl;
       exit(-1);
     }
 
