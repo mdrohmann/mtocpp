@@ -1,0 +1,12 @@
+# File Patterns
+ALL := *.m;
+
+##
+
+add(params) = auto_param => """ This documentation is added automatically! """;
+
+add(fields) = auto_struct.auto_field => """ This field's documentation has been added automatically! """;
+
+glob = * { groups = test; }
+
+# vim: set ft=perl et sw=2 :

@@ -1,17 +1,18 @@
 #!/bin/sh
 
-FILES=*.m
+FILES="test/+grid/+rect/@rectgrid/*.m test/+grid/+rect/doxygen_in_namespace.m ./*.m"
 
 for MFILE in $FILES
 do
     echo "Checking $MFILE ..."
-    CCFILE="${MFILE%.m}.cc"
-    CCREFFILE="${MFILE%.m}_ref.cc"
+    MBFILE=`basename $MFILE`
+    CCFILE="${MBFILE%.m}.cc"
+    CCREFFILE="${MBFILE%.m}_ref.cc"
     ../mtoc $MFILE 0 conf > $CCFILE
-    if diff -u $CCFILE $CCREFFILE > $MFILE.diff
+    if diff -u $CCFILE $CCREFFILE > $MBFILE.diff
     then
         echo " (passed)"
-        rm $MFILE.diff
+        rm $MBFILE.diff
     else
         echo " (failed)"
     fi
