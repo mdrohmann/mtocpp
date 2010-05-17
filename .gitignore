@@ -1,3 +1,4 @@
 *.o
 mtoc
 postprocess
+test/html
