@@ -7,6 +7,8 @@
 #include <vector>
 #include <map>
 #include <set>
+#include <list>
+#include <sstream>
 #include <fstream>
 
 // 160 KB
@@ -21,6 +23,8 @@ typedef enum
 {
   Header,
   Method,
+  AtMethod,
+  MethodDeclaration,
   Property,
   Event
 } ClassPart;
@@ -100,6 +104,9 @@ private:
   void print_function_synopsis();
   void end_of_property_doc();
 
+  void clear_lists();
+  std::string namespace_string();
+
   void cout_ingroup();
   void cout_docuheader();
   void cout_docubody();
@@ -126,6 +133,7 @@ private:
   bool latex_output_;
   ConfFileScanner cscan_;
   std::string  fnname_;
+  std::list<std::string> namespaces_;
   char         buf[BUFSIZE];
   int          line            , col;
   char        *ts              , *te;
