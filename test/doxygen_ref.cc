@@ -27,7 +27,7 @@ param1.sub.auto_added;
 auto_param.auto_field;
 
 }
-/** @file "doxygen.m"
+/** @file "./doxygen.m"
   * @ingroup test
   */
 /** @fn ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,matlabtypesubstitute auto_param)
