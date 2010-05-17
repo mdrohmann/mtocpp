@@ -1,3 +1,4 @@
+
 #line 1 "postprocess.rl"
 
 #include <string>
@@ -15,7 +16,7 @@ using std::ios_base;
 using std::endl;
 
 
-#line 19 "postprocess.cc"
+#line 20 "postprocess.cc"
 static const int PostProcess_start = 91;
 static const int PostProcess_first_final = 91;
 static const int PostProcess_error = 0;
@@ -23,6 +24,7 @@ static const int PostProcess_error = 0;
 static const int PostProcess_en_retvals = 124;
 static const int PostProcess_en_mtocsubst = 127;
 static const int PostProcess_en_main = 91;
+
 
 #line 90 "postprocess.rl"
 
@@ -44,13 +46,14 @@ public:
     std::ios::sync_with_stdio(false);
 
     
-#line 48 "postprocess.cc"
+#line 50 "postprocess.cc"
 	{
 	cs = PostProcess_start;
 	ts = 0;
 	te = 0;
 	act = 0;
 	}
+
 #line 109 "postprocess.rl"
 
     ifstream is;
@@ -91,7 +94,7 @@ public:
     char *eof = pe;
 
     
-#line 95 "postprocess.cc"
+#line 98 "postprocess.cc"
 	{
 	if ( p == pe )
 		goto _test_eof;
@@ -145,7 +148,7 @@ st91:
 case 91:
 #line 1 "postprocess.rl"
 	{ts = p;}
-#line 149 "postprocess.cc"
+#line 152 "postprocess.cc"
 	switch( (*p) ) {
 		case 32: goto tr96;
 		case 38: goto tr96;
@@ -184,7 +187,7 @@ st92:
 	if ( ++p == pe )
 		goto _test_eof92;
 case 92:
-#line 188 "postprocess.cc"
+#line 191 "postprocess.cc"
 	switch( (*p) ) {
 		case 32: goto tr100;
 		case 38: goto tr100;
@@ -717,7 +720,7 @@ st114:
 	if ( ++p == pe )
 		goto _test_eof114;
 case 114:
-#line 721 "postprocess.cc"
+#line 724 "postprocess.cc"
 	switch( (*p) ) {
 		case 32: goto tr101;
 		case 38: goto tr101;
@@ -883,7 +886,7 @@ st119:
 	if ( ++p == pe )
 		goto _test_eof119;
 case 119:
-#line 887 "postprocess.cc"
+#line 890 "postprocess.cc"
 	switch( (*p) ) {
 		case 32: goto tr101;
 		case 38: goto tr101;
@@ -1037,7 +1040,7 @@ st122:
 	if ( ++p == pe )
 		goto _test_eof122;
 case 122:
-#line 1041 "postprocess.cc"
+#line 1044 "postprocess.cc"
 	switch( (*p) ) {
 		case 32: goto tr101;
 		case 38: goto tr101;
@@ -1193,7 +1196,7 @@ st123:
 	if ( ++p == pe )
 		goto _test_eof123;
 case 123:
-#line 1197 "postprocess.cc"
+#line 1200 "postprocess.cc"
 	switch( (*p) ) {
 		case 32: goto tr101;
 		case 38: goto tr101;
@@ -1368,7 +1371,7 @@ st124:
 case 124:
 #line 1 "postprocess.rl"
 	{ts = p;}
-#line 1372 "postprocess.cc"
+#line 1375 "postprocess.cc"
 	switch( (*p) ) {
 		case 45: goto st125;
 		case 58: goto st54;
@@ -1417,7 +1420,7 @@ st126:
 	if ( ++p == pe )
 		goto _test_eof126;
 case 126:
-#line 1421 "postprocess.cc"
+#line 1424 "postprocess.cc"
 	if ( (*p) == 114 )
 		goto st55;
 	goto tr138;
@@ -1636,7 +1639,7 @@ st127:
 case 127:
 #line 1 "postprocess.rl"
 	{ts = p;}
-#line 1640 "postprocess.cc"
+#line 1643 "postprocess.cc"
 	switch( (*p) ) {
 		case 45: goto st128;
 		case 92: goto st128;
@@ -1673,7 +1676,7 @@ st129:
 	if ( ++p == pe )
 		goto _test_eof129;
 case 129:
-#line 1677 "postprocess.cc"
+#line 1680 "postprocess.cc"
 	if ( (*p) == 116 )
 		goto st82;
 	goto tr143;
@@ -2005,13 +2008,14 @@ case 90:
 
 	_out: {}
 	}
+
 #line 148 "postprocess.rl"
 
     /* Check if we failed. */
     if ( cs == PostProcess_error )
     {
       /* Machine failed before finding a token. */
-      cerr << "PARSE ERROR in line " << line << endl;
+      cerr << filename_ << ": PARSE ERROR in line " << line << endl;
       exit(-1);
     }
 
