@@ -15,20 +15,27 @@ matlabtypesubstitute mixed_access;
 /** @var mixed_access
  *  short help*/
 
-/** @brief longer help with default value
+/** @brief  longer help with default value
+  *
+  *
  */
-  matlabtypesubstitute mixed_access2 = 'test';
+matlabtypesubstitute mixed_access2 = 'test';
+
+
+
 
 public:
 static const matlabtypesubstitute aConstant = 1;
 /** @var aConstant
  *  help text*/
 
-/** @brief help text for bConstant
+/** @brief  help text for bConstant
+  *
+  *
  */
-  static const matlabtypesubstitute bConstant = 2;
+static const matlabtypesubstitute bConstant = 2;
 
-  static const matlabtypesubstitute cConstant = 3;
+static const matlabtypesubstitute cConstant = 3;
 /** @var cConstant
  *  help text for cConstant*/
 
@@ -38,18 +45,24 @@ matlabtypesubstitute public_access;
 /** @var public_access
  *  short help for public_access*/
 
-/** @brief longer help for public_access2
+/** @brief  longer help for public_access2
+  *
+  *
  */
-  matlabtypesubstitute public_access2;
+matlabtypesubstitute public_access2;
+
 
 protected:
 matlabtypesubstitute protected_access;
 /** @var protected_access
  *  short help for protected_access*/
 
-/** @brief longer help text for protected_access2
+/** @brief  longer help text for protected_access2
+  *
+  *
  */
-  matlabtypesubstitute protected_access2;
+matlabtypesubstitute protected_access2;
+
 
 public:
  classA() {
@@ -82,7 +95,7 @@ ret::substitutestart::value::retsubstituteend protected_access() {
   */
 
 /*
-rets::substitutestart::retssubstituteend protected_access(matlabtypesubstitute value) {
+noret::substitute protected_access(matlabtypesubstitute value) {
 }
 */
 /** @var protected_access
