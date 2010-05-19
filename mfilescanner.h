@@ -74,7 +74,7 @@ struct MethodParams
     if(abstr)
       return " = 0;";
     else
-      return " {";
+      return ";";
   }
 
 public:
