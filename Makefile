@@ -1,6 +1,7 @@
 all: mtoc postprocess
 
 RAGELOPTIM=-G1
+#RAGELOPTIM=-T0
 
 install: all
 	cp -dp ./mtoc ./postprocess ../../bin
