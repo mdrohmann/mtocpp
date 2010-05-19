@@ -1,6 +1,6 @@
 namespace grid{
 namespace rect{
- ret::substitutestart::p::retsubstituteend grid.rect.rectgrid::plot(matlabtypesubstitute params) {
+ ret::substitutestart::p::retsubstituteend grid.rect.rectgrid::plot(matlabtypesubstitute params){
 /* Bernard Haasdonk 9.5.2007
 */
 
