@@ -11,7 +11,7 @@ class rectgrid {
  */
 public:
 
-rectgrid(matlabtypesubstitute varargin) {
+rectgrid(matlabtypesubstitute varargin){
 /* Bernard Haasdonk 9.5.2007
 */
 
@@ -432,7 +432,6 @@ noret::substitute gridpart(matlabtypesubstitute eind);
 noret::substitute plot(matlabtypesubstitute params);
 
 noret::substitute set_enbi(matlabtypesubstitute nbind,matlabtypesubstitute values);
-
 
 }
 }
