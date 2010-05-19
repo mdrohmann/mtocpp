@@ -72,7 +72,7 @@ public:
   *
   */
 
- classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
+ classA(matlabtypesubstitute param1,matlabtypesubstitute param2){
 }
 /** @fn classA(matlabtypesubstitute param1,matlabtypesubstitute param2)
   * @brief  bigger constructor
@@ -82,10 +82,9 @@ public:
   * @param param2    param2
   */
 
-
 protected:
  /*
-ret::substitutestart::value::retsubstituteend protected_access() {
+ret::substitutestart::value::retsubstituteend protected_access(){
 }
 */
 /** @var protected_access
@@ -95,7 +94,7 @@ ret::substitutestart::value::retsubstituteend protected_access() {
   */
 
 /*
-noret::substitute protected_access(matlabtypesubstitute value) {
+noret::substitute protected_access(matlabtypesubstitute value){
 }
 */
 /** @var protected_access
@@ -104,9 +103,8 @@ noret::substitute protected_access(matlabtypesubstitute value) {
   *
   */
 
-
 public:
- static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute c) {
+ static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute c){
 }
 /** @fn rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute c)
   * @brief  a static method
@@ -118,9 +116,8 @@ public:
   * @retval b    b
   */
 
-
 public:
- ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d) = 0;
+ ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d){
 /** @fn ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d)
   * @brief  an abstract method
   *
@@ -129,7 +126,6 @@ public:
   *
   * @retval a    a
   */
-
 
 
 
