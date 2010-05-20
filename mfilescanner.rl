@@ -821,7 +821,7 @@ using std::ostringstream;
          )
       )
       $!{
-#if DEBUG
+#ifdef DEBUG
         cerr << "doxy_get_brief" << endl;
 #endif
         p = tmp_p - 2;
@@ -1080,6 +1080,10 @@ using std::ostringstream;
   )
  $!{
     fhold;
+#ifdef DEBUG
+  cerr << "no doxyblock" << (class_part_ == Method ? "method" : "no method")<< endl;
+  cerr.write(p, 20) << endl;
+#endif
     if(is_class_)
     {
       if(class_part_ == Header)
@@ -1087,7 +1091,19 @@ using std::ostringstream;
         end_of_class_doc();
         fgoto classbody;
       } else if(class_part_ == Method || class_part_ == AtMethod)
-        fgoto funcbody;
+      {
+        string endstringtest;
+        endstringtest.assign(p, 100);
+        string::size_type first_char = endstringtest.find_first_not_of(" \t");
+        if (endstringtest.substr(first_char, 3) == "end")
+        {
+          p += first_char+4;
+          end_function();
+          fgoto methods;
+        }
+        else
+          fgoto funcbody;
+      }
       else if(class_part_ == Property)
       {
         end_of_property_doc();
@@ -1128,7 +1144,8 @@ using std::ostringstream;
                  { paramlist_.clear(); }
                }
              )
-           . (')' @echo) . ( [ \t] | ('%' @{ tmp_p=p; comment_found=true; } . garble_comment_line_wo_eol) | ( ';'
+           . (')' @echo) . ( [ \t] | ('%' @{ tmp_p=p; comment_found=true; }
+             . garble_comment_line_wo_eol) | ( ';'
                @{ if(is_class_) { class_part_ = MethodDeclaration; } } ) )*
            . EOL
            @{
@@ -1175,7 +1192,8 @@ using std::ostringstream;
 #endif
                          if(is_class_ && class_part_ == MethodDeclaration)
                          {
-                            cout << "();" << tmp_string << "\n";
+                            cout << "()" << methodparams_.ccpostfix()
+                              << tmp_string << "\n";
                             class_part_ = Method;
                             clear_lists();
                             fgoto methods;
@@ -1221,7 +1239,10 @@ using std::ostringstream;
       '(' . [^)]* . ')';
 
   superclass =
-    ( ( IDENT_W_DOT ) >{ cout << "public "; } @echo );
+    ( ( IDENT_W_DOT ) >{ cout << "public ::"; }
+                      @{ if(*p == '.')
+                           cout << "::";
+                         else cout << *p; } );
 
   superclasses = (
       '<' @{ cout << "\n  :"; } . WSOC* . superclass . WSOC*
@@ -1703,10 +1724,11 @@ void MFileScanner::write_docu_listmap(const DocuListMap & listmap,
 string MFileScanner::namespace_string()
 {
   ostringstream oss;
+  oss << "";
   for( list<string>::iterator it = namespaces_.begin();
        it != namespaces_.end(); ++it)
   {
-    oss << *it << ".";
+    oss << *it << "::";
   }
   return oss.str();
 }
