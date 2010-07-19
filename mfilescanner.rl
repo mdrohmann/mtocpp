@@ -710,9 +710,13 @@ using std::ostringstream;
               end_of_class_doc();
               fgoto classbody;
             } else if(class_part_ == Method || class_part_ == AtMethod)
+            {
               fgoto funcbody;
+            }
             else if(class_part_ == MethodDeclaration)
+            {
               fgoto funcdef;
+            }
             else if(class_part_ == Property)
             {
               end_of_property_doc();
@@ -1294,6 +1298,8 @@ using std::ostringstream;
     . [\t]*
     . ( 'function' @{
                      p=tmp_p;
+                     if(is_class_ && class_part_ == Header)
+                       class_part_ = AtMethod;
                      fgoto funct;
                     }
       | 'classdef' @{
