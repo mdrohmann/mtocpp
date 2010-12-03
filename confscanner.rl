@@ -411,14 +411,14 @@ ConfFileScanner
 :: ConfFileScanner(const std::string & filename, const std::string & conffilename)
  : line(1), have(0), top(0), opt(true),
    filename_(filename),
-   conffile_(conffilename == "" ? "doxygen/mtoc.conf" : conffilename),
+   conffile_(conffilename == "" ? "./doxygen/mtoc.conf" : conffilename),
    confistream_(get_conffile()),
    level_(0),
    arg_to_be_added_(false)
 {
   if ( (confistream_.rdstate() & ifstream::failbit ) != 0 )
   {
-    cerr << "Error opening configuration file '" << conffilename << "'\n";
+    cerr << "Error opening configuration file '" << conffile_ << "'\n";
     exit(-2);
   }
   globlist_stack_.push_back(GlobList());
