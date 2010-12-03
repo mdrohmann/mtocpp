@@ -1988,6 +1988,18 @@ void MFileScanner::end_function()
   is_setter_ = false; is_getter_ = false;
 }
 
+void usage()
+{
+  cout
+    << "Usage: mtoc mfile [latex_output] [conf]\n"
+    << "       mtoc --help\n\n"
+    << "mtoc parses a Matlab m-file 'mfile'.\n"
+    << "If 'latex_output' is set to 1, the output is optimized for latex output.\n"
+    << "The default is 0.\n"
+    << "A configuration file needs to be given or it must exist in\n"
+    << "'./doxygen/mtoc.conf'." << endl;
+}
+
 // main routine
 int main(int argc, char ** argv)
 {
@@ -1996,6 +2008,11 @@ int main(int argc, char ** argv)
   string filename;
   if(argc >= 2)
   {
+    if (string(argv[1]) == string("--help"))
+    {
+      usage();
+      exit(0);
+    }
     try
     {
       fin.open(argv[1]);
@@ -2005,6 +2022,7 @@ int main(int argc, char ** argv)
     catch (std::ifstream::failure e)
     {
       cout << "Exception opening/reading file";
+      usage();
       exit(-1);
     }
   }
