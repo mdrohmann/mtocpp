@@ -23,6 +23,14 @@ using std::istream;
 using std::ostream_iterator;
 using std::ostringstream;
 
+void debug_output(const std::string & msg, char * p)
+{
+  cerr << "Message: " << msg << "\n";
+  cerr << "Next 20 characters to parse: \n";
+  cerr.write(p, 20);
+  cerr << "\n------------------------------------\n";
+}
+
 %%{
   machine MFileScanner;
   write data;
@@ -48,6 +56,10 @@ using std::ostringstream;
   )*
   $!{
     cout << "*/\n";
+    if(is_getter_ || is_setter_)
+    {
+      cout << "/* ";
+    }
     fhold;
     fret;
   };
@@ -100,10 +112,24 @@ using std::ostringstream;
     (
     # if percent character is followed by a bar we make the comment a doxygen
     # comment
-     '|' @{ cout << "/**"; tmp_p = p+1; } . (default - '\n')* . EOL
+     '|' @{ if(is_getter_ || is_setter_)
+            {
+              cout << "*/";
+            }
+            cout << "/**"; tmp_p = p+1; 
+          }
+     . (default - '\n')* . EOL
      |
     # else: a regular comment
-     ( (default - '|') @{ cout << "/*"; tmp_p = p; } )
+     ( (default - '|')
+       @{
+         if(is_getter_ || is_setter_)
+         {
+           cout << "*/";
+         }
+         cout << "/* ";
+         tmp_p = p;
+         } )
      . (default - '\n')* . EOL
     );
 
@@ -120,8 +146,16 @@ using std::ostringstream;
   garble_comment_line =
     ( (default - [\r\n])* . EOL )
       @{
+        if(is_getter_ || is_setter_)
+        {
+          cout << "*/";
+        }
         cout << "/* ";
         cout.write(tmp_p, p - tmp_p) << "*/\n";
+        if(is_getter_ || is_setter_)
+        {
+          cout << "/* ";
+        }
       };
   garble_comment_line_wo_eol =
     (default - [\r\n])*;
@@ -176,11 +210,22 @@ using std::ostringstream;
          if(addBlock) {
 
 #ifdef DEBUG
-  cerr << "found parameter: " << s << endl;
+{
+  ostringstream oss;
+  oss << "found parameter: " << s;
+  debug_output(oss.str(), p);
+}
 #endif
            cout << "matlabtypesubstitute " << s;
            // add an empty docu block for parameter \a s
            param_list_[s] = DocuBlock();
+#ifdef DEBUG
+{
+  ostringstream oss;
+  oss << "in paramlist: add to paramlist: " << s;
+  debug_output(oss.str(), p);
+}
+#endif
            paramlist_.push_back(s);
          }
        }
@@ -235,7 +280,12 @@ using std::ostringstream;
     ('...' . [ \t]* . EOL)
       => { cout.write(ts, te-ts); };
 
-    ('%' @{ tmp_p = p + 1; } . garble_comment_line);
+#    ('%' @{ tmp_p = p + 1; } . garble_comment_line);
+    (comment_block)
+      => {
+           cout.write(tmp_p, p - tmp_p+1);
+           fcall in_comment_block;
+         };
 
     # automatically add return value fields to retval_list_
     (
@@ -425,10 +475,14 @@ using std::ostringstream;
         => {
           p = ts-1;
           // further parse the function body line
+#ifdef DEBUG
+debug_output("in funcbody: goto funcline", p);
+#endif
           fgoto funcline;
         };
 
       # line only containing word 'end'
+      # the keyword needs to be in the same indentation level as beginning function
       ([ \t]* . 'end' . WSOC* ';'? . WSOC* . EOL)
           => {
               if(is_class_ && class_part_ == Method)
@@ -437,12 +491,21 @@ using std::ostringstream;
                 if(tmp_string.find("e") == funcindent_)
                 {
                   end_function();
-                  fgoto methods;
+#ifdef DEBUG
+debug_output("in funcbody: goto methods", p);
+#endif
+                  if(methodparams_.abstr)
+                    fgoto methods_abstract;
+                  else
+                    fgoto methods;
                 }
               }
               // else
               p=ts-1;
               // further parse the function body line
+#ifdef DEBUG
+debug_output("in funcbody: goto funcline 2", p);
+#endif
               fgoto funcline;
           };
 
@@ -452,6 +515,9 @@ using std::ostringstream;
         p = ts-1;
         // end the previous function if existent
         end_function();
+#ifdef DEBUG
+debug_output("in funcbody: goto main", p);
+#endif
         fgoto main;
       };
 
@@ -618,7 +684,12 @@ using std::ostringstream;
               end_of_class_doc();
               fgoto classbody;
             } else if(class_part_ == Method || class_part_ == AtMethod)
-              fgoto funcbody;
+            {
+              if(methodparams_.abstr)
+                fgoto methods_abstract;
+              else
+                fgoto funcbody;
+            }
             else if(class_part_ == MethodDeclaration)
               fgoto funcdef;
             else if(class_part_ == Property)
@@ -645,7 +716,12 @@ using std::ostringstream;
               end_of_class_doc();
               fgoto classbody;
             } else if(class_part_ == Method || class_part_ == AtMethod)
-              fgoto funcbody;
+            {
+              if(methodparams_.abstr)
+                fgoto methods_abstract;
+              else
+                fgoto funcbody;
+            }
             else if(class_part_ == MethodDeclaration)
               fgoto funcdef;
             else if(class_part_ == Property)
@@ -698,7 +774,11 @@ using std::ostringstream;
     ( EOL )
       => {
         #ifdef DEBUG
-            cerr << "end of line in doxyblock: " << (docline ? "docline" : "no docline") << endl;
+       {
+        ostringstream oss;
+        oss << "end of line in doxyblock: " << (docline ? "docline" : "no docline");
+        debug_output(oss.str(), p);
+       }
         #endif
         // cout << "*/\n";
         if(! docline)
@@ -763,7 +843,7 @@ using std::ostringstream;
       => {
         /*cout << "*\n";*/
 #ifdef DEBUG
-  cerr << "in doxy_get_brief: goto: doxy_get_body" << endl;
+  debug_output("in doxy_get_brief: goto: doxy_get_body", p);
 #endif
         fgoto doxy_get_body;
       };
@@ -773,29 +853,45 @@ using std::ostringstream;
       => {
         p=ts-1;
 #ifdef DEBUG
-  cerr << "in doxy_get_brief: end??" << endl;
+   debug_output("in doxy_get_brief: end!!", p);
 #endif
         //cout << "*/\n";
         if(is_class_)
         {
+#ifdef DEBUG
+  debug_output(" in_doxy_get_brief: this is a class",p);
+#endif
+
           if(class_part_ == Header)
           {
+#ifdef DEBUG
+  debug_output("  in_doxy_get_brief: method: goto classbody",p);
+#endif
             end_of_class_doc();
             fgoto classbody;
           } else if(class_part_ == Method || class_part_ == AtMethod)
           {
 #ifdef DEBUG
-  cerr << "in_doxy_get_brief: method: goto funcbody" << endl;
+  debug_output("  in_doxy_get_brief: method: goto funcbody",p);
 #endif
-            fgoto funcbody;
+            if (methodparams_.abstr)
+              fgoto methods_abstract;
+            else
+              fgoto funcbody;
           }
           else if(class_part_ == MethodDeclaration)
           {
+#ifdef DEBUG
+  debug_output("  in_doxy_get_brief: method: goto funcdef",p);
+#endif
             fgoto funcdef;
           }
           else if(class_part_ == Property)
           {
             end_of_property_doc();
+#ifdef DEBUG
+  debug_output("  in_doxy_get_brief: method: goto propertybody",p);
+#endif
             fgoto propertybody;
           }
         }
@@ -822,7 +918,7 @@ using std::ostringstream;
       )
       $!{
 #ifdef DEBUG
-        cerr << "doxy_get_brief" << endl;
+        debug_output("doxy_get_brief",p);
 #endif
         p = tmp_p - 2;
         fgoto doxy_get_brief;
@@ -940,15 +1036,27 @@ using std::ostringstream;
   # methods and properties {{{2
   # methods {{{4
   methods := |*
-    (empty_line) => { cout << "\n"; };
+# kommentare, newlines
+# nur bei keyword 'function' => goto funcdef
+# abstrakter fall, eine weitere Regel wird benötigt.
+# end => classbody
+    (empty_line) => {
+#ifdef DEBUG
+  debug_output("applying emtpy_line rule",p);
+#endif
+     cout << "\n";
+    };
 
     ([ \t]* . 'function' )
       => {
         tmp_string.assign(ts, te - ts+1);
         funcindent_ = tmp_string.find_first_not_of(" \t");
 #if DEBUG
-    cerr << tmp_string << endl;
-    cerr << "funcindent: " << funcindent_ << endl;
+    {
+ostringstream oss;
+oss << "in methods: funcindent: " << funcindent_;
+    debug_output(oss.str(), p);
+}
 #endif
         p=ts+funcindent_-1;
         fgoto funct;
@@ -959,19 +1067,67 @@ using std::ostringstream;
            fgoto classbody;
          };
 
-    ([ \t]* . ( IDENT | '[') - ('end' | 'function') )
-      => {
-        p=ts;
-        fgoto funcdef;
-         };
+    ([ \t]* . '%' . (default - '\n')* . EOL ) => {
+#if DEBUG
+    debug_output("in methods: garble comment line",p);
+#endif
+      cout << "/* hier beginnt ein kommentar: in methods zwischen Funktionen*/\n";
 
-    ([ \t]* . '%') => { fhold; class_part_ = MethodDeclaration; fgoto expect_doxyblock; };
+/*      class_part_ = MethodDeclaration; */
+/*      fcall in_comment_block; */
+/*      fgoto expect_doxyblock; */
+    };
 
       *|;
 
+methods_abstract := |*
+# kommentare, newlines
+# nur bei keyword 'function' => goto funcdef
+# abstrakter fall, eine weitere Regel wird benötigt.
+# end => classbody
+    (empty_line) => {
+#ifdef DEBUG
+  debug_output("in methods_abstract: applying emtpy_line rule",p);
+#endif
+     cout << "\n";
+    };
+
+    ([ \t]* . ( 'end' . (WSOC | ';')* ) . EOL )
+      => {
+           fgoto classbody;
+         };
+
+    # abstract rule
+    ([ \t]* . ( IDENT | '[') - ('end' | 'function') )
+      => {
+        p=ts;
+#if DEBUG
+    debug_output("in methods_abstract: goto (abstract) funcdef",p);
+#endif
+        fgoto funcdef;
+         };
+
+    ([ \t]* . '%' ) => {
+#if DEBUG
+    debug_output("in methods_abstract: expect_doxyblock",p);
+#endif
+    fhold; fgoto expect_doxyblock;
+
+    };
+
+      *|;
+
+
   methodsheader := (
     WSOC* . methodparams? . EOL
-         @{ print_access_specifier(access_.full); fgoto methods; } );
+         @{
+            print_access_specifier(access_.full);
+            if(methodparams_.abstr)
+              fgoto methods_abstract;
+            else
+              fgoto methods;
+          }
+              );
 
    #}}}4
 
@@ -1099,7 +1255,10 @@ using std::ostringstream;
         {
           p += first_char+4;
           end_function();
-          fgoto methods;
+          if(methodparams_.abstr)
+            fgoto methods_abstract;
+          else
+            fgoto methods;
         }
         else
           fgoto funcbody;
@@ -1117,7 +1276,7 @@ using std::ostringstream;
 
   # function declaration {{{2
   funcdef = (
-      WSOC* .
+      (WSOC)* .
       # return values (if found opt = true)
       (lparams)? @{opt=true;} .
       # matlab identifier (function name stored in cfuncname_)
@@ -1126,6 +1285,9 @@ using std::ostringstream;
           >st_tok
           %{
             cfuncname_.assign(tmp_p, p - tmp_p);
+#ifdef DEBUG
+  cerr << "\n Identifier of function: " << cfuncname_ << endl;
+#endif
             is_script_ = false;
           }
       )
@@ -1133,6 +1295,9 @@ using std::ostringstream;
       . (
            ('('
                  @{
+#ifdef DEBUG
+std::cerr << "print_function_synopsis()" << endl;
+#endif
                  print_function_synopsis();
                  cout << '(';
                  }
@@ -1155,14 +1320,24 @@ using std::ostringstream;
                 tmp_string = string("/* ") + tmp_string + string("*/");
              }
              else
+             {
                 tmp_string = "";
+             }
              comment_found = false;
              if(is_class_ && class_part_ == MethodDeclaration )
              {
                cout << methodparams_.ccpostfix() << tmp_string << "\n";
                class_part_ = Method;
-               clear_lists();
-               fgoto methods;
+               if(methodparams_.abstr)
+               {
+                 end_function();
+                 fgoto methods_abstract;
+               }
+               else
+               {
+                 clear_lists();
+                 fgoto methods;
+               }
              }
              else
              {
@@ -1185,10 +1360,12 @@ using std::ostringstream;
                             tmp_string = string("/* ") + tmp_string + string("*/");
                           }
                           else
+                          {
                             tmp_string = "";
+                          }
                           comment_found = false;
 #if DEBUG
-  cerr << "in funcdef: no parameters: expect doxyblock" << endl;
+  debug_output("in funcdef: script && no parameters: expect doxyblock",p);
 #endif
                          if(is_class_ && class_part_ == MethodDeclaration)
                          {
@@ -1196,7 +1373,13 @@ using std::ostringstream;
                               << tmp_string << "\n";
                             class_part_ = Method;
                             clear_lists();
-                            fgoto methods;
+                            if(methodparams_.abstr)
+                            {
+                              end_function();
+                              fgoto methods_abstract;
+                            }
+                            else
+                              fgoto methods;
                          }
                          else
                          {
@@ -1246,7 +1429,7 @@ using std::ostringstream;
 
   superclasses = (
       '<' @{ cout << "\n  :"; } . WSOC* . superclass . WSOC*
-          . ('&' @{ cout << ",\n   "; } . WSOC* . superclass)* );
+          . ('&' @{ cout << ",\n   "; } . WSOC* . superclass . WSOC*)* );
 
   classdef = (
       'classdef' . WSOC* .
@@ -1303,7 +1486,7 @@ using std::ostringstream;
       ) )
   $!{
 #ifdef DEBUG
-    cerr << "goto script" << endl;
+    debug_output("goto script",p);
 #endif
     p=tmp_p;
     fgoto script;
@@ -1319,7 +1502,7 @@ void MFileScanner :: print_function_synopsis()
 {
   if(is_getter_ || is_setter_)
   {
-   cout << "/*\n";
+   cout << "/* \n";
   }
   if(is_class_ && class_part_ == Method)
     cout << methodparams_.ccprefix();
@@ -1830,6 +2013,9 @@ void MFileScanner :: cout_ingroup()
 
 void MFileScanner::clear_lists()
 {
+#ifdef DEBUG
+  std::cerr << "clear lists" << endl;
+#endif
   paramlist_.clear();
   returnlist_.clear();
   param_list_.clear();
