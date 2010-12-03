@@ -66,6 +66,8 @@ struct MethodParams
   {
     if(statical)
       return "static ";
+    else if(abstr)
+      return "virtual ";
     else
       return "";
   }
