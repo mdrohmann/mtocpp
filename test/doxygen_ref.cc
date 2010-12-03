@@ -1,5 +1,5 @@
  ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,matlabtypesubstitute auto_param){
-/* After the first non-comment line the function body begins:
+/*  After the first non-comment line the function body begins:
 */
 
 /** Comment blocks starting with %| are interpreted as Doxygen documentation
@@ -9,14 +9,14 @@
 /** \todo There needs to be done something in this file
 */
 
-/* fields of parameters that are used in the function body are added to the
+/*  fields of parameters that are used in the function body are added to the
  * required fileds list automatically, if they are not documentated yet.
 */
 param1.auto_added;
 
 param2.auto_added;
 
-/* fields of return values that are assigned somewhere in the function body are
+/*  fields of return values that are assigned somewhere in the function body are
  * also added automatically to the list of generated fields
 */
 rv.auto_added= 1;
