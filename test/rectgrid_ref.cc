@@ -1,7 +1,7 @@
 namespace grid{
 namespace rect{
 class rectgrid {
-/** @class "grid.rect.rectgrid"
+/** @class "grid::rect::rectgrid"
   * @ingroup test
   * @brief  help for rectgrid is a class for a rectangular grid in 2 dimensions
   *
@@ -12,27 +12,27 @@ class rectgrid {
 public:
 
 rectgrid(matlabtypesubstitute varargin){
-/* Bernard Haasdonk 9.5.2007
+/*  Bernard Haasdonk 9.5.2007
 */
 
-/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
-/* copy constructor
+/*  copy constructor
 */
     if (nargin>0) & ...
           isa(varargin[1],'rectgrid')
       grid= varargin[1];
     else
-/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
-/* default constructor: unit square
+/*  default constructor: unit square
 */
       if (nargin==0)
         params.xnumintervals= 2;
         params.ynumintervals= 2;
         params.xrange= [0,1];
         params.yrange= [0,1];
-/* mark element in rectangle from [-1,-1] to [+2,+2] with index -1
+/*  mark element in rectangle from [-1,-1] to [+2,+2] with index -1
 */
         params.bnd_rect_corner1= [-1,-1]';
         params.bnd_rect_corner2= [2 2]';
@@ -42,18 +42,18 @@ rectgrid(matlabtypesubstitute varargin){
         params = varargin[1];
       end;
 
-/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+/* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
-/* construct from params
+/*  construct from params
 */
 
       grid = [];
 
-/*  if ~isfield(params,'verbose')
+/*   if ~isfield(params,'verbose')
 */
-/*    params.verbose = 0;
+/*     params.verbose = 0;
 */
-/*  end;
+/*   end;
 */
 
       nx = params.xnumintervals;
@@ -62,34 +62,34 @@ rectgrid(matlabtypesubstitute varargin){
       grid.nelements=nx*ny;
       grid.nvertices=(nx+1)*(ny+1);
 
-/* get areas of grid-cells
+/*  get areas of grid-cells
 */
       dx = (params.xrange(2)-params.xrange(1))/nx;
       dy = (params.yrange(2)-params.yrange(1))/ny;
       grid.A= dx*dy*ones(nx*ny,1);
       grid.Ainv= grid.A.^(-1);
 
-/* set vertex coordinates
+/*  set vertex coordinates
 */
       vind = (1:(nx+1)*(ny+1))';
       grid.X= mod(vind-1,nx+1) * dx + params.xrange(1);
       grid.Y= floor((vind-1)/(nx+1))*dy  + params.yrange(1);
 
-/* set element vertex indices: numbering starting right lower corner
+/*  set element vertex indices: numbering starting right lower corner
 */
-/* counterclockwise, i.e. edge j connects vertex j and j+1
+/*  counterclockwise, i.e. edge j connects vertex j and j+1
 */
-/* nx+2--nx+3-- ...
+/*  nx+2--nx+3-- ...
 */
-/*  |     |
+/*   |     |
 */
-/*  |  1  | 2 ...
+/*   |  1  | 2 ...
 */
-/*  |     |
+/*   |     |
 */
-/*  1-----2---- ...
+/*   1-----2---- ...
 */
-/*  =>  grid.VI = [ 2 nx+3 nx+2 1];
+/*   =>  grid.VI = [ 2 nx+3 nx+2 1];
 */
 
       el_ind = 1:length(grid.A);
@@ -102,7 +102,7 @@ rectgrid(matlabtypesubstitute varargin){
       VI(:,4) = (row_ind-1)*(nx+1)   +col_ind;
       grid.VI= VI;
 
-/* midpoint coordinates of grid-cells
+/*  midpoint coordinates of grid-cells
 */
       CX = (0:(nx-1))*(params.xrange(2)-params.xrange(1))/ ...
            nx+dx/2+params.xrange(1);
@@ -112,12 +112,12 @@ rectgrid(matlabtypesubstitute varargin){
            ny+dy/2+ params.yrange(1);
       CY = repmat(CY,nx,1);
       grid.CY= CY(:);
-/*disp('stopping after COG computation');
+/* disp('stopping after COG computation');
 */
-/*keyboard;
+/* keyboard;
 */
 
-/* check consistency: grid-midpoints and vertices
+/*  check consistency: grid-midpoints and vertices
 */
       xdiff1 = max(abs(grid.CX + dx/2 -grid.X(grid.VI(:,1))));
       xdiff2 = max(abs(grid.CX + dx/2 -grid.X(grid.VI(:,2))));
@@ -138,66 +138,70 @@ rectgrid(matlabtypesubstitute varargin){
         end;
       end;
 
-/* matrix with edge-lengths
+/*  matrix with edge-lengths
 */
       grid.EL= repmat([dy, dx, dy, dx ],size(grid.CX,1),1);
 
-/* matrix with midpoint-distances
+/*  matrix with midpoint-distances
 */
       grid.DC= repmat([dx, dy, dx, dy],size(grid.CX,1),1);
 
-/* matrix with (unit) normal components
+/*  matrix with (unit) normal components
 */
       grid.NX= repmat([1,0,-1,0],size(grid.CX,1),1);
       grid.NY= repmat([0,1,0,-1],size(grid.CX,1),1);
 
-/* matrix with edge-midpoint-coordinates
+/*  matrix with edge-midpoint-coordinates
 */
-/* this computation yields epsilon-differing edge-midpoints on
+/*  this computation yields epsilon-differing edge-midpoints on
 */
-/* neighbouring elements. This is adjusted at end of this routine
+/*  neighbouring elements. This is adjusted at end of this routine
 */
       grid.ECX= [grid.CX + dx/2,grid.CX,grid.CX-dx/2,grid.CX];
       grid.ECY= [grid.CY, grid.CY + dy/2,grid.CY,grid.CY-dy/2];
 
-/*%% determine indices of neighbouring elements,
+/* %% determine indices of neighbouring elements,
 */
       NBI = repmat((1:nx*ny)',1,4);
-/* first column: +x direction: cyclical shift +1 of indices
+/*  first column: +x direction: cyclical shift +1 of indices
 */
       NBI(:,1) = NBI(:,1)+1;
-/* second column: +y direction
+/*  second column: +y direction
 */
       NBI(:,2) = NBI(:,2)+nx;
-/* third column: -x direction
+/*  third column: -x direction
 */
       NBI(:,3) = NBI(:,3)-1;
-/* fourth column: -y direction
+/*  fourth column: -y direction
 */
       NBI(:,4) = NBI(:,4)-nx;
 
-/* correct boundary elements neighbour-indices:
+/*  correct boundary elements neighbour-indices:
 */
-      bnd_i1 = (1:ny)*nx; /*  indices of right-column elements*/
-      bnd_i2 = (1:nx)+ nx*(ny-1); /*  indices of upper el*/
-      bnd_i3 = (1:ny)*nx-nx+1; /*  indices of left-column*/
-      bnd_i4 = 1:nx; /*  indices of lower row elements*/
+      bnd_i1 = (1:ny)*nx;/*  indices of right-column elements
+*/
+      bnd_i2 = (1:nx)+ nx*(ny-1);/*  indices of upper el
+*/
+      bnd_i3 = (1:ny)*nx-nx+1;/*  indices of left-column
+*/
+      bnd_i4 = 1:nx;/*  indices of lower row elements
+*/
       SX = [grid.ECX(bnd_i1,1); grid.ECX(bnd_i2,2); grid.ECX(bnd_i3,3); grid.ECX(bnd_i4, 4)];
       SY = [grid.ECY(bnd_i1,1); grid.ECY(bnd_i2,2); grid.ECY(bnd_i3,3); grid.ECY(bnd_i4, 4)];
 
-/* formerly default: Dirichlet :
+/*  formerly default: Dirichlet :
 */
-/* bnd_ind = -1 * ones(1,length(SX));
+/*  bnd_ind = -1 * ones(1,length(SX));
 */
-/* now: set default to "symmetric", i.e. rectangle is a torus
+/*  now: set default to "symmetric", i.e. rectangle is a torus
 */
 
       bnd_ind = [NBI(bnd_i1,1)'-nx, NBI(bnd_i2,2)'-nx*ny, ...
     	     NBI(bnd_i3,3)'+nx, NBI(bnd_i4,4)'+nx*ny];
 
-/*  disp('halt 1');
+/*   disp('halt 1');
 */
-/*  keyboard;
+/*   keyboard;
 */
 
       if ~isfield(params, 'bnd_rect_index')
@@ -205,7 +209,7 @@ rectgrid(matlabtypesubstitute varargin){
       end
 
       if ~isempty(params.bnd_rect_index)
-/*    keyboard;
+/*     keyboard;
 */
         if (max(params.bnd_rect_index)>0)
           error('boundary indices must be negative!');
@@ -224,93 +228,109 @@ rectgrid(matlabtypesubstitute varargin){
           bnd_ind(indx) = params.bnd_rect_index(i);
         end;
       end;
-/*  disp('halt 2');
+/*   disp('halt 2');
 */
-/*  keyboard;
+/*   keyboard;
 */
 
       iend1 = length(bnd_i1);
       iend2 = iend1 + length(bnd_i2);
       iend3 = iend2 + length(bnd_i3);
       iend4 = iend3 + length(bnd_i4);
-      NBI(bnd_i1,1) = bnd_ind(1:iend1)'; /*  set right border-neigbours to boundary*/
-      NBI(bnd_i2,2) = bnd_ind((iend1+1):iend2)'; /*  set neighbours to boundary*/
-      NBI(bnd_i3,3) = bnd_ind((iend2+1):iend3)'; /*  set neigbours to boundary*/
-      NBI(bnd_i4,4) = bnd_ind((iend3+1):iend4)'; /*  set neighbours to boundary*/
+      NBI(bnd_i1,1) = bnd_ind(1:iend1)';/*  set right border-neigbours to boundary
+*/
+      NBI(bnd_i2,2) = bnd_ind((iend1+1):iend2)';/*  set neighbours to boundary
+*/
+      NBI(bnd_i3,3) = bnd_ind((iend2+1):iend3)';/*  set neigbours to boundary
+*/
+      NBI(bnd_i4,4) = bnd_ind((iend3+1):iend4)';/*  set neighbours to boundary
+*/
 
       grid.NBI= NBI;
 
-/* INB: INB(i,j) = local edge number in NBI(i,j) leading from element
+/*  INB: INB(i,j) = local edge number in NBI(i,j) leading from element
 */
-/*                 NBI(i,j) to element i, i.e. satisfying
+/*                  NBI(i,j) to element i, i.e. satisfying
 */
-/*                 NBI(NBI(i,j), INB(i,j)) = i
+/*                  NBI(NBI(i,j), INB(i,j)) = i
 */
       INB = repmat([3 4 1 2],size(grid.NBI,1),1);
       grid.INB= INB;
 
-/* check grid consistency:
+/*  check grid consistency:
 */
-      nonzero = find(NBI>0); /*  vector with vector-indices*/
-      [i,j] = ind2sub(size(NBI), nonzero); /*  vectors with matrix indices*/
-      NBIind = NBI(nonzero); /*  vector with global neighbour indices*/
+      nonzero = find(NBI>0);/*  vector with vector-indices
+*/
+      [i,j] = ind2sub(size(NBI), nonzero);/*  vectors with matrix indices
+*/
+      NBIind = NBI(nonzero);/*  vector with global neighbour indices
+*/
       INBind = INB(nonzero);
       i2 = sub2ind(size(NBI),NBIind, INBind);
       i3 = NBI(i2);
       if ~isequal(i3,i)
-/*    plot_element_data(grid,grid.NBI,params);
+/*     plot_element_data(grid,grid.NBI,params);
 */
         disp('neighbour indices are not consistent!!');
         keyboard;
       end;
 
-      grid.hmin= sqrt(dx^2+dy^2); /*  minimal diameter of elements*/
-    			       /*  CAUTION: this geometry bound is*/
-                                   /*  adapted to triangles, should be extended*/
-    			       /*  properly to rectangles*/
-      alpha1 = dx * dy/(dx^2+dy^2); /*  geometry bound*/
+      grid.hmin= sqrt(dx^2+dy^2);/*  minimal diameter of elements
+*/
+/*  CAUTION: this geometry bound is
+*/
+/*  adapted to triangles, should be extended
+*/
+/*  properly to rectangles
+*/
+      alpha1 = dx * dy/(dx^2+dy^2);/*  geometry bound
+*/
       alpha2 = sqrt(dx^2+dy^2)/(2*dx + 2*dy);
       alpha3 = dx / sqrt(dx^2+dy^2);
       grid.alpha= min([alpha1,alpha2,alpha3]);	
 
-/* make entries of ECX, ECY exactly identical for neighbouring elements!
+/*  make entries of ECX, ECY exactly identical for neighbouring elements!
 */
-/* currently by construction a small eps deviation is possible.
+/*  currently by construction a small eps deviation is possible.
 */
 
-/*averaging over all pairs is required
+/* averaging over all pairs is required
 */
-      nonzero = find(grid.NBI>0); /*  vector with vector-indices*/
-      [i,j] = ind2sub(size(grid.NBI), nonzero); /*  vectors with matrix indices*/
-      NBIind = NBI(nonzero); /*  vector with global neighbour indices*/
-      INBind = INB(nonzero); /*  vector with local edge indices*/
+      nonzero = find(grid.NBI>0);/*  vector with vector-indices
+*/
+      [i,j] = ind2sub(size(grid.NBI), nonzero);/*  vectors with matrix indices
+*/
+      NBIind = NBI(nonzero);/*  vector with global neighbour indices
+*/
+      INBind = INB(nonzero);/*  vector with local edge indices
+*/
       i2 = sub2ind(size(NBI),NBIind, INBind);
-/* determine maximum difference in edge-midpoints, but exclude
+/*  determine maximum difference in edge-midpoints, but exclude
 */
-/* symmetry boundaries by relative error < 0.0001
+/*  symmetry boundaries by relative error < 0.0001
 */
       diffx = abs(grid.ECX(nonzero)-grid.ECX(i2));
       diffy = abs(grid.ECY(nonzero)-grid.ECY(i2));
       fi = find ( (diffx/(max(grid.X)-min(grid.X)) < 0.0001) &  ...
     	      (diffy/(max(grid.Y)-min(grid.Y)) < 0.0001) );
 
-/*disp(max(diffx));
+/* disp(max(diffx));
 */
-/*disp(max(diffy));
+/* disp(max(diffy));
 */
-/*  => 0 ! :-)
+/*   => 0 ! :-)
 */
-/* keyboard;
+/*  keyboard;
 */
 
       grid.ECX(nonzero(fi)) = 0.5*(grid.ECX(nonzero(fi))+ grid.ECX(i2(fi)));
       grid.ECY(nonzero(fi)) = 0.5*(grid.ECY(nonzero(fi))+ grid.ECY(i2(fi)));
 
-/* for diffusion discretization: Assumption of points with
+/*  for diffusion discretization: Assumption of points with
 */
-/* orthogonal connections to edges. Distances and intersections
+/*  orthogonal connections to edges. Distances and intersections
 */
-/* determined here. In cartesian case identical to centroids
+/*  determined here. In cartesian case identical to centroids
 */
       grid.SX= grid.CX;
       grid.SY= grid.CY;
