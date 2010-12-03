@@ -1,13 +1,15 @@
-classdef classA < classB & classC
+classdef classA < general.reference.classB & a.b.c & ...
+    d.e.f ...
+    & g.h.i
   % help for classA
   %
   % bigger help for classA
 
-  properties ( SetAccess = Private, GetAccess=Protected, Transient)
+  properties ( SetAccess = private, GetAccess = protected, Transient)
 
     mixed_access; % short help
 
-    % longer help with default value
+    % longer help with `default` value
     mixed_access2 = 'test';
 
 
@@ -37,8 +39,29 @@ classdef classA < classB & classC
   end
 
   methods
-    function obj = classA
-      % default constructor
+
+    function obj = foo(a,b,c)
+      % brief doc for foo
+
+      bar;
+    end
+
+    % comment
+    %  zweite Zeile
+
+    function obj = bar(c,d,e)
+      % brief doc for bar
+
+      foo;
+    end
+
+    function obj = foobar()
+    % brief for foobar
+    %
+    % detail for foobar
+
+     test
+
     end
 
     function obj = classA(param1, param2)
@@ -46,13 +69,23 @@ classdef classA < classB & classC
     end
   end
 
-  methods (Access = protected, Sealed)
+  methods
     function value = get.protected_access(this)
       % getter enriching property help text of protected_access
+
+      if a==b
+        do something;
+      % the following end needs to be indented correctly
+      end % garble this correctly
+%|
+% \todo this is a test
+
     end
 
     function set.protected_access(this, value)
       % setter enriching property help text of protected_access
+
+      a;
     end
   end
 
@@ -63,9 +96,9 @@ classdef classA < classB & classC
   end
 
   methods (Abstract)
-    function [a] = abstract_method(this,d)
-      % an abstract method
-    end
+    % an abstract method comment above
+    [a] = abstract_method(this,d,e); % an abstract comment behind
+    % an abstract method comment below
   end
 
   events

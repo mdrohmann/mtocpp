@@ -1,6 +1,8 @@
 class classA
-  :public classB,
-   public classC {
+  :public ::general::reference::classB,
+   public ::a::b::c,
+   public ::d::e::f,
+   public ::g::h::i {
 /** @class "classA"
   * @ingroup test
   * @brief  help for classA
@@ -15,7 +17,7 @@ matlabtypesubstitute mixed_access;
 /** @var mixed_access
  *  short help*/
 
-/** @brief  longer help with default value
+/** @brief  longer help with @f$default@f$ value
   *
   *
  */
@@ -65,11 +67,49 @@ matlabtypesubstitute protected_access2;
 
 
 public:
- classA() {
+
+ ret::substitutestart::obj::retsubstituteend foo(matlabtypesubstitute b,matlabtypesubstitute c){
+
+      bar;
 }
-/** @fn classA()
-  * @brief  default constructor
+/** @fn ret::substitutestart::obj::retsubstituteend foo(matlabtypesubstitute b,matlabtypesubstitute c)
+  * @brief  brief doc for foo
   *
+  *
+  * @param b    b
+  * @param c    c
+  *
+  * @retval obj    obj
+  */
+
+/* hier beginnt ein kommentar: in methods zwischen Funktionen*/
+/* hier beginnt ein kommentar: in methods zwischen Funktionen*/
+
+ ret::substitutestart::obj::retsubstituteend bar(matlabtypesubstitute d,matlabtypesubstitute e){
+
+      foo;
+}
+/** @fn ret::substitutestart::obj::retsubstituteend bar(matlabtypesubstitute d,matlabtypesubstitute e)
+  * @brief  brief doc for bar
+  *
+  *
+  * @param d    d
+  * @param e    e
+  *
+  * @retval obj    obj
+  */
+
+ ret::substitutestart::obj::retsubstituteend foobar(){
+     test
+
+}
+/** @fn ret::substitutestart::obj::retsubstituteend foobar()
+  * @brief  brief for foobar
+  *
+  *
+  *  detail for foobar
+  *
+  * @retval obj    obj
   */
 
  classA(matlabtypesubstitute param1,matlabtypesubstitute param2){
@@ -82,9 +122,22 @@ public:
   * @param param2    param2
   */
 
-protected:
- /*
+public:
+ /* 
 ret::substitutestart::value::retsubstituteend protected_access(){
+
+      if a==b
+        do something;
+*//*  the following end needs to be indented correctly
+*/
+/* *//*  garble this correctly*/
+/* *//* |*/
+/* *//*  \todo this is a test*/
+/*       end*//*  garble this correctly
+ *|
+ * \todo this is a test
+*/
+/* 
 }
 */
 /** @var protected_access
@@ -93,8 +146,10 @@ ret::substitutestart::value::retsubstituteend protected_access(){
   *
   */
 
-/*
+/* 
 noret::substitute protected_access(matlabtypesubstitute value){
+
+      a;
 }
 */
 /** @var protected_access
@@ -117,12 +172,13 @@ public:
   */
 
 public:
- ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d){
-/** @fn ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d)
-  * @brief  an abstract method
+ virtual ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;/*  an abstract comment behind*/
+/** @fn ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e)
+  * @brief  an abstract method comment above
   *
   *
   * @param d    d
+  * @param e    e
   *
   * @retval a    a
   */
