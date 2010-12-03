@@ -171,11 +171,21 @@ private:
 
 };
 
+void usage()
+{
+  cout
+    << "Usage: ./postprocess filename" << endl;
+}
+
 int main(int argc, char ** argv)
 {
   string filename;
   if(argc >= 2)
   {
+    if (std::string("--help") == std::string(argv[1]))
+    {
+      usage();
+    }
     filename = argv[1];
   }
   else
