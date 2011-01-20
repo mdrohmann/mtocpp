@@ -1,0 +1,4 @@
+getter und setter Methodenrümpfe nicht mehr auskommentieren, sondern löschen. (Sonst bereiten innere Kommentare Probleme)
+Deklarieren von Typen in Kommentaren über die properties (tag @type)
+Bei unterschiedlichen Access-Rights Kommentar hinzufügen (SetAccess != GetAccess)
+
