@@ -28,8 +28,8 @@ using std::ostringstream;
 void debug_output(const std::string & msg, char * p)
 {
   cerr << "Message: " << msg << "\n";
-//  cerr << "Next 20 characters to parse: \n";
-//  cerr.write(p, 20);
+  cerr << "Next 20 characters to parse: \n";
+  cerr.write(p, 20);
   cerr << "\n------------------------------------\n";
 }
 
