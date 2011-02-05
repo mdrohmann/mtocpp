@@ -693,6 +693,19 @@ debug_output("in funcbody: goto main", p);
               end_of_property_doc();
               fgoto propertybody;
             }
+            else if(class_part_ == InClassComment)
+            {
+              // go back to last non-white space character
+              for(;*p==' ' || *p=='\t';--p)
+                ;
+              debug_output("HHHHHHHHHH", p);
+              class_part_ = Method;
+              fgoto methods;
+            }
+            else
+            {
+              cerr << "missing class part handling for class part: " << ClassPartNames[class_part_] << endl;
+            }
           }
           else
             fgoto funcbody;
@@ -725,6 +738,15 @@ debug_output("in funcbody: goto main", p);
               end_of_property_doc();
               fgoto propertybody;
             }
+            else if(class_part_ == InClassComment)
+            {
+              class_part_ = Method;
+              fgoto methods;
+            }
+            else
+            {
+              cerr << "missing class part handling for class part: " << ClassPartNames[class_part_] << endl;
+            }
           }
           else
             fgoto funcbody;
@@ -753,6 +775,16 @@ debug_output("in funcbody: goto main", p);
             {
               end_of_property_doc();
               fgoto propertybody;
+            }
+            else if(class_part_ == InClassComment)
+            {
+              p = ts-1;
+              class_part_ = Method;
+              fgoto methods;
+            }
+            else
+            {
+              cerr << "missing class part handling for class part: " << ClassPartNames[class_part_] << endl;
             }
           }
           else
@@ -797,6 +829,11 @@ debug_output("in funcbody: goto main", p);
             {
               end_of_property_doc();
               fgoto propertybody;
+            }
+            else if(class_part_ == InClassComment)
+            {
+              class_part_ = Method;
+              fgoto methods;
             }
           }
           else
@@ -910,10 +947,16 @@ debug_output("in funcbody: goto main", p);
   # garble synopsis line and then parse the documentation header {{{2
   doxyheader := (
     '%' . [ \t]* .
-       ( 'function'
+       (
+        ( ('function'
          . ( default - [;)\r\n.] )* .
          (
           ( [);] . (default - '\n')* . EOL )
+        )
+        |
+        ('classdef'
+         . ( default - [\r\n] )* . [^.] . EOL
+        ) )
             @{ fgoto doxy_get_brief; }
           |
           ( '...' . [ \t]* . EOL
@@ -1078,12 +1121,12 @@ debug_output("in funcbody: goto main", p);
            fgoto classbody;
          };
 
-    ([ \t]* . '%' . (default - '\n')* . EOL ) => {
+    ([ \t]* . '%' ) => {
 #if DEBUG
     debug_output("in methods: garble comment line",p);
 #endif
-      cout << "/* hier beginnt ein kommentar: in methods zwischen Funktionen*/\n";
 
+      p = ts-1;
       class_part_ = InClassComment;
 /*      fcall in_comment_block; */
       fgoto expect_doxyblock;
@@ -1096,7 +1139,7 @@ debug_output("in funcbody: goto main", p);
     debug_output("in methods: found method declaration, going to funcdef",p);
 #endif
       class_part_ = MethodDeclaration;
-      p = ts;
+      p = ts-1;
       fgoto funcdef;
     };
 
@@ -1183,10 +1226,10 @@ methods_abstract := |*
     |
     ( ([ \t]* . '%') @{ fhold; fgoto expect_doxyblock; } )
     |
-    ( [ \t]* . ( 'end' . ';'? )
+    ( [ \t]* . ( 'end' . [ \t]* . ';'? ) . WSOC* . EOL )
       @{
          fgoto classbody;
-       })
+       }
     );
 
   properties := ( (
@@ -1730,7 +1773,7 @@ int MFileScanner :: execute()
     {
       /* Machine failed before finding a token. */
       cerr << std::string(filename_) << ": PARSE ERROR in line " << line << endl;
-      debug_output("Shit", p);
+      debug_output("Grrrr!!!!", p);
       exit(-1);
     }
 
