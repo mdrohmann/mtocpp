@@ -25,7 +25,6 @@ matlabtypesubstitute mixed_access2 = 'test';
 
 
 
-
 public:
 static const matlabtypesubstitute aConstant = 1;
 /** @var aConstant
@@ -41,7 +40,6 @@ static const matlabtypesubstitute cConstant = 3;
 /** @var cConstant
  *  help text for cConstant*/
 
-
 public:
 matlabtypesubstitute public_access;
 /** @var public_access
@@ -53,7 +51,6 @@ matlabtypesubstitute public_access;
  */
 matlabtypesubstitute public_access2;
 
-
 protected:
 matlabtypesubstitute protected_access;
 /** @var protected_access
@@ -64,7 +61,6 @@ matlabtypesubstitute protected_access;
   *
  */
 matlabtypesubstitute protected_access2;
-
 
 public:
 
@@ -82,7 +78,6 @@ public:
   * @retval obj    obj
   */
 
-/* hier beginnt ein kommentar: in methods zwischen Funktionen*/
 
  ret::substitutestart::obj::retsubstituteend bar(matlabtypesubstitute d,matlabtypesubstitute e){
 
@@ -111,7 +106,6 @@ public:
   * @retval obj    obj
   */
 
-/* hier beginnt ein kommentar: in methods zwischen Funktionen*/
 
 ret::substitutestart::ret::retsubstituteend mdecl(matlabtypesubstitute b);
 

@@ -175,5 +175,5 @@ rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespac
   * @retval e    e
   * @retval f    f
   */
-}
-}
+};
+};
