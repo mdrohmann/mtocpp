@@ -453,7 +453,7 @@ noret::substitute plot(matlabtypesubstitute params);
 
 noret::substitute set_enbi(matlabtypesubstitute nbind,matlabtypesubstitute values);
 
-}
+};
 }
 }
 

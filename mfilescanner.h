@@ -14,13 +14,23 @@
 // 160 KB
 #define BUFSIZE 10*16384
 
-typedef enum
-{
-  Public, Protected, Private
-} AccessEnum;
+#define stringify( name ) #name
 
 typedef enum
 {
+  Public = 0, Protected, Private
+} AccessEnum;
+
+const char * AccessEnumNames[] =
+{
+  stringify( Public ),
+  stringify( Protected ),
+  stringify( Private )
+};
+
+typedef enum
+{
+  InClassComment,
   Header,
   Method,
   AtMethod,
@@ -28,6 +38,17 @@ typedef enum
   Property,
   Event
 } ClassPart;
+
+const char * ClassPartNames[] =
+{
+  stringify( InClassComment ),
+  stringify( Header ),
+  stringify( Method ),
+  stringify( AtMethod ),
+  stringify( MethodDeclaration ),
+  stringify( Property ),
+  stringify( Event )
+};
 
 struct AccessStruct
 {
@@ -38,7 +59,17 @@ struct AccessStruct
 public:
   AccessStruct()
     : full(Public), get(Public), set(Public) {};
+
+  friend std::ostream & operator<<(std::ostream & os, AccessStruct & as);
 };
+
+std::ostream & operator<<(std::ostream & os, AccessStruct & as)
+{
+  os << "AccessStruct: full = " << AccessEnumNames[as.full] << " get  = " <<
+    AccessEnumNames[as.get] << " set  = " << AccessEnumNames[as.set] << "\n";
+  return os;
+}
+
 
 struct PropParams
 {
@@ -55,7 +86,15 @@ struct PropParams
 public:
   PropParams()
     : constant(false) {};
+
+  friend std::ostream & operator<<(std::ostream & os, PropParams & pp);
 };
+
+std::ostream & operator<<(std::ostream & os, PropParams & pp)
+{
+  os << "PropParams: constant = " << pp.constant << "\n";
+  return os;
+}
 
 struct MethodParams
 {
@@ -82,7 +121,17 @@ struct MethodParams
 public:
   MethodParams()
     : abstr(false), statical(false) {};
+
+  friend std::ostream & operator<<(std::ostream & os, MethodParams & mp);
 };
+
+std::ostream & operator<<(std::ostream & os, MethodParams & mp)
+{
+  std::string abstract = mp.abstr ? "abstract, " : "";
+  std::string statics = mp.statical ? "static, " : "";
+  os << "MethodParams: " << abstract << statics << "\n";
+  return os;
+}
 
 class MFileScanner
 {
@@ -128,6 +177,17 @@ private:
                           const std::string & text,
                           const DocuListMap & altlistmap);
 
+
+  void debug_output(const std::string & msg, char * p)
+  {
+    std::cerr << "Message: " << msg << "\n";
+    std::cerr << "Next 20 characters to parse: \n";
+    std::cerr.write(p, 20);
+    std::cerr << "\n------------------------------------\n";
+    std::cerr << "States are: ClassPart: " << ClassPartNames[class_part_] << "\n"
+      << propertyparams_ << methodparams_ << access_;
+    std::cerr << "\n------------------------------------\n";
+  }
 
 private:
   std::istream & fin_;
