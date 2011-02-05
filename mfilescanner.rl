@@ -23,13 +23,6 @@ using std::istream;
 using std::ostream_iterator;
 using std::ostringstream;
 
-void debug_output(const std::string & msg, char * p)
-{
-  cerr << "Message: " << msg << "\n";
-  cerr << "Next 20 characters to parse: \n";
-  cerr.write(p, 20);
-  cerr << "\n------------------------------------\n";
-}
 
 %%{
   machine MFileScanner;
@@ -64,14 +57,14 @@ void debug_output(const std::string & msg, char * p)
     fret;
   };
 
-  # executed when end of file ist reached
+  # executed when end of file is reached
   action end_of_file
   {
     end_function();
     for(  list<string>::iterator it = namespaces_.begin();
           it != namespaces_.end(); ++it)
     {
-      cout << "}\n";
+      cout << "};\n";
     }
   }
 
@@ -198,7 +191,7 @@ void debug_output(const std::string & msg, char * p)
          // do not print this pointer
          if( is_class_ && ( ( class_part_ == Method
                               && cfuncname_ != classname_ )
-           || class_part_ == AtMethod ) ) {
+           || class_part_ == AtMethod || class_part_ == MethodDeclaration ) ) {
             if(paramlist_.empty()) {
               addBlock = false;
               paramlist_.push_back(string("this"));
@@ -259,6 +252,9 @@ void debug_output(const std::string & msg, char * p)
              returnlist_.push_back(s);
              // add an empty docu block for single return value \a s
              return_list_[s] = DocuBlock();
+#ifdef DEBUG
+  cerr << "\n In return list: " << endl;
+#endif
            }
         )
         | ( '['
@@ -697,6 +693,19 @@ debug_output("in funcbody: goto main", p);
               end_of_property_doc();
               fgoto propertybody;
             }
+            else if(class_part_ == InClassComment)
+            {
+              // go back to last non-white space character
+              for(;*p==' ' || *p=='\t';--p)
+                ;
+              debug_output("HHHHHHHHHH", p);
+              class_part_ = Method;
+              fgoto methods;
+            }
+            else
+            {
+              cerr << "missing class part handling for class part: " << ClassPartNames[class_part_] << endl;
+            }
           }
           else
             fgoto funcbody;
@@ -729,6 +738,15 @@ debug_output("in funcbody: goto main", p);
               end_of_property_doc();
               fgoto propertybody;
             }
+            else if(class_part_ == InClassComment)
+            {
+              class_part_ = Method;
+              fgoto methods;
+            }
+            else
+            {
+              cerr << "missing class part handling for class part: " << ClassPartNames[class_part_] << endl;
+            }
           }
           else
             fgoto funcbody;
@@ -757,6 +775,16 @@ debug_output("in funcbody: goto main", p);
             {
               end_of_property_doc();
               fgoto propertybody;
+            }
+            else if(class_part_ == InClassComment)
+            {
+              p = ts-1;
+              class_part_ = Method;
+              fgoto methods;
+            }
+            else
+            {
+              cerr << "missing class part handling for class part: " << ClassPartNames[class_part_] << endl;
             }
           }
           else
@@ -790,13 +818,22 @@ debug_output("in funcbody: goto main", p);
               end_of_class_doc();
               fgoto classbody;
             } else if(class_part_ == Method || class_part_ == AtMethod)
+            {
               fgoto funcbody;
+            }
             else if(class_part_ == MethodDeclaration)
+            {
               fgoto funcdef;
+            }
             else if(class_part_ == Property)
             {
               end_of_property_doc();
               fgoto propertybody;
+            }
+            else if(class_part_ == InClassComment)
+            {
+              class_part_ = Method;
+              fgoto methods;
             }
           }
           else
@@ -894,6 +931,11 @@ debug_output("in funcbody: goto main", p);
 #endif
             fgoto propertybody;
           }
+          else if(class_part_ == InClassComment)
+          {
+            class_part_ = Method;
+            fgoto methods;
+          }
         }
         else
           fgoto funcbody;
@@ -905,10 +947,16 @@ debug_output("in funcbody: goto main", p);
   # garble synopsis line and then parse the documentation header {{{2
   doxyheader := (
     '%' . [ \t]* .
-       ( 'function'
+       (
+        ( ('function'
          . ( default - [;)\r\n.] )* .
          (
           ( [);] . (default - '\n')* . EOL )
+        )
+        |
+        ('classdef'
+         . ( default - [\r\n] )* . [^.] . EOL
+        ) )
             @{ fgoto doxy_get_brief; }
           |
           ( '...' . [ \t]* . EOL
@@ -1044,7 +1092,10 @@ debug_output("in funcbody: goto main", p);
 #ifdef DEBUG
   debug_output("applying emtpy_line rule",p);
 #endif
-     cout << "\n";
+      cout << "\n";
+      docuheader_.clear();
+      docubody_.clear();
+      docuextra_.clear();
     };
 
     ([ \t]* . 'function' )
@@ -1053,10 +1104,10 @@ debug_output("in funcbody: goto main", p);
         funcindent_ = tmp_string.find_first_not_of(" \t");
 #if DEBUG
     {
-ostringstream oss;
-oss << "in methods: funcindent: " << funcindent_;
-    debug_output(oss.str(), p);
-}
+      ostringstream oss;
+      oss << "in methods: funcindent: " << funcindent_;
+      debug_output(oss.str(), p);
+    }
 #endif
         p=ts+funcindent_-1;
         fgoto funct;
@@ -1064,18 +1115,32 @@ oss << "in methods: funcindent: " << funcindent_;
 
     ([ \t]* . ( 'end' . (WSOC | ';')* ) . EOL )
       => {
+#if DEBUG
+    debug_output("in methods: found end keyword, goto classbody",p);
+#endif
            fgoto classbody;
          };
 
-    ([ \t]* . '%' . (default - '\n')* . EOL ) => {
+    ([ \t]* . '%' ) => {
 #if DEBUG
     debug_output("in methods: garble comment line",p);
 #endif
-      cout << "/* hier beginnt ein kommentar: in methods zwischen Funktionen*/\n";
 
-/*      class_part_ = MethodDeclaration; */
+      p = ts-1;
+      class_part_ = InClassComment;
 /*      fcall in_comment_block; */
-/*      fgoto expect_doxyblock; */
+      fgoto expect_doxyblock;
+    };
+
+    # if we reach this: method declaration without definition is found
+    ([ \t]* . [^% \t\n]) =>
+    {
+#if DEBUG
+    debug_output("in methods: found method declaration, going to funcdef",p);
+#endif
+      class_part_ = MethodDeclaration;
+      p = ts-1;
+      fgoto funcdef;
     };
 
       *|;
@@ -1161,10 +1226,10 @@ methods_abstract := |*
     |
     ( ([ \t]* . '%') @{ fhold; fgoto expect_doxyblock; } )
     |
-    ( [ \t]* . ( 'end' . ';'? )
+    ( [ \t]* . ( 'end' . [ \t]* . ';'? ) . WSOC* . EOL )
       @{
          fgoto classbody;
-       })
+       }
     );
 
   properties := ( (
@@ -1191,7 +1256,7 @@ methods_abstract := |*
     (EOL) => { cout << "\n"; };
 
     ('end' . [ \t]* ';'?) => {
-      cout << "\n}\n";
+      cout << "\n};\n";
       for(  list<string>::iterator it = namespaces_.begin();
             it != namespaces_.end(); ++it)
       {
@@ -1237,8 +1302,7 @@ methods_abstract := |*
  $!{
     fhold;
 #ifdef DEBUG
-  cerr << "no doxyblock" << (class_part_ == Method ? "method" : "no method")<< endl;
-  cerr.write(p, 20) << endl;
+    debug_output("stopping expect_doxyblock", p);
 #endif
     if(is_class_)
     {
@@ -1267,6 +1331,14 @@ methods_abstract := |*
       {
         end_of_property_doc();
         fgoto propertybody;
+      }
+      else if(class_part_ == InClassComment || class_part_ == MethodDeclaration)
+      {
+        class_part_ = Method;
+        fgoto methods;
+      }
+      else{
+        cerr << "Do not know where to go from here. Classpart " << ClassPartNames[class_part_] << " is not handled.\n";
       }
     }
     else
@@ -1335,7 +1407,11 @@ std::cerr << "print_function_synopsis()" << endl;
                }
                else
                {
+                 class_part_ = Method;
                  clear_lists();
+#if DEBUG
+    debug_output("in funcdef: end of method declaration, returning to methods",p);
+#endif
                  fgoto methods;
                }
              }
@@ -1477,6 +1553,8 @@ std::cerr << "print_function_synopsis()" << endl;
     . [\t]*
     . ( 'function' @{
                      p=tmp_p;
+                     if(is_class_ && class_part_ == Header)
+                       class_part_ = AtMethod;
                      fgoto funct;
                     }
       | 'classdef' @{
@@ -1535,9 +1613,13 @@ void MFileScanner :: print_function_synopsis()
     }
   }
   if(is_class_ && class_part_ == AtMethod)
+  {
     cout << namespace_string() << classname_ << "::";
+  }
   else if(!is_first_function_)
+  {
     cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
+  }
   cout << cfuncname_;
 }
 
@@ -1594,7 +1676,10 @@ MFileScanner :: MFileScanner(istream & fin, const std::string & filename,
       is_class_ = true;
       if(classname_
           != fnname_.substr(fnname_.find_last_of('/')+1, classname_.size()))
+      {
         class_part_ = AtMethod;
+        cout << "#include \"" << classname_ << ".m\"" << endl;
+      }
     }
     else
       break;
@@ -1688,8 +1773,7 @@ int MFileScanner :: execute()
     {
       /* Machine failed before finding a token. */
       cerr << std::string(filename_) << ": PARSE ERROR in line " << line << endl;
-      cerr << "next 100 characters to parse" << endl;
-      cerr.write(p, 100);
+      debug_output("Grrrr!!!!", p);
       exit(-1);
     }
 
