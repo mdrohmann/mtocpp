@@ -83,7 +83,6 @@ public:
   */
 
 /* hier beginnt ein kommentar: in methods zwischen Funktionen*/
-/* hier beginnt ein kommentar: in methods zwischen Funktionen*/
 
  ret::substitutestart::obj::retsubstituteend bar(matlabtypesubstitute d,matlabtypesubstitute e){
 
@@ -111,6 +110,10 @@ public:
   *
   * @retval obj    obj
   */
+
+/* hier beginnt ein kommentar: in methods zwischen Funktionen*/
+
+ret::substitutestart::ret::retsubstituteend mdecl(matlabtypesubstitute b);
 
  classA(matlabtypesubstitute param1,matlabtypesubstitute param2){
 }
@@ -185,7 +188,7 @@ public:
 
 
 
-}
+};
 
 
 

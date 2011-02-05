@@ -1,3 +1,4 @@
+#include "rectgrid.m"
 namespace grid{
 namespace rect{
  ret::substitutestart::p::retsubstituteend grid::rect::rectgrid::plot(matlabtypesubstitute params){
@@ -28,5 +29,5 @@ p = plot_polygon_grid(grid,params);
   * @retval p    p
   * @synupdate Syntax needs to be updated! 
   */
-}
-}
+};
+};
