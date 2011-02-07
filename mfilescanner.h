@@ -231,6 +231,7 @@ private:
   PropParams   propertyparams_;
   MethodParams methodparams_;
   std::vector<std::string> property_list_;
+  std::string  buffer_;
 
 };
 
