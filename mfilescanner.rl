@@ -177,9 +177,9 @@ using std::ostringstream;
   paramlist =
     (
      (WSOC | [,\n]
-       @{if(*p=='\n' || paramlist_.size() != 1 || paramlist_[0] != string("this" )) {
-         cout << *p;
-         } }
+#       @{if(*p=='\n' || paramlist_.size() != 1 || paramlist_[0] != string("this" )) {
+#         //buffer_.append(std::string(*p));
+#         } }
      | ( '=' . default_arg ) )+
      |
      # matlab identifier (parameter)
@@ -209,7 +209,7 @@ using std::ostringstream;
   debug_output(oss.str(), p);
 }
 #endif
-           cout << "matlabtypesubstitute " << s;
+           buffer_.append(std::string("matlabtypesubstitute ") + s);
            // add an empty docu block for parameter \a s
            param_list_[s] = DocuBlock();
 #ifdef DEBUG
@@ -263,7 +263,8 @@ using std::ostringstream;
           )
       )
       . ([ \t]*
-          @echo)
+#          @{ buffer_.append(*p); }
+        )
       :> '=' . WSOC*
     );
     # }}}2
@@ -681,13 +682,19 @@ debug_output("in funcbody: goto main", p);
               fgoto classbody;
             } else if(class_part_ == Method || class_part_ == AtMethod)
             {
+              print_function_synopsis();
               if(methodparams_.abstr)
+              {
+                end_function();
                 fgoto methods_abstract;
+              }
               else
                 fgoto funcbody;
             }
             else if(class_part_ == MethodDeclaration)
+            {
               fgoto funcdef;
+            }
             else if(class_part_ == Property)
             {
               end_of_property_doc();
@@ -698,7 +705,6 @@ debug_output("in funcbody: goto main", p);
               // go back to last non-white space character
               for(;*p==' ' || *p=='\t';--p)
                 ;
-              debug_output("HHHHHHHHHH", p);
               class_part_ = Method;
               fgoto methods;
             }
@@ -708,7 +714,10 @@ debug_output("in funcbody: goto main", p);
             }
           }
           else
+          {
+            print_function_synopsis();
             fgoto funcbody;
+          }
         }
       };
 
@@ -726,13 +735,19 @@ debug_output("in funcbody: goto main", p);
               fgoto classbody;
             } else if(class_part_ == Method || class_part_ == AtMethod)
             {
+              print_function_synopsis();
               if(methodparams_.abstr)
+              {
+                end_function();
                 fgoto methods_abstract;
+              }
               else
                 fgoto funcbody;
             }
             else if(class_part_ == MethodDeclaration)
+            {
               fgoto funcdef;
+            }
             else if(class_part_ == Property)
             {
               end_of_property_doc();
@@ -749,7 +764,10 @@ debug_output("in funcbody: goto main", p);
             }
           }
           else
+          {
+            print_function_synopsis();
             fgoto funcbody;
+          }
         }
       };
 
@@ -768,7 +786,10 @@ debug_output("in funcbody: goto main", p);
               end_of_class_doc();
               fgoto classbody;
             } else if(class_part_ == Method || class_part_ == AtMethod)
+            {
+              print_function_synopsis();
               fgoto funcbody;
+            }
             else if(class_part_ == MethodDeclaration)
               fgoto funcdef;
             else if(class_part_ == Property)
@@ -788,7 +809,10 @@ debug_output("in funcbody: goto main", p);
             }
           }
           else
+          {
+            print_function_synopsis();
             fgoto funcbody;
+          }
         else
         {
           docubody_.push_back("@par " + string(tmp_p+1, ts - tmp_p-1)+"\n");
@@ -819,6 +843,7 @@ debug_output("in funcbody: goto main", p);
               fgoto classbody;
             } else if(class_part_ == Method || class_part_ == AtMethod)
             {
+              print_function_synopsis();
               fgoto funcbody;
             }
             else if(class_part_ == MethodDeclaration)
@@ -837,7 +862,10 @@ debug_output("in funcbody: goto main", p);
             }
           }
           else
+          {
+            print_function_synopsis();
             fgoto funcbody;
+          }
         }
         else
         {
@@ -911,10 +939,16 @@ debug_output("in funcbody: goto main", p);
 #ifdef DEBUG
   debug_output("  in_doxy_get_brief: method: goto funcbody",p);
 #endif
+            print_function_synopsis();
             if (methodparams_.abstr)
+            {
+              end_function();
               fgoto methods_abstract;
+            }
             else
+            {
               fgoto funcbody;
+            }
           }
           else if(class_part_ == MethodDeclaration)
           {
@@ -938,7 +972,10 @@ debug_output("in funcbody: goto main", p);
           }
         }
         else
+        {
+          print_function_synopsis();
           fgoto funcbody;
+        }
       };
 
   *|;
@@ -1089,6 +1126,14 @@ debug_output("in funcbody: goto main", p);
 # abstrakter fall, eine weitere Regel wird benötigt.
 # end => classbody
     (empty_line) => {
+      if (!cfuncname_.empty())
+      {
+        class_part_ = MethodDeclaration;
+        print_function_synopsis();
+        cfuncname_.clear();
+        clear_lists();
+        class_part_ = Method;
+      }
 #ifdef DEBUG
   debug_output("applying emtpy_line rule",p);
 #endif
@@ -1318,6 +1363,7 @@ methods_abstract := |*
         if (endstringtest.substr(first_char, 3) == "end")
         {
           p += first_char+4;
+          print_function_synopsis();
           end_function();
           if(methodparams_.abstr)
             fgoto methods_abstract;
@@ -1325,7 +1371,10 @@ methods_abstract := |*
             fgoto methods;
         }
         else
+        {
+          print_function_synopsis();
           fgoto funcbody;
+        }
       }
       else if(class_part_ == Property)
       {
@@ -1342,7 +1391,10 @@ methods_abstract := |*
       }
     }
     else
+    {
+      print_function_synopsis();
       fgoto funcbody;
+    }
   };
   #}}}2
 
@@ -1370,8 +1422,8 @@ methods_abstract := |*
 #ifdef DEBUG
 std::cerr << "print_function_synopsis()" << endl;
 #endif
-                 print_function_synopsis();
-                 cout << '(';
+//                 print_function_synopsis();
+//                 cout << '(';
                  }
                  )
            # parameter list
@@ -1381,9 +1433,8 @@ std::cerr << "print_function_synopsis()" << endl;
                  { paramlist_.clear(); }
                }
              )
-           . (')' @echo) . ( [ \t] | ('%' @{ tmp_p=p; comment_found=true; }
-             . garble_comment_line_wo_eol) | ( ';'
-               @{ if(is_class_) { class_part_ = MethodDeclaration; } } ) )*
+           . (')' ) . ( [ \t] | ('%' @{ tmp_p=p; comment_found=true; }
+             . garble_comment_line_wo_eol) | ( ';' ) )*
            . EOL
            @{
              if(comment_found)
@@ -1398,7 +1449,7 @@ std::cerr << "print_function_synopsis()" << endl;
              comment_found = false;
              if(is_class_ && class_part_ == MethodDeclaration )
              {
-               cout << methodparams_.ccpostfix() << tmp_string << "\n";
+//               cout << methodparams_.ccpostfix() << tmp_string << "\n";
                class_part_ = Method;
                if(methodparams_.abstr)
                {
@@ -1408,7 +1459,6 @@ std::cerr << "print_function_synopsis()" << endl;
                else
                {
                  class_part_ = Method;
-                 clear_lists();
 #if DEBUG
     debug_output("in funcdef: end of method declaration, returning to methods",p);
 #endif
@@ -1417,7 +1467,7 @@ std::cerr << "print_function_synopsis()" << endl;
              }
              else
              {
-               cout << tmp_string << "{\n";
+//               cout << tmp_string << "{\n";
                // check for documentation block
                fgoto expect_doxyblock;
              }
@@ -1620,7 +1670,36 @@ void MFileScanner :: print_function_synopsis()
   {
     cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
   }
+
+  bool first = true;
+  if(!is_first_function_)
+    cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
   cout << cfuncname_;
+  if(paramlist_.size() == 0)
+    cout << "()\n  ";
+  else
+  {
+#if DEBUG
+    cerr << "paramlist size of " << cfuncname_ << ": " << paramlist_.size() << " first element: " << paramlist_[0] << endl;
+#endif
+    cout << "(";
+    for(unsigned int i=0; i < paramlist_.size(); ++i)
+    {
+      if(!first)
+        cout << ",";
+      else
+        first = false;
+
+      std::string typen = "matlabtypesubstitute";
+//        getTypename(paramlist_[i], typen);
+      cout << typen << " " << paramlist_[i];
+    }
+    cout << ") ";
+  }
+  if(is_class_ && class_part_ == MethodDeclaration )
+    cout << methodparams_.ccpostfix() << "\n";
+  else
+    cout << "{\n";
 }
 
 void MFileScanner :: print_access_specifier(AccessEnum & access)
@@ -2109,6 +2188,42 @@ void MFileScanner::clear_lists()
   retval_list_.clear();
 }
 
+// void MFileScanner::getTypename(const std::string & paramname, std::string & typen)
+// {
+//   typedef DocuList :: iterator                                       DLIt;
+//   typedef DocuBock :: iterator                                       DBIt;
+//   DLIt it  = param_list_.find(paramname);
+//   DocuBlock * pdb;
+//   if(it != param_list_.end())
+//     dl   = &(it->second);
+//   else
+//   {
+//     it = return_list_.find(paramname);
+//     if(it != return_list_.end())
+//       dl   = &(it->second);
+//     else
+//     {
+//       typen="matlabtypesubstitute";
+//       return;
+//     }
+//   }
+// 
+//   DocuBlock & db = *pdb;
+//   for(DBIt dit = db.begin(); dit != db.end(); ++dit)
+//   {
+//     std::string line = *dit;
+//     size_t found = line.find("of type")
+//     if(found != string::npos)
+//     {
+//       size_t typenstart=found+1+string("of type").length();
+//       size_t typenend =
+//         line.find_first_of( " \0", typenstart );
+//       typen = line.substr(typenstart, typenend - typenstart);
+//       line.erase(found, typenend - found);
+//     }
+//   }
+// }
+
 // end a function and pretty print the documentation for this function
 void MFileScanner::end_function()
 {
@@ -2199,7 +2314,9 @@ void MFileScanner::end_function()
         else
           first = false;
 
-        cout << "matlabtypesubstitute " << paramlist_[i];
+        std::string typen = "matlabtypesubstitute";
+//        getTypename(paramlist_[i], typen);
+        cout << typen << " " << paramlist_[i];
       }
       cout << ")\n  ";
     }
@@ -2250,6 +2367,7 @@ void MFileScanner::end_function()
     is_first_function_ = false;
 
   is_setter_ = false; is_getter_ = false;
+  cfuncname_.clear();
 }
 
 void usage()
