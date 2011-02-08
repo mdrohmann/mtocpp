@@ -444,11 +444,11 @@ noret::substitute demo()
 noret::substitute display()
   ;
 
-noret::substitute gridpart(matlabtypesubstitute eind) ;
+noret::substitute gridpart(matlabtypesubstitute eind);
 
-noret::substitute plot(matlabtypesubstitute params) ;
+noret::substitute plot(matlabtypesubstitute params);
 
-noret::substitute set_enbi(matlabtypesubstitute nbind,matlabtypesubstitute values) ;
+noret::substitute set_enbi(matlabtypesubstitute nbind,matlabtypesubstitute values);
 
 };
 }

@@ -95,12 +95,13 @@ ret::substitutestart::obj::retsubstituteend bar(matlabtypesubstitute d,matlabtyp
   */
 
 ret::substitutestart::obj::retsubstituteend foobar()
-  {
+   {
 
      test
 
 }
 /** @fn ret::substitutestart::obj::retsubstituteend foobar()
+  
   * @brief  brief for foobar
   *
   *
@@ -109,7 +110,7 @@ ret::substitutestart::obj::retsubstituteend foobar()
   * @retval obj    obj
   */
 
-ret::substitutestart::ret::retsubstituteend mdecl(matlabtypesubstitute b) ;
+ret::substitutestart::ret::retsubstituteend mdecl(matlabtypesubstitute b);
 
 classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
 }
@@ -124,7 +125,7 @@ classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
 public:
 /* 
 ret::substitutestart::value::retsubstituteend protected_access()
-  {
+   {
 
       if a==b
         do something;
@@ -169,7 +170,7 @@ static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesu
   */
 
 public:
-virtual ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e)  = 0;
+virtual ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;
 /** @fn ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e)
   * @brief  an abstract method comment above
   *  an abstract method comment below
