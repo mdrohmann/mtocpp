@@ -155,6 +155,7 @@ private:
   void print_function_synopsis();
   void end_of_property_doc();
 
+  void end_method();
   void clear_lists();
   std::string namespace_string();
 
