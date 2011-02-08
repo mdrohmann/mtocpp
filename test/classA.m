@@ -65,8 +65,8 @@ classdef classA < general.reference.classB & a.b.c & ...
     end
 
     % this is only a declaration without definition of a method
-
-    ret=mdecl(a,b);
+    ret=mdecl(a,b);;;;;;;;
+    % this is only a declaration without definition of a method behind
 
     function obj = classA(param1, param2)
       % bigger constructor

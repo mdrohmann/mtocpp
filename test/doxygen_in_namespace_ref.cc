@@ -1,6 +1,7 @@
 namespace grid{
 namespace rect{
- ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,matlabtypesubstitute auto_param){
+ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,matlabtypesubstitute auto_param) {
+
 /*  After the first non-comment line the function body begins:
 */
 
@@ -137,7 +138,7 @@ auto_param.auto_field;
   * @arg \c auto_added&nbsp;&mdash;&nbsp;    auto added
   * @arg \c sub.auto_added&nbsp;&mdash;&nbsp;    sub.auto added
   */
-ret::substitutestart::c::retsubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b){
+ret::substitutestart::c::retsubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b) {
 
 }
 /** @fn ret::substitutestart::c::retsubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b)
@@ -149,7 +150,8 @@ ret::substitutestart::c::retsubstituteend mtoc_subst_doxygen_in_namespace_m_tsbu
   *
   * @retval c    c
   */
-rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_with_sev_retvals(matlabtypesubstitute auto_param){
+rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_with_sev_retvals(matlabtypesubstitute auto_param) {
+
 }
 /** @fn rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_with_sev_retvals(matlabtypesubstitute auto_param)
   * @brief  a third (private) function in the test file with serveral return values
@@ -161,7 +163,9 @@ rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespac
   * @retval e    e
   * @retval f    f
   */
-rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_without_parameters() {
+rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_without_parameters()
+  {
+
 /** \docupdate
 */
 

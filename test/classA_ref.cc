@@ -11,6 +11,7 @@ class classA
   *  bigger help for classA
   *
  */
+
 protected:
 
 matlabtypesubstitute mixed_access;
@@ -64,7 +65,7 @@ matlabtypesubstitute protected_access2;
 
 public:
 
- ret::substitutestart::obj::retsubstituteend foo(matlabtypesubstitute b,matlabtypesubstitute c){
+ret::substitutestart::obj::retsubstituteend foo(matlabtypesubstitute b,matlabtypesubstitute c) {
 
       bar;
 }
@@ -79,7 +80,7 @@ public:
   */
 
 
- ret::substitutestart::obj::retsubstituteend bar(matlabtypesubstitute d,matlabtypesubstitute e){
+ret::substitutestart::obj::retsubstituteend bar(matlabtypesubstitute d,matlabtypesubstitute e) {
 
       foo;
 }
@@ -93,7 +94,9 @@ public:
   * @retval obj    obj
   */
 
- ret::substitutestart::obj::retsubstituteend foobar(){
+ret::substitutestart::obj::retsubstituteend foobar()
+  {
+
      test
 
 }
@@ -106,10 +109,9 @@ public:
   * @retval obj    obj
   */
 
+ret::substitutestart::ret::retsubstituteend mdecl(matlabtypesubstitute b) ;
 
-ret::substitutestart::ret::retsubstituteend mdecl(matlabtypesubstitute b);
-
- classA(matlabtypesubstitute param1,matlabtypesubstitute param2){
+classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
 }
 /** @fn classA(matlabtypesubstitute param1,matlabtypesubstitute param2)
   * @brief  bigger constructor
@@ -120,16 +122,14 @@ ret::substitutestart::ret::retsubstituteend mdecl(matlabtypesubstitute b);
   */
 
 public:
- /* 
-ret::substitutestart::value::retsubstituteend protected_access(){
+/* 
+ret::substitutestart::value::retsubstituteend protected_access()
+  {
 
       if a==b
         do something;
 *//*  the following end needs to be indented correctly
 */
-/* *//*  garble this correctly*/
-/* *//* |*/
-/* *//*  \todo this is a test*/
 /*       end*//*  garble this correctly
  *|
  * \todo this is a test
@@ -144,7 +144,7 @@ ret::substitutestart::value::retsubstituteend protected_access(){
   */
 
 /* 
-noret::substitute protected_access(matlabtypesubstitute value){
+noret::substitute protected_access(matlabtypesubstitute value) {
 
       a;
 }
@@ -156,7 +156,7 @@ noret::substitute protected_access(matlabtypesubstitute value){
   */
 
 public:
- static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute c){
+static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute c) {
 }
 /** @fn rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute c)
   * @brief  a static method
@@ -169,9 +169,10 @@ public:
   */
 
 public:
- virtual ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;/*  an abstract comment behind*/
+virtual ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e)  = 0;
 /** @fn ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e)
   * @brief  an abstract method comment above
+  *  an abstract method comment below
   *
   *
   * @param d    d
