@@ -152,6 +152,7 @@ public:
 private:
   void end_of_class_doc();
   void print_access_specifier(AccessEnum & access);
+  void print_pure_function_synopsis();
   void print_function_synopsis();
   void end_of_property_doc();
 

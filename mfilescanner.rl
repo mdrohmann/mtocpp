@@ -1206,7 +1206,7 @@ debug_output("in funcbody: goto main", p);
   funcdef = (
       (WSOC)* .
       # return values (if found opt = true)
-      (lparams)? @{opt=true;} .
+      (lparams)? .
       # matlab identifier (function name stored in cfuncname_)
       ( ('get.' @{is_getter_ = true;} | 'set.' @{is_setter_=true;} )? .
         IDENT
@@ -1400,53 +1400,35 @@ debug_output("in funcbody: goto main", p);
 
 }%%
 
-void MFileScanner :: print_function_synopsis()
+void MFileScanner :: print_pure_function_synopsis()
 {
-  if(is_getter_ || is_setter_)
-  {
-   cout << "/* \n";
-  }
-  if(is_class_ && (class_part_ == Method || class_part_ == MethodDeclaration) )
-    cout << methodparams_.ccprefix();
-
-  // no return values?
-  if(!opt)
-  {
-    cout << "noret::substitute ";
-    opt=false;
-  }
-  else
-  {
-    // do we have a constructor?
-    if(is_class_ && (cfuncname_ == classname_))
-      returnlist_.clear();
-    else{
-      if(returnlist_.size() == 0)
-        cout << "noret::substitute ";
-      else if(returnlist_.size() == 1)
-        cout << "ret::substitutestart::" << returnlist_[0] << "::retsubstituteend ";
-      else
+  // do we have a constructor?
+  if(is_class_ && (cfuncname_ == classname_))
+    returnlist_.clear();
+  else{
+    if(returnlist_.size() == 0)
+      cout << "noret::substitute ";
+    else if(returnlist_.size() == 1)
+      cout << "ret::substitutestart::" << returnlist_[0] << "::retsubstituteend ";
+    else
+    {
+      cout << "rets::substitutestart::";
+      for(unsigned int i=0; i < returnlist_.size(); ++i)
       {
-        cout << "rets::substitutestart::";
-        for(size_t i=0; i<returnlist_.size(); ++i)
-        {
-          cout << returnlist_[i] << "::";
-        }
-        cout << "retssubstituteend ";
+        cout << returnlist_[i] << "::";
       }
+      cout << "retssubstituteend ";
     }
-  }
-  if(is_class_ && class_part_ == AtMethod)
-  {
-    cout << namespace_string() << classname_ << "::";
-  }
-  else if(!is_first_function_)
-  {
-    cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
   }
 
   bool first = true;
+  if(is_class_ && class_part_ == AtMethod)
+    cout << namespace_string() << classname_ << "::";
+  else if(!is_first_function_)
+    cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
+
   cout << cfuncname_;
+
   if(paramlist_.size() == 0)
     cout << "()\n  ";
   else
@@ -1466,12 +1448,25 @@ void MFileScanner :: print_function_synopsis()
 //        getTypename(paramlist_[i], typen);
       cout << typen << " " << paramlist_[i];
     }
-    cout << ") ";
+    cout << ")";
   }
+}
+
+void MFileScanner :: print_function_synopsis()
+{
+  if(is_getter_ || is_setter_)
+  {
+   cout << "/* \n";
+  }
+  if(is_class_ && (class_part_ == Method || class_part_ == MethodDeclaration) )
+    cout << methodparams_.ccprefix();
+
+  print_pure_function_synopsis();
+
   if(is_class_ && class_part_ == MethodDeclaration )
     cout << methodparams_.ccpostfix() << "\n";
   else
-    cout << "{\n";
+    cout << " {\n";
 }
 
 void MFileScanner :: print_access_specifier(AccessEnum & access)
@@ -2065,33 +2060,30 @@ void MFileScanner::end_function()
   {
     // specify the @fn part
     cout << "* @fn ";
-    if(! is_constructor) {
+    print_pure_function_synopsis();
+/*    if(! is_constructor) {
       if(returnlist_.size() == 0)
         cout << "noret::substitute ";
       else if(returnlist_.size() == 1)
-      {
         cout << "ret::substitutestart::" << returnlist_[0] << "::retsubstituteend ";
-      }
       else
       {
         cout << "rets::substitutestart::";
         for(unsigned int i = 0; i < returnlist_.size(); ++i)
         {
-          if(i != 0)
-            cout << "::";
-
-          cout << returnlist_[i];
+          cout << returnlist_[i] << "::";
         }
-        cout << "::retssubstituteend ";
+        cout << "retssubstituteend ";
       }
     }
 
-    bool first = true;
     if(is_class_ && class_part_ == AtMethod)
       cout << namespace_string() << classname_ << "::";
     else if(!is_first_function_)
       cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
+
     cout << cfuncname_;
+
     if(paramlist_.size() == 0)
       cout << "()\n  ";
     else
@@ -2112,10 +2104,10 @@ void MFileScanner::end_function()
         cout << typen << " " << paramlist_[i];
       }
       cout << ")\n  ";
-    }
+    } */
 
     // specify the @brief part
-    cout << "* @brief ";
+    cout << "\n  * @brief ";
   }
   cout_docuheader();
   cout << "*\n  ";

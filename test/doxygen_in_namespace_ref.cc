@@ -164,13 +164,14 @@ rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespac
   * @retval f    f
   */
 rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_without_parameters()
-  {
+   {
 
 /** \docupdate
 */
 
 }
 /** @fn rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_without_parameters()
+  
   * @brief  function [d,e,f]=third_function_without_parameters
   *  a third (private) function in the test file without parameters
   *
