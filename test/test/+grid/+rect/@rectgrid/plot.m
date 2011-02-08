@@ -3,6 +3,9 @@ function p = plot(grid,params)
 %
 % plot of a rectgrid via plot_polygon_grid
 % see help plot_polygon_grid for further information
+%
+% Parameters:
+%   params: struct of type rectgrid that needs to be plotted
 
 % Bernard Haasdonk 9.5.2007
 

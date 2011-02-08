@@ -25853,8 +25853,8 @@ void MFileScanner :: print_pure_function_synopsis()
       else
         first = false;
 
-      std::string typen = "matlabtypesubstitute";
-//        getTypename(paramlist_[i], typen);
+      std::string typen;// = "matlabtypesubstitute";
+      get_typename(paramlist_[i], typen);
       cout << typen << " " << paramlist_[i];
     }
     cout << ")";
@@ -28113,41 +28113,44 @@ void MFileScanner::end_method()
   docuextra_.clear();
 }
 
-// void MFileScanner::getTypename(const std::string & paramname, std::string & typen)
-// {
-//   typedef DocuList :: iterator                                       DLIt;
-//   typedef DocuBock :: iterator                                       DBIt;
-//   DLIt it  = param_list_.find(paramname);
-//   DocuBlock * pdb;
-//   if(it != param_list_.end())
-//     dl   = &(it->second);
-//   else
-//   {
-//     it = return_list_.find(paramname);
-//     if(it != return_list_.end())
-//       dl   = &(it->second);
-//     else
-//     {
-//       typen="matlabtypesubstitute";
-//       return;
-//     }
-//   }
-// 
-//   DocuBlock & db = *pdb;
-//   for(DBIt dit = db.begin(); dit != db.end(); ++dit)
-//   {
-//     std::string line = *dit;
-//     size_t found = line.find("of type")
-//     if(found != string::npos)
-//     {
-//       size_t typenstart=found+1+string("of type").length();
-//       size_t typenend =
-//         line.find_first_of( " \0", typenstart );
-//       typen = line.substr(typenstart, typenend - typenstart);
-//       line.erase(found, typenend - found);
-//     }
-//   }
-// }
+void MFileScanner::get_typename(const std::string & paramname, std::string & typen)
+{
+  typedef DocuList :: iterator                                       DLIt;
+  typedef DocuBlock :: iterator                                      DBIt;
+  DLIt it  = param_list_.find(paramname);
+  DocuBlock * pdb;
+  if(it != param_list_.end())
+    pdb   = &(it->second);
+  else
+  {
+    it = return_list_.find(paramname);
+    if(it != return_list_.end())
+      pdb   = &(it->second);
+    else
+    {
+      typen="matlabtypesubstitute";
+      return;
+    }
+  }
+
+  DocuBlock & db = *pdb;
+  for(DBIt dit = db.begin(); dit != db.end(); ++dit)
+  {
+    std::string line = *dit;
+    size_t found = line.find("of type");
+    if(found != std::string::npos)
+    {
+      size_t typenstart=found+1+string("of type").length();
+      size_t typenend =
+        line.find_first_of( " \0", typenstart );
+      typen = line.substr(typenstart, typenend - typenstart);
+      line.erase(found, typenend - found);
+    }
+  }
+
+  if(typen.empty())
+    typen = "matlabtypesubstitute";
+}
 
 // end a function and pretty print the documentation for this function
 void MFileScanner::end_function()
