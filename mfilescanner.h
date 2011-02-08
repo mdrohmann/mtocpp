@@ -155,6 +155,7 @@ private:
   void print_pure_function_synopsis();
   void print_function_synopsis();
   void end_of_property_doc();
+  void get_typename(const std::string &, std::string &);
 
   void end_method();
   void clear_lists();
