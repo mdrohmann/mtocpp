@@ -7,9 +7,12 @@ classdef classA < general.reference.classB & a.b.c & ...
 
   properties ( SetAccess = private, GetAccess = protected, Transient)
 
-    mixed_access; % short help
+    mixed_access; % of type gridbase short help
 
     % longer help with `default` value
+    % what is this??
+    %
+    % can we do some special stuff??
     mixed_access2 = 'test';
 
 

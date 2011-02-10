@@ -78,9 +78,9 @@ struct PropParams
   std::string ccprefix()
   {
     if(constant)
-      return "static const matlabtypesubstitute";
+      return "static const ";
     else
-      return "matlabtypesubstitute";
+      return "";
   }
 
 public:
@@ -162,7 +162,7 @@ private:
   std::string namespace_string();
 
   void cout_ingroup();
-  void cout_docuheader();
+  void cout_docuheader(std::string);
   void cout_docubody();
   void cout_docuextra();
   const std::string & replace_underscore(std::string & s);
@@ -234,7 +234,7 @@ private:
   PropParams   propertyparams_;
   MethodParams methodparams_;
   std::vector<std::string> property_list_;
-  std::string  buffer_;
+  std::string  defaultprop_;
 
 };
 

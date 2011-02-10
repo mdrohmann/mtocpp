@@ -59,45 +59,44 @@ using std::ostringstream;
 
   action end_doxy_block
   {
-        if(!docline)
+    if(!docline)
+    {
+      p = ts-1;
+      if(is_class_)
+      {
+        if(class_part_ == Header)
         {
-          p = ts-1;
-          if(is_class_)
-          {
-            if(class_part_ == Header)
-            {
-              end_of_class_doc();
-              fgoto classbody;
-            } else if(class_part_ == Method || class_part_ == AtMethod)
-            {
-              print_function_synopsis();
-              fgoto funcbody;
-            }
-            else if(class_part_ == MethodDeclaration)
-            {
-              fgoto funcdef;
-            }
-            else if(class_part_ == Property)
-            {
-              end_of_property_doc();
-              fgoto propertybody;
-            }
-            else if(class_part_ == InClassComment)
-            {
-              class_part_ = Method;
-              fgoto methods;
-            }
-            else
-            {
-              cerr << "missing class part handling for class part: " << ClassPartNames[class_part_] << endl;
-            }
-          }
-          else
-          {
-            print_function_synopsis();
-            fgoto funcbody;
-          }
-}
+          end_of_class_doc();
+          fgoto classbody;
+        } else if(class_part_ == Method || class_part_ == AtMethod)
+        {
+          print_function_synopsis();
+          fgoto funcbody;
+        }
+        else if(class_part_ == MethodDeclaration)
+        {
+          fgoto funcdef;
+        }
+        else if(class_part_ == Property)
+        {
+          fgoto propertybody;
+        }
+        else if(class_part_ == InClassComment)
+        {
+          class_part_ = Method;
+          fgoto methods;
+        }
+        else
+        {
+          cerr << "missing class part handling for class part: " << ClassPartNames[class_part_] << endl;
+        }
+      }
+      else
+      {
+        print_function_synopsis();
+        fgoto funcbody;
+      }
+    }
   }
 
   # executed when end of file is reached
@@ -125,20 +124,6 @@ using std::ostringstream;
   action echo_tok { cout.write(tmp_p, p - tmp_p); }
 
   action string_tok { tmp_string.assign(tmp_p, p-tmp_p); }
-
-#  action end_of_doxybody_in_class {
-#    if(class_part_ == Header)
-#    {
-#        end_of_class_doc();
-#        fgoto classbody;
-#    } else if(class_part_ == Method)
-#        fgoto funcbody;
-#    else if(class_part_ == Property)
-#    {
-#        end_of_property_doc();
-#        fgoto property;
-#    }
-#  }
 
   # common definitions {{{2
 
@@ -252,7 +237,6 @@ using std::ostringstream;
   debug_output(oss.str(), p);
 }
 #endif
-           buffer_.append(std::string("matlabtypesubstitute ") + s);
            // add an empty docu block for parameter \a s
            param_list_[s] = DocuBlock();
 #ifdef DEBUG
@@ -818,7 +802,6 @@ debug_output("in funcbody: goto main", p);
           }
           else if(class_part_ == Property)
           {
-            end_of_property_doc();
 #ifdef DEBUG
   debug_output("  in_doxy_get_brief: method: goto propertybody",p);
 #endif
@@ -1053,17 +1036,24 @@ debug_output("in funcbody: goto main", p);
                  %{
             string s(tmp_p, p - tmp_p);
             property_list_.push_back(s);
-            cout << propertyparams_.ccprefix() << " " << s;
+//            cout << propertyparams_.ccprefix() << " " << s;
             }
           )
-        . ( ';' | [ =]+ . ('[' . [^\]]* . ']')? . [^;[]* .';')
-            >st_tok %echo_tok . [ \t]* .
+        . ( ';' @{defaultprop_ = "";}
+            |
+            ([ =]+ %st_tok . ('[' . [^\]]* . ']')? . [^;[]* .';')
+            @{
+              defaultprop_ = string(tmp_p, p - tmp_p);
+             }
+          )
+            . [ \t]* .
         ( '%' %st_tok . ( default - [\r\n] )*
-          . EOL @{
-            cout << "\n/** @var " << property_list_.back() << "\n" << " * ";
-            cout.write(tmp_p, p-tmp_p);
-            cout << "*/\n";
-          } | EOL @{ cout << "\n";} )
+          . EOL
+            @{
+               docuheader_.push_back(string(tmp_p, p - tmp_p+1));
+               end_of_property_doc();
+             } | EOL @{ end_of_property_doc(); }
+        )
       );
 
   #}}}4
@@ -1182,7 +1172,6 @@ debug_output("in funcbody: goto main", p);
       }
       else if(class_part_ == Property)
       {
-        end_of_property_doc();
         fgoto propertybody;
       }
       else if(class_part_ == InClassComment || class_part_ == MethodDeclaration)
@@ -1853,7 +1842,7 @@ void MFileScanner::end_of_class_doc()
   cout_ingroup();
 
   cout << "* @brief ";
-  cout_docuheader();
+  cout_docuheader(cfuncname_);
   cout << "*\n  ";
   cout_docubody();
   cout << "*\n ";
@@ -1863,21 +1852,49 @@ void MFileScanner::end_of_class_doc()
 
 void MFileScanner::end_of_property_doc()
 {
-  cout << "/** @brief ";
-  cout_docuheader();
+  typedef DocuBlock :: iterator                                      DBIt;
+  string typen;
+  for(DBIt dit = docuheader_.begin(); dit != docuheader_.end(); ++dit)
+  {
+    std::string line = *dit;
+    size_t found = line.find("of type");
+    if(found != std::string::npos)
+    {
+      size_t typenstart=found+1+string("of type").length();
+      size_t typenend =
+        line.find_first_of( " \0", typenstart );
+      typen = line.substr(typenstart, typenend - typenstart);
+      line.erase(found, typenend - found);
+    }
+  }
+
+  if(typen.empty())
+    typen = "matlabtypesubstitute";
+
+  cout << propertyparams_.ccprefix() << typen << " " << property_list_.back();
+  if(defaultprop_.empty())
+    cout << ";\n";
+  else
+    cout << " = " << defaultprop_ << ";\n";
+
+  cout << "/** @var " << property_list_.back() << "\n  ";
+  cout << "* @brief ";
+  cout_docuheader(property_list_.back());
   cout << "*\n  ";
   cout_docubody();
   cout << "*\n ";
   cout_docuextra();
   cout << "*/\n";
+  docuheader_.clear();
+  docubody_.clear();
+  docuextra_.clear();
 }
 
-void MFileScanner::cout_docuheader()
+void MFileScanner::cout_docuheader(string altheader)
 {
   if(docuheader_.empty() && cscan_.docuheader_.empty())
   {
-    string s(cfuncname_);
-    cout << replace_underscore(s) << "\n  ";
+    cout << replace_underscore(altheader) << "\n  ";
   }
   else
   {
@@ -1955,6 +1972,9 @@ void MFileScanner::clear_lists()
   retval_list_.clear();
 }
 
+/* we come here, from an empty line in a methods block or the end of a
+ * methods block
+ */
 void MFileScanner::end_method()
 {
   if (!cfuncname_.empty())
@@ -1963,14 +1983,19 @@ void MFileScanner::end_method()
     print_function_synopsis();
     class_part_ = Method;
 
+    // for abstract methods: print out documentation of the abstract method
+    // declaration
     if(methodparams_.abstr)
       end_function();
     else
+    // otherwise: all the following comments are not related to this function
+    // anymore, so we delete traces of the method name...
     {
       cfuncname_.clear();
       clear_lists();
     }
   }
+  // free documentation block variables
   docuheader_.clear();
   docubody_.clear();
   docuextra_.clear();
@@ -1982,17 +2007,29 @@ void MFileScanner::get_typename(const std::string & paramname, std::string & typ
   typedef DocuBlock :: iterator                                      DBIt;
   DLIt it  = param_list_.find(paramname);
   DocuBlock * pdb;
-  if(it != param_list_.end())
+  if(it != param_list_.end() && !(it->second).empty())
     pdb   = &(it->second);
   else
   {
     it = return_list_.find(paramname);
-    if(it != return_list_.end())
+    if(it != return_list_.end() && !(it->second).empty())
       pdb   = &(it->second);
     else
     {
-      typen="matlabtypesubstitute";
-      return;
+      it = cscan_.param_list_.find(paramname);
+      if(it != cscan_.param_list_.end() && !(it->second).empty())
+        pdb   = &(it->second);
+      else
+      {
+        it = cscan_.return_list_.find(paramname);
+        if(it != cscan_.return_list_.end() && !(it->second).empty())
+          pdb   = &(it->second);
+        else
+        {
+          typen="matlabtypesubstitute";
+          return;
+        }
+      }
     }
   }
 
@@ -2064,55 +2101,11 @@ void MFileScanner::end_function()
     // specify the @fn part
     cout << "* @fn ";
     print_pure_function_synopsis();
-/*    if(! is_constructor) {
-      if(returnlist_.size() == 0)
-        cout << "noret::substitute ";
-      else if(returnlist_.size() == 1)
-        cout << "ret::substitutestart::" << returnlist_[0] << "::retsubstituteend ";
-      else
-      {
-        cout << "rets::substitutestart::";
-        for(unsigned int i = 0; i < returnlist_.size(); ++i)
-        {
-          cout << returnlist_[i] << "::";
-        }
-        cout << "retssubstituteend ";
-      }
-    }
-
-    if(is_class_ && class_part_ == AtMethod)
-      cout << namespace_string() << classname_ << "::";
-    else if(!is_first_function_)
-      cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
-
-    cout << cfuncname_;
-
-    if(paramlist_.size() == 0)
-      cout << "()\n  ";
-    else
-    {
-#if DEBUG
-        cerr << "paramlist size of " << cfuncname_ << ": " << paramlist_.size() << " first element: " << paramlist_[0] << endl;
-#endif
-      cout << "(";
-      for(unsigned int i=0; i < paramlist_.size(); ++i)
-      {
-        if(!first)
-          cout << ",";
-        else
-          first = false;
-
-        std::string typen = "matlabtypesubstitute";
-//        getTypename(paramlist_[i], typen);
-        cout << typen << " " << paramlist_[i];
-      }
-      cout << ")\n  ";
-    } */
 
     // specify the @brief part
     cout << "\n  * @brief ";
   }
-  cout_docuheader();
+  cout_docuheader(cfuncname_);
   cout << "*\n  ";
 
   // specify the @details part
