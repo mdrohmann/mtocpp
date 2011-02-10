@@ -1,4 +1,4 @@
-ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,matlabtypesubstitute auto_param) {
+ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,gridbase auto_param) {
 
 /*  After the first non-comment line the function body begins:
 */
@@ -31,7 +31,7 @@ auto_param.auto_field;
 /** @file "./doxygen.m"
   * @ingroup test
   */
-/** @fn ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,matlabtypesubstitute auto_param)
+/** @fn ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,gridbase auto_param)
   * @brief  Here comes a short description text
   *
   *
@@ -111,7 +111,7 @@ auto_param.auto_field;
   * 
   * 
   *
-  * @param auto_param     This documentation is added automatically! 
+  * @param auto_param     object of type gridbase which is not used! This documentation is added automatically! 
   * @param param1     first parameter
   * @param param2    param2
   *
@@ -148,14 +148,14 @@ ret::substitutestart::c::retsubstituteend mtoc_subst_doxygen_m_tsbus_cotm_second
   *
   * @retval c    c
   */
-rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(matlabtypesubstitute auto_param) {
+rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(gridbase auto_param) {
 
 }
-/** @fn rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(matlabtypesubstitute auto_param)
+/** @fn rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(gridbase auto_param)
   * @brief  a third (private) function in the test file with serveral return values
   *
   *
-  * @param auto_param     This documentation is added automatically! 
+  * @param auto_param     object of type gridbase which is not used! This documentation is added automatically! 
   *
   * @retval d     a return value
   * @retval e    e

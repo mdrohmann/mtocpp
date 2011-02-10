@@ -14,54 +14,76 @@ class classA
 
 protected:
 
-matlabtypesubstitute mixed_access;
+gridbase mixed_access;
 /** @var mixed_access
- *  short help*/
-
-/** @brief  longer help with @f$default@f$ value
+  * @brief  of type gridbase short help
   *
   *
  */
+
 matlabtypesubstitute mixed_access2 = 'test';
+/** @var mixed_access2
+  * @brief  longer help with @f$default@f$ value
+  *  what is this??
+  *
+  *
+  *  can we do some special stuff??
+  *
+ */
 
 
 
 public:
 static const matlabtypesubstitute aConstant = 1;
 /** @var aConstant
- *  help text*/
-
-/** @brief  help text for bConstant
+  * @brief  help text
   *
   *
  */
+
 static const matlabtypesubstitute bConstant = 2;
+/** @var bConstant
+  * @brief  help text for bConstant
+  *
+  *
+ */
 
 static const matlabtypesubstitute cConstant = 3;
 /** @var cConstant
- *  help text for cConstant*/
+  * @brief  help text for cConstant
+  *
+  *
+ */
 
 public:
 matlabtypesubstitute public_access;
 /** @var public_access
- *  short help for public_access*/
-
-/** @brief  longer help for public_access2
+  * @brief  short help for public_access
   *
   *
  */
+
 matlabtypesubstitute public_access2;
+/** @var public_access2
+  * @brief  longer help for public_access2
+  *
+  *
+ */
 
 protected:
 matlabtypesubstitute protected_access;
 /** @var protected_access
- *  short help for protected_access*/
-
-/** @brief  longer help text for protected_access2
+  * @brief  short help for protected_access
   *
   *
  */
+
 matlabtypesubstitute protected_access2;
+/** @var protected_access2
+  * @brief  longer help text for protected_access2
+  *
+  *
+ */
 
 public:
 

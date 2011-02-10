@@ -3,7 +3,7 @@ ALL := *.m;
 
 ##
 
-add(params) = auto_param => """ This documentation is added automatically! """;
+add(params) = auto_param => """ object of type gridbase which is not used! This documentation is added automatically! """;
 
 add(fields) = auto_struct.auto_field => """ This field's documentation has been added automatically! """;
 
