@@ -228,9 +228,16 @@ using std::ostringstream;
          bool addBlock = true;
          // do not print this pointer
          if( is_class_ && ( ( class_part_ == Method
-                              && cfuncname_ != classname_ )
-           || class_part_ == AtMethod || class_part_ == MethodDeclaration ) ) {
-            if(paramlist_.empty()) {
+                              && cfuncname_ != classname_
+                              && !methodparams_.statical
+                            )
+                            || class_part_ == AtMethod
+                            || class_part_ == MethodDeclaration
+                          )
+           )
+         {
+            if(paramlist_.empty())
+            {
               addBlock = false;
               paramlist_.push_back(string("this"));
             }
@@ -1045,7 +1052,7 @@ debug_output("in funcbody: goto main", p);
 
 
   methodsheader := (
-    methodparams? . WSOC* . ( '%' . garble_comment_line_wo_eol )? . EOL
+    [ \t]* . methodparams? . (WSOC | ';')* . ( '%' . garble_comment_line_wo_eol )? . EOL
          @{
             print_access_specifier(access_.full);
             fgoto methods;
@@ -1098,7 +1105,7 @@ debug_output("in funcbody: goto main", p);
     );
 
   properties := ( (
-    WSOC* . propertyparams? . WSOC* . EOL @{
+    WSOC* . propertyparams? . (WSOC |';')* . ('%' . garble_comment_line_wo_eol )? . EOL @{
         print_access_specifier(access_.full);
         }
     . propertybody* )

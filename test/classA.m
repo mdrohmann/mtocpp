@@ -5,7 +5,7 @@ classdef classA < general.reference.classB & a.b.c & ...
   %
   % bigger help for classA
 
-  properties ( SetAccess = private, GetAccess = protected, Transient)
+  properties ( SetAccess = private, GetAccess = protected, Transient);
 
     mixed_access; % of type gridbase short help
 
@@ -18,7 +18,7 @@ classdef classA < general.reference.classB & a.b.c & ...
 
   end
 
-  properties (Constant)
+  properties (Constant); % garbage comment
     aConstant = 1; % help text
 
     % help text for bConstant
@@ -41,9 +41,9 @@ classdef classA < general.reference.classB & a.b.c & ...
     protected_access2;
   end
 
-  methods
+  methods; % garbage comment
 
-    function obj = foo(a,b,c)
+    function obj = foo(a,b,c);
       % brief doc for foo
 
       bar;
@@ -52,7 +52,7 @@ classdef classA < general.reference.classB & a.b.c & ...
     % comment
     %  zweite Zeile
 
-    function obj = bar(c,d,e)
+    function obj = bar(c,d,e);
       % brief doc for bar
 
       foo;
@@ -96,8 +96,8 @@ classdef classA < general.reference.classB & a.b.c & ...
     end
   end
 
-  methods (Static)
-    function [a,b] = static_method(this,c)
+  methods (Static) ;;; % garbage comment
+    function [a,b] = static_method(notthis,c)
       % a static method
     end
   end

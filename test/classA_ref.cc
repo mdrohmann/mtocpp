@@ -179,13 +179,14 @@ noret::substitute protected_access(matlabtypesubstitute value) {
   */
 
 public:
-static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute c) {
+static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute notthis,matlabtypesubstitute c) {
 }
-/** @fn rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute c)
+/** @fn rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute notthis,matlabtypesubstitute c)
   * @brief  a static method
   *
   *
   * @param c    c
+  * @param notthis    notthis
   *
   * @retval a    a
   * @retval b    b
