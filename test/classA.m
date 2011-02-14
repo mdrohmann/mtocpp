@@ -1,11 +1,11 @@
 classdef classA < general.reference.classB & a.b.c & ...
     d.e.f ...
-    & g.h.i
+    & g.h.i;
   % help for classA
   %
   % bigger help for classA
 
-  properties ( SetAccess = private, GetAccess = protected, Transient);
+  properties ( SetAccess = private, GetAccess = protected, Transient);% garbage comment
 
     mixed_access; % of type gridbase short help
 
@@ -13,10 +13,14 @@ classdef classA < general.reference.classB & a.b.c & ...
     % what is this??
     %
     % can we do some special stuff??
+    % @verbatim
+    %  a= b;
+    %  c= d;
+    % @endverbatim
     mixed_access2 = 'test';
 
 
-  end
+  end; % garbage comment
 
   properties (Constant); % garbage comment
     aConstant = 1; % help text
@@ -47,7 +51,7 @@ classdef classA < general.reference.classB & a.b.c & ...
       % brief doc for foo
 
       bar;
-    end
+    end; % garbage comment
 
     % comment
     %  zweite Zeile
@@ -56,7 +60,7 @@ classdef classA < general.reference.classB & a.b.c & ...
       % brief doc for bar
 
       foo;
-    end
+    end;
 
     function obj = foobar()
     % brief for foobar
@@ -65,7 +69,7 @@ classdef classA < general.reference.classB & a.b.c & ...
 
      test
 
-    end
+    end %garbage comment
 
     % this is only a declaration without definition of a method
     ret=mdecl(a,b);;;;;;;;
@@ -73,8 +77,8 @@ classdef classA < general.reference.classB & a.b.c & ...
 
     function obj = classA(param1, param2)
       % bigger constructor
-    end
-  end
+    end;
+  end; %garbage comment
 
   methods
     function value = get.protected_access(this)

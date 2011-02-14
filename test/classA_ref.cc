@@ -28,6 +28,10 @@ matlabtypesubstitute mixed_access2 = 'test';
   *
   *
   *  can we do some special stuff??
+  *  @verbatim
+  *   a= b;
+  *   c= d;
+  *  @endverbatim
   *
  */
 

@@ -114,7 +114,7 @@ using std::ostringstream;
   # executed when we reached a comment block
   action in_c_block
   {
-    assert(p >= tmp_p);
+    assert(p >= tmp_p-1);
     cout.write(tmp_p, p-tmp_p+1);
     fcall in_comment_block;
   }
@@ -124,12 +124,12 @@ using std::ostringstream;
   action st_tok { tmp_p = p; }
 
   action echo_tok {
-    assert (p > tmp_p);
+    assert (p >= tmp_p);
     cout.write(tmp_p, p - tmp_p);
   }
 
   action string_tok {
-    assert ( p > tmp_p );
+    assert ( p >= tmp_p );
     tmp_string.assign(tmp_p, p-tmp_p);
   }
 
@@ -180,7 +180,7 @@ using std::ostringstream;
           cout << "*/";
         }
         cout << "/* ";
-        assert( p > tmp_p );
+        assert( p >= tmp_p );
         cout.write(tmp_p, p - tmp_p) << "*/\n";
         if(is_getter_ || is_setter_)
         {
@@ -223,7 +223,7 @@ using std::ostringstream;
      (IDENT)
        >st_tok
        %{
-         assert(p > tmp_p);
+         assert(p >= tmp_p);
          string s(tmp_p, p - tmp_p);
          bool addBlock = true;
          // do not print this pointer
@@ -275,7 +275,7 @@ using std::ostringstream;
       # matlab identifier (return value)
       | ( IDENT > st_tok
           %{
-            assert(p > tmp_p);
+            assert(p >= tmp_p);
             string s(tmp_p, p - tmp_p);
             returnlist_.push_back(s);
             // add an empty docu block for return value \a s
@@ -293,7 +293,7 @@ using std::ostringstream;
          IDENT
            >st_tok
            %{
-             assert(p > tmp_p);
+             assert(p >= tmp_p);
              string s(tmp_p, p - tmp_p);
              returnlist_.push_back(s);
              // add an empty docu block for single return value \a s
@@ -326,7 +326,7 @@ using std::ostringstream;
 #    ('%' @{ tmp_p = p + 1; } . garble_comment_line);
     (comment_block)
       => {
-           assert(p >= tmp_p);
+           assert(p >= tmp_p-1);
            cout.write(tmp_p, p - tmp_p+1);
            fcall in_comment_block;
          };
@@ -345,7 +345,7 @@ using std::ostringstream;
     => {
       fhold;
       // store fieldname
-      assert(tmp_p2 > tmp_p);
+      assert(tmp_p2 >= tmp_p);
       string s(tmp_p, tmp_p2 - tmp_p);
       cout << tmp_string << "." << s << "=";
       // typedef of iterators
@@ -502,7 +502,7 @@ using std::ostringstream;
       # a comment block
       (comment_block)
         => {
-          assert(p > tmp_p);
+          assert(p+1 >= tmp_p);
           cout.write(tmp_p, p - tmp_p+1);
           fcall in_comment_block;
         };
@@ -581,10 +581,10 @@ debug_output("in funcbody: goto main", p);
     . ( default - '\n' )* . EOL
   )
     => {
-      assert(tmp_p2 > tmp_p3);
+      assert(tmp_p2 >= tmp_p3);
       tmp_string.assign(tmp_p3, tmp_p2 - tmp_p3);
       //    std::cout << tmp_string << '\n';
-      assert(p > tmp_p);
+      assert(p >= tmp_p);
       (*clist_)[tmp_string].push_back(string(tmp_p+1, p - tmp_p));
     };
 
@@ -602,7 +602,7 @@ debug_output("in funcbody: goto main", p);
     )
   )
     => {
-      assert(p >= tmp_p);
+      assert(p+1 >= tmp_p);
       string s(tmp_p, p - tmp_p + 1);
       (*clist_)[tmp_string].push_back(s);
       /*cout << "add something results in\n" << (*clist_)[tmp_string];*/
@@ -711,10 +711,10 @@ debug_output("in funcbody: goto main", p);
     ( /see also/i . ':'? )
       => {
         string s;
-        assert(ts > tmp_p + 1);
+        assert(ts > tmp_p);
         s.assign(tmp_p+1, ts - tmp_p-1);
-        docubody_.push_back(s+"@sa ");
-        tmp_p = p+1;
+        docubody_.push_back(s+"@sa");
+        tmp_p = p;
       };
 
     # lines that could end doxyblock {{{6
@@ -735,7 +735,7 @@ debug_output("in funcbody: goto main", p);
       @(end_doxy_block)
       @{ if(docline)
          {
-           assert(ts > tmp_p+1);
+           assert(ts > tmp_p);
            docubody_.push_back("@par " + string(tmp_p+1, ts - tmp_p-1)+"\n");
            docline = false;
          }
@@ -749,7 +749,7 @@ debug_output("in funcbody: goto main", p);
        @{ if(docline)
           {
             int offset = ( latex_begin ? 0 : 1 );
-            assert(p > tmp_p + offset);
+            assert(p >= tmp_p + offset);
             docubody_.push_back(string(tmp_p+1, p - tmp_p - offset));
             docline = false;
           }
@@ -1017,7 +1017,7 @@ debug_output("in funcbody: goto main", p);
         fgoto funct;
        };
 
-    ([ \t]* . ( 'end' . (WSOC | ';')* ) . EOL )
+    ([ \t]* . 'end' . [ \t;]* . ('%' . garble_comment_line_wo_eol)? . EOL )
       => {
            end_method();
 #if DEBUG
@@ -1052,7 +1052,7 @@ debug_output("in funcbody: goto main", p);
 
 
   methodsheader := (
-    [ \t]* . methodparams? . (WSOC | ';')* . ( '%' . garble_comment_line_wo_eol )? . EOL
+    [ \t]* . methodparams? . [ \t;]* . ( '%' . garble_comment_line_wo_eol )? . EOL
          @{
             print_access_specifier(access_.full);
             fgoto methods;
@@ -1092,20 +1092,20 @@ debug_output("in funcbody: goto main", p);
 
   #property body {{{4
   propertybody = (
+    ( [ \t]* . ( 'end' . [ \t;]* ) . ('%' . garble_comment_line_wo_eol )? . EOL )
+      @{
+         fgoto classbody;
+       }
+    |
     (prop)
     |
     ( (empty_line) @{ cout << "\n";} )
     |
     ( ([ \t]* . '%') @{ fhold; fgoto expect_doxyblock; } )
-    |
-    ( [ \t]* . ( 'end' . [ \t]* . ';'? ) . WSOC* . EOL )
-      @{
-         fgoto classbody;
-       }
     );
 
   properties := ( (
-    WSOC* . propertyparams? . (WSOC |';')* . ('%' . garble_comment_line_wo_eol )? . EOL @{
+    WSOC* . propertyparams? . [ \t;]* . ('%' . garble_comment_line_wo_eol )? . EOL @{
         print_access_specifier(access_.full);
         }
     . propertybody* )
@@ -1365,7 +1365,8 @@ debug_output("in funcbody: goto main", p);
       . classparams?
       . WSOC*
       . superclasses?
-      . WSOC*
+      . [ \t;]*
+      . ( '%'. garble_comment_line_wo_eol )?
       EOL
       @{
         cout << " {\n";
