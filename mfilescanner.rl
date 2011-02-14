@@ -682,7 +682,7 @@ debug_output("in funcbody: goto main", p);
       };
 
     # paragraph line with "see also" substituted by "@sa"
-    ( /see also/i )
+    ( /see also/i . ':'? )
       => {
         string s;
         s.assign(tmp_p+1, ts - tmp_p-1);
@@ -1022,7 +1022,7 @@ debug_output("in funcbody: goto main", p);
 
 
   methodsheader := (
-    WSOC* . methodparams? . EOL
+    methodparams? . WSOC* . ( '%' . garble_comment_line_wo_eol )? . EOL
          @{
             print_access_specifier(access_.full);
             fgoto methods;
