@@ -1,21 +1,28 @@
 classdef classA < general.reference.classB & a.b.c & ...
     d.e.f ...
-    & g.h.i
+    & g.h.i;
   % help for classA
   %
   % bigger help for classA
 
-  properties ( SetAccess = private, GetAccess = protected, Transient)
+  properties ( SetAccess = private, GetAccess = protected, Transient);% garbage comment
 
-    mixed_access; % short help
+    mixed_access; % of type gridbase short help
 
     % longer help with `default` value
+    % what is this??
+    %
+    % can we do some special stuff??
+    % @verbatim
+    %  a= b;
+    %  c= d;
+    % @endverbatim
     mixed_access2 = 'test';
 
 
-  end
+  end; % garbage comment
 
-  properties (Constant)
+  properties (Constant); % garbage comment
     aConstant = 1; % help text
 
     % help text for bConstant
@@ -38,22 +45,22 @@ classdef classA < general.reference.classB & a.b.c & ...
     protected_access2;
   end
 
-  methods
+  methods; % garbage comment
 
-    function obj = foo(a,b,c)
+    function obj = foo(a,b,c);
       % brief doc for foo
 
       bar;
-    end
+    end; % garbage comment
 
     % comment
     %  zweite Zeile
 
-    function obj = bar(c,d,e)
+    function obj = bar(c,d,e);
       % brief doc for bar
 
       foo;
-    end
+    end;
 
     function obj = foobar()
     % brief for foobar
@@ -62,16 +69,16 @@ classdef classA < general.reference.classB & a.b.c & ...
 
      test
 
-    end
+    end %garbage comment
 
     % this is only a declaration without definition of a method
-
-    ret=mdecl(a,b);
+    ret=mdecl(a,b);;;;;;;;
+    % this is only a declaration without definition of a method behind
 
     function obj = classA(param1, param2)
       % bigger constructor
-    end
-  end
+    end;
+  end; %garbage comment
 
   methods
     function value = get.protected_access(this)
@@ -93,15 +100,20 @@ classdef classA < general.reference.classB & a.b.c & ...
     end
   end
 
-  methods (Static)
-    function [a,b] = static_method(this,c)
+  methods (Static) ;;; % garbage comment
+    function [a,b] = static_method(notthis,c)
       % a static method
     end
   end
 
   methods (Abstract)
     % an abstract method comment above
-    [a] = abstract_method(this,d,e); % an abstract comment behind
+    %
+    [a] = abstract_method(this,d,e);
+    % an abstract method comment below
+    %
+    % Return values:
+    %   a: test of type @link classA::mixed_access "gridbase comment" @endlink
     % an abstract method comment below
   end
 

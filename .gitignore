@@ -1,3 +1,4 @@
+.gdbinit
 *.o
 mtoc
 postprocess

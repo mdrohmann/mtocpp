@@ -344,15 +344,15 @@ classdef rectgrid
 
     end;
 
-    function demo(dummy);
+    demo(dummy);
 
-    function display(grid);
+    display(grid);
 
-    function gridpart(grid, eind);
+    gridpart(grid, eind);
 
-    function plot(grid, params);
+    plot(grid, params);
 
-    function set_enbi(grid, nbind, values);
+    set_enbi(grid, nbind, values);
   end
 end
 

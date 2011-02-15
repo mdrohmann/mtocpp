@@ -78,9 +78,9 @@ struct PropParams
   std::string ccprefix()
   {
     if(constant)
-      return "static const matlabtypesubstitute";
+      return "static const ";
     else
-      return "matlabtypesubstitute";
+      return "";
   }
 
 public:
@@ -152,14 +152,17 @@ public:
 private:
   void end_of_class_doc();
   void print_access_specifier(AccessEnum & access);
+  void print_pure_function_synopsis();
   void print_function_synopsis();
   void end_of_property_doc();
+  void get_typename(const std::string &, std::string &);
 
+  void end_method();
   void clear_lists();
   std::string namespace_string();
 
   void cout_ingroup();
-  void cout_docuheader();
+  void cout_docuheader(std::string);
   void cout_docubody();
   void cout_docuextra();
   const std::string & replace_underscore(std::string & s);
@@ -231,6 +234,7 @@ private:
   PropParams   propertyparams_;
   MethodParams methodparams_;
   std::vector<std::string> property_list_;
+  std::string  defaultprop_;
 
 };
 
