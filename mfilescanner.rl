@@ -1442,9 +1442,12 @@ void MFileScanner :: print_pure_function_synopsis()
   }
 
   bool first = true;
-  if(is_class_ && class_part_ == AtMethod)
-    cout << namespace_string() << classname_ << "::";
-  else if(!is_first_function_)
+  if(is_first_function_)
+  {
+    if(is_class_ && class_part_ == AtMethod)
+      cout << namespace_string() << classname_ << "::";
+  }
+  else
     cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
 
   cout << cfuncname_;
@@ -1895,7 +1898,11 @@ void MFileScanner::end_of_property_doc()
       size_t typenend =
         line.find_first_of( " \0", typenstart );
       typen = line.substr(typenstart, typenend - typenstart);
-      line.erase(found, typenend - found);
+//      line.erase(found, typenend - found);
+      line.insert(typenend, string(" \"") + typen + "\" @endlink");
+      line.insert(typenstart, string("@link "));
+
+      *dit = line;
     }
   }
 

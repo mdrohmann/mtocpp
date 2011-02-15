@@ -16,7 +16,7 @@ protected:
 
 gridbase mixed_access;
 /** @var mixed_access
-  * @brief  of type gridbase short help
+  * @brief  of type @link gridbase "gridbase" @endlink short help
   *
   *
  */
@@ -206,7 +206,8 @@ virtual ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubs
   * @param d    d
   * @param e    e
   *
-  * @retval a    a
+  * @retval a     test of type @link classA::mixed_access "gridbase comment" @endlink
+  *  an abstract method comment below
   */
 
 
