@@ -19564,9 +19564,12 @@ void MFileScanner :: print_pure_function_synopsis()
   }
 
   bool first = true;
-  if(is_class_ && class_part_ == AtMethod)
-    cout << namespace_string() << classname_ << "::";
-  else if(!is_first_function_)
+  if(is_first_function_)
+  {
+    if(is_class_ && class_part_ == AtMethod)
+      cout << namespace_string() << classname_ << "::";
+  }
+  else
     cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
 
   cout << cfuncname_;
@@ -19697,7 +19700,7 @@ int MFileScanner :: execute()
   std::ios::sync_with_stdio(false);
 
   
-#line 19701 "mfilescanner.cc"
+#line 19704 "mfilescanner.cc"
 	{
 	cs = MFileScanner_start;
 	top = 0;
@@ -19706,7 +19709,7 @@ int MFileScanner :: execute()
 	act = 0;
 	}
 
-#line 1578 "mfilescanner.rl"
+#line 1581 "mfilescanner.rl"
 
   /* Do the first read. */
   bool done = false;
@@ -19765,7 +19768,7 @@ int MFileScanner :: execute()
     }
 
     
-#line 19769 "mfilescanner.cc"
+#line 19772 "mfilescanner.cc"
 	{
 	int _klen;
 	unsigned int _trans;
@@ -19786,7 +19789,7 @@ _resume:
 #line 1 "NONE"
 	{ts = p;}
 	break;
-#line 19790 "mfilescanner.cc"
+#line 19793 "mfilescanner.cc"
 		}
 	}
 
@@ -21379,7 +21382,7 @@ debug_output("in funcbody: goto funcline", p);
 	}
 	}
 	break;
-#line 21383 "mfilescanner.cc"
+#line 21386 "mfilescanner.cc"
 		}
 	}
 
@@ -21396,7 +21399,7 @@ _again:
 #line 1 "NONE"
 	{act = 0;}
 	break;
-#line 21400 "mfilescanner.cc"
+#line 21403 "mfilescanner.cc"
 		}
 	}
 
@@ -21509,7 +21512,7 @@ _again:
     {cs = 5952; goto _again;}
   }
 	break;
-#line 21513 "mfilescanner.cc"
+#line 21516 "mfilescanner.cc"
 		}
 	}
 	}
@@ -21517,7 +21520,7 @@ _again:
 	_out: {}
 	}
 
-#line 1636 "mfilescanner.rl"
+#line 1639 "mfilescanner.rl"
 
     /* Check if we failed. */
     if ( cs == MFileScanner_error )
@@ -21780,7 +21783,11 @@ void MFileScanner::end_of_property_doc()
       size_t typenend =
         line.find_first_of( " \0", typenstart );
       typen = line.substr(typenstart, typenend - typenstart);
-      line.erase(found, typenend - found);
+//      line.erase(found, typenend - found);
+      line.insert(typenend, string(" \"") + typen + "\" @endlink");
+      line.insert(typenstart, string("@link "));
+
+      *dit = line;
     }
   }
 
