@@ -9,9 +9,11 @@ class rectgrid {
   *  rectgrid is a class for a rectangular grid in 2 dimensions
   *
  */
+
 public:
 
-rectgrid(matlabtypesubstitute varargin){
+rectgrid(matlabtypesubstitute varargin) {
+
 /*  Bernard Haasdonk 9.5.2007
 */
 
@@ -341,8 +343,6 @@ rectgrid(matlabtypesubstitute varargin){
 
       grid = class(grid,'rectgrid');
 
-    end;
-
 }
 /** @fn rectgrid(matlabtypesubstitute varargin)
   * @brief rectgrid
@@ -437,15 +437,12 @@ rectgrid(matlabtypesubstitute varargin){
   * @arg \c ynumintervals&nbsp;&mdash;&nbsp;     number of elements along y directions
   * @arg \c yrange&nbsp;&mdash;&nbsp;     interval covered along the y-axes
   */
-noret::substitute rectgrid() {
-}
-/** @fn rectgrid()
-  * @brief rectgrid
-  *
-  */
-noret::substitute demo();
 
-noret::substitute display();
+noret::substitute demo()
+  ;
+
+noret::substitute display()
+  ;
 
 noret::substitute gridpart(matlabtypesubstitute eind);
 
