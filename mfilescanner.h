@@ -12,7 +12,7 @@
 #include <fstream>
 
 // 160 KB
-#define BUFSIZE 10*16384
+#define BUFSIZE 100*16384
 
 #define stringify( name ) #name
 
@@ -142,10 +142,19 @@ public:
   typedef std :: set< std :: string >                                GroupSet;
 
 public:
-  MFileScanner (std::istream & fin, const std::string & filename, const
-                std::string & conffilename, bool latex_output);
+  MFileScanner (std::istream & fin, std::ostream & fout,
+                const std::string & filename,
+                const std::string & conffilename,
+                bool latex_output,
+                bool only_parse_params);
 
   int execute();
+
+  DocuList & getParamList()
+  {
+    return param_list_;
+  }
+
 
   void end_function();
 
@@ -156,6 +165,7 @@ private:
   void print_function_synopsis();
   void end_of_property_doc();
   void get_typename(const std::string &, std::string &);
+  void extract_typen(std::string & line, std::string & typen);
 
   void end_method();
   void clear_lists();
@@ -174,7 +184,8 @@ private:
   void write_docu_list(const DocuList & list,
                        const std::string & item_text,
                        const DocuList & alternative,
-                       const std::string separator);
+                       const std::string separator,
+                       const std::string docu_list_name);
 
   void write_docu_listmap(const DocuListMap & listmap,
                           const std::string & text,
@@ -194,6 +205,7 @@ private:
 
 private:
   std::istream & fin_;
+  std::ostream & fout_;
   const std::string  filename_;
   bool latex_output_;
   ConfFileScanner cscan_;
@@ -234,8 +246,11 @@ private:
   PropParams   propertyparams_;
   MethodParams methodparams_;
   std::vector<std::string> property_list_;
+  bool         only_parse_params_;
   std::string  defaultprop_;
+  std::string  dirname_;
 
+  std::map<std::string,std::string> param_type_map_;
 };
 
 /* vim: set et sw=2: */
