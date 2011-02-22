@@ -3119,7 +3119,7 @@ static const int ConfFileScanner_en_rules = 886;
 static const int ConfFileScanner_en_main = 879;
 
 
-#line 331 "confscanner.rl"
+#line 340 "confscanner.rl"
 
 
 // this method is called when a glob ... {} block ends
@@ -3130,7 +3130,7 @@ void ConfFileScanner :: go_level_down()
   level_--;
 }
 
-// checks wether the string ist matched by a glob from the globlist_stack_ at
+// checks wether the string is matched by a glob from the globlist_stack_ at
 // level \a l
 bool ConfFileScanner :: check_for_match(int l, const char * str,
                                         bool match_path_sep)
@@ -3159,10 +3159,13 @@ bool ConfFileScanner :: check_glob_rec(int l, const string & s)
 {
   string str;
   string :: size_type found;
-  // exit condition (if filename ist matched up to level level_+1 the check was
+  // exit condition (if filename is matched up to level level_+1 the check was
   // successful.
   if(l == level_+1)
+  {
+    //cerr << "matched " << s << endl;
     return true;
+  }
 
   found = s.find("/"); // try to match dir in path
   while(found != string :: npos)
@@ -3172,14 +3175,20 @@ bool ConfFileScanner :: check_glob_rec(int l, const string & s)
     if(check_for_match(l, str.c_str())
         // ... then try to match the rest of the substring at a higher level.
         && check_glob_rec(l+1, s.substr(found+1)))
+    {
+      //cerr << "matched " << s << endl;
       return true;
+    }
 
     found = s.find("/", found+1); // try to match more dirs
   }
   if(l == level_) // try also to match the entire string at this level
   {
     if(check_for_match(l, s.c_str()))
+    {
+      //cerr << "matched " << s << endl;
       return true;
+    }
   }
 
   return false;
@@ -3208,6 +3217,7 @@ ConfFileScanner
    level_(0),
    arg_to_be_added_(false)
 {
+  //cerr << "filename" << filename << endl;
   if ( (confistream_.rdstate() & ifstream::failbit ) != 0 )
   {
     cerr << "Error opening configuration file '" << conffile_ << "'\n";
@@ -3231,13 +3241,13 @@ int ConfFileScanner :: execute()
   std::ios::sync_with_stdio(false);
 
   
-#line 3235 "confscanner.cc"
+#line 3245 "confscanner.cc"
 	{
 	cs = ConfFileScanner_start;
 	top = 0;
 	}
 
-#line 442 "confscanner.rl"
+#line 461 "confscanner.rl"
 
   /* Do the first read. */
   bool done = false;
@@ -3278,8 +3288,9 @@ int ConfFileScanner :: execute()
         pe--;
     }
 
+    //std::cerr << "execute parser" << std::endl;
     
-#line 3283 "confscanner.cc"
+#line 3294 "confscanner.cc"
 	{
 	int _klen;
 	unsigned int _trans;
@@ -3418,6 +3429,7 @@ _match:
     // check wether glob expression matches
     if(match_at_level_[level_])
     {
+      //cerr << "glob matched!" << endl;
       tmp_string.assign(tmp_p, p-tmp_p);
       string :: size_type found = tmp_string.find_first_not_of(" \t");
       if(found == string::npos || string(tmp_string.substr(found)) != "\"\"")
@@ -3425,9 +3437,11 @@ _match:
         found = tmp_string.rfind("\"");
         if(found != string::npos && string(tmp_string.substr(found-1)) == "\"\"")
         {
-          //cerr << "a1: " << tmp_string.substr(0, found-1) + '\n';
+          //cerr << "adding: " << tmp_string.substr(0, found-1) + '\n';
+          //cerr << endl;
           (*cblock_).push_back(tmp_string.substr(0, found-1) + '\n');
-          //cerr << "after a1: " << param_list_["detailed_data"][0];
+          /*if(!param_list_["grid"].empty())
+            cerr << "afterwards param_list_[\"grid\"][0] " << param_list_["grid"][0];*/
         }
         else
         {
@@ -3440,7 +3454,7 @@ _match:
   }
 	break;
 	case 7:
-#line 110 "confscanner.rl"
+#line 113 "confscanner.rl"
 	{
     // check wether glob expression matches
     if(match_at_level_[level_])
@@ -3452,111 +3466,117 @@ _match:
   }
 	break;
 	case 8:
-#line 122 "confscanner.rl"
+#line 125 "confscanner.rl"
 	{
     string s(tmp_p, p-tmp_p);
     cblock_ = &((*clistmap_)[tmp_string][s]);
   }
 	break;
 	case 9:
-#line 128 "confscanner.rl"
+#line 131 "confscanner.rl"
 	{
     tmp_string.assign(tmp_p, p-tmp_p);
-    //cerr << "glob: " << tmp_string << endl;
+/*    cerr << "register glob: " << tmp_string << endl;
+    cerr << " on top of globlist_stack " << endl;*/
+    //cerr_stack();
+//    cerr << "\n";
     // TODO: use globlist_map
     globlist_stack_.back().push_back(tmp_string);
   }
 	break;
 	case 10:
-#line 154 "confscanner.rl"
+#line 160 "confscanner.rl"
 	{line++;{cs = stack[--top]; goto _again;}}
 	break;
 	case 11:
-#line 166 "confscanner.rl"
+#line 172 "confscanner.rl"
 	{line++;}
 	break;
 	case 12:
-#line 167 "confscanner.rl"
+#line 173 "confscanner.rl"
 	{ /*cerr << "l: " << line << "\n";*/ p--;{stack[top++] = cs; cs = 22; goto _again;} }
 	break;
 	case 13:
-#line 172 "confscanner.rl"
+#line 178 "confscanner.rl"
 	{arg_to_be_added_ = true;}
 	break;
 	case 14:
-#line 175 "confscanner.rl"
+#line 181 "confscanner.rl"
 	{arg_to_be_added_ = false;}
 	break;
 	case 15:
-#line 181 "confscanner.rl"
+#line 187 "confscanner.rl"
 	{ if(opt) { tmp_p = p; } }
 	break;
 	case 16:
-#line 184 "confscanner.rl"
+#line 190 "confscanner.rl"
 	{line++;}
 	break;
 	case 17:
-#line 187 "confscanner.rl"
-	{{cs = stack[--top]; goto _again;}}
+#line 193 "confscanner.rl"
+	{cblock_ = 0; {cs = stack[--top]; goto _again;}}
 	break;
 	case 18:
-#line 190 "confscanner.rl"
+#line 196 "confscanner.rl"
 	{ p--; opt=false; }
 	break;
 	case 19:
-#line 195 "confscanner.rl"
+#line 201 "confscanner.rl"
 	{
                 opt=true;
                 if(!arg_to_be_added_)
-                  (*cblock_).clear();
+                {
+                  if(cblock_ != 0)
+                    (*cblock_).clear();
+                }
                 {stack[top++] = cs; cs = 884; goto _again;}
                 }
 	break;
 	case 20:
-#line 207 "confscanner.rl"
+#line 216 "confscanner.rl"
 	{tmp_p = p;}
 	break;
 	case 21:
-#line 229 "confscanner.rl"
+#line 238 "confscanner.rl"
 	{tmp_p = p;/* cerr << "dlmi\n";*/}
 	break;
 	case 22:
-#line 234 "confscanner.rl"
+#line 243 "confscanner.rl"
 	{tmp_p = p;/* cerr << "dlmi2\n";*/}
 	break;
 	case 23:
-#line 253 "confscanner.rl"
-	{/*cerr << "glob_list";*/ tmp_p = p;}
+#line 262 "confscanner.rl"
+	{/*cerr << "glob_list:\n"; cerr.write(p, 10); cerr << endl;*/ tmp_p = p;}
 	break;
 	case 24:
-#line 255 "confscanner.rl"
-	{/*cerr << "glob list2";*/ tmp_p = p;}
+#line 264 "confscanner.rl"
+	{/*cerr << "glob list2\n"; cerr.write(p, 20); cerr << endl;*/ tmp_p = p;}
 	break;
 	case 25:
-#line 272 "confscanner.rl"
+#line 281 "confscanner.rl"
 	{ check_glob_level_up(); {stack[top++] = cs; cs = 886; goto _again;} }
 	break;
 	case 26:
-#line 281 "confscanner.rl"
+#line 290 "confscanner.rl"
 	{/*cerr << "add:" << '\n';*/ tmp_p = p;}
 	break;
 	case 27:
-#line 309 "confscanner.rl"
+#line 318 "confscanner.rl"
 	{ go_level_down(); {cs = stack[--top]; goto _again;} }
 	break;
 	case 28:
-#line 322 "confscanner.rl"
+#line 331 "confscanner.rl"
 	{/*TODO*/}
 	break;
 	case 29:
-#line 323 "confscanner.rl"
+#line 332 "confscanner.rl"
 	{/*TODO*/}
 	break;
 	case 30:
-#line 329 "confscanner.rl"
+#line 338 "confscanner.rl"
 	{ line++; /*cerr<<"-> rules\n";*/ {cs = 886; goto _again;} }
 	break;
-#line 3560 "confscanner.cc"
+#line 3580 "confscanner.cc"
 		}
 	}
 
@@ -3569,7 +3589,8 @@ _again:
 	_out: {}
 	}
 
-#line 483 "confscanner.rl"
+#line 503 "confscanner.rl"
+    //std::cerr << "finish parser" << std::endl;
 
     /* Check if we failed. */
     if ( cs == ConfFileScanner_error )
@@ -3583,6 +3604,7 @@ _again:
     /* cerr << "memmove by " << have << "bytes\n";*/
     memmove( buf, pe, have );
   }
+  //cerr << "afterwards param_list_[\"grid\"][0] " << param_list_["grid"][0];
 
   return 0;
 }

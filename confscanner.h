@@ -13,7 +13,7 @@
 #include <set>
 
 // 160 KB
-#define BUFSIZE 10*16384
+#define BUFSIZE 100*16384
 
 class ConfFileScanner {
 private:
@@ -31,6 +31,8 @@ public:
 
   int execute();
 
+  const char * get_conffile();
+
 public:
   DocuList           param_list_;
   DocuList           return_list_;
@@ -41,7 +43,6 @@ public:
   GroupSet           groupset_;
 
 private:
-  const char * get_conffile();
 
   void check_glob_level_up();
 
@@ -52,6 +53,18 @@ private:
 
 
   bool check_glob_rec(int l, const std::string & s);
+
+  void cerr_stack()
+  {
+    for (unsigned int i = 0; i < globlist_stack_.size(); i++) {
+      if (!globlist_stack_[i].empty()) {
+        std::cerr << globlist_stack_[i][0] << " ";
+      }
+    }
+    std::cerr << "current level: " << level_ << std::endl;
+    std::cerr << "size of globlist_stack: " << globlist_stack_.size() << std::endl;
+    std::cerr << std::endl;
+  }
 
   void clear_all()
   {
