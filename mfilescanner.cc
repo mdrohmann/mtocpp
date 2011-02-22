@@ -23,12 +23,14 @@ using std::copy;
 using std::map;
 using std::set;
 using std::istream;
+using std::ifstream;
+using std::ostream;
 using std::ostream_iterator;
 using std::ostringstream;
 
 
 
-#line 32 "mfilescanner.cc"
+#line 34 "mfilescanner.cc"
 static const unsigned char _MFileScanner_actions[] = {
 	0, 1, 0, 1, 1, 1, 3, 1, 
 	4, 1, 5, 1, 7, 1, 8, 1, 
@@ -19539,7 +19541,7 @@ static const int MFileScanner_en_class_classdef = 5965;
 static const int MFileScanner_en_main = 6019;
 
 
-#line 1421 "mfilescanner.rl"
+#line 1439 "mfilescanner.rl"
 
 
 void MFileScanner :: print_pure_function_synopsis()
@@ -19549,17 +19551,17 @@ void MFileScanner :: print_pure_function_synopsis()
     returnlist_.clear();
   else{
     if(returnlist_.size() == 0)
-      cout << "noret::substitute ";
+      fout_ << "noret::substitute ";
     else if(returnlist_.size() == 1)
-      cout << "ret::substitutestart::" << returnlist_[0] << "::retsubstituteend ";
+      fout_ << "ret::substitutestart::" << returnlist_[0] << "::retsubstituteend ";
     else
     {
-      cout << "rets::substitutestart::";
+      fout_ << "rets::substitutestart::";
       for(unsigned int i=0; i < returnlist_.size(); ++i)
       {
-        cout << returnlist_[i] << "::";
+        fout_ << returnlist_[i] << "::";
       }
-      cout << "retssubstituteend ";
+      fout_ << "retssubstituteend ";
     }
   }
 
@@ -19567,33 +19569,33 @@ void MFileScanner :: print_pure_function_synopsis()
   if(is_first_function_)
   {
     if(is_class_ && class_part_ == AtMethod)
-      cout << namespace_string() << classname_ << "::";
+      fout_ << namespace_string() << classname_ << "::";
   }
   else
-    cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
+    fout_ << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
 
-  cout << cfuncname_;
+  fout_ << cfuncname_;
 
   if(paramlist_.size() == 0)
-    cout << "()\n  ";
+    fout_ << "()\n  ";
   else
   {
 #if DEBUG
     cerr << "paramlist size of " << cfuncname_ << ": " << paramlist_.size() << " first element: " << paramlist_[0] << endl;
 #endif
-    cout << "(";
+    fout_ << "(";
     for(unsigned int i=0; i < paramlist_.size(); ++i)
     {
       if(!first)
-        cout << ",";
+        fout_ << ",";
       else
         first = false;
 
       std::string typen;// = "matlabtypesubstitute";
       get_typename(paramlist_[i], typen);
-      cout << typen << " " << paramlist_[i];
+      fout_ << typen << " " << paramlist_[i];
     }
-    cout << ")";
+    fout_ << ")";
   }
 }
 
@@ -19601,33 +19603,36 @@ void MFileScanner :: print_function_synopsis()
 {
   if(is_getter_ || is_setter_)
   {
-   cout << "/* \n";
+   fout_ << "/* \n";
   }
   if(is_class_ && (class_part_ == Method || class_part_ == MethodDeclaration) )
-    cout << methodparams_.ccprefix();
+    fout_ << methodparams_.ccprefix();
 
   print_pure_function_synopsis();
 
   if(is_class_ && class_part_ == MethodDeclaration )
-    cout << methodparams_.ccpostfix() << "\n";
+    fout_ << methodparams_.ccpostfix() << "\n";
   else
-    cout << " {\n";
+    fout_ << " {\n";
 }
 
 void MFileScanner :: print_access_specifier(AccessEnum & access)
 {
   if(access == Public)
-    cout << "public:\n";
+    fout_ << "public:\n";
   else if(access == Protected)
-    cout << "protected:\n";
+    fout_ << "protected:\n";
   else if(access == Private)
-    cout << "private:\n";
+    fout_ << "private:\n";
 }
 
 // constructor
-MFileScanner :: MFileScanner(istream & fin, const std::string & filename,
-                             const std::string & conffilename, bool latex_output) :
-  fin_(fin), filename_(filename),
+MFileScanner :: MFileScanner(istream & fin, ostream & fout,
+                             const std::string & filename,
+                             const std::string & conffilename,
+                             bool latex_output,
+                             bool only_parse_params = false) :
+  fin_(fin), fout_(fout), filename_(filename),
   latex_output_(latex_output), cscan_(filename_, conffilename),
   fnname_(filename), namespaces_(),
   line(1),
@@ -19637,25 +19642,25 @@ MFileScanner :: MFileScanner(istream & fin, const std::string & filename,
   is_class_(false), is_setter_(false), is_getter_(false),
   classname_(), funcindent_(0), eventindent_(0),
   class_part_(Header),
-  access_(), propertyparams_(), methodparams_(), property_list_()
+  access_(), propertyparams_(), methodparams_(), property_list_(),
+  only_parse_params_(only_parse_params)
 {
   string::size_type found = fnname_.find_last_of('/');
-  std::string dirname;
   if(found != string::npos)
-    dirname = filename.substr(0, found);
+    dirname_ = filename.substr(0, found);
 
   list<string> namespaces;
   string classname;
-  string::size_type enddir = dirname.size();
+  string::size_type enddir = dirname_.size();
   string::size_type ppos = 0;
   while (ppos != string::npos)
   {
-    ppos = dirname.find_last_of('/', enddir);
+    ppos = dirname_.find_last_of('/', enddir);
     string directory;
     if(ppos == string::npos)
-      directory = dirname.substr(0, enddir+1);
+      directory = dirname_.substr(0, enddir+1);
     else
-      directory = dirname.substr(ppos+1, enddir-ppos);
+      directory = dirname_.substr(ppos+1, enddir-ppos);
 
     if(directory[0] == '+')
     {
@@ -19669,7 +19674,7 @@ MFileScanner :: MFileScanner(istream & fin, const std::string & filename,
           != fnname_.substr(fnname_.find_last_of('/')+1, classname_.size()))
       {
         class_part_ = AtMethod;
-        cout << "#include \"" << classname_ << ".m\"" << endl;
+        fout_ << "#include \"" << classname_ << ".m\"" << endl;
       }
     }
     else
@@ -19678,7 +19683,7 @@ MFileScanner :: MFileScanner(istream & fin, const std::string & filename,
   }
   for (list<string>::iterator it = namespaces_.begin();
        it != namespaces_.end(); ++it)
-    cout << "namespace " << *it << "{\n";
+    fout_ << "namespace " << *it << "{\n";
 
   found = fnname_.rfind("/");
   if(found != string::npos)
@@ -19700,7 +19705,7 @@ int MFileScanner :: execute()
   std::ios::sync_with_stdio(false);
 
   
-#line 19704 "mfilescanner.cc"
+#line 19709 "mfilescanner.cc"
 	{
 	cs = MFileScanner_start;
 	top = 0;
@@ -19709,7 +19714,7 @@ int MFileScanner :: execute()
 	act = 0;
 	}
 
-#line 1581 "mfilescanner.rl"
+#line 1602 "mfilescanner.rl"
 
   /* Do the first read. */
   bool done = false;
@@ -19768,7 +19773,7 @@ int MFileScanner :: execute()
     }
 
     
-#line 19772 "mfilescanner.cc"
+#line 19777 "mfilescanner.cc"
 	{
 	int _klen;
 	unsigned int _trans;
@@ -19789,7 +19794,7 @@ _resume:
 #line 1 "NONE"
 	{ts = p;}
 	break;
-#line 19793 "mfilescanner.cc"
+#line 19798 "mfilescanner.cc"
 		}
 	}
 
@@ -19856,35 +19861,39 @@ _eof_trans:
 		switch ( *_acts++ )
 		{
 	case 0:
-#line 39 "mfilescanner.rl"
+#line 41 "mfilescanner.rl"
 	{line++;}
 	break;
 	case 1:
-#line 46 "mfilescanner.rl"
-	{ tmp_p = p+1; cout << " *"; }
+#line 48 "mfilescanner.rl"
+	{ tmp_p = p+1; fout_ << " *"; }
 	break;
 	case 2:
-#line 49 "mfilescanner.rl"
-	{ cout.write(tmp_p, p - tmp_p+1); }
+#line 51 "mfilescanner.rl"
+	{ fout_.write(tmp_p, p - tmp_p+1); }
 	break;
 	case 3:
-#line 51 "mfilescanner.rl"
+#line 53 "mfilescanner.rl"
 	{
-    cout << "*/\n";
+    fout_ << "*/\n";
     if(is_getter_ || is_setter_)
     {
-      cout << "/* ";
+      fout_ << "/* ";
     }
     p--;
     {cs = stack[--top]; goto _again;}
   }
 	break;
 	case 4:
-#line 62 "mfilescanner.rl"
+#line 64 "mfilescanner.rl"
 	{
     if(!docline)
     {
       p = ts-1;
+      /* go backward until first non-whitespace is found */
+      for(p=p-1; *p==' ' || *p == '\t'; --p)
+        ;
+
       if(is_class_)
       {
         if(class_part_ == Header)
@@ -19893,6 +19902,8 @@ _eof_trans:
           {cs = 6248; goto _again;}
         } else if(class_part_ == Method || class_part_ == AtMethod)
         {
+          if(only_parse_params_)
+            return 1;
           print_function_synopsis();
           {cs = 6043; goto _again;}
         }
@@ -19916,6 +19927,8 @@ _eof_trans:
       }
       else
       {
+        if(only_parse_params_)
+          return 1;
         print_function_synopsis();
         {cs = 6043; goto _again;}
       }
@@ -19923,74 +19936,74 @@ _eof_trans:
   }
 	break;
 	case 6:
-#line 116 "mfilescanner.rl"
+#line 126 "mfilescanner.rl"
 	{
     assert(p >= tmp_p-1);
-    cout.write(tmp_p, p-tmp_p+1);
+    fout_.write(tmp_p, p-tmp_p+1);
     {stack[top++] = cs; cs = 6020; goto _again;}
   }
 	break;
 	case 7:
-#line 122 "mfilescanner.rl"
-	{ cout << (*p); }
+#line 132 "mfilescanner.rl"
+	{ fout_ << (*p); }
 	break;
 	case 8:
-#line 124 "mfilescanner.rl"
+#line 134 "mfilescanner.rl"
 	{ tmp_p = p; }
 	break;
 	case 9:
-#line 131 "mfilescanner.rl"
+#line 141 "mfilescanner.rl"
 	{
     assert ( p >= tmp_p );
     tmp_string.assign(tmp_p, p-tmp_p);
   }
 	break;
 	case 10:
-#line 144 "mfilescanner.rl"
+#line 154 "mfilescanner.rl"
 	{ if(is_getter_ || is_setter_)
             {
-              cout << "*/";
+              fout_ << "*/";
             }
-            cout << "/**"; tmp_p = p+1;
+            fout_ << "/**"; tmp_p = p+1;
           }
 	break;
 	case 11:
-#line 154 "mfilescanner.rl"
+#line 164 "mfilescanner.rl"
 	{
          if(is_getter_ || is_setter_)
          {
-           cout << "*/";
+           fout_ << "*/";
          }
-         cout << "/* ";
+         fout_ << "/* ";
          tmp_p = p;
          }
 	break;
 	case 12:
-#line 172 "mfilescanner.rl"
+#line 182 "mfilescanner.rl"
 	{ tmp_p = p + 1; }
 	break;
 	case 13:
-#line 177 "mfilescanner.rl"
+#line 187 "mfilescanner.rl"
 	{
         if(is_getter_ || is_setter_)
         {
-          cout << "*/";
+          fout_ << "*/";
         }
-        cout << "/* ";
+        fout_ << "/* ";
         assert( p >= tmp_p );
-        cout.write(tmp_p, p - tmp_p) << "*/\n";
+        fout_.write(tmp_p, p - tmp_p) << "*/\n";
         if(is_getter_ || is_setter_)
         {
-          cout << "/* ";
+          fout_ << "/* ";
         }
       }
 	break;
 	case 14:
-#line 196 "mfilescanner.rl"
+#line 206 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	break;
 	case 15:
-#line 225 "mfilescanner.rl"
+#line 235 "mfilescanner.rl"
 	{
          assert(p >= tmp_p);
          string s(tmp_p, p - tmp_p);
@@ -20037,7 +20050,7 @@ _eof_trans:
        }
 	break;
 	case 16:
-#line 277 "mfilescanner.rl"
+#line 287 "mfilescanner.rl"
 	{
             assert(p >= tmp_p);
             string s(tmp_p, p - tmp_p);
@@ -20047,7 +20060,7 @@ _eof_trans:
           }
 	break;
 	case 17:
-#line 295 "mfilescanner.rl"
+#line 305 "mfilescanner.rl"
 	{
              assert(p >= tmp_p);
              string s(tmp_p, p - tmp_p);
@@ -20060,31 +20073,31 @@ _eof_trans:
            }
 	break;
 	case 18:
-#line 338 "mfilescanner.rl"
+#line 348 "mfilescanner.rl"
 	{tmp_string.assign(ts,p-ts);}
 	break;
 	case 19:
-#line 341 "mfilescanner.rl"
+#line 351 "mfilescanner.rl"
 	{tmp_p2 = p;}
 	break;
 	case 20:
-#line 383 "mfilescanner.rl"
+#line 393 "mfilescanner.rl"
 	{tmp_string.assign(ts,p-ts);}
 	break;
 	case 21:
-#line 444 "mfilescanner.rl"
+#line 454 "mfilescanner.rl"
 	{tmp_string.assign("");}
 	break;
 	case 22:
-#line 580 "mfilescanner.rl"
+#line 590 "mfilescanner.rl"
 	{tmp_p3 = p;}
 	break;
 	case 23:
-#line 580 "mfilescanner.rl"
+#line 590 "mfilescanner.rl"
 	{tmp_p2 = p;}
 	break;
 	case 24:
-#line 736 "mfilescanner.rl"
+#line 746 "mfilescanner.rl"
 	{ if(docline)
          {
            assert(ts > tmp_p);
@@ -20094,7 +20107,7 @@ _eof_trans:
        }
 	break;
 	case 25:
-#line 749 "mfilescanner.rl"
+#line 759 "mfilescanner.rl"
 	{ if(docline)
           {
             int offset = ( latex_begin ? 0 : 1 );
@@ -20105,15 +20118,15 @@ _eof_trans:
         }
 	break;
 	case 26:
-#line 869 "mfilescanner.rl"
+#line 883 "mfilescanner.rl"
 	{ {cs = 6072; goto _again;} }
 	break;
 	case 27:
-#line 872 "mfilescanner.rl"
+#line 886 "mfilescanner.rl"
 	{ {cs = 6071; goto _again;} }
 	break;
 	case 28:
-#line 876 "mfilescanner.rl"
+#line 890 "mfilescanner.rl"
 	{
 #ifdef DEBUG
         debug_output("doxy_get_brief",p);
@@ -20123,84 +20136,84 @@ _eof_trans:
       }
 	break;
 	case 29:
-#line 889 "mfilescanner.rl"
+#line 903 "mfilescanner.rl"
 	{ access_.full = Public;
                access_.set = Public;
              }
 	break;
 	case 30:
-#line 893 "mfilescanner.rl"
+#line 907 "mfilescanner.rl"
 	{ access_.full =
                  (access_.get == Public ? Public : Protected );
                access_.set = Protected;
              }
 	break;
 	case 31:
-#line 898 "mfilescanner.rl"
+#line 912 "mfilescanner.rl"
 	{ access_.full = access_.get;
                access_.set = Private;
              }
 	break;
 	case 32:
-#line 905 "mfilescanner.rl"
+#line 919 "mfilescanner.rl"
 	{ access_.full = Public;
                access_.get = Public;
              }
 	break;
 	case 33:
-#line 909 "mfilescanner.rl"
+#line 923 "mfilescanner.rl"
 	{ access_.full =
                  (access_.set == Public ? Public : Protected );
                access_.get = Protected;
              }
 	break;
 	case 34:
-#line 914 "mfilescanner.rl"
+#line 928 "mfilescanner.rl"
 	{ access_.full = access_.set;
                access_.get = Private;
              }
 	break;
 	case 35:
-#line 921 "mfilescanner.rl"
+#line 935 "mfilescanner.rl"
 	{ access_.full = Public;
                access_.get = Public;
                access_.set = Public;
              }
 	break;
 	case 36:
-#line 926 "mfilescanner.rl"
+#line 940 "mfilescanner.rl"
 	{ access_.full = Protected;
                access_.get = Protected;
                access_.set = Protected;
              }
 	break;
 	case 37:
-#line 931 "mfilescanner.rl"
+#line 945 "mfilescanner.rl"
 	{ access_.full = Private;
                access_.get = Private;
                access_.set = Private;
              }
 	break;
 	case 38:
-#line 944 "mfilescanner.rl"
+#line 958 "mfilescanner.rl"
 	{
            methodparams_.abstr = true;
          }
 	break;
 	case 39:
-#line 948 "mfilescanner.rl"
+#line 962 "mfilescanner.rl"
 	{
            methodparams_.statical = true;
          }
 	break;
 	case 40:
-#line 959 "mfilescanner.rl"
+#line 973 "mfilescanner.rl"
 	{
            propertyparams_.constant = true;
          }
 	break;
 	case 41:
-#line 984 "mfilescanner.rl"
+#line 998 "mfilescanner.rl"
 	{ tmp_string.assign(tmp_p, p - tmp_p);
                 if(tmp_string.find("e") == eventindent_)
                   {
@@ -20209,71 +20222,71 @@ _eof_trans:
               }
 	break;
 	case 42:
-#line 1056 "mfilescanner.rl"
+#line 1070 "mfilescanner.rl"
 	{
             print_access_specifier(access_.full);
             {cs = 6077; goto _again;}
           }
 	break;
 	case 43:
-#line 1066 "mfilescanner.rl"
+#line 1080 "mfilescanner.rl"
 	{
             string s(tmp_p, p - tmp_p);
             property_list_.push_back(s);
-//            cout << propertyparams_.ccprefix() << " " << s;
+//            fout_ << propertyparams_.ccprefix() << " " << s;
             }
 	break;
 	case 44:
-#line 1072 "mfilescanner.rl"
+#line 1086 "mfilescanner.rl"
 	{defaultprop_ = "";}
 	break;
 	case 45:
-#line 1075 "mfilescanner.rl"
+#line 1089 "mfilescanner.rl"
 	{
               defaultprop_ = string(tmp_p, p - tmp_p);
              }
 	break;
 	case 46:
-#line 1082 "mfilescanner.rl"
+#line 1096 "mfilescanner.rl"
 	{
                docuheader_.push_back(string(tmp_p, p - tmp_p+1));
                end_of_property_doc();
              }
 	break;
 	case 47:
-#line 1085 "mfilescanner.rl"
+#line 1099 "mfilescanner.rl"
 	{ end_of_property_doc(); }
 	break;
 	case 48:
-#line 1096 "mfilescanner.rl"
+#line 1110 "mfilescanner.rl"
 	{
          {cs = 6248; goto _again;}
        }
 	break;
 	case 49:
-#line 1102 "mfilescanner.rl"
-	{ cout << "\n";}
+#line 1116 "mfilescanner.rl"
+	{ fout_ << "\n";}
 	break;
 	case 50:
-#line 1104 "mfilescanner.rl"
+#line 1118 "mfilescanner.rl"
 	{ p--; {cs = 5870; goto _again;} }
 	break;
 	case 51:
-#line 1108 "mfilescanner.rl"
+#line 1122 "mfilescanner.rl"
 	{
         print_access_specifier(access_.full);
         }
 	break;
 	case 52:
-#line 1168 "mfilescanner.rl"
+#line 1182 "mfilescanner.rl"
 	{
-        //cout << "/*";
+        //fout_ << "/*";
         p--;
         {cs = 202; goto _again;}
       }
 	break;
 	case 53:
-#line 1174 "mfilescanner.rl"
+#line 1188 "mfilescanner.rl"
 	{
     p--;
 #ifdef DEBUG
@@ -20290,6 +20303,8 @@ _eof_trans:
         string endstringtest;
         endstringtest.assign(p, 100);
         string::size_type first_char = endstringtest.find_first_not_of(" \t");
+        if(only_parse_params_)
+          return 1;
         if (endstringtest.substr(first_char, 3) == "end")
         {
           p += first_char+4;
@@ -20318,21 +20333,23 @@ _eof_trans:
     }
     else
     {
+      if(only_parse_params_)
+        return 1;
       print_function_synopsis();
       {cs = 6043; goto _again;}
     }
   }
 	break;
 	case 54:
-#line 1230 "mfilescanner.rl"
+#line 1248 "mfilescanner.rl"
 	{is_getter_ = true;}
 	break;
 	case 55:
-#line 1230 "mfilescanner.rl"
+#line 1248 "mfilescanner.rl"
 	{is_setter_=true;}
 	break;
 	case 56:
-#line 1233 "mfilescanner.rl"
+#line 1251 "mfilescanner.rl"
 	{
             cfuncname_.assign(tmp_p, p - tmp_p);
 #ifdef DEBUG
@@ -20342,18 +20359,18 @@ _eof_trans:
           }
 	break;
 	case 57:
-#line 1246 "mfilescanner.rl"
+#line 1264 "mfilescanner.rl"
 	{
                  if(paramlist_.size() == 1 && paramlist_[0] == "this")
                  { paramlist_.clear(); }
                }
 	break;
 	case 58:
-#line 1251 "mfilescanner.rl"
+#line 1269 "mfilescanner.rl"
 	{ tmp_p=p; comment_found=true; }
 	break;
 	case 59:
-#line 1254 "mfilescanner.rl"
+#line 1272 "mfilescanner.rl"
 	{
              if(comment_found)
              {
@@ -20375,18 +20392,18 @@ _eof_trans:
              }
              else
              {
-//               cout << tmp_string << "{\n";
+//               fout_ << tmp_string << "{\n";
                // check for documentation block
                {cs = 5870; goto _again;}
              }
            }
 	break;
 	case 60:
-#line 1283 "mfilescanner.rl"
+#line 1301 "mfilescanner.rl"
 	{ tmp_p=p; comment_found=true; }
 	break;
 	case 61:
-#line 1285 "mfilescanner.rl"
+#line 1303 "mfilescanner.rl"
 	{
                  if(comment_found)
                  {
@@ -20413,61 +20430,61 @@ _eof_trans:
              }
 	break;
 	case 62:
-#line 1324 "mfilescanner.rl"
+#line 1342 "mfilescanner.rl"
 	{
        string :: size_type found = filename_.rfind("/");
        if(found == string :: npos)
          found = -1;
        string funcname = filename_.substr(found+1, filename_.size()-3-found);
        cfuncname_.assign( funcname );
-  /*     cout << "noret::substitute ";
+  /*     fout_ << "noret::substitute ";
        if(!is_first_function_)
-         cout << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
-       cout << funcname << "() {\n";*/
+         fout_ << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
+       fout_ << funcname << "() {\n";*/
        is_script_ = true;
        p--;
        {cs = 5870; goto _again;}
      }
 	break;
 	case 63:
-#line 1344 "mfilescanner.rl"
-	{ cout << "public ::"; }
+#line 1362 "mfilescanner.rl"
+	{ fout_ << "public ::"; }
 	break;
 	case 64:
-#line 1345 "mfilescanner.rl"
+#line 1363 "mfilescanner.rl"
 	{ if(*p == '.')
-                           cout << "::";
-                         else cout << *p; }
+                           fout_ << "::";
+                         else fout_ << *p; }
 	break;
 	case 65:
-#line 1350 "mfilescanner.rl"
-	{ cout << "\n  :"; }
+#line 1368 "mfilescanner.rl"
+	{ fout_ << "\n  :"; }
 	break;
 	case 66:
-#line 1351 "mfilescanner.rl"
-	{ cout << ",\n   "; }
+#line 1369 "mfilescanner.rl"
+	{ fout_ << ",\n   "; }
 	break;
 	case 67:
-#line 1358 "mfilescanner.rl"
+#line 1376 "mfilescanner.rl"
 	{
             classname_.assign(tmp_p, p - tmp_p);
             is_class_ = true;
-            cout << "class " << classname_;
+            fout_ << "class " << classname_;
           }
 	break;
 	case 68:
-#line 1371 "mfilescanner.rl"
+#line 1389 "mfilescanner.rl"
 	{
-        cout << " {\n";
+        fout_ << " {\n";
         {cs = 5870; goto _again;}
       }
 	break;
 	case 69:
-#line 1392 "mfilescanner.rl"
+#line 1410 "mfilescanner.rl"
 	{ p--; tmp_p = p; }
 	break;
 	case 70:
-#line 1398 "mfilescanner.rl"
+#line 1416 "mfilescanner.rl"
 	{
                      p=tmp_p;
                      if(is_class_ && class_part_ == Header)
@@ -20476,14 +20493,14 @@ _eof_trans:
                     }
 	break;
 	case 71:
-#line 1404 "mfilescanner.rl"
+#line 1422 "mfilescanner.rl"
 	{
                      p=tmp_p;
                      {cs = 5965; goto _again;}
                     }
 	break;
 	case 72:
-#line 1409 "mfilescanner.rl"
+#line 1427 "mfilescanner.rl"
 	{
 #ifdef DEBUG
     debug_output("goto script",p);
@@ -20497,33 +20514,33 @@ _eof_trans:
 	{te = p+1;}
 	break;
 	case 77:
-#line 321 "mfilescanner.rl"
+#line 331 "mfilescanner.rl"
 	{act = 1;}
 	break;
 	case 78:
-#line 483 "mfilescanner.rl"
+#line 493 "mfilescanner.rl"
 	{act = 10;}
 	break;
 	case 79:
-#line 324 "mfilescanner.rl"
-	{te = p+1;{ cout.write(ts, te-ts); }}
+#line 334 "mfilescanner.rl"
+	{te = p+1;{ fout_.write(ts, te-ts); }}
 	break;
 	case 80:
-#line 328 "mfilescanner.rl"
+#line 338 "mfilescanner.rl"
 	{te = p+1;{
            assert(p >= tmp_p-1);
-           cout.write(tmp_p, p - tmp_p+1);
+           fout_.write(tmp_p, p - tmp_p+1);
            {stack[top++] = cs; cs = 6020; goto _again;}
          }}
 	break;
 	case 81:
-#line 345 "mfilescanner.rl"
+#line 355 "mfilescanner.rl"
 	{te = p+1;{
       p--;
       // store fieldname
       assert(tmp_p2 >= tmp_p);
       string s(tmp_p, tmp_p2 - tmp_p);
-      cout << tmp_string << "." << s << "=";
+      fout_ << tmp_string << "." << s << "=";
       // typedef of iterators
       typedef DocuList     :: iterator list_iterator;
       typedef DocuListMap  :: iterator map_iterator;
@@ -20553,7 +20570,7 @@ _eof_trans:
     }}
 	break;
 	case 82:
-#line 455 "mfilescanner.rl"
+#line 465 "mfilescanner.rl"
 	{te = p+1;{
         string s;
         if(tmp_string.empty())
@@ -20569,32 +20586,32 @@ _eof_trans:
       }}
 	break;
 	case 83:
-#line 476 "mfilescanner.rl"
-	{te = p+1;{ cout << '['; }}
+#line 486 "mfilescanner.rl"
+	{te = p+1;{ fout_ << '['; }}
 	break;
 	case 84:
-#line 479 "mfilescanner.rl"
-	{te = p+1;{ cout << ']'; }}
+#line 489 "mfilescanner.rl"
+	{te = p+1;{ fout_ << ']'; }}
 	break;
 	case 85:
-#line 483 "mfilescanner.rl"
-	{te = p+1;{ cout << (*p); }}
+#line 493 "mfilescanner.rl"
+	{te = p+1;{ fout_ << (*p); }}
 	break;
 	case 86:
-#line 487 "mfilescanner.rl"
-	{te = p+1;{ cout << (*p); {cs = 6043; goto _again;} }}
+#line 497 "mfilescanner.rl"
+	{te = p+1;{ fout_ << (*p); {cs = 6043; goto _again;} }}
 	break;
 	case 87:
-#line 321 "mfilescanner.rl"
-	{te = p;p--;{ cout.write(ts, te-ts); }}
+#line 331 "mfilescanner.rl"
+	{te = p;p--;{ fout_.write(ts, te-ts); }}
 	break;
 	case 88:
-#line 390 "mfilescanner.rl"
+#line 400 "mfilescanner.rl"
 	{te = p;p--;{
       // store fieldname
       assert(p >= tmp_p);
       string s(tmp_p, p - tmp_p+1);
-      cout << tmp_string << "." << s;
+      fout_ << tmp_string << "." << s;
       typedef DocuList     :: iterator list_iterator;
       typedef DocuListMap  :: iterator map_iterator;
       typedef DocuBlock    :: iterator iterator;
@@ -20640,24 +20657,24 @@ _eof_trans:
     }}
 	break;
 	case 89:
-#line 471 "mfilescanner.rl"
-	{te = p;p--;{ cout.write(ts, te-ts); }}
+#line 481 "mfilescanner.rl"
+	{te = p;p--;{ fout_.write(ts, te-ts); }}
 	break;
 	case 90:
-#line 483 "mfilescanner.rl"
-	{te = p;p--;{ cout << (*p); }}
+#line 493 "mfilescanner.rl"
+	{te = p;p--;{ fout_ << (*p); }}
 	break;
 	case 91:
-#line 321 "mfilescanner.rl"
-	{{p = ((te))-1;}{ cout.write(ts, te-ts); }}
+#line 331 "mfilescanner.rl"
+	{{p = ((te))-1;}{ fout_.write(ts, te-ts); }}
 	break;
 	case 92:
-#line 390 "mfilescanner.rl"
+#line 400 "mfilescanner.rl"
 	{{p = ((te))-1;}{
       // store fieldname
       assert(p >= tmp_p);
       string s(tmp_p, p - tmp_p+1);
-      cout << tmp_string << "." << s;
+      fout_ << tmp_string << "." << s;
       typedef DocuList     :: iterator list_iterator;
       typedef DocuListMap  :: iterator map_iterator;
       typedef DocuBlock    :: iterator iterator;
@@ -20703,46 +20720,46 @@ _eof_trans:
     }}
 	break;
 	case 93:
-#line 471 "mfilescanner.rl"
-	{{p = ((te))-1;}{ cout.write(ts, te-ts); }}
+#line 481 "mfilescanner.rl"
+	{{p = ((te))-1;}{ fout_.write(ts, te-ts); }}
 	break;
 	case 94:
-#line 483 "mfilescanner.rl"
-	{{p = ((te))-1;}{ cout << (*p); }}
+#line 493 "mfilescanner.rl"
+	{{p = ((te))-1;}{ fout_ << (*p); }}
 	break;
 	case 95:
 #line 1 "NONE"
 	{	switch( act ) {
 	case 1:
-	{{p = ((te))-1;} cout.write(ts, te-ts); }
+	{{p = ((te))-1;} fout_.write(ts, te-ts); }
 	break;
 	case 10:
-	{{p = ((te))-1;} cout << (*p); }
+	{{p = ((te))-1;} fout_ << (*p); }
 	break;
 	}
 	}
 	break;
 	case 96:
-#line 497 "mfilescanner.rl"
+#line 507 "mfilescanner.rl"
 	{te = p+1;{
           new_syntax_ = true;
-          cout << "*/\n"; //cout << "add to special group */\n";
+          fout_ << "*/\n"; //fout_ << "add to special group */\n";
         }}
 	break;
 	case 97:
-#line 504 "mfilescanner.rl"
+#line 514 "mfilescanner.rl"
 	{te = p+1;{
           assert(p+1 >= tmp_p);
-          cout.write(tmp_p, p - tmp_p+1);
+          fout_.write(tmp_p, p - tmp_p+1);
           {stack[top++] = cs; cs = 6020; goto _again;}
         }}
 	break;
 	case 98:
-#line 512 "mfilescanner.rl"
-	{te = p+1;{ cout << '\n'; }}
+#line 522 "mfilescanner.rl"
+	{te = p+1;{ fout_ << '\n'; }}
 	break;
 	case 99:
-#line 533 "mfilescanner.rl"
+#line 543 "mfilescanner.rl"
 	{te = p+1;{
               if(is_class_ && class_part_ == Method)
               {
@@ -20767,7 +20784,7 @@ debug_output("in funcbody: goto funcline 2", p);
           }}
 	break;
 	case 100:
-#line 558 "mfilescanner.rl"
+#line 568 "mfilescanner.rl"
 	{te = p+1;{
         p = ts-1;
         // end the previous function if existent
@@ -20779,11 +20796,11 @@ debug_output("in funcbody: goto main", p);
       }}
 	break;
 	case 101:
-#line 568 "mfilescanner.rl"
+#line 578 "mfilescanner.rl"
 	{te = p+1;}
 	break;
 	case 102:
-#line 521 "mfilescanner.rl"
+#line 531 "mfilescanner.rl"
 	{te = p;p--;{
           p = ts-1;
           // further parse the function body line
@@ -20794,7 +20811,7 @@ debug_output("in funcbody: goto funcline", p);
         }}
 	break;
 	case 103:
-#line 533 "mfilescanner.rl"
+#line 543 "mfilescanner.rl"
 	{te = p;p--;{
               if(is_class_ && class_part_ == Method)
               {
@@ -20819,7 +20836,7 @@ debug_output("in funcbody: goto funcline 2", p);
           }}
 	break;
 	case 104:
-#line 521 "mfilescanner.rl"
+#line 531 "mfilescanner.rl"
 	{{p = ((te))-1;}{
           p = ts-1;
           // further parse the function body line
@@ -20830,45 +20847,45 @@ debug_output("in funcbody: goto funcline", p);
         }}
 	break;
 	case 105:
-#line 617 "mfilescanner.rl"
+#line 627 "mfilescanner.rl"
 	{act = 22;}
 	break;
 	case 106:
-#line 583 "mfilescanner.rl"
+#line 593 "mfilescanner.rl"
 	{te = p+1;{
       assert(tmp_p2 >= tmp_p3);
       tmp_string.assign(tmp_p3, tmp_p2 - tmp_p3);
-      //    std::cout << tmp_string << '\n';
+      //    std::fout_ << tmp_string << '\n';
       assert(p >= tmp_p);
       (*clist_)[tmp_string].push_back(string(tmp_p+1, p - tmp_p));
     }}
 	break;
 	case 107:
-#line 604 "mfilescanner.rl"
+#line 614 "mfilescanner.rl"
 	{te = p+1;{
       assert(p+1 >= tmp_p);
       string s(tmp_p, p - tmp_p + 1);
       (*clist_)[tmp_string].push_back(s);
-      /*cout << "add something results in\n" << (*clist_)[tmp_string];*/
+      /*fout_ << "add something results in\n" << (*clist_)[tmp_string];*/
     }}
 	break;
 	case 108:
-#line 613 "mfilescanner.rl"
-	{te = p+1;{ /*cout << "empty line\n";*/ {cs = stack[--top]; goto _again;} }}
+#line 623 "mfilescanner.rl"
+	{te = p+1;{ /*fout_ << "empty line\n";*/ {cs = stack[--top]; goto _again;} }}
 	break;
 	case 109:
-#line 617 "mfilescanner.rl"
+#line 627 "mfilescanner.rl"
 	{te = p+1;{
       p =ts-1;
-      // cout << "*/\n";
+      // fout_ << "*/\n";
       {cs = stack[--top]; goto _again;}
     }}
 	break;
 	case 110:
-#line 617 "mfilescanner.rl"
+#line 627 "mfilescanner.rl"
 	{te = p;p--;{
       p =ts-1;
-      // cout << "*/\n";
+      // fout_ << "*/\n";
       {cs = stack[--top]; goto _again;}
     }}
 	break;
@@ -20881,7 +20898,7 @@ debug_output("in funcbody: goto funcline", p);
 	case 22:
 	{{p = ((te))-1;}
       p =ts-1;
-      // cout << "*/\n";
+      // fout_ << "*/\n";
       {cs = stack[--top]; goto _again;}
     }
 	break;
@@ -20889,16 +20906,16 @@ debug_output("in funcbody: goto funcline", p);
 	}
 	break;
 	case 112:
-#line 636 "mfilescanner.rl"
+#line 646 "mfilescanner.rl"
 	{te = p+1;{
-        //cout << tmp_string << '\n';
+        //fout_ << tmp_string << '\n';
         clist_ = &(required_list_[tmp_string]);
         docline = false;
         {stack[top++] = cs; cs = 6059; goto _again;}
       }}
 	break;
 	case 113:
-#line 650 "mfilescanner.rl"
+#line 660 "mfilescanner.rl"
 	{te = p+1;{
         clist_ = &(optional_list_[tmp_string]);
         docline = false;
@@ -20906,7 +20923,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 114:
-#line 663 "mfilescanner.rl"
+#line 673 "mfilescanner.rl"
 	{te = p+1;{
         clist_ = &(retval_list_[tmp_string]);
         docline = false;
@@ -20914,7 +20931,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 115:
-#line 673 "mfilescanner.rl"
+#line 683 "mfilescanner.rl"
 	{te = p+1;{
         clist_ = &param_list_;
         docline = false;
@@ -20922,7 +20939,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 116:
-#line 683 "mfilescanner.rl"
+#line 693 "mfilescanner.rl"
 	{te = p+1;{
         clist_ = &return_list_;
         docline = false;
@@ -20930,15 +20947,15 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 117:
-#line 694 "mfilescanner.rl"
+#line 704 "mfilescanner.rl"
 	{te = p+1;{
-        /*cout << "*\n  ";*/
+        /*fout_ << "*\n  ";*/
         docubody_.push_back("\n");
         docline = false;
       }}
 	break;
 	case 118:
-#line 712 "mfilescanner.rl"
+#line 722 "mfilescanner.rl"
 	{te = p+1;{
         string s;
         assert(ts > tmp_p);
@@ -20948,15 +20965,15 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 119:
-#line 742 "mfilescanner.rl"
+#line 752 "mfilescanner.rl"
 	{te = p+1;}
 	break;
 	case 120:
-#line 756 "mfilescanner.rl"
+#line 766 "mfilescanner.rl"
 	{te = p+1;}
 	break;
 	case 121:
-#line 702 "mfilescanner.rl"
+#line 712 "mfilescanner.rl"
 	{te = p;p--;{
         if(!docline)
         {
@@ -20966,7 +20983,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 122:
-#line 712 "mfilescanner.rl"
+#line 722 "mfilescanner.rl"
 	{te = p;p--;{
         string s;
         assert(ts > tmp_p);
@@ -20976,19 +20993,19 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 123:
-#line 723 "mfilescanner.rl"
+#line 733 "mfilescanner.rl"
 	{te = p;p--;}
 	break;
 	case 124:
-#line 727 "mfilescanner.rl"
+#line 737 "mfilescanner.rl"
 	{te = p;p--;}
 	break;
 	case 125:
-#line 731 "mfilescanner.rl"
+#line 741 "mfilescanner.rl"
 	{te = p;p--;}
 	break;
 	case 126:
-#line 702 "mfilescanner.rl"
+#line 712 "mfilescanner.rl"
 	{{p = ((te))-1;}{
         if(!docline)
         {
@@ -20998,41 +21015,41 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 127:
-#line 723 "mfilescanner.rl"
+#line 733 "mfilescanner.rl"
 	{{p = ((te))-1;}}
 	break;
 	case 128:
-#line 727 "mfilescanner.rl"
+#line 737 "mfilescanner.rl"
 	{{p = ((te))-1;}}
 	break;
 	case 129:
-#line 731 "mfilescanner.rl"
+#line 741 "mfilescanner.rl"
 	{{p = ((te))-1;}}
 	break;
 	case 130:
-#line 767 "mfilescanner.rl"
+#line 777 "mfilescanner.rl"
 	{te = p+1;}
 	break;
 	case 131:
-#line 770 "mfilescanner.rl"
+#line 780 "mfilescanner.rl"
 	{te = p+1;{ {cs = 6072; goto _again;} }}
 	break;
 	case 132:
-#line 799 "mfilescanner.rl"
+#line 809 "mfilescanner.rl"
 	{act = 40;}
 	break;
 	case 133:
-#line 781 "mfilescanner.rl"
+#line 791 "mfilescanner.rl"
 	{te = p+1;{
-        /* cout << "*"; cout.write(tmp_p, p - tmp_p+1); */
+        /* fout_ << "*"; fout_.write(tmp_p, p - tmp_p+1); */
         assert(p >= tmp_p);
         docuheader_.push_back(string(tmp_p, p - tmp_p+1));
       }}
 	break;
 	case 134:
-#line 789 "mfilescanner.rl"
+#line 799 "mfilescanner.rl"
 	{te = p+1;{
-        /*cout << "*\n";*/
+        /*fout_ << "*\n";*/
 #ifdef DEBUG
   debug_output("in doxy_get_brief: goto: doxy_get_body", p);
 #endif
@@ -21040,13 +21057,13 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 135:
-#line 799 "mfilescanner.rl"
+#line 809 "mfilescanner.rl"
 	{te = p+1;{
         p=ts-1;
 #ifdef DEBUG
    debug_output("in doxy_get_brief: end!!", p);
 #endif
-        //cout << "*/\n";
+        //fout_ << "*/\n";
         if(is_class_)
         {
 #ifdef DEBUG
@@ -21065,6 +21082,8 @@ debug_output("in funcbody: goto funcline", p);
 #ifdef DEBUG
   debug_output("  in_doxy_get_brief: method: goto funcbody",p);
 #endif
+            if(only_parse_params_)
+              return 1;
             print_function_synopsis();
             {cs = 6043; goto _again;}
           }
@@ -21090,19 +21109,21 @@ debug_output("in funcbody: goto funcline", p);
         }
         else
         {
+          if(only_parse_params_)
+            return 1;
           print_function_synopsis();
           {cs = 6043; goto _again;}
         }
       }}
 	break;
 	case 136:
-#line 799 "mfilescanner.rl"
+#line 809 "mfilescanner.rl"
 	{te = p;p--;{
         p=ts-1;
 #ifdef DEBUG
    debug_output("in doxy_get_brief: end!!", p);
 #endif
-        //cout << "*/\n";
+        //fout_ << "*/\n";
         if(is_class_)
         {
 #ifdef DEBUG
@@ -21121,6 +21142,8 @@ debug_output("in funcbody: goto funcline", p);
 #ifdef DEBUG
   debug_output("  in_doxy_get_brief: method: goto funcbody",p);
 #endif
+            if(only_parse_params_)
+              return 1;
             print_function_synopsis();
             {cs = 6043; goto _again;}
           }
@@ -21146,6 +21169,8 @@ debug_output("in funcbody: goto funcline", p);
         }
         else
         {
+          if(only_parse_params_)
+            return 1;
           print_function_synopsis();
           {cs = 6043; goto _again;}
         }
@@ -21163,7 +21188,7 @@ debug_output("in funcbody: goto funcline", p);
 #ifdef DEBUG
    debug_output("in doxy_get_brief: end!!", p);
 #endif
-        //cout << "*/\n";
+        //fout_ << "*/\n";
         if(is_class_)
         {
 #ifdef DEBUG
@@ -21182,6 +21207,8 @@ debug_output("in funcbody: goto funcline", p);
 #ifdef DEBUG
   debug_output("  in_doxy_get_brief: method: goto funcbody",p);
 #endif
+            if(only_parse_params_)
+              return 1;
             print_function_synopsis();
             {cs = 6043; goto _again;}
           }
@@ -21207,6 +21234,8 @@ debug_output("in funcbody: goto funcline", p);
         }
         else
         {
+          if(only_parse_params_)
+            return 1;
           print_function_synopsis();
           {cs = 6043; goto _again;}
         }
@@ -21216,14 +21245,14 @@ debug_output("in funcbody: goto funcline", p);
 	}
 	break;
 	case 138:
-#line 1000 "mfilescanner.rl"
+#line 1014 "mfilescanner.rl"
 	{te = p+1;{
       end_method();
-      cout << "\n";
+      fout_ << "\n";
     }}
 	break;
 	case 139:
-#line 1006 "mfilescanner.rl"
+#line 1020 "mfilescanner.rl"
 	{te = p+1;{
         tmp_string.assign(ts, te - ts+1);
         funcindent_ = tmp_string.find_first_not_of(" \t");
@@ -21239,7 +21268,7 @@ debug_output("in funcbody: goto funcline", p);
        }}
 	break;
 	case 140:
-#line 1021 "mfilescanner.rl"
+#line 1035 "mfilescanner.rl"
 	{te = p+1;{
            end_method();
 #if DEBUG
@@ -21249,7 +21278,7 @@ debug_output("in funcbody: goto funcline", p);
          }}
 	break;
 	case 141:
-#line 1029 "mfilescanner.rl"
+#line 1043 "mfilescanner.rl"
 	{te = p+1;{
 #if DEBUG
     debug_output("in methods: garble comment line",p);
@@ -21262,7 +21291,7 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 142:
-#line 1042 "mfilescanner.rl"
+#line 1056 "mfilescanner.rl"
 	{te = p+1;{
 #if DEBUG
     debug_output("in methods: found method declaration, going to funcdef",p);
@@ -21273,7 +21302,7 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 143:
-#line 1042 "mfilescanner.rl"
+#line 1056 "mfilescanner.rl"
 	{te = p;p--;{
 #if DEBUG
     debug_output("in methods: found method declaration, going to funcdef",p);
@@ -21284,7 +21313,7 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 144:
-#line 1042 "mfilescanner.rl"
+#line 1056 "mfilescanner.rl"
 	{{p = ((te))-1;}{
 #if DEBUG
     debug_output("in methods: found method declaration, going to funcdef",p);
@@ -21295,37 +21324,37 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 145:
-#line 1126 "mfilescanner.rl"
+#line 1140 "mfilescanner.rl"
 	{act = 47;}
 	break;
 	case 146:
-#line 1121 "mfilescanner.rl"
+#line 1135 "mfilescanner.rl"
 	{te = p+1;{
-        cout.write(tmp_p, p - tmp_p+1);
+        fout_.write(tmp_p, p - tmp_p+1);
         {stack[top++] = cs; cs = 6020; goto _again;}
       }}
 	break;
 	case 147:
-#line 1126 "mfilescanner.rl"
-	{te = p+1;{ cout.write(ts, te-ts); }}
+#line 1140 "mfilescanner.rl"
+	{te = p+1;{ fout_.write(ts, te-ts); }}
 	break;
 	case 148:
-#line 1128 "mfilescanner.rl"
-	{te = p+1;{ cout << "\n"; }}
+#line 1142 "mfilescanner.rl"
+	{te = p+1;{ fout_ << "\n"; }}
 	break;
 	case 149:
-#line 1130 "mfilescanner.rl"
+#line 1144 "mfilescanner.rl"
 	{te = p+1;{
-      cout << "\n};\n";
+      fout_ << "\n};\n";
       for(  list<string>::iterator it = namespaces_.begin();
             it != namespaces_.end(); ++it)
       {
-        cout << "}\n";
+        fout_ << "}\n";
       }
     }}
 	break;
 	case 150:
-#line 1140 "mfilescanner.rl"
+#line 1154 "mfilescanner.rl"
 	{te = p+1;{
         propertyparams_ = PropParams();
         access_ = AccessStruct();
@@ -21334,7 +21363,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 151:
-#line 1147 "mfilescanner.rl"
+#line 1161 "mfilescanner.rl"
 	{te = p+1;{
         methodparams_ = MethodParams();
         access_ = AccessStruct();
@@ -21343,7 +21372,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 152:
-#line 1154 "mfilescanner.rl"
+#line 1168 "mfilescanner.rl"
 	{te = p+1;{
         std::string tmp_string(ts, te-ts);
         eventindent_ = tmp_string.find("e");
@@ -21352,23 +21381,23 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 153:
-#line 1126 "mfilescanner.rl"
-	{te = p;p--;{ cout.write(ts, te-ts); }}
+#line 1140 "mfilescanner.rl"
+	{te = p;p--;{ fout_.write(ts, te-ts); }}
 	break;
 	case 154:
-#line 1130 "mfilescanner.rl"
+#line 1144 "mfilescanner.rl"
 	{te = p;p--;{
-      cout << "\n};\n";
+      fout_ << "\n};\n";
       for(  list<string>::iterator it = namespaces_.begin();
             it != namespaces_.end(); ++it)
       {
-        cout << "}\n";
+        fout_ << "}\n";
       }
     }}
 	break;
 	case 155:
-#line 1126 "mfilescanner.rl"
-	{{p = ((te))-1;}{ cout.write(ts, te-ts); }}
+#line 1140 "mfilescanner.rl"
+	{{p = ((te))-1;}{ fout_.write(ts, te-ts); }}
 	break;
 	case 156:
 #line 1 "NONE"
@@ -21377,12 +21406,12 @@ debug_output("in funcbody: goto funcline", p);
 	{{cs = 0; goto _again;}}
 	break;
 	case 47:
-	{{p = ((te))-1;} cout.write(ts, te-ts); }
+	{{p = ((te))-1;} fout_.write(ts, te-ts); }
 	break;
 	}
 	}
 	break;
-#line 21386 "mfilescanner.cc"
+#line 21415 "mfilescanner.cc"
 		}
 	}
 
@@ -21399,7 +21428,7 @@ _again:
 #line 1 "NONE"
 	{act = 0;}
 	break;
-#line 21403 "mfilescanner.cc"
+#line 21432 "mfilescanner.cc"
 		}
 	}
 
@@ -21419,30 +21448,30 @@ _again:
 	while ( __nacts-- > 0 ) {
 		switch ( *__acts++ ) {
 	case 3:
-#line 51 "mfilescanner.rl"
+#line 53 "mfilescanner.rl"
 	{
-    cout << "*/\n";
+    fout_ << "*/\n";
     if(is_getter_ || is_setter_)
     {
-      cout << "/* ";
+      fout_ << "/* ";
     }
     p--;
     {cs = stack[--top]; goto _again;}
   }
 	break;
 	case 5:
-#line 105 "mfilescanner.rl"
+#line 115 "mfilescanner.rl"
 	{
     end_function();
     for(  list<string>::iterator it = namespaces_.begin();
           it != namespaces_.end(); ++it)
     {
-      cout << "};\n";
+      fout_ << "};\n";
     }
   }
 	break;
 	case 28:
-#line 876 "mfilescanner.rl"
+#line 890 "mfilescanner.rl"
 	{
 #ifdef DEBUG
         debug_output("doxy_get_brief",p);
@@ -21452,7 +21481,7 @@ _again:
       }
 	break;
 	case 53:
-#line 1174 "mfilescanner.rl"
+#line 1188 "mfilescanner.rl"
 	{
     p--;
 #ifdef DEBUG
@@ -21469,6 +21498,8 @@ _again:
         string endstringtest;
         endstringtest.assign(p, 100);
         string::size_type first_char = endstringtest.find_first_not_of(" \t");
+        if(only_parse_params_)
+          return 1;
         if (endstringtest.substr(first_char, 3) == "end")
         {
           p += first_char+4;
@@ -21497,13 +21528,15 @@ _again:
     }
     else
     {
+      if(only_parse_params_)
+        return 1;
       print_function_synopsis();
       {cs = 6043; goto _again;}
     }
   }
 	break;
 	case 72:
-#line 1409 "mfilescanner.rl"
+#line 1427 "mfilescanner.rl"
 	{
 #ifdef DEBUG
     debug_output("goto script",p);
@@ -21512,7 +21545,7 @@ _again:
     {cs = 5952; goto _again;}
   }
 	break;
-#line 21516 "mfilescanner.cc"
+#line 21549 "mfilescanner.cc"
 		}
 	}
 	}
@@ -21520,7 +21553,7 @@ _again:
 	_out: {}
 	}
 
-#line 1639 "mfilescanner.rl"
+#line 1660 "mfilescanner.rl"
 
     /* Check if we failed. */
     if ( cs == MFileScanner_error )
@@ -21587,9 +21620,14 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
   bool not_verbatim = true;
   for( unsigned int i = 0; i < block.size(); i += 1 )
   {
-    // begin all documentation lines after the first one with an asterisk
+    // begin all documentation lines after the first one with an asterisk (unless in verbatim mode)
     if(add_prefix)
-      cout << "* ";
+    {
+      if(not_verbatim)
+        fout_ << "* ";
+      else
+        fout_ << "  ";
+    }
 
     add_prefix = false;
     // read in new line of docu block
@@ -21613,18 +21651,18 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
           not_verbatim = false;
         else if(s.substr(i+1,7) == "endcode" || s.substr(i+1,11) == "endverbatim")
           not_verbatim = true;
-        cout << s.substr(i,j-i);
+        fout_ << s.substr(i,j-i);
       }
       // use typewriter fonts for words in single quotes
       else if(s[i] == '\'' && not_verbatim && latex_begin)
       {
         if(j != s.size() && s[j] == '\'' && !last_char_escaped)
         {
-          cout << "<tt>" << s.substr(i+1, j-i-1) << "</tt>";
+          fout_ << "<tt>" << s.substr(i+1, j-i-1) << "</tt>";
           ++j;
         }
         else
-          cout << s.substr(i,j-i);
+          fout_ << s.substr(i,j-i);
       }
       // use latex output for words in backtick quotes
       else if(s[i] == '`' && not_verbatim)
@@ -21656,23 +21694,23 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
         {
           lout = "";
         }
-        cout << lout << s.substr(i, j-i);
+        fout_ << lout << s.substr(i, j-i);
       }
       // new line
       else if(s[i] == '\n')
       {
-        cout << "\n  ";
+        fout_ << "\n  ";
         if(latex_begin)
           add_prefix = true;
         else
         {
-          cout << "  ";
+          fout_ << "  ";
           add_prefix = false;
         }
       }
       else
       {
-        cout << s.substr(i,j-i);
+        fout_ << s.substr(i,j-i);
       }
       if(s[j-1] != '\\' && s[j] == '\\')
       {
@@ -21692,25 +21730,42 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
 void MFileScanner::write_docu_list(const DocuList & list,
                                    const string & item_text,
                                    const DocuList & alternative,
-                                   const string separator = string())
+                                   const string separator = string(),
+                                   const string docu_list_name = string())
 {
   typedef DocuList :: const_iterator list_iterator;
   list_iterator lit = list.begin();
   // iterate over documentation blocks
   for(; lit != list.end(); ++lit)
   {
-    cout << "* " << item_text << " " << (*lit).first << separator << "    ";
+    fout_ << "* " << item_text << " " << (*lit).first << separator << "    ";
     const DocuBlock & block = (*lit).second;
     // block is empty?
     if(block.empty())
     {
       // then look for alternative documentation block form global
-      // configuration file or use default text generated from variable name.
+      // configuration file ...
       list_iterator alit = alternative.find((*lit).first);
       if(alit == alternative.end() || (*alit).second.empty())
       {
-        std::string s((*lit).first);
-        cout << replace_underscore(s) << "\n  ";
+        string s((*lit).first);
+        typedef map< string, string > :: iterator                  MapIterator;
+        MapIterator param_type_map_entry = param_type_map_.end();
+        if(!docu_list_name.empty())
+        {
+          param_type_map_entry = param_type_map_.find(docu_list_name);
+        }
+
+        if(param_type_map_entry != param_type_map_.end())
+        {
+          // ... or copy documentation brief text from class documentation ...
+          fout_ << "@copybrief " << (*param_type_map_entry).second << "::" << s << "\n  ";
+        }
+        else
+        {
+          // ... or use default text generated from variable name.
+          fout_ << replace_underscore(s) << "\n  ";
+        }
       }
       else
         write_docu_block((*alit).second);
@@ -21732,12 +21787,16 @@ void MFileScanner::write_docu_listmap(const DocuListMap & listmap,
     map_iterator mit = listmap.begin();
     for(; mit != listmap.end(); ++mit)
     {
-      cout << "*\n  ";
-      cout << "* " << text << (*mit).first << ":\n  ";
+      fout_ << "*\n  ";
+      fout_ << "* " << text << (*mit).first << ":\n  ";
       map_iterator amit = altlistmap.find((*mit).first);
-      write_docu_list((*mit).second, "@arg \\c", ( amit != altlistmap.end() ? (*amit).second : DocuList() ), "&nbsp;&mdash;&nbsp;");
+      write_docu_list((*mit).second,
+                      "@arg \\c",
+                      ( amit != altlistmap.end() ? (*amit).second : DocuList() ),
+                      "&nbsp;&mdash;&nbsp;",
+                      (*mit).first );
     }
-//    cout << "* </TABLE>\n  ";
+//    fout_ << "* </TABLE>\n  ";
 
   }
 }
@@ -21756,17 +21815,17 @@ string MFileScanner::namespace_string()
 
 void MFileScanner::end_of_class_doc()
 {
-  cout << "/** @class \"" << namespace_string() << classname_ << "\"\n  ";
+  fout_ << "/** @class \"" << namespace_string() << classname_ << "\"\n  ";
 
   cout_ingroup();
 
-  cout << "* @brief ";
+  fout_ << "* @brief ";
   cout_docuheader(cfuncname_);
-  cout << "*\n  ";
+  fout_ << "*\n  ";
   cout_docubody();
-  cout << "*\n ";
+  fout_ << "*\n ";
   cout_docuextra();
-  cout << "*/\n";
+  fout_ << "*/\n";
 }
 
 void MFileScanner::end_of_property_doc()
@@ -21775,39 +21834,27 @@ void MFileScanner::end_of_property_doc()
   string typen;
   for(DBIt dit = docuheader_.begin(); dit != docuheader_.end(); ++dit)
   {
-    std::string line = *dit;
-    size_t found = line.find("of type");
-    if(found != std::string::npos)
-    {
-      size_t typenstart=found+1+string("of type").length();
-      size_t typenend =
-        line.find_first_of( " \0", typenstart );
-      typen = line.substr(typenstart, typenend - typenstart);
-//      line.erase(found, typenend - found);
-      line.insert(typenend, string(" \"") + typen + "\" @endlink");
-      line.insert(typenstart, string("@link "));
-
-      *dit = line;
-    }
+    std::string & line = *dit;
+    extract_typen(line, typen);
   }
 
   if(typen.empty())
     typen = "matlabtypesubstitute";
 
-  cout << propertyparams_.ccprefix() << typen << " " << property_list_.back();
+  fout_ << propertyparams_.ccprefix() << typen << " " << property_list_.back();
   if(defaultprop_.empty())
-    cout << ";\n";
+    fout_ << ";\n";
   else
-    cout << " = " << defaultprop_ << ";\n";
+    fout_ << " = " << defaultprop_ << ";\n";
 
-  cout << "/** @var " << property_list_.back() << "\n  ";
-  cout << "* @brief ";
+  fout_ << "/** @var " << property_list_.back() << "\n  ";
+  fout_ << "* @brief ";
   cout_docuheader(property_list_.back());
-  cout << "*\n  ";
+  fout_ << "*\n  ";
   cout_docubody();
-  cout << "*\n ";
+  fout_ << "*\n ";
   cout_docuextra();
-  cout << "*/\n";
+  fout_ << "*/\n";
   docuheader_.clear();
   docubody_.clear();
   docuextra_.clear();
@@ -21817,7 +21864,7 @@ void MFileScanner::cout_docuheader(string altheader)
 {
   if(docuheader_.empty() && cscan_.docuheader_.empty())
   {
-    cout << replace_underscore(altheader) << "\n  ";
+    fout_ << replace_underscore(altheader) << "\n  ";
   }
   else
   {
@@ -21837,13 +21884,13 @@ void MFileScanner :: cout_docubody()
 {
   if(!docubody_.empty())
   {
-    cout << "*\n  * ";
+    fout_ << "*\n  * ";
     write_docu_block(docubody_);
   }
   docubody_.clear();
   if(!cscan_.docubody_.empty())
   {
-    cout << "*\n  * ";
+    fout_ << "*\n  * ";
     write_docu_block(cscan_.docubody_);
   }
 }
@@ -21852,7 +21899,7 @@ void MFileScanner :: cout_docuextra()
 {
   if(! cscan_.docuextra_.empty())
   {
-    cout << "*\n  * ";
+    fout_ << "*\n  * ";
     write_docu_block(cscan_.docuextra_);
   }
   docuextra_.clear();
@@ -21864,20 +21911,20 @@ void MFileScanner :: cout_ingroup()
   // add @ingroup commands from the configuration file
   if((! groupset_.empty() || ! cscan_.groupset_.empty() ))
   {
-    cout << "* @ingroup ";
+    fout_ << "* @ingroup ";
     bool not_first = false;
     group_iterator git = cscan_.groupset_.begin();
     for(; git != cscan_.groupset_.end(); ++git)
     {
       if(not_first)
-        cout << " ";
+        fout_ << " ";
       else
         not_first = true;
 
-      cout << *git;
+      fout_ << *git;
     }
     groupset_.clear();
-    cout << "\n  ";
+    fout_ << "\n  ";
   }
 }
 
@@ -21893,6 +21940,7 @@ void MFileScanner::clear_lists()
   required_list_.clear();
   optional_list_.clear();
   retval_list_.clear();
+  param_type_map_.clear();
 }
 
 /* we come here, from an empty line in a methods block or the end of a
@@ -21902,6 +21950,30 @@ void MFileScanner::end_method()
 {
   if (!cfuncname_.empty())
   {
+
+    if(docuheader_.empty())
+    {
+      istream  *fcin;
+      ifstream  fin;
+      try
+      {
+        std::string filename(dirname_ + "/" + cfuncname_ + ".m");
+        std::ios_base::iostate oldstate = fin.exceptions();
+        fin.exceptions ( ifstream::failbit | ifstream::badbit );
+        fin.open(filename.c_str());
+        fin.exceptions(oldstate);
+        fcin = &fin;
+        ostringstream oss;
+        MFileScanner scanner(*fcin, oss, filename, cscan_.get_conffile(), latex_output_, true);
+        scanner.execute();
+        param_list_ = scanner.getParamList();
+      }
+      catch (ifstream::failure e)
+      {
+        std::cerr << "Warning: No definition for function " << cfuncname_ << " found!\n";
+      }
+    }
+
     class_part_ = MethodDeclaration;
     print_function_synopsis();
     class_part_ = Method;
@@ -21959,20 +22031,36 @@ void MFileScanner::get_typename(const std::string & paramname, std::string & typ
   DocuBlock & db = *pdb;
   for(DBIt dit = db.begin(); dit != db.end(); ++dit)
   {
-    std::string line = *dit;
-    size_t found = line.find("of type");
-    if(found != std::string::npos)
-    {
-      size_t typenstart=found+1+string("of type").length();
-      size_t typenend =
-        line.find_first_of( " \0", typenstart );
-      typen = line.substr(typenstart, typenend - typenstart);
-      line.erase(found, typenend - found);
-    }
+    std::string & line = *dit;
+    extract_typen(line, typen);
   }
 
   if(typen.empty())
     typen = "matlabtypesubstitute";
+  else
+    param_type_map_[paramname] = typen;
+}
+
+void MFileScanner::extract_typen(std::string & line, std::string & typen)
+{
+  size_t found = line.find("of type");
+  if(found != std::string::npos)
+  {
+    size_t typenstart=found+1+string("of type").length();
+    size_t typenend =
+      line.find_first_of( " \n\0", typenstart );
+    typen = line.substr(typenstart, typenend - typenstart);
+    if(typen[0] != ':')
+    {
+      for(size_t i=0; i < typen.length(); ++i)
+        if(typen.at(i) == '.')
+          typen.replace(i,1,std::string("::"));
+      typen = string("::") + typen;
+
+      line.replace(typenstart, typenend - typenstart, typen);
+      //line.erase(found, typenend - found);
+    }
+  }
 }
 
 // end a function and pretty print the documentation for this function
@@ -21991,45 +22079,45 @@ void MFileScanner::end_function()
   }
   // end function
   if(!is_method || !methodparams_.abstr)
-    cout << "}\n";
+    fout_ << "}\n";
   if(is_getter_ || is_setter_)
-    cout << "*/\n";
+    fout_ << "*/\n";
   // is the first function?
   if(is_first_function_)
   {
     if(! latex_output_ && ! is_class_)
     {
         // Then make a file documentation block
-        cout << "/** @file \"" << filename_ << "\"\n  ";
+        fout_ << "/** @file \"" << filename_ << "\"\n  ";
 
       cout_ingroup();
 
-      cout << "*/\n";
+      fout_ << "*/\n";
     }
   }
-  cout << "/*";
+  fout_ << "/*";
   if(latex_output_ && !is_class_)
   {
     cout_ingroup();
-    cout << "\n  ";
+    fout_ << "\n  ";
   }
   if(is_setter_ || is_getter_)
   {
-    cout << "* @var " << cfuncname_ << "\n  ";
+    fout_ << "* @var " << cfuncname_ << "\n  ";
     string temp = (is_setter_ ? "Setter" : "Getter");
-    cout << "* @par " << temp << " is implemented\n  *";
+    fout_ << "* @par " << temp << " is implemented\n  *";
   }
   else
   {
     // specify the @fn part
-    cout << "* @fn ";
+    fout_ << "* @fn ";
     print_pure_function_synopsis();
 
     // specify the @brief part
-    cout << "\n  * @brief ";
+    fout_ << "\n  * @brief ";
   }
   cout_docuheader(cfuncname_);
-  cout << "*\n  ";
+  fout_ << "*\n  ";
 
   // specify the @details part
 
@@ -22039,14 +22127,14 @@ void MFileScanner::end_function()
   // parameters
   if(!param_list_.empty() && !is_getter_ && !is_setter_)
   {
-    cout << "*\n  ";
+    fout_ << "*\n  ";
     write_docu_list(param_list_, "@param", cscan_.param_list_);
   }
 
   // return values
   if(!return_list_.empty() && !is_constructor && !is_getter_ && !is_setter_)
   {
-    cout << "*\n  ";
+    fout_ << "*\n  ";
     write_docu_list(return_list_, "@retval", cscan_.return_list_);
   }
 
@@ -22064,9 +22152,9 @@ void MFileScanner::end_function()
   cout_docuextra();
   if( new_syntax_ )
   {
-    cout << "* @synupdate Syntax needs to be updated! \n  ";
+    fout_ << "* @synupdate Syntax needs to be updated! \n  ";
   }
-  cout << "*/\n";
+  fout_ << "*/\n";
   if(!is_method)
     is_first_function_ = false;
 
@@ -22099,6 +22187,8 @@ int main(int argc, char ** argv)
       usage();
       exit(0);
     }
+    std::ios_base::iostate oldstate = fin.exceptions();
+    fin.exceptions ( ifstream::failbit );
     try
     {
       fin.open(argv[1]);
@@ -22111,6 +22201,7 @@ int main(int argc, char ** argv)
       usage();
       exit(-1);
     }
+    fin.exceptions(oldstate);
   }
   else
   {
@@ -22141,7 +22232,7 @@ int main(int argc, char ** argv)
   {
     filename = filename.substr(cwd.size()+1);
   }
-  MFileScanner scanner(*fcin, filename, conffilename, latex_output);
+  MFileScanner scanner(*fcin, cout, filename, conffilename, latex_output);
   scanner.execute();
   return 0;
 }
