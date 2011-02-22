@@ -84,6 +84,7 @@ using std::ifstream;
     // check wether glob expression matches
     if(match_at_level_[level_])
     {
+      //cerr << "glob matched!" << endl;
       tmp_string.assign(tmp_p, p-tmp_p);
       string :: size_type found = tmp_string.find_first_not_of(" \t");
       if(found == string::npos || string(tmp_string.substr(found)) != "\"\"")
@@ -91,9 +92,11 @@ using std::ifstream;
         found = tmp_string.rfind("\"");
         if(found != string::npos && string(tmp_string.substr(found-1)) == "\"\"")
         {
-          //cerr << "a1: " << tmp_string.substr(0, found-1) + '\n';
+          //cerr << "adding: " << tmp_string.substr(0, found-1) + '\n';
+          //cerr << endl;
           (*cblock_).push_back(tmp_string.substr(0, found-1) + '\n');
-          //cerr << "after a1: " << param_list_["detailed_data"][0];
+          /*if(!param_list_["grid"].empty())
+            cerr << "afterwards param_list_[\"grid\"][0] " << param_list_["grid"][0];*/
         }
         else
         {
@@ -127,7 +130,10 @@ using std::ifstream;
   action reg_glob
   {
     tmp_string.assign(tmp_p, p-tmp_p);
-    //cerr << "glob: " << tmp_string << endl;
+/*    cerr << "register glob: " << tmp_string << endl;
+    cerr << " on top of globlist_stack " << endl;*/
+    //cerr_stack();
+//    cerr << "\n";
     // TODO: use globlist_map
     globlist_stack_.back().push_back(tmp_string);
   }
@@ -184,7 +190,7 @@ using std::ifstream;
      EOL @(add_block_line) @{line++;}
      |
      # end of documentation block (calls add_block_line)
-     '"""' @(add_block_line) @{fret;}
+     '"""' @(add_block_line) @{cblock_ = 0; fret;}
      |
      # ignore quotes (less than 3 in a row)
      ('"'{1,2} . (default - ["\n])) @{ fhold; opt=false; }
@@ -195,7 +201,10 @@ using std::ifstream;
                 @{
                 opt=true;
                 if(!arg_to_be_added_)
-                  (*cblock_).clear();
+                {
+                  if(cblock_ != 0)
+                    (*cblock_).clear();
+                }
                 fcall docu_block_line;
                 }
                );
@@ -250,9 +259,9 @@ using std::ifstream;
 
   # list of file matching words
   globlist =
-    (GLOB >{/*cerr << "glob_list";*/ tmp_p = p;} %(reg_glob))
+    (GLOB >{/*cerr << "glob_list:\n"; cerr.write(p, 10); cerr << endl;*/ tmp_p = p;} %(reg_glob))
     . (MWSOC* . [ \t]+ . MWSOC*
-        . (GLOB >{/*cerr << "glob list2";*/ tmp_p = p;} %(reg_glob)))*;
+        . (GLOB >{/*cerr << "glob list2\n"; cerr.write(p, 20); cerr << endl;*/ tmp_p = p;} %(reg_glob)))*;
 
   # list of group names
   grouplist = (
@@ -338,7 +347,7 @@ void ConfFileScanner :: go_level_down()
   level_--;
 }
 
-// checks wether the string ist matched by a glob from the globlist_stack_ at
+// checks wether the string is matched by a glob from the globlist_stack_ at
 // level \a l
 bool ConfFileScanner :: check_for_match(int l, const char * str,
                                         bool match_path_sep)
@@ -367,10 +376,13 @@ bool ConfFileScanner :: check_glob_rec(int l, const string & s)
 {
   string str;
   string :: size_type found;
-  // exit condition (if filename ist matched up to level level_+1 the check was
+  // exit condition (if filename is matched up to level level_+1 the check was
   // successful.
   if(l == level_+1)
+  {
+    //cerr << "matched " << s << endl;
     return true;
+  }
 
   found = s.find("/"); // try to match dir in path
   while(found != string :: npos)
@@ -380,14 +392,20 @@ bool ConfFileScanner :: check_glob_rec(int l, const string & s)
     if(check_for_match(l, str.c_str())
         // ... then try to match the rest of the substring at a higher level.
         && check_glob_rec(l+1, s.substr(found+1)))
+    {
+      //cerr << "matched " << s << endl;
       return true;
+    }
 
     found = s.find("/", found+1); // try to match more dirs
   }
   if(l == level_) // try also to match the entire string at this level
   {
     if(check_for_match(l, s.c_str()))
+    {
+      //cerr << "matched " << s << endl;
       return true;
+    }
   }
 
   return false;
@@ -416,6 +434,7 @@ ConfFileScanner
    level_(0),
    arg_to_be_added_(false)
 {
+  //cerr << "filename" << filename << endl;
   if ( (confistream_.rdstate() & ifstream::failbit ) != 0 )
   {
     cerr << "Error opening configuration file '" << conffile_ << "'\n";
@@ -479,7 +498,9 @@ int ConfFileScanner :: execute()
         pe--;
     }
 
+    //std::cerr << "execute parser" << std::endl;
     %% write exec;
+    //std::cerr << "finish parser" << std::endl;
 
     /* Check if we failed. */
     if ( cs == ConfFileScanner_error )
@@ -493,6 +514,7 @@ int ConfFileScanner :: execute()
     /* cerr << "memmove by " << have << "bytes\n";*/
     memmove( buf, pe, have );
   }
+  //cerr << "afterwards param_list_[\"grid\"][0] " << param_list_["grid"][0];
 
   return 0;
 }
