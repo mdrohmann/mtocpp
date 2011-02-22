@@ -3,10 +3,16 @@ ALL := *.m;
 
 ##
 
-add(params) = auto_param => """ object of type gridbase which is not used! This documentation is added automatically! """;
+add(params) = auto_param => """ object of type gridbase.gridbase which is not used! This documentation is added automatically! """;
 
 add(fields) = auto_struct.auto_field => """ This field's documentation has been added automatically! """;
 
 glob = * { groups = test; }
+
+glob = test {
+  add(params) = auto_param => """ object of type othergrid which is not used! This documentation is added automatically! """;
+}
+
+glob = doxygen.m { add(params) = auto_param => """ jajaja """; }
 
 # vim: set ft=perl et sw=2 :

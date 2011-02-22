@@ -1,6 +1,7 @@
 namespace grid{
 namespace rect{
-ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,gridbase auto_param) {
+ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,::othergrid auto_param) {
+
 
 /*  After the first non-comment line the function body begins:
 */
@@ -33,7 +34,7 @@ auto_param.auto_field;
 /** @file "test/+grid/+rect/doxygen_in_namespace.m"
   * @ingroup test
   */
-/** @fn ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,gridbase auto_param)
+/** @fn ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,::othergrid auto_param)
   * @brief  Here comes a short description text
   *
   *
@@ -57,16 +58,16 @@ auto_param.auto_field;
   * 
   * @par  Example
   *  @verbatim
-  *                 /| |\
-  *                ( |-| )
-  *                 ) " (
-  *                (>(Y)<)
-  *                 )   (
-  *                /     \
-  *               ( (m|m) )  hjw
-  *             ,-.),___.(,-.\`97
-  *             \`---\'   \`---\'
-  *  @endverbatim
+                    /| |\
+                   ( |-| )
+                    ) " (
+                   (>(Y)<)
+                    )   (
+                   /     \
+                  ( (m|m) )  hjw
+                ,-.),___.(,-.\`97
+                \`---\'   \`---\'
+     @endverbatim
   * 
   * @par  Paragaphs starting with line ending with a double-colon
   *  are started with a bold title line
@@ -83,7 +84,7 @@ auto_param.auto_field;
   *   - @verbatim ``x`` to @f[x.@f] @endverbatim resulting in the output: @f[x@f].
   * 
   *  You therefore need to be careful with the use of characters @verbatim ' `
-  *  @endverbatim. If you want to say something about the transposed of a Matrix
+     @endverbatim. If you want to say something about the transposed of a Matrix
   *  <tt>A</tt>, better do it in a Tex-Environment as @f$A' * B'@f$ or in a verbatim/code
   *  environment as
   *  @code A' * B' @endcode
@@ -113,14 +114,14 @@ auto_param.auto_field;
   * 
   * 
   *
-  * @param auto_param     object of type gridbase which is not used! This documentation is added automatically! 
+  * @param auto_param     object of type ::othergrid which is not used! This documentation is added automatically! 
   * @param param1     first parameter
   * @param param2    param2
   *
   * @retval rv     return value
   *
   * @par Required fields of auto_param:
-  * @arg \c auto_field&nbsp;&mdash;&nbsp;    auto field
+  * @arg \c auto_field&nbsp;&mdash;&nbsp;    @copybrief ::othergrid::auto_field
   *
   * @par Required fields of param1:
   * @arg \c auto_added&nbsp;&mdash;&nbsp;    auto added
@@ -150,14 +151,15 @@ ret::substitutestart::c::retsubstituteend mtoc_subst_doxygen_in_namespace_m_tsbu
   *
   * @retval c    c
   */
-rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_with_sev_retvals(gridbase auto_param) {
+rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_with_sev_retvals(::othergrid auto_param) {
+
 
 }
-/** @fn rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_with_sev_retvals(gridbase auto_param)
+/** @fn rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_with_sev_retvals(::othergrid auto_param)
   * @brief  a third (private) function in the test file with serveral return values
   *
   *
-  * @param auto_param     object of type gridbase which is not used! This documentation is added automatically! 
+  * @param auto_param     object of type ::othergrid which is not used! This documentation is added automatically! 
   *
   * @retval d     a return value
   * @retval e    e
@@ -165,6 +167,7 @@ rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespac
   */
 rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_without_parameters()
    {
+
 
 /** \docupdate
 */

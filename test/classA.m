@@ -7,7 +7,7 @@ classdef classA < general.reference.classB & a.b.c & ...
 
   properties ( SetAccess = private, GetAccess = protected, Transient);% garbage comment
 
-    mixed_access; % of type gridbase short help
+    mixed_access; % of type gridbase.gridbase short help
 
     % longer help with `default` value
     % what is this??
@@ -62,6 +62,9 @@ classdef classA < general.reference.classB & a.b.c & ...
       foo;
     end;
 
+    % last function comment above
+    %
+    % with main docu block
     function obj = foobar()
     % brief for foobar
     %

@@ -1,6 +1,9 @@
 function p = plot(grid,params)
 %function p = plot(grid [,params])
 %
+% Parameters:
+%   params: object of type plot_params
+%
 % plot of a rectgrid via plot_polygon_grid
 % see help plot_polygon_grid for further information
 
