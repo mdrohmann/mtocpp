@@ -73,7 +73,7 @@ function rv = doxygen(param1, param2, auto_param)
 % of argument respectively return argument descriptions.
 %
 % Parameters:
-%  param1: first parameter
+%  param1: first parameter of type testnamespace.testclass
 %
 % Return values:
 %  rv: return value

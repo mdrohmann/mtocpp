@@ -12,11 +12,12 @@ class classA
   *
  */
 
+
 protected:
 
-gridbase mixed_access;
+::gridbase::gridbase mixed_access;
 /** @var mixed_access
-  * @brief  of type @link gridbase "gridbase" @endlink short help
+  * @brief  of type ::gridbase::gridbase short help
   *
   *
  */
@@ -29,9 +30,9 @@ matlabtypesubstitute mixed_access2 = 'test';
   *
   *  can we do some special stuff??
   *  @verbatim
-  *   a= b;
-  *   c= d;
-  *  @endverbatim
+      a= b;
+      c= d;
+     @endverbatim
   *
  */
 
@@ -123,14 +124,17 @@ ret::substitutestart::obj::retsubstituteend bar(matlabtypesubstitute d,matlabtyp
 ret::substitutestart::obj::retsubstituteend foobar()
    {
 
+
      test
 
 }
 /** @fn ret::substitutestart::obj::retsubstituteend foobar()
   
-  * @brief  brief for foobar
+  * @brief  last function comment above
+  *  brief for foobar
   *
   *
+  *  with main docu block
   *  detail for foobar
   *
   * @retval obj    obj
