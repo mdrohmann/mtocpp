@@ -48,8 +48,7 @@ private:
 
   void go_level_down();
 
-  bool check_for_match(int l, const char * str,
-                       bool match_path_sep = false);
+  bool check_for_match(int l, const char * str);
 
 
   bool check_glob_rec(int l, const std::string & s);
