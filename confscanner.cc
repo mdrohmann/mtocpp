@@ -3132,20 +3132,26 @@ void ConfFileScanner :: go_level_down()
 
 // checks wether the string is matched by a glob from the globlist_stack_ at
 // level \a l
-bool ConfFileScanner :: check_for_match(int l, const char * str,
-                                        bool match_path_sep)
+bool ConfFileScanner :: check_for_match(int l, const char * str)
 {
   typedef GlobList :: iterator iterator;
   // get globlist at stack level \a l
   GlobList & gl = globlist_stack_[l];
 
   iterator endit = gl.end();
-  int flags = (match_path_sep? FNM_PATHNAME : 0);
   // iterate over all globs
   for( iterator it = gl.begin(); it != endit; it++ )
   {
+    const char * glob = (*it).c_str();
+    int flags = 0;
+    if (glob[0] == '.' && glob[1] == '/')
+    {
+      glob = &glob[2];
+      flags = FNM_PATHNAME;
+    }
+
     // check wether str matches glob
-    if(fnmatch((*it).c_str(), str, flags) == 0)
+    if(fnmatch(glob, str, flags) == 0)
     {
       return true;
     }
@@ -3241,13 +3247,13 @@ int ConfFileScanner :: execute()
   std::ios::sync_with_stdio(false);
 
   
-#line 3245 "confscanner.cc"
+#line 3251 "confscanner.cc"
 	{
 	cs = ConfFileScanner_start;
 	top = 0;
 	}
 
-#line 461 "confscanner.rl"
+#line 467 "confscanner.rl"
 
   /* Do the first read. */
   bool done = false;
@@ -3290,7 +3296,7 @@ int ConfFileScanner :: execute()
 
     //std::cerr << "execute parser" << std::endl;
     
-#line 3294 "confscanner.cc"
+#line 3300 "confscanner.cc"
 	{
 	int _klen;
 	unsigned int _trans;
@@ -3576,7 +3582,7 @@ _match:
 #line 338 "confscanner.rl"
 	{ line++; /*cerr<<"-> rules\n";*/ {cs = 886; goto _again;} }
 	break;
-#line 3580 "confscanner.cc"
+#line 3586 "confscanner.cc"
 		}
 	}
 
@@ -3589,7 +3595,7 @@ _again:
 	_out: {}
 	}
 
-#line 503 "confscanner.rl"
+#line 509 "confscanner.rl"
     //std::cerr << "finish parser" << std::endl;
 
     /* Check if we failed. */

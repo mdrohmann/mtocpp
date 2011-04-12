@@ -2171,6 +2171,21 @@ void MFileScanner::end_function()
 {
   bool is_constructor = false;
   bool is_method = false;
+  bool skip_parameters = false;
+  if (! docuheader_.empty()
+       && docuheader_[0].find("copydoc") != std::string::npos)
+  {
+    skip_parameters = true;
+  }
+  if (! docubody_.empty()
+       && (docubody_[0].find("copydoc") != std::string::npos
+           || docubody_[0].find("copybody") != std::string::npos
+           )
+     )
+  {
+    skip_parameters = true;
+  }
+
   if(is_class_)
   {
     if(class_part_ == Property)
@@ -2227,28 +2242,31 @@ void MFileScanner::end_function()
   // standard body definitions
   cout_docubody();
 
-  // parameters
-  if(!param_list_.empty() && !is_getter_ && !is_setter_)
+  if (! skip_parameters)
   {
-    fout_ << "*\n  ";
-    write_docu_list(param_list_, "@param", cscan_.param_list_);
+    // parameters
+    if(!param_list_.empty() && !is_getter_ && !is_setter_)
+    {
+      fout_ << "*\n  ";
+      write_docu_list(param_list_, "@param", cscan_.param_list_);
+    }
+
+    // return values
+    if(!return_list_.empty() && !is_constructor && !is_getter_ && !is_setter_)
+    {
+      fout_ << "*\n  ";
+      write_docu_list(return_list_, "@retval", cscan_.return_list_);
+    }
+
+    // required fields
+    write_docu_listmap(required_list_, "@par Required fields of ", cscan_.field_docu_);
+
+    // optional fields
+    write_docu_listmap(optional_list_, "@par Optional fields of ", cscan_.field_docu_);
+
+    // return fields
+    write_docu_listmap(retval_list_, "@par Generated fields of ", cscan_.field_docu_);
   }
-
-  // return values
-  if(!return_list_.empty() && !is_constructor && !is_getter_ && !is_setter_)
-  {
-    fout_ << "*\n  ";
-    write_docu_list(return_list_, "@retval", cscan_.return_list_);
-  }
-
-  // required fields
-  write_docu_listmap(required_list_, "@par Required fields of ", cscan_.field_docu_);
-
-  // optional fields
-  write_docu_listmap(optional_list_, "@par Optional fields of ", cscan_.field_docu_);
-
-  // return fields
-  write_docu_listmap(retval_list_, "@par Generated fields of ", cscan_.field_docu_);
   clear_lists();
 
   // extra docu fields
