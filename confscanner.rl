@@ -349,20 +349,26 @@ void ConfFileScanner :: go_level_down()
 
 // checks wether the string is matched by a glob from the globlist_stack_ at
 // level \a l
-bool ConfFileScanner :: check_for_match(int l, const char * str,
-                                        bool match_path_sep)
+bool ConfFileScanner :: check_for_match(int l, const char * str)
 {
   typedef GlobList :: iterator iterator;
   // get globlist at stack level \a l
   GlobList & gl = globlist_stack_[l];
 
   iterator endit = gl.end();
-  int flags = (match_path_sep? FNM_PATHNAME : 0);
   // iterate over all globs
   for( iterator it = gl.begin(); it != endit; it++ )
   {
+    const char * glob = (*it).c_str();
+    int flags = 0;
+    if (glob[0] == '.' && glob[1] == '/')
+    {
+      glob = &glob[2];
+      flags = FNM_PATHNAME;
+    }
+
     // check wether str matches glob
-    if(fnmatch((*it).c_str(), str, flags) == 0)
+    if(fnmatch(glob, str, flags) == 0)
     {
       return true;
     }
