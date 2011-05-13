@@ -256,6 +256,20 @@ static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesu
   */
 
 public:
+static rets::substitutestart::a::b::retssubstituteend static_abstract_method(matlabtypesubstitute this,matlabtypesubstitute c) = 0;
+/** @fn rets::substitutestart::a::b::retssubstituteend static_abstract_method(matlabtypesubstitute this,matlabtypesubstitute c)
+  * @brief  a static abstract method
+  *
+  *
+  * @param c    c
+  * @param this    this
+  *
+  * @retval a    a
+  * @retval b    b
+  */
+
+
+public:
 
 virtual ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;
 /** @fn ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e)

@@ -238,12 +238,14 @@ using std::ostringstream;
          string s(tmp_p, p - tmp_p);
          bool addBlock = true;
          // do not print this pointer
-         if( is_class_ && ( ( class_part_ == Method
-                              && cfuncname_ != classname_
-                              && !methodparams_.statical
-                            )
-                            || class_part_ == AtMethod
-                            || class_part_ == MethodDeclaration
+         if( is_class_ && ( !methodparams_.statical
+                            && (
+                                ( class_part_ == Method
+                                  && cfuncname_ != classname_
+                                )
+                                || class_part_ == AtMethod
+                                || class_part_ == MethodDeclaration
+                               )
                           )
            )
          {
