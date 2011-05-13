@@ -772,11 +772,11 @@ debug_output("in funcbody: goto main", p);
   # doxy header parsing {{{2
   # swallow the synopsis line
   doxyfunction_garble := |*
-    garbage = doc_begin . ( (default - '\n' )* -- '...' );
+    garbage = ( (default - '\n' )* -- '...' );
 
-    ( garbage . '...' . [\t ]* .  EOL );
+    ( doc_begin . (garbage . '...')+ . [\t ]* .  EOL );
 
-    ( garbage . EOL )
+    ( doc_begin . (garbage . '...')* . garbage . EOL )
       => { fgoto doxy_get_brief; };
   *|;
 
@@ -871,22 +871,8 @@ debug_output("in funcbody: goto main", p);
   doxyheader := (
     '%' . [ \t]* .
        (
-        ( ('function'
-         . ( default - [;)\r\n.] )* .
-         (
-          ( [);] . (default - '\n')* . EOL )
-        )
-        |
-        ('classdef'
-         . ( default - [\r\n] )* . [^.] . EOL
-        ) )
-            @{ fgoto doxy_get_brief; }
-          |
-          ( '...' . [ \t]* . EOL
-            @{ fgoto doxyfunction_garble; }
-          )
-         )
-      )
+        ('function '|'classdef ') @{ p = tmp_p-2; fgoto doxyfunction_garble; }
+       )
       $!{
 #ifdef DEBUG
         debug_output("doxy_get_brief",p);
