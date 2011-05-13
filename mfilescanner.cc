@@ -9642,7 +9642,7 @@ static const int MFileScanner_en_class_classdef = 3120;
 static const int MFileScanner_en_main = 3174;
 
 
-#line 1425 "mfilescanner.rl"
+#line 1433 "mfilescanner.rl"
 
 
 void MFileScanner :: print_pure_function_synopsis()
@@ -9815,7 +9815,7 @@ int MFileScanner :: execute()
 	act = 0;
 	}
 
-#line 1588 "mfilescanner.rl"
+#line 1596 "mfilescanner.rl"
 
   /* Do the first read. */
   bool done = false;
@@ -9982,11 +9982,12 @@ _eof_trans:
       fout_ << "/* ";
     }
     p--;
+    p--;
     {cs = stack[--top]; goto _again;}
   }
 	break;
 	case 4:
-#line 64 "mfilescanner.rl"
+#line 65 "mfilescanner.rl"
 	{
     if(!docline)
     {
@@ -10037,7 +10038,7 @@ _eof_trans:
   }
 	break;
 	case 6:
-#line 126 "mfilescanner.rl"
+#line 127 "mfilescanner.rl"
 	{
     assert(p >= tmp_p-1);
     fout_.write(tmp_p, p-tmp_p+1);
@@ -10045,22 +10046,22 @@ _eof_trans:
   }
 	break;
 	case 7:
-#line 132 "mfilescanner.rl"
+#line 133 "mfilescanner.rl"
 	{ fout_ << (*p); }
 	break;
 	case 8:
-#line 134 "mfilescanner.rl"
+#line 135 "mfilescanner.rl"
 	{ tmp_p = p; }
 	break;
 	case 9:
-#line 141 "mfilescanner.rl"
+#line 142 "mfilescanner.rl"
 	{
     assert ( p >= tmp_p );
     tmp_string.assign(tmp_p, p-tmp_p);
   }
 	break;
 	case 10:
-#line 154 "mfilescanner.rl"
+#line 155 "mfilescanner.rl"
 	{ if(is_getter_ || is_setter_)
             {
               fout_ << "*/";
@@ -10069,7 +10070,7 @@ _eof_trans:
           }
 	break;
 	case 11:
-#line 164 "mfilescanner.rl"
+#line 165 "mfilescanner.rl"
 	{
          if(is_getter_ || is_setter_)
          {
@@ -10080,11 +10081,11 @@ _eof_trans:
          }
 	break;
 	case 12:
-#line 182 "mfilescanner.rl"
+#line 183 "mfilescanner.rl"
 	{ tmp_p = p + 1; }
 	break;
 	case 13:
-#line 187 "mfilescanner.rl"
+#line 188 "mfilescanner.rl"
 	{
         if(is_getter_ || is_setter_)
         {
@@ -10100,11 +10101,11 @@ _eof_trans:
       }
 	break;
 	case 14:
-#line 206 "mfilescanner.rl"
+#line 207 "mfilescanner.rl"
 	{ tmp_p = p+1; }
 	break;
 	case 15:
-#line 235 "mfilescanner.rl"
+#line 236 "mfilescanner.rl"
 	{
          assert(p >= tmp_p);
          string s(tmp_p, p - tmp_p);
@@ -10151,7 +10152,7 @@ _eof_trans:
        }
 	break;
 	case 16:
-#line 287 "mfilescanner.rl"
+#line 288 "mfilescanner.rl"
 	{
             assert(p >= tmp_p);
             string s(tmp_p, p - tmp_p);
@@ -10161,7 +10162,7 @@ _eof_trans:
           }
 	break;
 	case 17:
-#line 305 "mfilescanner.rl"
+#line 306 "mfilescanner.rl"
 	{
              assert(p >= tmp_p);
              string s(tmp_p, p - tmp_p);
@@ -10174,31 +10175,31 @@ _eof_trans:
            }
 	break;
 	case 18:
-#line 348 "mfilescanner.rl"
+#line 349 "mfilescanner.rl"
 	{tmp_string.assign(ts,p-ts);}
 	break;
 	case 19:
-#line 351 "mfilescanner.rl"
+#line 352 "mfilescanner.rl"
 	{tmp_p2 = p;}
 	break;
 	case 20:
-#line 393 "mfilescanner.rl"
+#line 394 "mfilescanner.rl"
 	{tmp_string.assign(ts,p-ts);}
 	break;
 	case 21:
-#line 454 "mfilescanner.rl"
+#line 455 "mfilescanner.rl"
 	{tmp_string.assign("");}
 	break;
 	case 22:
-#line 590 "mfilescanner.rl"
+#line 598 "mfilescanner.rl"
 	{tmp_p3 = p;}
 	break;
 	case 23:
-#line 590 "mfilescanner.rl"
+#line 598 "mfilescanner.rl"
 	{tmp_p2 = p;}
 	break;
 	case 24:
-#line 746 "mfilescanner.rl"
+#line 754 "mfilescanner.rl"
 	{ if(docline)
          {
            assert(ts > tmp_p);
@@ -10208,7 +10209,7 @@ _eof_trans:
        }
 	break;
 	case 25:
-#line 759 "mfilescanner.rl"
+#line 767 "mfilescanner.rl"
 	{ if(docline)
           {
             int offset = ( latex_begin ? 0 : 1 );
@@ -10219,11 +10220,11 @@ _eof_trans:
         }
 	break;
 	case 26:
-#line 874 "mfilescanner.rl"
+#line 882 "mfilescanner.rl"
 	{ p = tmp_p-2; {cs = 3226; goto _again;} }
 	break;
 	case 27:
-#line 876 "mfilescanner.rl"
+#line 884 "mfilescanner.rl"
 	{
 #ifdef DEBUG
         debug_output("doxy_get_brief",p);
@@ -10233,84 +10234,84 @@ _eof_trans:
       }
 	break;
 	case 28:
-#line 889 "mfilescanner.rl"
+#line 897 "mfilescanner.rl"
 	{ access_.full = Public;
                access_.set = Public;
              }
 	break;
 	case 29:
-#line 893 "mfilescanner.rl"
+#line 901 "mfilescanner.rl"
 	{ access_.full =
                  (access_.get == Public ? Public : Protected );
                access_.set = Protected;
              }
 	break;
 	case 30:
-#line 898 "mfilescanner.rl"
+#line 906 "mfilescanner.rl"
 	{ access_.full = access_.get;
                access_.set = Private;
              }
 	break;
 	case 31:
-#line 905 "mfilescanner.rl"
+#line 913 "mfilescanner.rl"
 	{ access_.full = Public;
                access_.get = Public;
              }
 	break;
 	case 32:
-#line 909 "mfilescanner.rl"
+#line 917 "mfilescanner.rl"
 	{ access_.full =
                  (access_.set == Public ? Public : Protected );
                access_.get = Protected;
              }
 	break;
 	case 33:
-#line 914 "mfilescanner.rl"
+#line 922 "mfilescanner.rl"
 	{ access_.full = access_.set;
                access_.get = Private;
              }
 	break;
 	case 34:
-#line 921 "mfilescanner.rl"
+#line 929 "mfilescanner.rl"
 	{ access_.full = Public;
                access_.get = Public;
                access_.set = Public;
              }
 	break;
 	case 35:
-#line 926 "mfilescanner.rl"
+#line 934 "mfilescanner.rl"
 	{ access_.full = Protected;
                access_.get = Protected;
                access_.set = Protected;
              }
 	break;
 	case 36:
-#line 931 "mfilescanner.rl"
+#line 939 "mfilescanner.rl"
 	{ access_.full = Private;
                access_.get = Private;
                access_.set = Private;
              }
 	break;
 	case 37:
-#line 944 "mfilescanner.rl"
+#line 952 "mfilescanner.rl"
 	{
            methodparams_.abstr = true;
          }
 	break;
 	case 38:
-#line 948 "mfilescanner.rl"
+#line 956 "mfilescanner.rl"
 	{
            methodparams_.statical = true;
          }
 	break;
 	case 39:
-#line 959 "mfilescanner.rl"
+#line 967 "mfilescanner.rl"
 	{
            propertyparams_.constant = true;
          }
 	break;
 	case 40:
-#line 984 "mfilescanner.rl"
+#line 992 "mfilescanner.rl"
 	{ tmp_string.assign(tmp_p, p - tmp_p);
                 if(tmp_string.find("e") == eventindent_)
                   {
@@ -10319,14 +10320,14 @@ _eof_trans:
               }
 	break;
 	case 41:
-#line 1056 "mfilescanner.rl"
+#line 1064 "mfilescanner.rl"
 	{
             print_access_specifier(access_.full);
             {cs = 3231; goto _again;}
           }
 	break;
 	case 42:
-#line 1066 "mfilescanner.rl"
+#line 1074 "mfilescanner.rl"
 	{
             string s(tmp_p, p - tmp_p);
             property_list_.push_back(s);
@@ -10334,48 +10335,48 @@ _eof_trans:
             }
 	break;
 	case 43:
-#line 1072 "mfilescanner.rl"
+#line 1080 "mfilescanner.rl"
 	{defaultprop_ = "";}
 	break;
 	case 44:
-#line 1075 "mfilescanner.rl"
+#line 1083 "mfilescanner.rl"
 	{
               defaultprop_ = string(tmp_p, p - tmp_p);
              }
 	break;
 	case 45:
-#line 1082 "mfilescanner.rl"
+#line 1090 "mfilescanner.rl"
 	{
                docuheader_.push_back(string(tmp_p, p - tmp_p+1));
                end_of_property_doc();
              }
 	break;
 	case 46:
-#line 1085 "mfilescanner.rl"
+#line 1093 "mfilescanner.rl"
 	{ end_of_property_doc(); }
 	break;
 	case 47:
-#line 1096 "mfilescanner.rl"
+#line 1104 "mfilescanner.rl"
 	{
          {cs = 3320; goto _again;}
        }
 	break;
 	case 48:
-#line 1102 "mfilescanner.rl"
+#line 1110 "mfilescanner.rl"
 	{ fout_ << "\n";}
 	break;
 	case 49:
-#line 1104 "mfilescanner.rl"
+#line 1112 "mfilescanner.rl"
 	{ p--; {cs = 3025; goto _again;} }
 	break;
 	case 50:
-#line 1108 "mfilescanner.rl"
+#line 1116 "mfilescanner.rl"
 	{
         print_access_specifier(access_.full);
         }
 	break;
 	case 51:
-#line 1168 "mfilescanner.rl"
+#line 1176 "mfilescanner.rl"
 	{
         //fout_ << "/*";
         p--;
@@ -10383,7 +10384,7 @@ _eof_trans:
       }
 	break;
 	case 52:
-#line 1174 "mfilescanner.rl"
+#line 1182 "mfilescanner.rl"
 	{
     p--;
 #ifdef DEBUG
@@ -10438,15 +10439,15 @@ _eof_trans:
   }
 	break;
 	case 53:
-#line 1234 "mfilescanner.rl"
+#line 1242 "mfilescanner.rl"
 	{is_getter_ = true;}
 	break;
 	case 54:
-#line 1234 "mfilescanner.rl"
+#line 1242 "mfilescanner.rl"
 	{is_setter_=true;}
 	break;
 	case 55:
-#line 1237 "mfilescanner.rl"
+#line 1245 "mfilescanner.rl"
 	{
             cfuncname_.assign(tmp_p, p - tmp_p);
 #ifdef DEBUG
@@ -10456,18 +10457,18 @@ _eof_trans:
           }
 	break;
 	case 56:
-#line 1250 "mfilescanner.rl"
+#line 1258 "mfilescanner.rl"
 	{
                  if(paramlist_.size() == 1 && paramlist_[0] == "this")
                  { paramlist_.clear(); }
                }
 	break;
 	case 57:
-#line 1255 "mfilescanner.rl"
+#line 1263 "mfilescanner.rl"
 	{ tmp_p=p; comment_found=true; }
 	break;
 	case 58:
-#line 1258 "mfilescanner.rl"
+#line 1266 "mfilescanner.rl"
 	{
              if(comment_found)
              {
@@ -10496,11 +10497,11 @@ _eof_trans:
            }
 	break;
 	case 59:
-#line 1287 "mfilescanner.rl"
+#line 1295 "mfilescanner.rl"
 	{ tmp_p=p; comment_found=true; }
 	break;
 	case 60:
-#line 1289 "mfilescanner.rl"
+#line 1297 "mfilescanner.rl"
 	{
                  if(comment_found)
                  {
@@ -10527,7 +10528,7 @@ _eof_trans:
              }
 	break;
 	case 61:
-#line 1328 "mfilescanner.rl"
+#line 1336 "mfilescanner.rl"
 	{
        string :: size_type found = filename_.rfind("/");
        if(found == string :: npos)
@@ -10544,25 +10545,25 @@ _eof_trans:
      }
 	break;
 	case 62:
-#line 1348 "mfilescanner.rl"
+#line 1356 "mfilescanner.rl"
 	{ fout_ << "public ::"; }
 	break;
 	case 63:
-#line 1349 "mfilescanner.rl"
+#line 1357 "mfilescanner.rl"
 	{ if(*p == '.')
                            fout_ << "::";
                          else fout_ << *p; }
 	break;
 	case 64:
-#line 1354 "mfilescanner.rl"
+#line 1362 "mfilescanner.rl"
 	{ fout_ << "\n  :"; }
 	break;
 	case 65:
-#line 1355 "mfilescanner.rl"
+#line 1363 "mfilescanner.rl"
 	{ fout_ << ",\n   "; }
 	break;
 	case 66:
-#line 1362 "mfilescanner.rl"
+#line 1370 "mfilescanner.rl"
 	{
             classname_.assign(tmp_p, p - tmp_p);
             is_class_ = true;
@@ -10570,18 +10571,18 @@ _eof_trans:
           }
 	break;
 	case 67:
-#line 1375 "mfilescanner.rl"
+#line 1383 "mfilescanner.rl"
 	{
         fout_ << " {\n";
         {cs = 3025; goto _again;}
       }
 	break;
 	case 68:
-#line 1396 "mfilescanner.rl"
+#line 1404 "mfilescanner.rl"
 	{ p--; tmp_p = p; }
 	break;
 	case 69:
-#line 1402 "mfilescanner.rl"
+#line 1410 "mfilescanner.rl"
 	{
                      p=tmp_p;
                      if(is_class_ && class_part_ == Header)
@@ -10590,14 +10591,14 @@ _eof_trans:
                     }
 	break;
 	case 70:
-#line 1408 "mfilescanner.rl"
+#line 1416 "mfilescanner.rl"
 	{
                      p=tmp_p;
                      {cs = 3120; goto _again;}
                     }
 	break;
 	case 71:
-#line 1413 "mfilescanner.rl"
+#line 1421 "mfilescanner.rl"
 	{
 #ifdef DEBUG
     debug_output("goto script",p);
@@ -10611,19 +10612,19 @@ _eof_trans:
 	{te = p+1;}
 	break;
 	case 76:
-#line 331 "mfilescanner.rl"
+#line 332 "mfilescanner.rl"
 	{act = 1;}
 	break;
 	case 77:
-#line 493 "mfilescanner.rl"
+#line 494 "mfilescanner.rl"
 	{act = 10;}
 	break;
 	case 78:
-#line 334 "mfilescanner.rl"
+#line 335 "mfilescanner.rl"
 	{te = p+1;{ fout_.write(ts, te-ts); }}
 	break;
 	case 79:
-#line 338 "mfilescanner.rl"
+#line 339 "mfilescanner.rl"
 	{te = p+1;{
            assert(p >= tmp_p-1);
            fout_.write(tmp_p, p - tmp_p+1);
@@ -10631,7 +10632,7 @@ _eof_trans:
          }}
 	break;
 	case 80:
-#line 355 "mfilescanner.rl"
+#line 356 "mfilescanner.rl"
 	{te = p+1;{
       p--;
       // store fieldname
@@ -10667,7 +10668,7 @@ _eof_trans:
     }}
 	break;
 	case 81:
-#line 465 "mfilescanner.rl"
+#line 466 "mfilescanner.rl"
 	{te = p+1;{
         string s;
         if(tmp_string.empty())
@@ -10683,27 +10684,27 @@ _eof_trans:
       }}
 	break;
 	case 82:
-#line 486 "mfilescanner.rl"
+#line 487 "mfilescanner.rl"
 	{te = p+1;{ fout_ << '['; }}
 	break;
 	case 83:
-#line 489 "mfilescanner.rl"
+#line 490 "mfilescanner.rl"
 	{te = p+1;{ fout_ << ']'; }}
 	break;
 	case 84:
-#line 493 "mfilescanner.rl"
+#line 494 "mfilescanner.rl"
 	{te = p+1;{ fout_ << (*p); }}
 	break;
 	case 85:
-#line 497 "mfilescanner.rl"
+#line 498 "mfilescanner.rl"
 	{te = p+1;{ fout_ << (*p); {cs = 3198; goto _again;} }}
 	break;
 	case 86:
-#line 331 "mfilescanner.rl"
+#line 332 "mfilescanner.rl"
 	{te = p;p--;{ fout_.write(ts, te-ts); }}
 	break;
 	case 87:
-#line 400 "mfilescanner.rl"
+#line 401 "mfilescanner.rl"
 	{te = p;p--;{
       // store fieldname
       assert(p >= tmp_p);
@@ -10754,19 +10755,19 @@ _eof_trans:
     }}
 	break;
 	case 88:
-#line 481 "mfilescanner.rl"
+#line 482 "mfilescanner.rl"
 	{te = p;p--;{ fout_.write(ts, te-ts); }}
 	break;
 	case 89:
-#line 493 "mfilescanner.rl"
+#line 494 "mfilescanner.rl"
 	{te = p;p--;{ fout_ << (*p); }}
 	break;
 	case 90:
-#line 331 "mfilescanner.rl"
+#line 332 "mfilescanner.rl"
 	{{p = ((te))-1;}{ fout_.write(ts, te-ts); }}
 	break;
 	case 91:
-#line 400 "mfilescanner.rl"
+#line 401 "mfilescanner.rl"
 	{{p = ((te))-1;}{
       // store fieldname
       assert(p >= tmp_p);
@@ -10817,11 +10818,11 @@ _eof_trans:
     }}
 	break;
 	case 92:
-#line 481 "mfilescanner.rl"
+#line 482 "mfilescanner.rl"
 	{{p = ((te))-1;}{ fout_.write(ts, te-ts); }}
 	break;
 	case 93:
-#line 493 "mfilescanner.rl"
+#line 494 "mfilescanner.rl"
 	{{p = ((te))-1;}{ fout_ << (*p); }}
 	break;
 	case 94:
@@ -10837,14 +10838,14 @@ _eof_trans:
 	}
 	break;
 	case 95:
-#line 507 "mfilescanner.rl"
+#line 508 "mfilescanner.rl"
 	{te = p+1;{
           new_syntax_ = true;
           fout_ << "*/\n"; //fout_ << "add to special group */\n";
         }}
 	break;
 	case 96:
-#line 514 "mfilescanner.rl"
+#line 515 "mfilescanner.rl"
 	{te = p+1;{
           assert(p+1 >= tmp_p);
           fout_.write(tmp_p, p - tmp_p+1);
@@ -10852,11 +10853,11 @@ _eof_trans:
         }}
 	break;
 	case 97:
-#line 522 "mfilescanner.rl"
+#line 523 "mfilescanner.rl"
 	{te = p+1;{ fout_ << '\n'; }}
 	break;
 	case 98:
-#line 543 "mfilescanner.rl"
+#line 544 "mfilescanner.rl"
 	{te = p+1;{
               if(is_class_ && class_part_ == Method)
               {
@@ -10881,23 +10882,30 @@ debug_output("in funcbody: goto funcline 2", p);
           }}
 	break;
 	case 99:
-#line 568 "mfilescanner.rl"
+#line 569 "mfilescanner.rl"
 	{te = p+1;{
         p = ts-1;
-        // end the previous function if existent
-        end_function();
+        if (!is_class_)
+        {
+          // end the previous function if existent
+          end_function();
 #ifdef DEBUG
 debug_output("in funcbody: goto main", p);
 #endif
-        {cs = 3174; goto _again;}
+          {cs = 3174; goto _again;}
+        }
+        else
+        {
+          {cs = 3176; goto _again;}
+        }
       }}
 	break;
 	case 100:
-#line 578 "mfilescanner.rl"
+#line 586 "mfilescanner.rl"
 	{te = p+1;}
 	break;
 	case 101:
-#line 531 "mfilescanner.rl"
+#line 532 "mfilescanner.rl"
 	{te = p;p--;{
           p = ts-1;
           // further parse the function body line
@@ -10908,7 +10916,7 @@ debug_output("in funcbody: goto funcline", p);
         }}
 	break;
 	case 102:
-#line 543 "mfilescanner.rl"
+#line 544 "mfilescanner.rl"
 	{te = p;p--;{
               if(is_class_ && class_part_ == Method)
               {
@@ -10933,7 +10941,7 @@ debug_output("in funcbody: goto funcline 2", p);
           }}
 	break;
 	case 103:
-#line 531 "mfilescanner.rl"
+#line 532 "mfilescanner.rl"
 	{{p = ((te))-1;}{
           p = ts-1;
           // further parse the function body line
@@ -10944,11 +10952,11 @@ debug_output("in funcbody: goto funcline", p);
         }}
 	break;
 	case 104:
-#line 627 "mfilescanner.rl"
+#line 635 "mfilescanner.rl"
 	{act = 22;}
 	break;
 	case 105:
-#line 593 "mfilescanner.rl"
+#line 601 "mfilescanner.rl"
 	{te = p+1;{
       assert(tmp_p2 >= tmp_p3);
       tmp_string.assign(tmp_p3, tmp_p2 - tmp_p3);
@@ -10958,7 +10966,7 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 106:
-#line 614 "mfilescanner.rl"
+#line 622 "mfilescanner.rl"
 	{te = p+1;{
       assert(p+1 >= tmp_p);
       string s(tmp_p, p - tmp_p + 1);
@@ -10967,11 +10975,11 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 107:
-#line 623 "mfilescanner.rl"
+#line 631 "mfilescanner.rl"
 	{te = p+1;{ /*fout_ << "empty line\n";*/ {cs = stack[--top]; goto _again;} }}
 	break;
 	case 108:
-#line 627 "mfilescanner.rl"
+#line 635 "mfilescanner.rl"
 	{te = p+1;{
       p =ts-1;
       // fout_ << "*/\n";
@@ -10979,7 +10987,7 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 109:
-#line 627 "mfilescanner.rl"
+#line 635 "mfilescanner.rl"
 	{te = p;p--;{
       p =ts-1;
       // fout_ << "*/\n";
@@ -11003,7 +11011,7 @@ debug_output("in funcbody: goto funcline", p);
 	}
 	break;
 	case 111:
-#line 646 "mfilescanner.rl"
+#line 654 "mfilescanner.rl"
 	{te = p+1;{
         //fout_ << tmp_string << '\n';
         clist_ = &(required_list_[tmp_string]);
@@ -11012,7 +11020,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 112:
-#line 660 "mfilescanner.rl"
+#line 668 "mfilescanner.rl"
 	{te = p+1;{
         clist_ = &(optional_list_[tmp_string]);
         docline = false;
@@ -11020,7 +11028,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 113:
-#line 673 "mfilescanner.rl"
+#line 681 "mfilescanner.rl"
 	{te = p+1;{
         clist_ = &(retval_list_[tmp_string]);
         docline = false;
@@ -11028,7 +11036,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 114:
-#line 683 "mfilescanner.rl"
+#line 691 "mfilescanner.rl"
 	{te = p+1;{
         clist_ = &param_list_;
         docline = false;
@@ -11036,7 +11044,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 115:
-#line 693 "mfilescanner.rl"
+#line 701 "mfilescanner.rl"
 	{te = p+1;{
         clist_ = &return_list_;
         docline = false;
@@ -11044,7 +11052,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 116:
-#line 704 "mfilescanner.rl"
+#line 712 "mfilescanner.rl"
 	{te = p+1;{
         /*fout_ << "*\n  ";*/
         docubody_.push_back("\n");
@@ -11052,7 +11060,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 117:
-#line 722 "mfilescanner.rl"
+#line 730 "mfilescanner.rl"
 	{te = p+1;{
         string s;
         assert(ts > tmp_p);
@@ -11062,15 +11070,15 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 118:
-#line 752 "mfilescanner.rl"
+#line 760 "mfilescanner.rl"
 	{te = p+1;}
 	break;
 	case 119:
-#line 766 "mfilescanner.rl"
+#line 774 "mfilescanner.rl"
 	{te = p+1;}
 	break;
 	case 120:
-#line 712 "mfilescanner.rl"
+#line 720 "mfilescanner.rl"
 	{te = p;p--;{
         if(!docline)
         {
@@ -11080,7 +11088,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 121:
-#line 722 "mfilescanner.rl"
+#line 730 "mfilescanner.rl"
 	{te = p;p--;{
         string s;
         assert(ts > tmp_p);
@@ -11090,19 +11098,19 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 122:
-#line 733 "mfilescanner.rl"
-	{te = p;p--;}
-	break;
-	case 123:
-#line 737 "mfilescanner.rl"
-	{te = p;p--;}
-	break;
-	case 124:
 #line 741 "mfilescanner.rl"
 	{te = p;p--;}
 	break;
+	case 123:
+#line 745 "mfilescanner.rl"
+	{te = p;p--;}
+	break;
+	case 124:
+#line 749 "mfilescanner.rl"
+	{te = p;p--;}
+	break;
 	case 125:
-#line 712 "mfilescanner.rl"
+#line 720 "mfilescanner.rl"
 	{{p = ((te))-1;}{
         if(!docline)
         {
@@ -11112,31 +11120,31 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 126:
-#line 733 "mfilescanner.rl"
-	{{p = ((te))-1;}}
-	break;
-	case 127:
-#line 737 "mfilescanner.rl"
-	{{p = ((te))-1;}}
-	break;
-	case 128:
 #line 741 "mfilescanner.rl"
 	{{p = ((te))-1;}}
 	break;
+	case 127:
+#line 745 "mfilescanner.rl"
+	{{p = ((te))-1;}}
+	break;
+	case 128:
+#line 749 "mfilescanner.rl"
+	{{p = ((te))-1;}}
+	break;
 	case 129:
-#line 777 "mfilescanner.rl"
+#line 785 "mfilescanner.rl"
 	{te = p+1;}
 	break;
 	case 130:
-#line 780 "mfilescanner.rl"
+#line 788 "mfilescanner.rl"
 	{te = p+1;{ {cs = 3227; goto _again;} }}
 	break;
 	case 131:
-#line 809 "mfilescanner.rl"
+#line 817 "mfilescanner.rl"
 	{act = 40;}
 	break;
 	case 132:
-#line 791 "mfilescanner.rl"
+#line 799 "mfilescanner.rl"
 	{te = p+1;{
         /* fout_ << "*"; fout_.write(tmp_p, p - tmp_p+1); */
         assert(p >= tmp_p);
@@ -11144,7 +11152,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 133:
-#line 799 "mfilescanner.rl"
+#line 807 "mfilescanner.rl"
 	{te = p+1;{
         /*fout_ << "*\n";*/
 #ifdef DEBUG
@@ -11154,7 +11162,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 134:
-#line 809 "mfilescanner.rl"
+#line 817 "mfilescanner.rl"
 	{te = p+1;{
         p=ts-1;
 #ifdef DEBUG
@@ -11214,7 +11222,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 135:
-#line 809 "mfilescanner.rl"
+#line 817 "mfilescanner.rl"
 	{te = p;p--;{
         p=ts-1;
 #ifdef DEBUG
@@ -11342,14 +11350,14 @@ debug_output("in funcbody: goto funcline", p);
 	}
 	break;
 	case 137:
-#line 1000 "mfilescanner.rl"
+#line 1008 "mfilescanner.rl"
 	{te = p+1;{
       end_method();
       fout_ << "\n";
     }}
 	break;
 	case 138:
-#line 1006 "mfilescanner.rl"
+#line 1014 "mfilescanner.rl"
 	{te = p+1;{
         tmp_string.assign(ts, te - ts+1);
         funcindent_ = tmp_string.find_first_not_of(" \t");
@@ -11365,7 +11373,7 @@ debug_output("in funcbody: goto funcline", p);
        }}
 	break;
 	case 139:
-#line 1021 "mfilescanner.rl"
+#line 1029 "mfilescanner.rl"
 	{te = p+1;{
            end_method();
 #if DEBUG
@@ -11375,7 +11383,7 @@ debug_output("in funcbody: goto funcline", p);
          }}
 	break;
 	case 140:
-#line 1029 "mfilescanner.rl"
+#line 1037 "mfilescanner.rl"
 	{te = p+1;{
 #if DEBUG
     debug_output("in methods: garble comment line",p);
@@ -11388,7 +11396,7 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 141:
-#line 1042 "mfilescanner.rl"
+#line 1050 "mfilescanner.rl"
 	{te = p+1;{
 #if DEBUG
     debug_output("in methods: found method declaration, going to funcdef",p);
@@ -11399,7 +11407,7 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 142:
-#line 1042 "mfilescanner.rl"
+#line 1050 "mfilescanner.rl"
 	{te = p;p--;{
 #if DEBUG
     debug_output("in methods: found method declaration, going to funcdef",p);
@@ -11410,7 +11418,7 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 143:
-#line 1042 "mfilescanner.rl"
+#line 1050 "mfilescanner.rl"
 	{{p = ((te))-1;}{
 #if DEBUG
     debug_output("in methods: found method declaration, going to funcdef",p);
@@ -11421,26 +11429,26 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 144:
-#line 1126 "mfilescanner.rl"
+#line 1134 "mfilescanner.rl"
 	{act = 47;}
 	break;
 	case 145:
-#line 1121 "mfilescanner.rl"
+#line 1129 "mfilescanner.rl"
 	{te = p+1;{
         fout_.write(tmp_p, p - tmp_p+1);
         {stack[top++] = cs; cs = 3175; goto _again;}
       }}
 	break;
 	case 146:
-#line 1126 "mfilescanner.rl"
+#line 1134 "mfilescanner.rl"
 	{te = p+1;{ fout_.write(ts, te-ts); }}
 	break;
 	case 147:
-#line 1128 "mfilescanner.rl"
+#line 1136 "mfilescanner.rl"
 	{te = p+1;{ fout_ << "\n"; }}
 	break;
 	case 148:
-#line 1130 "mfilescanner.rl"
+#line 1138 "mfilescanner.rl"
 	{te = p+1;{
       fout_ << "\n};\n";
       for(  list<string>::iterator it = namespaces_.begin();
@@ -11451,7 +11459,7 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 149:
-#line 1140 "mfilescanner.rl"
+#line 1148 "mfilescanner.rl"
 	{te = p+1;{
         propertyparams_ = PropParams();
         access_ = AccessStruct();
@@ -11460,7 +11468,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 150:
-#line 1147 "mfilescanner.rl"
+#line 1155 "mfilescanner.rl"
 	{te = p+1;{
         methodparams_ = MethodParams();
         access_ = AccessStruct();
@@ -11469,7 +11477,7 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 151:
-#line 1154 "mfilescanner.rl"
+#line 1162 "mfilescanner.rl"
 	{te = p+1;{
         std::string tmp_string(ts, te-ts);
         eventindent_ = tmp_string.find("e");
@@ -11478,11 +11486,11 @@ debug_output("in funcbody: goto funcline", p);
       }}
 	break;
 	case 152:
-#line 1126 "mfilescanner.rl"
+#line 1134 "mfilescanner.rl"
 	{te = p;p--;{ fout_.write(ts, te-ts); }}
 	break;
 	case 153:
-#line 1130 "mfilescanner.rl"
+#line 1138 "mfilescanner.rl"
 	{te = p;p--;{
       fout_ << "\n};\n";
       for(  list<string>::iterator it = namespaces_.begin();
@@ -11493,7 +11501,7 @@ debug_output("in funcbody: goto funcline", p);
     }}
 	break;
 	case 154:
-#line 1126 "mfilescanner.rl"
+#line 1134 "mfilescanner.rl"
 	{{p = ((te))-1;}{ fout_.write(ts, te-ts); }}
 	break;
 	case 155:
@@ -11508,7 +11516,7 @@ debug_output("in funcbody: goto funcline", p);
 	}
 	}
 	break;
-#line 11512 "mfilescanner.cc"
+#line 11520 "mfilescanner.cc"
 		}
 	}
 
@@ -11525,7 +11533,7 @@ _again:
 #line 1 "mfilescanner.rl"
 	{act = 0;}
 	break;
-#line 11529 "mfilescanner.cc"
+#line 11537 "mfilescanner.cc"
 		}
 	}
 
@@ -11553,11 +11561,12 @@ _again:
       fout_ << "/* ";
     }
     p--;
+    p--;
     {cs = stack[--top]; goto _again;}
   }
 	break;
 	case 5:
-#line 115 "mfilescanner.rl"
+#line 116 "mfilescanner.rl"
 	{
     end_function();
     for(  list<string>::iterator it = namespaces_.begin();
@@ -11568,7 +11577,7 @@ _again:
   }
 	break;
 	case 27:
-#line 876 "mfilescanner.rl"
+#line 884 "mfilescanner.rl"
 	{
 #ifdef DEBUG
         debug_output("doxy_get_brief",p);
@@ -11578,7 +11587,7 @@ _again:
       }
 	break;
 	case 52:
-#line 1174 "mfilescanner.rl"
+#line 1182 "mfilescanner.rl"
 	{
     p--;
 #ifdef DEBUG
@@ -11633,7 +11642,7 @@ _again:
   }
 	break;
 	case 71:
-#line 1413 "mfilescanner.rl"
+#line 1421 "mfilescanner.rl"
 	{
 #ifdef DEBUG
     debug_output("goto script",p);
@@ -11642,7 +11651,7 @@ _again:
     {cs = 3107; goto _again;}
   }
 	break;
-#line 11646 "mfilescanner.cc"
+#line 11655 "mfilescanner.cc"
 		}
 	}
 	}
@@ -11650,7 +11659,7 @@ _again:
 	_out: {}
 	}
 
-#line 1646 "mfilescanner.rl"
+#line 1654 "mfilescanner.rl"
 
     /* Check if we failed. */
     if ( cs == MFileScanner_error )

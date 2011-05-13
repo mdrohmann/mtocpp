@@ -19,6 +19,7 @@ classdef classA < general.reference.classB & a.b.c & ...
     % @endverbatim
     mixed_access2 = 'test';
 
+    DataStoreDirectory = '';
 
   end; % garbage comment
 
@@ -51,6 +52,11 @@ classdef classA < general.reference.classB & a.b.c & ...
 
     function obj = foo(a,b,c);
       % brief doc for foo
+
+      function private_function
+
+        pause;
+      end
 
       bar;
     end; % garbage comment
@@ -99,10 +105,27 @@ classdef classA < general.reference.classB & a.b.c & ...
     end
 
     function set.protected_access(this, value)
-      % setter enriching property help text of protected_access
+      % setter comment is parsed too
 
       a;
     end
+
+
+    function set.DataStoreDirectory(this, ds)
+      if ~isdir(ds)
+        fprintf('Creating directory %s\n',ds);
+        mkdir(ds);
+      end
+      setpref('KERMOR','DATASTORE',ds);
+      this.DataStoreDirectory = ds;
+      fprintf('Simulation and model data: %s\n',ds);
+    end
+
+    function set.protected_access2(this, value)
+
+       a;
+    end
+
   end
 
   methods (Static) ;;; % garbage comment

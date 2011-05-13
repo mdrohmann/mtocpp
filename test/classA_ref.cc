@@ -36,6 +36,12 @@ matlabtypesubstitute mixed_access2 = 'test';
   *
  */
 
+matlabtypesubstitute DataStoreDirectory = '';
+/** @var DataStoreDirectory
+  * @brief DataStoreDirectory
+  *
+  *
+ */
 
 
 public:
@@ -100,6 +106,11 @@ matlabtypesubstitute protected_access2;
 public:
 
 ret::substitutestart::obj::retsubstituteend foo(matlabtypesubstitute b,matlabtypesubstitute c) {
+
+      function private_function
+
+        pause;
+      end
 
       bar;
 }
@@ -168,11 +179,13 @@ ret::substitutestart::value::retsubstituteend protected_access()
         do something;
 *//*  the following end needs to be indented correctly
 */
-/*       end*//*  garble this correctly
+/* 
+      end*//*  garble this correctly
  *|
  * \todo this is a test
 */
 /* 
+
 }
 */
 /** @var protected_access
@@ -189,9 +202,44 @@ noret::substitute protected_access(matlabtypesubstitute value) {
 */
 /** @var protected_access
   * @par Setter is implemented
-  * setter enriching property help text of protected_access
+  * setter comment is parsed too
   *
   */
+
+
+/* 
+noret::substitute DataStoreDirectory(matlabtypesubstitute ds) {
+if ~isdir(ds)
+        fprintf('Creating directory*//* s\n',ds);
+*/
+/* 
+        mkdir(ds);
+      end
+      setpref('KERMOR','DATASTORE',ds);
+      this.DataStoreDirectory= ds;
+      fprintf('Simulation and model data:*//* s\n',ds);
+*/
+/* 
+}
+*/
+/** @var DataStoreDirectory
+  * @par Setter is implemented
+  *DataStoreDirectory
+  *
+  */
+
+/* 
+noret::substitute protected_access2(matlabtypesubstitute value) {
+
+       a;
+}
+*/
+/** @var protected_access2
+  * @par Setter is implemented
+  *protected access2
+  *
+  */
+
 
 public:
 static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute notthis,matlabtypesubstitute c) {
