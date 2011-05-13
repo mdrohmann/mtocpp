@@ -134,6 +134,12 @@ classdef classA < general.reference.classB & a.b.c & ...
     end
   end
 
+  methods (Static, Abstract)
+    % a static abstract method
+    [a,b] = static_abstract_method(this, c);
+
+  end
+
   methods (Abstract)
 
     % an abstract method comment above
