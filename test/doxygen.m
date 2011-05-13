@@ -1,5 +1,6 @@
 function rv = doxygen(param1, param2, auto_param)
-% function rv = doxygen(param1, param2) is ignored
+% function rv = doxygen(param1,...
+% param2,...) is ignored
 % Here comes a short description text
 %
 % After the first empty documentation line, paragraphs of the detailed
