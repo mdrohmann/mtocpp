@@ -135,14 +135,19 @@ classdef classA < general.reference.classB & a.b.c & ...
   end
 
   methods (Abstract)
+
     % an abstract method comment above
     %
-    [a] = abstract_method(this,d,e);
-    % an abstract method comment below
+    % Parameters:
+    %  d:  parameter 1
+    %  e:  parameter 2
     %
     % Return values:
     %   a: test of type @link classA::mixed_access "gridbase comment" @endlink
+    [a] = abstract_method(this,d,e);
     % an abstract method comment below
+    %
+    % further comments
   end
 
   events
