@@ -6,16 +6,20 @@ ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,m
 /*  After the first non-comment line the function body begins:
 */
 
+
 /** Comment blocks starting with %| are interpreted as Doxygen documentation
  * blocks and can include doxygen commands like
 */
 
+
 /** \todo There needs to be done something in this file
 */
+
 
 /*  fields of parameters that are used in the function body are added to the
  * required fileds list automatically, if they are not documentated yet.
 */
+
 param1.auto_added;
 
 param2.auto_added;
@@ -23,6 +27,7 @@ param2.auto_added;
 /*  fields of return values that are assigned somewhere in the function body are
  * also added automatically to the list of generated fields
 */
+
 rv.auto_added= 1;
 rv.sub.auto_added= 2;
 
@@ -171,6 +176,7 @@ rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespac
 
 /** \docupdate
 */
+
 
 }
 /** @fn rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_without_parameters()

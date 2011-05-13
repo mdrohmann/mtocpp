@@ -7,16 +7,19 @@ ret::substitutestart::p::retsubstituteend grid::rect::rectgrid::plot(::plot_para
 /*  Bernard Haasdonk 9.5.2007
 */
 
+
 if (nargin <2)
   params = [];
 end;
 
 /*  simply forward the call
 */
+
 p = plot_polygon_grid(grid,params);
 /* */
 /** \docupdate 
 */
+
 
 }
 /** @fn ret::substitutestart::p::retsubstituteend grid::rect::rectgrid::plot(::plot_params params)

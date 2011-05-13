@@ -57,6 +57,7 @@ using std::ostringstream;
       fout_ << "/* ";
     }
     fhold;
+    fhold;
     fret;
   };
 
@@ -567,12 +568,19 @@ debug_output("in funcbody: goto funcline 2", p);
       ([ \t]*. 'function ')
       {
         p = ts-1;
-        // end the previous function if existent
-        end_function();
+        if (!is_class_)
+        {
+          // end the previous function if existent
+          end_function();
 #ifdef DEBUG
 debug_output("in funcbody: goto main", p);
 #endif
-        fgoto main;
+          fgoto main;
+        }
+        else
+        {
+          fgoto funcline;
+        }
       };
 
       (EOF) $eof(end_of_file);
