@@ -2,7 +2,7 @@ all: mtoc postprocess
 
 #RAGELOPTIM=-G1
 RAGELOPTIM=-T0
-#CXXFLAGS=-g -DDEBUG
+#CXXFLAGS=-g -O0 -DDEBUG
 CXXFLAGS=
 
 install: all

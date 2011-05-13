@@ -256,17 +256,19 @@ static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesu
   */
 
 public:
+
 virtual ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;
 /** @fn ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e)
   * @brief  an abstract method comment above
   *  an abstract method comment below
   *
   *
-  * @param d    d
-  * @param e    e
+  *  further comments
+  *
+  * @param d      parameter 1
+  * @param e      parameter 2
   *
   * @retval a     test of type @link classA::mixed_access "gridbase comment" @endlink
-  *  an abstract method comment below
   */
 
 

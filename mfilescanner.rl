@@ -266,7 +266,10 @@ using std::ostringstream;
 }
 #endif
            // add an empty docu block for parameter \a s
-           param_list_[s] = DocuBlock();
+           if(param_list_.find(s) == param_list_.end())
+           {
+             param_list_[s] = DocuBlock();
+           }
 #ifdef DEBUG
 {
   ostringstream oss;
@@ -290,7 +293,10 @@ using std::ostringstream;
             string s(tmp_p, p - tmp_p);
             returnlist_.push_back(s);
             // add an empty docu block for return value \a s
-            return_list_[s] = DocuBlock();
+            if(return_list_.find(s) == return_list_.end())
+            {
+              return_list_[s] = DocuBlock();
+            }
           }
         )
     )**;
@@ -308,7 +314,11 @@ using std::ostringstream;
              string s(tmp_p, p - tmp_p);
              returnlist_.push_back(s);
              // add an empty docu block for single return value \a s
-             return_list_[s] = DocuBlock();
+
+             if(return_list_.find(s) == return_list_.end())
+             {
+               return_list_[s] = DocuBlock();
+             }
 #ifdef DEBUG
   cerr << "\n In return list: " << endl;
 #endif
@@ -2261,6 +2271,9 @@ void MFileScanner::end_function()
     // return fields
     write_docu_listmap(retval_list_, "@par Generated fields of ", cscan_.field_docu_);
   }
+#ifdef DEBUG
+  std::cerr << "CLEARING LISTS!";
+#endif
   clear_lists();
 
   // extra docu fields
