@@ -1495,6 +1495,11 @@ void MFileScanner :: print_pure_function_synopsis()
       get_typename(paramlist_[i], typen);
       fout_ << typen << " " << paramlist_[i];
     }
+    for(unsigned int i=0; i < returnlist_.size(); ++i)
+    {
+      std::string typen;// = "matlabtypesubstitute";
+      get_typename(returnlist_[i], typen);
+    }
     fout_ << ")";
   }
 }
