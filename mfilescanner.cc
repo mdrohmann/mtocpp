@@ -9696,6 +9696,11 @@ void MFileScanner :: print_pure_function_synopsis()
       get_typename(paramlist_[i], typen);
       fout_ << typen << " " << paramlist_[i];
     }
+    for(unsigned int i=0; i < returnlist_.size(); ++i)
+    {
+      std::string typen;// = "matlabtypesubstitute";
+      get_typename(returnlist_[i], typen);
+    }
     fout_ << ")";
   }
 }
@@ -9806,7 +9811,7 @@ int MFileScanner :: execute()
   std::ios::sync_with_stdio(false);
 
   
-#line 9810 "mfilescanner.cc"
+#line 9815 "mfilescanner.cc"
 	{
 	cs = MFileScanner_start;
 	top = 0;
@@ -9815,7 +9820,7 @@ int MFileScanner :: execute()
 	act = 0;
 	}
 
-#line 1608 "mfilescanner.rl"
+#line 1613 "mfilescanner.rl"
 
   /* Do the first read. */
   bool done = false;
@@ -9874,7 +9879,7 @@ int MFileScanner :: execute()
     }
 
     
-#line 9878 "mfilescanner.cc"
+#line 9883 "mfilescanner.cc"
 	{
 	int _klen;
 	unsigned int _trans;
@@ -9895,7 +9900,7 @@ _resume:
 #line 1 "mfilescanner.rl"
 	{ts = p;}
 	break;
-#line 9899 "mfilescanner.cc"
+#line 9904 "mfilescanner.cc"
 		}
 	}
 
@@ -11528,7 +11533,7 @@ debug_output("in funcbody: goto funcline", p);
 	}
 	}
 	break;
-#line 11532 "mfilescanner.cc"
+#line 11537 "mfilescanner.cc"
 		}
 	}
 
@@ -11545,7 +11550,7 @@ _again:
 #line 1 "mfilescanner.rl"
 	{act = 0;}
 	break;
-#line 11549 "mfilescanner.cc"
+#line 11554 "mfilescanner.cc"
 		}
 	}
 
@@ -11663,7 +11668,7 @@ _again:
     {cs = 3107; goto _again;}
   }
 	break;
-#line 11667 "mfilescanner.cc"
+#line 11672 "mfilescanner.cc"
 		}
 	}
 	}
@@ -11671,7 +11676,7 @@ _again:
 	_out: {}
 	}
 
-#line 1666 "mfilescanner.rl"
+#line 1671 "mfilescanner.rl"
 
     /* Check if we failed. */
     if ( cs == MFileScanner_error )
@@ -12194,7 +12199,7 @@ void MFileScanner::end_function()
   }
   if (! docubody_.empty()
        && (docubody_[0].find("copydoc") != std::string::npos
-           || docubody_[0].find("copybody") != std::string::npos
+           || docubody_[0].find("copydetails") != std::string::npos
            )
      )
   {
