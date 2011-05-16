@@ -2185,7 +2185,7 @@ void MFileScanner::end_function()
   }
   if (! docubody_.empty()
        && (docubody_[0].find("copydoc") != std::string::npos
-           || docubody_[0].find("copybody") != std::string::npos
+           || docubody_[0].find("copydetails") != std::string::npos
            )
      )
   {
