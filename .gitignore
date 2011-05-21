@@ -6,5 +6,8 @@ accesstest
 test/html
 .gdbinit
 test/*.cc
+CMakeCache.txt
+CMakeFiles
+*.sw[op]
 !test/*_ref.cc
 
