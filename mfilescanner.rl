@@ -26,6 +26,24 @@ using std::ostream;
 using std::ostream_iterator;
 using std::ostringstream;
 
+const char * AccessEnumNames[] =
+{
+  stringify( Public ),
+  stringify( Protected ),
+  stringify( Private )
+};
+
+const char * ClassPartNames[] =
+{
+  stringify( InClassComment ),
+  stringify( Header ),
+  stringify( Method ),
+  stringify( AtMethod ),
+  stringify( MethodDeclaration ),
+  stringify( Property ),
+  stringify( Event )
+};
+
 
 %%{
   machine MFileScanner;
@@ -78,7 +96,7 @@ using std::ostringstream;
           fgoto classbody;
         } else if(class_part_ == Method || class_part_ == AtMethod)
         {
-          if(only_parse_params_)
+          if(runMode_.mode == RunMode::ParseParams)
             return 1;
           print_function_synopsis();
           fgoto funcbody;
@@ -103,7 +121,7 @@ using std::ostringstream;
       }
       else
       {
-        if(only_parse_params_)
+        if(runMode_.mode == RunMode::ParseParams)
           return 1;
         print_function_synopsis();
         fgoto funcbody;
@@ -850,7 +868,7 @@ debug_output("in funcbody: goto main", p);
 #ifdef DEBUG
   debug_output("  in_doxy_get_brief: method: goto funcbody",p);
 #endif
-            if(only_parse_params_)
+            if(runMode_.mode == RunMode::ParseParams)
               return 1;
             print_function_synopsis();
             fgoto funcbody;
@@ -877,7 +895,7 @@ debug_output("in funcbody: goto main", p);
         }
         else
         {
-          if(only_parse_params_)
+          if(runMode_.mode == RunMode::ParseParams)
             return 1;
           print_function_synopsis();
           fgoto funcbody;
@@ -1018,38 +1036,47 @@ debug_output("in funcbody: goto main", p);
 # abstrakter fall, eine weitere Regel wird benötigt.
 # end => classbody
     (empty_line) => {
-      end_method();
-      fout_ << "\n";
+      if(runMode_.mode != RunMode::ParseMethodParams)
+      {
+        end_method();
+        fout_ << "\n";
+      }
     };
 
+    # default: method definition
     ([ \t]* . 'function' )
       => {
         tmp_string.assign(ts, te - ts+1);
         funcindent_ = tmp_string.find_first_not_of(" \t");
-#if DEBUG
-    {
-      ostringstream oss;
-      oss << "in methods: funcindent: " << funcindent_;
-      debug_output(oss.str(), p);
-    }
-#endif
+        #if DEBUG
+            {
+              ostringstream oss;
+              oss << "in methods: funcindent: " << funcindent_;
+              debug_output(oss.str(), p);
+            }
+        #endif
         p=ts+funcindent_-1;
         fgoto funct;
        };
 
+    # end of methods block
     ([ \t]* . 'end' . [ \t;]* . ('%' . garble_comment_line_wo_eol)? . EOL )
       => {
-           end_method();
-#if DEBUG
-    debug_output("in methods: found end keyword, goto classbody",p);
-#endif
+           if(runMode_.mode != RunMode::ParseMethodParams)
+           {
+             end_method();
+             #if DEBUG
+               debug_output("in methods: found end keyword, goto classbody",p);
+             #endif
+           }
            fgoto classbody;
          };
 
+    # comment between two methods
     ([ \t]* . '%' ) => {
-#if DEBUG
-    debug_output("in methods: garble comment line",p);
-#endif
+      #if DEBUG
+        debug_output("in methods: garble comment line",p);
+      #endif
 
       p = ts-1;
       class_part_ = InClassComment;
@@ -1060,9 +1087,9 @@ debug_output("in funcbody: goto main", p);
     # if we reach this: method declaration without definition is found
     ([ \t]* . [^% \t\n]) =>
     {
-#if DEBUG
-    debug_output("in methods: found method declaration, going to funcdef",p);
-#endif
+      #if DEBUG
+        debug_output("in methods: found method declaration, going to funcdef",p);
+      #endif
       class_part_ = MethodDeclaration;
       p = ts-1;
       fgoto funcdef;
@@ -1131,6 +1158,7 @@ debug_output("in funcbody: goto main", p);
     . propertybody* )
       );
   #}}}4
+
   #}}}2
 
   # class body {{{2
@@ -1207,7 +1235,7 @@ debug_output("in funcbody: goto main", p);
         string endstringtest;
         endstringtest.assign(p, 100);
         string::size_type first_char = endstringtest.find_first_not_of(" \t");
-        if(only_parse_params_)
+        if(runMode_.mode == RunMode::ParseParams)
           return 1;
         if (endstringtest.substr(first_char, 3) == "end")
         {
@@ -1237,7 +1265,7 @@ debug_output("in funcbody: goto main", p);
     }
     else
     {
-      if(only_parse_params_)
+      if(runMode_.mode == RunMode::ParseParams)
         return 1;
       print_function_synopsis();
       fgoto funcbody;
@@ -1256,9 +1284,24 @@ debug_output("in funcbody: goto main", p);
           >st_tok
           %{
             cfuncname_.assign(tmp_p, p - tmp_p);
-#ifdef DEBUG
-  cerr << "\n Identifier of function: " << cfuncname_ << endl;
-#endif
+            #ifdef DEBUG
+              cerr << "\n Identifier of function: " << cfuncname_ << endl;
+            #endif
+            // in ParseMethodParams mode, we only check for the method
+            // parameters of a specific method.
+            if(is_class_ && class_part_ == MethodDeclaration
+               && runMode_.mode == RunMode::ParseMethodParams)
+            {
+              if(runMode_.methodname == cfuncname_)
+              {
+                return 0;
+              }
+            }
+            if(runMode_.mode == RunMode::Normal
+               && is_class_ && class_part_ == AtMethod)
+            {
+              update_method_params(cfuncname_);
+            }
             is_script_ = false;
           }
       )
@@ -1289,19 +1332,19 @@ debug_output("in funcbody: goto main", p);
              if(is_class_ && class_part_ == MethodDeclaration )
              {
                class_part_ = Method;
-#if DEBUG
-    debug_output("in funcdef: end of method declaration, returning to methods",p);
-#endif
+               #if DEBUG
+                 debug_output("in funcdef: end of method declaration, returning to methods",p);
+               #endif
                fgoto methods;
              }
              else
              {
-//               fout_ << tmp_string << "{\n";
+               //               fout_ << tmp_string << "{\n";
                // check for documentation block
                fgoto expect_doxyblock;
              }
            }
-        # no parameter list && first function => script
+        # no parameter list && first function => ( script || method )
         | (( [ \t]
               |
              ('%' @{ tmp_p=p; comment_found=true; }
@@ -1317,9 +1360,9 @@ debug_output("in funcbody: goto main", p);
                    tmp_string = "";
                  }
                  comment_found = false;
-#if DEBUG
-  debug_output("in funcdef: script && no parameters: expect doxyblock",p);
-#endif
+                 #if DEBUG
+                   debug_output("in funcdef: script && no parameters: expect doxyblock",p);
+                 #endif
                  if(is_class_ && class_part_ == MethodDeclaration)
                  {
                     class_part_ = Method;
@@ -1444,6 +1487,32 @@ debug_output("in funcbody: goto main", p);
 
 }%%
 
+void MFileScanner :: update_method_params(const std::string & methodname)
+{
+  istream  *fcin;
+  ifstream  fin;
+  try
+  {
+    std::string filename(dirname_ + "/" + classname_ + ".m");
+    std::ios_base::iostate oldstate = fin.exceptions();
+    fin.exceptions ( ifstream::failbit | ifstream::badbit );
+    fin.open(filename.c_str());
+    fin.exceptions(oldstate);
+    fcin = &fin;
+    ostringstream oss;
+    RunMode methodParamsMode = runMode_;
+    methodParamsMode.mode = RunMode::ParseMethodParams;
+    methodParamsMode.methodname = methodname;
+    MFileScanner scanner(*fcin, oss, filename, cscan_.get_conffile(), methodParamsMode);
+    scanner.execute();
+    methodparams_ = scanner.getMethodParams();
+  }
+  catch (ifstream::failure e)
+  {
+    std::cerr << "Warning: No method params for @-function " << methodname << " found!\n";
+  }
+}
+
 void MFileScanner :: print_pure_function_synopsis()
 {
   // do we have a constructor?
@@ -1510,8 +1579,13 @@ void MFileScanner :: print_function_synopsis()
   {
    fout_ << "/* \n";
   }
-  if(is_class_ && (class_part_ == Method || class_part_ == MethodDeclaration) )
+  if(is_class_ && (class_part_ == Method
+                   || class_part_ == AtMethod
+                   || class_part_ == MethodDeclaration)
+    )
+  {
     fout_ << methodparams_.ccprefix();
+  }
 
   print_pure_function_synopsis();
 
@@ -1535,10 +1609,10 @@ void MFileScanner :: print_access_specifier(AccessEnum & access)
 MFileScanner :: MFileScanner(istream & fin, ostream & fout,
                              const std::string & filename,
                              const std::string & conffilename,
-                             bool latex_output,
-                             bool only_parse_params = false) :
+                             RunMode runMode = RunMode()
+                            ) :
   fin_(fin), fout_(fout), filename_(filename),
-  latex_output_(latex_output), cscan_(filename_, conffilename),
+  cscan_(filename_, conffilename),
   fnname_(filename), namespaces_(),
   line(1),
   ts(0), have(0), top(0),
@@ -1548,7 +1622,7 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
   classname_(), funcindent_(0), eventindent_(0),
   class_part_(Header),
   access_(), propertyparams_(), methodparams_(), property_list_(),
-  only_parse_params_(only_parse_params)
+  runMode_(runMode)
 {
   string::size_type found = fnname_.find_last_of('/');
   if(found != string::npos)
@@ -2065,7 +2139,7 @@ void MFileScanner::end_method()
   if (!cfuncname_.empty())
   {
 
-    if(docuheader_.empty())
+    if(runMode_.mode != RunMode::ParseMethodParams && docuheader_.empty())
     {
       istream  *fcin;
       ifstream  fin;
@@ -2078,7 +2152,9 @@ void MFileScanner::end_method()
         fin.exceptions(oldstate);
         fcin = &fin;
         ostringstream oss;
-        MFileScanner scanner(*fcin, oss, filename, cscan_.get_conffile(), latex_output_, true);
+        RunMode paramsMode = runMode_;
+        paramsMode.mode = RunMode::ParseParams;
+        MFileScanner scanner(*fcin, oss, filename, cscan_.get_conffile(), paramsMode);
         scanner.execute();
         param_list_ = scanner.getParamList();
       }
@@ -2160,7 +2236,8 @@ void MFileScanner::extract_typen(std::string & line, std::string & typen)
   size_t found = line.find("of type");
   if(found != std::string::npos)
   {
-    size_t typenstart=found+1+string("of type").length();
+    size_t typenstart=found+string("of type").length();
+    typenstart=line.find_first_not_of( " \t", typenstart );
     size_t typenend =
       line.find_first_of( " \n\0", typenstart );
     typen = line.substr(typenstart, typenend - typenstart);
@@ -2214,7 +2291,7 @@ void MFileScanner::end_function()
   // is the first function?
   if(is_first_function_)
   {
-    if(! latex_output_ && ! is_class_)
+    if(! runMode_.latex_output && ! is_class_)
     {
         // Then make a file documentation block
         fout_ << "/** @file \"" << filename_ << "\"\n  ";
@@ -2225,7 +2302,7 @@ void MFileScanner::end_function()
     }
   }
   fout_ << "/*";
-  if(latex_output_ && !is_class_)
+  if(runMode_.latex_output && !is_class_)
   {
     cout_ingroup();
     fout_ << "\n  ";
@@ -2278,9 +2355,9 @@ void MFileScanner::end_function()
     // return fields
     write_docu_listmap(retval_list_, "@par Generated fields of ", cscan_.field_docu_);
   }
-#ifdef DEBUG
-  std::cerr << "CLEARING LISTS!";
-#endif
+  #ifdef DEBUG
+    std::cerr << "CLEARING LISTS!";
+  #endif
   clear_lists();
 
   // extra docu fields
@@ -2297,79 +2374,36 @@ void MFileScanner::end_function()
   cfuncname_.clear();
 }
 
-void usage()
+void MFileScanner::debug_output(const std::string & msg, char * p)
 {
-  cout
-    << "Usage: mtoc mfile [latex_output] [conf]\n"
-    << "       mtoc --help\n\n"
-    << "mtoc parses a Matlab m-file 'mfile'.\n"
-    << "If 'latex_output' is set to 1, the output is optimized for latex output.\n"
-    << "The default is 0.\n"
-    << "A configuration file needs to be given or it must exist in\n"
-    << "'./doxygen/mtoc.conf'." << endl;
+  std::cerr << "Message: " << msg << "\n";
+  std::cerr << "Next 20 characters to parse: \n";
+  std::cerr.write(p, 20);
+  std::cerr << "\n------------------------------------\n";
+  std::cerr << "States are: ClassPart: " << ClassPartNames[class_part_] << "\n"
+    << propertyparams_ << methodparams_ << access_;
+  std::cerr << "\n------------------------------------\n";
 }
 
-// main routine
-int main(int argc, char ** argv)
+std::ostream & operator<<(std::ostream & os, AccessStruct & as)
 {
-  istream * fcin;
-  std::ifstream fin;
-  string filename;
-  if(argc >= 2)
-  {
-    if (string(argv[1]) == string("--help"))
-    {
-      usage();
-      exit(0);
-    }
-    std::ios_base::iostate oldstate = fin.exceptions();
-    fin.exceptions ( ifstream::failbit );
-    try
-    {
-      fin.open(argv[1]);
-      fcin = &fin;
-      filename = argv[1];
-    }
-    catch (std::ifstream::failure e)
-    {
-      cout << "Exception opening/reading file";
-      usage();
-      exit(-1);
-    }
-    fin.exceptions(oldstate);
-  }
-  else
-  {
-    fcin = &cin;
-    filename = "stdin";
-  }
+  os << "AccessStruct: full = " << AccessEnumNames[as.full] << " get  = " <<
+    AccessEnumNames[as.get] << " set  = " << AccessEnumNames[as.set] << "\n";
+  return os;
+}
 
-  bool latex_output = false;
-  if(argc == 3)
-  {
-    latex_output = (strncmp(argv[2],"1",1)==0) ? true : false;
-  }
+std::ostream & operator<<(std::ostream & os, PropParams & pp)
+{
+  os << "PropParams: constant = " << pp.constant << "\n";
+  return os;
+}
 
-  std::string conffilename;
-  if(argc == 4)
-  {
-    conffilename = std::string(argv[3]);
-  }
-
-  char buf[1000];
-  char * dummy = getcwd(buf, 1000);
-  dummy = 0;
-
-  string::size_type found = 0;
-  string cwd(buf);
-  found = filename.find(cwd);
-  if(found!=string::npos)
-  {
-    filename = filename.substr(cwd.size()+1);
-  }
-  MFileScanner scanner(*fcin, cout, filename, conffilename, latex_output);
-  scanner.execute();
-  return 0;
+std::ostream & operator<<(std::ostream & os, MethodParams & mp)
+{
+  std::string abstract = mp.abstr ? "abstract, " : "";
+  std::string statics = mp.statical ? "static, " : "";
+  os << "MethodParams: " << abstract << statics << "\n";
+  return os;
 }
 
 /* vim: set et sw=2 ft=ragel foldmethod=marker: */

@@ -534,6 +534,9 @@ noret::substitute plot(::plot_params params);
 
 noret::substitute set_enbi(matlabtypesubstitute nbind,matlabtypesubstitute values);
 
+public:
+static ret::substitutestart::ret::retsubstituteend test(matlabtypesubstitute a,matlabtypesubstitute b,matlabtypesubstitute c);
+
 };
 }
 }
