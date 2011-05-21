@@ -2,13 +2,15 @@
 
 FILES="test/+grid/+rect/@rectgrid/*.m test/+grid/+rect/doxygen_in_namespace.m ./*.m"
 
+cd @PROJECT_SOURCE_DIR@/test
+
 for MFILE in $FILES
 do
     echo "Checking $MFILE ..."
     MBFILE=`basename $MFILE`
     CCFILE="${MBFILE%.m}.cc"
     CCREFFILE="${MBFILE%.m}_ref.cc"
-    ../mtoc $MFILE 0 conf > $CCFILE
+    @PROJECT_BINARY_DIR@/mtocpp $MFILE 0 conf > $CCFILE
     if diff -u $CCFILE $CCREFFILE > $MBFILE.diff
     then
         echo " (passed)"

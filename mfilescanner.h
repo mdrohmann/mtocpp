@@ -1,6 +1,8 @@
 #ifndef MFILESCANNER_H_
 #define MFILESCANNER_H_
 
+#include "config.h"
+
 #include "confscanner.h"
 #include <string>
 #include <vector>

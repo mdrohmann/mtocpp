@@ -29,6 +29,8 @@ using std::ostringstream;
 void usage()
 {
   cout
+    << "mtoc Version " << MTOCPP_VERSION_MAJOR << "." << MTOCPP_VERSION_MINOR
+    << "\n\n"
     << "Usage: mtoc mfile [latex_output] [conf]\n"
     << "       mtoc --help\n\n"
     << "mtoc parses a Matlab m-file 'mfile'.\n"

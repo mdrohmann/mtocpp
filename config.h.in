@@ -1,0 +1,4 @@
+// the configured options and settings for Tutorial
+#define MTOCPP_VERSION_MAJOR @MTOC++_VERSION_MAJOR@
+#define MTOCPP_VERSION_MINOR @MTOC++_VERSION_MINOR@
+
