@@ -1,3 +1,4 @@
+#include "config.h"
 
 #include <string>
 #include <fstream>
@@ -173,8 +174,9 @@ private:
 
 void usage()
 {
-  cout
-    << "Usage: ./postprocess filename" << endl;
+  cout << "postprocess Version " << MTOCPP_VERSION_MAJOR << "."
+    << MTOCPP_VERSION_MINOR << endl;
+  cout << "Usage: ./postprocess filename" << endl;
 }
 
 int main(int argc, char ** argv)
@@ -185,6 +187,7 @@ int main(int argc, char ** argv)
     if (std::string("--help") == std::string(argv[1]))
     {
       usage();
+      return 0;
     }
     filename = argv[1];
   }

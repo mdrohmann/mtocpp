@@ -1,3 +1,5 @@
+# This file is copied from the fcgi-debug available at
+# http://cgit.stbuehler.de/gitosis/fcgi-debug
 
 IF(NOT RAGEL_EXECUTABLE)
   MESSAGE(STATUS "Looking for ragel")
