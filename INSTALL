@@ -1,0 +1,13 @@
+In order to compile this program and install it on your computer, you need to
+install the Ragel state machine (http://www.complang.org/ragel/).
+
+Afterwards you can build and install the programme with cmake. Under Unix for
+example like this:
+
+mkdir build
+cd build
+cmake -DCMAKE_INSTALL_PREFIX=/install/directory ..
+make install
+
+Have fun!
+
