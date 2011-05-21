@@ -353,6 +353,10 @@ classdef rectgrid
     plot(grid, params);
 
     set_enbi(grid, nbind, values);
+
+  end
+  methods(Static)
+    ret = test(a, b, c);
   end
 end
 

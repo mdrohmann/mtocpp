@@ -2,6 +2,7 @@
 *.o
 mtoc
 postprocess
+accesstest
 test/html
 .gdbinit
 test/*.cc

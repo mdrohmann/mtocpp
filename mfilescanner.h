@@ -1,5 +1,4 @@
 #ifndef MFILESCANNER_H_
-
 #define MFILESCANNER_H_
 
 #include "confscanner.h"
@@ -16,17 +15,31 @@
 
 #define stringify( name ) #name
 
+
+struct RunMode
+{
+  RunMode() : mode(Normal), methodname(), latex_output(false)
+  {}
+
+  typedef enum
+  {
+    Normal = 0,
+    ParseParams,
+    ParseMethodParams
+  } Mode;
+
+  Mode mode;
+  std::string methodname;
+  bool latex_output;
+};
+
 typedef enum
 {
   Public = 0, Protected, Private
 } AccessEnum;
 
-const char * AccessEnumNames[] =
-{
-  stringify( Public ),
-  stringify( Protected ),
-  stringify( Private )
-};
+
+/*extern const char * AccessEnumNames[];*/
 
 typedef enum
 {
@@ -39,16 +52,7 @@ typedef enum
   Event
 } ClassPart;
 
-const char * ClassPartNames[] =
-{
-  stringify( InClassComment ),
-  stringify( Header ),
-  stringify( Method ),
-  stringify( AtMethod ),
-  stringify( MethodDeclaration ),
-  stringify( Property ),
-  stringify( Event )
-};
+/*extern const char * ClassPartNames[];*/
 
 struct AccessStruct
 {
@@ -63,12 +67,6 @@ public:
   friend std::ostream & operator<<(std::ostream & os, AccessStruct & as);
 };
 
-std::ostream & operator<<(std::ostream & os, AccessStruct & as)
-{
-  os << "AccessStruct: full = " << AccessEnumNames[as.full] << " get  = " <<
-    AccessEnumNames[as.get] << " set  = " << AccessEnumNames[as.set] << "\n";
-  return os;
-}
 
 
 struct PropParams
@@ -89,12 +87,6 @@ public:
 
   friend std::ostream & operator<<(std::ostream & os, PropParams & pp);
 };
-
-std::ostream & operator<<(std::ostream & os, PropParams & pp)
-{
-  os << "PropParams: constant = " << pp.constant << "\n";
-  return os;
-}
 
 struct MethodParams
 {
@@ -125,14 +117,6 @@ public:
   friend std::ostream & operator<<(std::ostream & os, MethodParams & mp);
 };
 
-std::ostream & operator<<(std::ostream & os, MethodParams & mp)
-{
-  std::string abstract = mp.abstr ? "abstract, " : "";
-  std::string statics = mp.statical ? "static, " : "";
-  os << "MethodParams: " << abstract << statics << "\n";
-  return os;
-}
-
 class MFileScanner
 {
 public:
@@ -145,8 +129,7 @@ public:
   MFileScanner (std::istream & fin, std::ostream & fout,
                 const std::string & filename,
                 const std::string & conffilename,
-                bool latex_output,
-                bool only_parse_params);
+                RunMode runmode);
 
   int execute();
 
@@ -155,8 +138,13 @@ public:
     return param_list_;
   }
 
+  MethodParams & getMethodParams()
+  {
+    return methodparams_;
+  }
 
   void end_function();
+
 
 private:
   void end_of_class_doc();
@@ -166,6 +154,7 @@ private:
   void end_of_property_doc();
   void get_typename(const std::string &, std::string &);
   void extract_typen(std::string & line, std::string & typen);
+  void update_method_params(const std::string & methodname);
 
   void end_method();
   void clear_lists();
@@ -192,22 +181,12 @@ private:
                           const DocuListMap & altlistmap);
 
 
-  void debug_output(const std::string & msg, char * p)
-  {
-    std::cerr << "Message: " << msg << "\n";
-    std::cerr << "Next 20 characters to parse: \n";
-    std::cerr.write(p, 20);
-    std::cerr << "\n------------------------------------\n";
-    std::cerr << "States are: ClassPart: " << ClassPartNames[class_part_] << "\n"
-      << propertyparams_ << methodparams_ << access_;
-    std::cerr << "\n------------------------------------\n";
-  }
+  void debug_output(const std::string & msg, char * p);
 
 private:
   std::istream & fin_;
   std::ostream & fout_;
   const std::string  filename_;
-  bool latex_output_;
   ConfFileScanner cscan_;
   std::string  fnname_;
   std::list<std::string> namespaces_;
@@ -246,7 +225,7 @@ private:
   PropParams   propertyparams_;
   MethodParams methodparams_;
   std::vector<std::string> property_list_;
-  bool         only_parse_params_;
+  RunMode      runMode_;
   std::string  defaultprop_;
   std::string  dirname_;
 
