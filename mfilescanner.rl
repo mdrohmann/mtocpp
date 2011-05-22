@@ -1676,6 +1676,72 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
   }
 
   cscan_.execute();
+  if(cscan_.vars_.find(string("LATEX_OUTPUT"))!=cscan_.vars_.end())
+  {
+    if(cscan_.vars_[string("LATEX_OUTPUT")][0] == string("true"))
+    {
+      runMode_.latex_output = true;
+    }
+    else
+    {
+      runMode_.latex_output = false;
+    }
+  }
+  if(cscan_.vars_.find(string("PRINT_FIELDS"))!=cscan_.vars_.end())
+  {
+    if(cscan_.vars_[string("PRINT_FIELDS")][0] == string("true"))
+    {
+      runMode_.print_fields = true;
+    }
+    else
+    {
+      runMode_.print_fields = false;
+    }
+  }
+  if(cscan_.vars_.find(string("AUTO_ADD_FIELDS"))!=cscan_.vars_.end())
+  {
+    if(cscan_.vars_[string("AUTO_ADD_FIELDS")][0] == string("true"))
+    {
+      runMode_.auto_add_fields = true;
+    }
+    else
+    {
+      runMode_.auto_add_fields = false;
+    }
+  }
+  if(cscan_.vars_.find(string("AUTO_ADD_PARAMS"))!=cscan_.vars_.end())
+  {
+    if(cscan_.vars_[string("AUTO_ADD_PARAMS")][0] == string("true"))
+    {
+      runMode_.auto_add_params = true;
+    }
+    else
+    {
+      runMode_.auto_add_params = false;
+    }
+  }
+  if(cscan_.vars_.find(string("AUTO_ADD_MEMBERS"))!=cscan_.vars_.end())
+  {
+    if(cscan_.vars_[string("AUTO_ADD_MEMBERS")][0] == string("true"))
+    {
+      runMode_.auto_add_members = true;
+    }
+    else
+    {
+      runMode_.auto_add_members = false;
+    }
+  }
+  if(cscan_.vars_.find(string("AUTO_ADD_CLASS"))!=cscan_.vars_.end())
+  {
+    if(cscan_.vars_[string("AUTO_ADD_CLASS")][0] == string("true"))
+    {
+      runMode_.auto_add_class = true;
+    }
+    else
+    {
+      runMode_.auto_add_class = false;
+    }
+  }
 };
 
 // run the scanner
@@ -1918,6 +1984,7 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
 void MFileScanner::write_docu_list(const DocuList & list,
                                    const string & item_text,
                                    const DocuList & alternative,
+                                   bool add_undocumented = true,
                                    const string separator = string(),
                                    const string docu_list_name = string())
 {
@@ -1926,7 +1993,8 @@ void MFileScanner::write_docu_list(const DocuList & list,
   // iterate over documentation blocks
   for(; lit != list.end(); ++lit)
   {
-    fout_ << "* " << item_text << " " << (*lit).first << separator << "    ";
+    ostringstream oss;
+    oss << "* " << item_text << " " << (*lit).first << separator << "    ";
     const DocuBlock & block = (*lit).second;
     // block is empty?
     if(block.empty())
@@ -1947,19 +2015,28 @@ void MFileScanner::write_docu_list(const DocuList & list,
         if(param_type_map_entry != param_type_map_.end())
         {
           // ... or copy documentation brief text from class documentation ...
-          fout_ << "@copybrief " << (*param_type_map_entry).second << "::" << s << "\n  ";
+          fout_ << oss.str() << "@copybrief " << (*param_type_map_entry).second << "::" << s << "\n  ";
         }
         else
         {
-          // ... or use default text generated from variable name.
-          fout_ << replace_underscore(s) << "\n  ";
+          if (add_undocumented)
+          {
+            // ... or use default text generated from variable name.
+            fout_ << oss.str() << replace_underscore(s) << "\n  ";
+          }
         }
       }
       else
+      {
+        fout_ << oss.str();
         write_docu_block((*alit).second);
+      }
     }
     else
+    {
+      fout_ << oss.str();
       write_docu_block(block);
+    }
   }
 }
 
@@ -1981,6 +2058,7 @@ void MFileScanner::write_docu_listmap(const DocuListMap & listmap,
       write_docu_list((*mit).second,
                       "@arg \\c",
                       ( amit != altlistmap.end() ? (*amit).second : DocuList() ),
+                      runMode_.auto_add_fields,
                       "&nbsp;&mdash;&nbsp;",
                       (*mit).first );
     }
@@ -2003,17 +2081,20 @@ string MFileScanner::namespace_string()
 
 void MFileScanner::end_of_class_doc()
 {
-  fout_ << "/** @class \"" << namespace_string() << classname_ << "\"\n  ";
+  if (!docuheader_.empty() || runMode_.auto_add_class)
+  {
+    fout_ << "/** @class \"" << namespace_string() << classname_ << "\"\n  ";
 
-  cout_ingroup();
+    cout_ingroup();
 
-  fout_ << "* @brief ";
-  cout_docuheader(cfuncname_);
-  fout_ << "*\n  ";
-  cout_docubody();
-  fout_ << "*\n ";
-  cout_docuextra();
-  fout_ << "*/\n";
+    fout_ << "* @brief ";
+    cout_docuheader(cfuncname_);
+    fout_ << "*\n  ";
+    cout_docubody();
+    fout_ << "*\n ";
+    cout_docuextra();
+    fout_ << "*/\n";
+  }
 }
 
 void MFileScanner::end_of_property_doc()
@@ -2035,14 +2116,17 @@ void MFileScanner::end_of_property_doc()
   else
     fout_ << " = " << defaultprop_ << ";\n";
 
-  fout_ << "/** @var " << property_list_.back() << "\n  ";
-  fout_ << "* @brief ";
-  cout_docuheader(property_list_.back());
-  fout_ << "*\n  ";
-  cout_docubody();
-  fout_ << "*\n ";
-  cout_docuextra();
-  fout_ << "*/\n";
+  if (!docuheader_.empty() || runMode_.auto_add_members)
+  {
+    fout_ << "/** @var " << property_list_.back() << "\n  ";
+    fout_ << "* @brief ";
+    cout_docuheader(property_list_.back());
+    fout_ << "*\n  ";
+    cout_docubody();
+    fout_ << "*\n ";
+    cout_docuextra();
+    fout_ << "*/\n";
+  }
   docuheader_.clear();
   docubody_.clear();
   docuextra_.clear();
@@ -2288,85 +2372,97 @@ void MFileScanner::end_function()
     fout_ << "}\n";
   if(is_getter_ || is_setter_)
     fout_ << "*/\n";
-  // is the first function?
-  if(is_first_function_)
+  if (!docuheader_.empty() || runMode_.auto_add_members)
   {
-    if(! runMode_.latex_output && ! is_class_)
+    // is the first function?
+    if(is_first_function_)
     {
-        // Then make a file documentation block
-        fout_ << "/** @file \"" << filename_ << "\"\n  ";
+      if(! runMode_.latex_output && ! is_class_)
+      {
+          // Then make a file documentation block
+          fout_ << "/** @file \"" << filename_ << "\"\n  ";
 
-      cout_ingroup();
+        cout_ingroup();
 
-      fout_ << "*/\n";
+        fout_ << "*/\n";
+      }
     }
-  }
-  fout_ << "/*";
-  if(runMode_.latex_output && !is_class_)
-  {
-    cout_ingroup();
-    fout_ << "\n  ";
-  }
-  if(is_setter_ || is_getter_)
-  {
-    fout_ << "* @var " << cfuncname_ << "\n  ";
-    string temp = (is_setter_ ? "Setter" : "Getter");
-    fout_ << "* @par " << temp << " is implemented\n  *";
-  }
+    fout_ << "/*";
+    if(runMode_.latex_output && !is_class_)
+    {
+      cout_ingroup();
+      fout_ << "\n  ";
+    }
+    if(is_setter_ || is_getter_)
+    {
+      fout_ << "* @var " << cfuncname_ << "\n  ";
+      string temp = (is_setter_ ? "Setter" : "Getter");
+      fout_ << "* @par " << temp << " is implemented\n  *";
+    }
+    else
+    {
+      // specify the @fn part
+      fout_ << "* @fn ";
+      print_pure_function_synopsis();
+
+      // specify the @brief part
+      fout_ << "\n  * @brief ";
+    }
+    cout_docuheader(cfuncname_);
+    fout_ << "*\n  ";
+
+    // specify the @details part
+
+    // standard body definitions
+    cout_docubody();
+
+    if (! skip_parameters)
+    {
+      // parameters
+      if(!param_list_.empty() && !is_getter_ && !is_setter_)
+      {
+        fout_ << "*\n  ";
+        write_docu_list(param_list_, "@param", cscan_.param_list_,
+                        runMode_.auto_add_params);
+      }
+
+      // return values
+      if(!return_list_.empty() && !is_constructor && !is_getter_ && !is_setter_)
+      {
+        fout_ << "*\n  ";
+        write_docu_list(return_list_, "@retval", cscan_.return_list_,
+                        runMode_.auto_add_params);
+      }
+
+      if(runMode_.print_fields)
+      {
+        // required fields
+        write_docu_listmap(required_list_, "@par Required fields of ", cscan_.field_docu_);
+
+        // optional fields
+        write_docu_listmap(optional_list_, "@par Optional fields of ", cscan_.field_docu_);
+
+        // return fields
+        write_docu_listmap(retval_list_, "@par Generated fields of ", cscan_.field_docu_);
+      }
+    }
+    #ifdef DEBUG
+      std::cerr << "CLEARING LISTS!";
+    #endif
+    clear_lists();
+
+    // extra docu fields
+    cout_docuextra();
+    if( new_syntax_ )
+    {
+      fout_ << "* @synupdate Syntax needs to be updated! \n  ";
+    }
+    fout_ << "*/\n";
+    }
   else
   {
-    // specify the @fn part
-    fout_ << "* @fn ";
-    print_pure_function_synopsis();
-
-    // specify the @brief part
-    fout_ << "\n  * @brief ";
+    clear_lists();
   }
-  cout_docuheader(cfuncname_);
-  fout_ << "*\n  ";
-
-  // specify the @details part
-
-  // standard body definitions
-  cout_docubody();
-
-  if (! skip_parameters)
-  {
-    // parameters
-    if(!param_list_.empty() && !is_getter_ && !is_setter_)
-    {
-      fout_ << "*\n  ";
-      write_docu_list(param_list_, "@param", cscan_.param_list_);
-    }
-
-    // return values
-    if(!return_list_.empty() && !is_constructor && !is_getter_ && !is_setter_)
-    {
-      fout_ << "*\n  ";
-      write_docu_list(return_list_, "@retval", cscan_.return_list_);
-    }
-
-    // required fields
-    write_docu_listmap(required_list_, "@par Required fields of ", cscan_.field_docu_);
-
-    // optional fields
-    write_docu_listmap(optional_list_, "@par Optional fields of ", cscan_.field_docu_);
-
-    // return fields
-    write_docu_listmap(retval_list_, "@par Generated fields of ", cscan_.field_docu_);
-  }
-  #ifdef DEBUG
-    std::cerr << "CLEARING LISTS!";
-  #endif
-  clear_lists();
-
-  // extra docu fields
-  cout_docuextra();
-  if( new_syntax_ )
-  {
-    fout_ << "* @synupdate Syntax needs to be updated! \n  ";
-  }
-  fout_ << "*/\n";
   if(!is_method)
     is_first_function_ = false;
 

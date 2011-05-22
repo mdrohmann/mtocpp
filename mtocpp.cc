@@ -31,11 +31,9 @@ void usage()
   cout
     << "mtoc Version " << MTOCPP_VERSION_MAJOR << "." << MTOCPP_VERSION_MINOR
     << "\n\n"
-    << "Usage: mtoc mfile [latex_output] [conf]\n"
+    << "Usage: mtoc mfile [conf]\n"
     << "       mtoc --help\n\n"
     << "mtoc parses a Matlab m-file 'mfile'.\n"
-    << "If 'latex_output' is set to 1, the output is optimized for latex output.\n"
-    << "The default is 0.\n"
     << "A configuration file needs to be given or it must exist in\n"
     << "'./doxygen/mtoc.conf'." << endl;
 }
@@ -75,16 +73,10 @@ int main(int argc, char ** argv)
     filename = "stdin";
   }
 
-  bool latex_output = false;
+  std::string conffilename;
   if(argc == 3)
   {
-    latex_output = (strncmp(argv[2],"1",1)==0) ? true : false;
-  }
-
-  std::string conffilename;
-  if(argc == 4)
-  {
-    conffilename = std::string(argv[3]);
+    conffilename = std::string(argv[2]);
   }
 
   char buf[1000];
@@ -99,7 +91,6 @@ int main(int argc, char ** argv)
     filename = filename.substr(cwd.size()+1);
   }
   RunMode runMode;
-  runMode.latex_output = latex_output;
   MFileScanner scanner(*fcin, cout, filename, conffilename, runMode);
   scanner.execute();
   return 0;
