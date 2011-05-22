@@ -10,7 +10,7 @@ do
     MBFILE=`basename $MFILE`
     CCFILE="${MBFILE%.m}.cc"
     CCREFFILE="${MBFILE%.m}_ref.cc"
-    @PROJECT_BINARY_DIR@/mtocpp $MFILE 0 conf > $CCFILE
+    @PROJECT_BINARY_DIR@/mtocpp $MFILE conf > $CCFILE
     if diff -u $CCFILE $CCREFFILE > $MBFILE.diff
     then
         echo " (passed)"

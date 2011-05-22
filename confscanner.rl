@@ -324,14 +324,20 @@ using std::ifstream;
            MWSOC
            | (
               # variable definitions (not yet implemented)
-              (IDENT
+              (MIDENT
                  >(st_tok)
                  %(string_tok)
               ). MWSOC* . ':=' . MWSOC*
-              . (GLOB >st_tok @{/*TODO*/})
-              . (MWSOC* . (GLOB >st_tok @{/*TODO*/}))*
+              . (GLOB >st_tok )
+              . (MWSOC*
+                 . (GLOB)
+                )*
               . MWSOC*
               . ';'
+                @{
+                  arglist_ = &vars_[tmp_string];
+                  arglist_->push_back(std::string(tmp_p, p - tmp_p));
+                 }
              )
            |
            # end variable definitions

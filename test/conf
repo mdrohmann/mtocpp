@@ -1,5 +1,16 @@
-# File Patterns
-ALL := *.m;
+# Configurations
+
+LATEX_OUTPUT := false;
+
+# PRINT_FIELDS := false;
+
+# AUTO_ADD_FIELDS := false;
+
+#AUTO_ADD_PARAMETERS := false;
+
+#AUTO_ADD_MEMBERS := false;
+
+#AUTO_ADD_CLASS := false;
 
 ##
 

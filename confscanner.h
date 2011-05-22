@@ -34,13 +34,14 @@ public:
   const char * get_conffile();
 
 public:
-  DocuList           param_list_;
-  DocuList           return_list_;
-  DocuListMap        field_docu_;
-  DocuBlock          docuheader_;
-  DocuBlock          docubody_;
-  DocuBlock          docuextra_;
-  GroupSet           groupset_;
+  DocuList     param_list_;
+  DocuList     return_list_;
+  DocuListMap  field_docu_;
+  DocuBlock    docuheader_;
+  DocuBlock    docubody_;
+  DocuBlock    docuextra_;
+  GroupSet     groupset_;
+  DocuList     vars_;
 
 private:
 
@@ -102,6 +103,7 @@ private:
   DocuListMap   *clistmap_;
   GlobListMap    globlist_map_;
   GlobListStack  globlist_stack_;
+  DocuBlock     *arglist_;
 
 };
 

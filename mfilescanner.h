@@ -20,7 +20,10 @@
 
 struct RunMode
 {
-  RunMode() : mode(Normal), methodname(), latex_output(false)
+  RunMode() : mode(Normal), methodname(), latex_output(false),
+  print_fields(true), auto_add_fields(true),
+  auto_add_params(true), auto_add_members(true),
+  auto_add_class(true)
   {}
 
   typedef enum
@@ -33,6 +36,11 @@ struct RunMode
   Mode mode;
   std::string methodname;
   bool latex_output;
+  bool print_fields;
+  bool auto_add_fields;
+  bool auto_add_params;
+  bool auto_add_members;
+  bool auto_add_class;
 };
 
 typedef enum
@@ -175,6 +183,7 @@ private:
   void write_docu_list(const DocuList & list,
                        const std::string & item_text,
                        const DocuList & alternative,
+                       bool,
                        const std::string separator,
                        const std::string docu_list_name);
 
