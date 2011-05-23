@@ -1,8 +1,13 @@
 #include "confscanner.h"
 
+#ifdef WIN32
+#include <windows.h>
+#include <shlwapi.h>
+#else
 extern "C" {
 #include <fnmatch.h>
 }
+#endif
 
 using std::cerr;
 using std::cout;
@@ -370,11 +375,17 @@ bool ConfFileScanner :: check_for_match(int l, const char * str)
     if (glob[0] == '.' && glob[1] == '/')
     {
       glob = &glob[2];
+#ifndef WIN32
       flags = FNM_PATHNAME;
+#endif
     }
 
     // check wether str matches glob
+#ifdef WIN32
+    if(PathMatchSpec(str,glob))
+#else
     if(fnmatch(glob, str, flags) == 0)
+#endif
     {
       return true;
     }

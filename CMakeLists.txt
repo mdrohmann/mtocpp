@@ -29,6 +29,11 @@ RAGEL_PARSER(postprocess)
 
 ADD_EXECUTABLE(mtocpp mtocpp.cc mfilescanner.cc confscanner.cc)
 ADD_EXECUTABLE(postprocess postprocess.cc)
+ADD_EXECUTABLE(accesstest access.cc mfilescanner.cc confscanner.cc)
+IF(CMAKE_CROSSCOMPILING)
+  TARGET_LINK_LIBRARIES(mtocpp -lshlwapi)
+  TARGET_LINK_LIBRARIES(accesstest -lshlwapi)
+ENDIF(CMAKE_CROSSCOMPILING)
 
 INSTALL(TARGETS mtocpp postprocess DESTINATION bin)
 INSTALL(FILES License.txt test/doxygen.m DESTINATION share/doc/mtocpp)
@@ -40,8 +45,6 @@ SET_TESTS_PROPERTIES(MTOCPP_TEST
 IF(DOXYGEN_FOUND)
   ADD_TEST(NAME MTOCPP_DOXYTEST COMMAND ${DOXYGEN_EXECUTABLE} "${PROJECT_SOURCE_DIR}/test/Doxyfile")
 ENDIF(DOXYGEN_FOUND)
-
-ADD_EXECUTABLE(accesstest access.cc mfilescanner.cc confscanner.cc)
 
 # enable dashboard scripting
 INCLUDE (CTest)
