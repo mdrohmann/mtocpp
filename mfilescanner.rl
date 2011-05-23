@@ -1614,7 +1614,7 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
   fin_(fin), fout_(fout), filename_(filename),
   cscan_(filename_, conffilename),
   fnname_(filename), namespaces_(),
-  line(1),
+  buf(new char[BUFSIZE]), line(1),
   ts(0), have(0), top(0),
   opt(false), new_syntax_(false),
   is_script_(false), is_first_function_(true),
@@ -1662,7 +1662,7 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
   }
   for (list<string>::iterator it = namespaces_.begin();
        it != namespaces_.end(); ++it)
-    fout_ << "namespace " << *it << "{\n";
+    fout_ << "namespace " << *it << "{" << endl;
 
   found = fnname_.rfind("/");
   if(found != string::npos)

@@ -141,6 +141,11 @@ public:
                 const std::string & conffilename,
                 RunMode runmode);
 
+  virtual ~MFileScanner()
+  {
+    delete buf;
+  }
+
   int execute();
 
   DocuList & getParamList()
@@ -201,7 +206,7 @@ private:
   ConfFileScanner cscan_;
   std::string  fnname_;
   std::list<std::string> namespaces_;
-  char         buf[BUFSIZE];
+  char         *buf;
   int          line            , col;
   char        *ts              , *te;
   int          act             , have;
