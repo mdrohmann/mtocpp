@@ -371,7 +371,9 @@ bool ConfFileScanner :: check_for_match(int l, const char * str)
   for( iterator it = gl.begin(); it != endit; it++ )
   {
     const char * glob = (*it).c_str();
+#ifndef WIN32
     int flags = 0;
+#endif
     if (glob[0] == '.' && glob[1] == '/')
     {
       glob = &glob[2];
