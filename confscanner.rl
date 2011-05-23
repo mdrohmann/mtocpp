@@ -450,7 +450,7 @@ void ConfFileScanner :: check_glob_level_up()
 // constructor
 ConfFileScanner
 :: ConfFileScanner(const std::string & filename, const std::string & conffilename)
- : line(1), have(0), top(0), opt(true),
+ : buf(new char[BUFSIZE]), line(1), have(0), top(0), opt(true),
    filename_(filename),
    conffile_(conffilename == "" ? "./doxygen/mtoc.conf" : conffilename),
    confistream_(get_conffile()),

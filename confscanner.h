@@ -29,6 +29,11 @@ private:
 public:
   ConfFileScanner(const std::string & filename, const std::string & conffilename);
 
+  virtual ~ConfFileScanner()
+  {
+    delete buf;
+  }
+
   int execute();
 
   const char * get_conffile();
@@ -79,7 +84,7 @@ private:
 
 private:
   /* ragel scanner variables */
-  char         buf[BUFSIZE];
+  char        *buf;
   int          line            , col;
   int          have;
   int          cs;
