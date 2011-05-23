@@ -4,14 +4,21 @@ FILES="test/+grid/+rect/@rectgrid/*.m test/+grid/+rect/doxygen_in_namespace.m ./
 
 cd @PROJECT_SOURCE_DIR@/test
 
+if [ -x @PROJECT_BINARY_DIR@/mtocpp ];
+then
+    MTOCPP=@PROJECT_BINARY_DIR@/mtocpp
+else
+    MTOCPP="wine @PROJECT_BINARY_DIR@/mtocpp.exe"
+fi
+
 for MFILE in $FILES
 do
     echo "Checking $MFILE ..."
     MBFILE=`basename $MFILE`
     CCFILE="${MBFILE%.m}.cc"
     CCREFFILE="${MBFILE%.m}_ref.cc"
-    @PROJECT_BINARY_DIR@/mtocpp $MFILE conf > $CCFILE
-    if diff -u $CCFILE $CCREFFILE > $MBFILE.diff
+    $MTOCPP $MFILE conf > $CCFILE
+    if diff --strip-trailing-cr -u $CCFILE $CCREFFILE > $MBFILE.diff
     then
         echo " (passed)"
         rm $MBFILE.diff
