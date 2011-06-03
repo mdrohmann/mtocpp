@@ -1108,6 +1108,15 @@ debug_output("in funcbody: goto main", p);
 
    #}}}4
 
+  matrix_or_cell := (
+      '[' . ( [^[{\]] | [[{] @{fhold; fcall matrix_or_cell;} )* . ']' @{ fret; }
+      |
+      '{' . ( [^[{}]  | [[{] @{fhold; fcall matrix_or_cell;} )* . '}' @{ fret; }
+      );
+
+  matrix = ([[{] @{fhold; fcall matrix_or_cell;} );
+
+
   # single property {{{4
   prop = ( ( [ \t]* . (IDENT) >st_tok
                  %{
@@ -1118,7 +1127,7 @@ debug_output("in funcbody: goto main", p);
           )
         . ( ';' @{defaultprop_ = "";}
             |
-            ([ =]+ %st_tok . ([[{] . ([^\]}]* . [\]}])* )* . [^;]* .';')
+            ([ =]+ %st_tok . ( matrix | [^[{;])* .';')
             @{
               defaultprop_ = string(tmp_p, p - tmp_p);
              }
