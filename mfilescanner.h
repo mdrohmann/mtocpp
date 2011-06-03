@@ -212,7 +212,7 @@ private:
   int          act             , have;
   int          cs;
   int          top;
-  int          stack[5];
+  int          stack[10];
   bool         opt;
   bool         new_syntax_;
   DocuListMap  required_list_;
