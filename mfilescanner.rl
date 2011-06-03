@@ -1118,7 +1118,7 @@ debug_output("in funcbody: goto main", p);
           )
         . ( ';' @{defaultprop_ = "";}
             |
-            ([ =]+ %st_tok . [^;]* .';')
+            ([ =]+ %st_tok . ([[{] . ([^\]}]* . [\]}])* )* . [^;]* .';')
             @{
               defaultprop_ = string(tmp_p, p - tmp_p);
              }

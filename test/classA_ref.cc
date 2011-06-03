@@ -66,6 +66,13 @@ static const matlabtypesubstitute cConstant = 3;
   *
  */
 
+static const matlabtypesubstitute dConstant = { [ 1, 2; 3, 4]; 'test'; [ 1 2; [ 3 4] ] };
+/** @var dConstant
+  * @brief  test
+  *
+  *
+ */
+
 static const matlabtypesubstitute dConstant = struct('a', [], 'b', {'c', 'd'}, 'e', [1 2 3]);
 /** @var dConstant
   * @brief dConstant

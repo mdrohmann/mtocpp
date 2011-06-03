@@ -31,6 +31,9 @@ classdef classA < general.reference.classB & a.b.c & ...
 
     cConstant = 3; % help text for cConstant
 
+    % test
+    dConstant = { [ 1, 2; 3, 4]; 'test'; [ 1 2; [ 3 4] ] };
+
     dConstant = struct('a', [], 'b', {'c', 'd'}, 'e', [1 2 3]);
   end
 
