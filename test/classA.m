@@ -21,6 +21,8 @@ classdef classA < general.reference.classB & a.b.c & ...
 
     DataStoreDirectory = '';
 
+    SomeProp = struct('xi',[],'ti',[],'mui',[]);
+
   end; % garbage comment
 
   properties (Constant); % garbage comment

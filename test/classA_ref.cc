@@ -43,6 +43,13 @@ matlabtypesubstitute DataStoreDirectory = '';
   *
  */
 
+matlabtypesubstitute SomeProp = struct('xi',[],'ti',[],'mui',[]);
+/** @var SomeProp
+  * @brief SomeProp
+  *
+  *
+ */
+
 
 public:
 static const matlabtypesubstitute aConstant = 1;
