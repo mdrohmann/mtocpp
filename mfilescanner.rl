@@ -1426,8 +1426,8 @@ debug_output("in funcbody: goto main", p);
       '<' @{ fout_ << "\n  :"; } . WSOC* . superclass . WSOC*
           . ('&' @{ fout_ << ",\n   "; } . WSOC* . superclass . WSOC*)* );
 
-  classdef = (
-      'classdef' . WSOC* .
+  classdef := (
+      'classdef' . WSOC* . ('(' . WSOC* . 'Sealed' . [^)]* . ')')? . WSOC* .
       # matlab identifier (class name stored in classname_)
       ( IDENT
           >st_tok
@@ -1449,15 +1449,6 @@ debug_output("in funcbody: goto main", p);
         fgoto expect_doxyblock;
       } );
 
-  class :=
-  (
-    (
-      comment_block @in_c_block
-      | [ \t]*. EOL
-    )*
-    . [\t]* . 'classdef'
-    . classdef
-  ) ;
   # }}}2
 
   # main loop {{{2
