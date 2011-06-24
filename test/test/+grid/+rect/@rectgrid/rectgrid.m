@@ -356,7 +356,7 @@ classdef rectgrid
 
   end
   methods(Static)
-    ret = test(a, b, c);
+    ret = test(auto_param, b, c);
   end
 end
 

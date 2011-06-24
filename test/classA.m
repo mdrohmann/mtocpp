@@ -1,6 +1,7 @@
 classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
     d.e.f ...
-    & g.h.i;
+    & g.h.i ...
+    & grid.rect.rectgrid;
   % help for classA
   %
   % bigger help for classA
@@ -136,6 +137,21 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
   methods (Static) ;;; % garbage comment
     function [a,b] = static_method(notthis,c)
       % a static method
+    end
+
+    function ret = test(auto_param,b,c)
+      % @copybrief grid::rect::rectgrid::test()
+      %
+      % @copydetails grid::rect::rectgrid::test()
+      %
+      % If copydetails/copydoc commands are used, "parameters" and "return
+      % values" are ignored in the derived class, except for the strings
+      % 'object of ...' which are used to define the parameter / return value
+      % type.
+      %
+      % Parameters:
+      %   b: second argument in derived class (this is not shown!)
+      %   c: object of type test2
     end
   end
 

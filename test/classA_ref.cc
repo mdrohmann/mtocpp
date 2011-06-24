@@ -2,7 +2,8 @@ class classA
   :public ::general::reference::classB,
    public ::a::b::c,
    public ::d::e::f,
-   public ::g::h::i {
+   public ::g::h::i,
+   public ::grid::rect::rectgrid {
 /** @class "classA"
   * @ingroup test
   * @brief  help for classA
@@ -267,6 +268,21 @@ static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesu
   *
   * @retval a    a
   * @retval b    b
+  */
+
+static ret::substitutestart::ret::retsubstituteend test(matlabtypesubstitute a,matlabtypesubstitute b,::test2 c) {
+}
+/** @fn ret::substitutestart::ret::retsubstituteend test(matlabtypesubstitute a,matlabtypesubstitute b,::test2 c)
+  * @brief  @copybrief grid::rect::rectgrid::test()
+  *
+  *
+  *  @copydetails grid::rect::rectgrid::test()
+  * 
+  *  If copydetails/copydoc commands are used, "parameters" and "return
+  *  values" are ignored in the derived class, except for the strings
+  *  <tt>object of ...</tt> which are used to define the parameter / return value
+  *  type.
+  * 
   */
 
 public:
