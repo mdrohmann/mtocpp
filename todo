@@ -1,5 +1,0 @@
-Bei unterschiedlichen Access-Rights Kommentar hinzufügen (SetAccess != GetAccess)
-
-done:
-Deklarieren von Typen in Kommentaren über die properties (of type)
-getter und setter Methodenrümpfe nicht mehr auskommentieren, sondern löschen. (Sonst bereiten innere Kommentare Probleme)

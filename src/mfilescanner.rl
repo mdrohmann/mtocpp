@@ -62,7 +62,7 @@ const char * ClassPartNames[] =
   in_comment_block :=
   (
    # comment line begins with a percent sign
-   '%'
+   [ \t]* . '%'
      @{ tmp_p = p+1; fout_ << " *"; }
    # and then some default characters
    . (default - '\n')* . EOL
@@ -177,6 +177,14 @@ const char * ClassPartNames[] =
             fout_ << "/**"; tmp_p = p+1;
           }
      . (default - '\n')* . EOL
+#     . ( EOL . [ \t]*
+#       . '%' @{
+#                assert(p >= tmp_p -1);
+#                fout_.write(tmp_p, p - tmp_p+1);
+#                fout_.write("* ");
+#                tmp_p = p+1;
+#              }
+#     . (default - '\n')* )* . EOL
      |
     # else: a regular comment
      ( (default - '|')
@@ -1720,15 +1728,15 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
       runMode_.auto_add_params = false;
     }
   }
-  if(cscan_.vars_.find(string("AUTO_ADD_MEMBERS"))!=cscan_.vars_.end())
+  if(cscan_.vars_.find(string("AUTO_ADD_CLASS_PROPERTIES"))!=cscan_.vars_.end())
   {
-    if(cscan_.vars_[string("AUTO_ADD_MEMBERS")][0] == string("true"))
+    if(cscan_.vars_[string("AUTO_ADD_CLASS_PROPERTIES")][0] == string("true"))
     {
-      runMode_.auto_add_members = true;
+      runMode_.auto_add_class_properties = true;
     }
     else
     {
-      runMode_.auto_add_members = false;
+      runMode_.auto_add_class_properties = false;
     }
   }
   if(cscan_.vars_.find(string("AUTO_ADD_CLASS"))!=cscan_.vars_.end())
@@ -1984,7 +1992,7 @@ void MFileScanner::write_docu_block(const DocuBlock & block)
 void MFileScanner::write_docu_list(const DocuList & list,
                                    const string & item_text,
                                    const DocuList & alternative,
-                                   bool add_undocumented = true,
+                                   bool add_undocumented = false,
                                    const string separator = string(),
                                    const string docu_list_name = string())
 {
@@ -2116,7 +2124,7 @@ void MFileScanner::end_of_property_doc()
   else
     fout_ << " = " << defaultprop_ << ";\n";
 
-  if (!docuheader_.empty() || runMode_.auto_add_members)
+  if (!docuheader_.empty() || runMode_.auto_add_class_properties)
   {
     fout_ << "/** @var " << property_list_.back() << "\n  ";
     fout_ << "* @brief ";
@@ -2372,7 +2380,7 @@ void MFileScanner::end_function()
     fout_ << "}\n";
   if(is_getter_ || is_setter_)
     fout_ << "*/\n";
-  if (!docuheader_.empty() || runMode_.auto_add_members)
+  if (!docuheader_.empty() || runMode_.auto_add_class_properties)
   {
     // is the first function?
     if(is_first_function_)

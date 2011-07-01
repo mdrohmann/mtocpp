@@ -8,7 +8,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
 
   properties ( SetAccess = private, GetAccess = protected, Transient);% garbage comment
 
-    mixed_access; % of type gridbase.gridbase short help
+    mixed_access; % variable of type gridbase.gridbase storing a grid.
 
     % longer help with `default` value
     % what is this??

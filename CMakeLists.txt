@@ -14,7 +14,7 @@ CONFIGURE_FILE(
   )
 
 CONFIGURE_FILE(
-  "${PROJECT_SOURCE_DIR}/config.h.in"
+  "${PROJECT_SOURCE_DIR}/src/config.h.in"
   "${PROJECT_BINARY_DIR}/config.h"
   )
 
@@ -23,34 +23,50 @@ CONFIGURE_FILE(
   "${PROJECT_SOURCE_DIR}/test/mtoc.sh"
   )
 
+CONFIGURE_FILE(
+  "${PROJECT_SOURCE_DIR}/src/docs/mtoc.sh.in"
+  "${PROJECT_SOURCE_DIR}/src/docs/mtoc.sh"
+  )
 
-INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}")
+
+INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/src")
+
+ADD_DEFINITIONS(-DCUSTOM_DOC_DIR)
+#IF(NOT DEFINED CUSTOM_DOC_DIR)
+SET(CUSTOM_DOC_DIR "${CMAKE_INSTALL_PREFIX}/share/doc/mtocpp")
+#ENDIF(NOT DEFINED CUSTOM_DOC_DIR)
 
 FIND_PACKAGE(Ragel REQUIRED)
-FIND_PACKAGE(Doxygen)
-RAGEL_PARSER(mfilescanner)
-RAGEL_PARSER(confscanner)
-RAGEL_PARSER(postprocess)
+FIND_PACKAGE(Doxygen REQUIRED)
+RAGEL_PARSER(src/mfilescanner)
+RAGEL_PARSER(src/confscanner)
+RAGEL_PARSER(src/postprocess)
 
-ADD_EXECUTABLE(mtocpp mtocpp.cc mfilescanner.cc confscanner.cc)
-ADD_EXECUTABLE(postprocess postprocess.cc)
-ADD_EXECUTABLE(accesstest access.cc mfilescanner.cc confscanner.cc)
+ADD_EXECUTABLE(mtocpp src/mtocpp.cc mfilescanner.cc confscanner.cc)
+ADD_EXECUTABLE(mtocpp_post postprocess.cc)
+ADD_EXECUTABLE(accesstest src/access.cc mfilescanner.cc confscanner.cc)
 IF(CMAKE_CROSSCOMPILING)
   TARGET_LINK_LIBRARIES(mtocpp -lshlwapi)
   TARGET_LINK_LIBRARIES(accesstest -lshlwapi)
 ENDIF(CMAKE_CROSSCOMPILING)
 
-INSTALL(TARGETS mtocpp postprocess DESTINATION bin)
-INSTALL(FILES License.txt test/doxygen.m DESTINATION share/doc/mtocpp)
+ADD_CUSTOM_TARGET(doxygen ALL
+  COMMAND "${DOXYGEN_EXECUTABLE}"
+          "${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf"
+  COMMENT "Creating Documentation ..." VERBATIM
+  DEPENDS mtocpp mtocpp_post
+  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/docs"
+  )
+
+INSTALL(TARGETS mtocpp mtocpp_post DESTINATION bin)
+INSTALL(FILES License.txt DESTINATION ${CUSTOM_DOC_DIR})
+INSTALL(FILES docs/* DESTINATION ${CUSTOM_DOC_DIR}/html)
 
 ADD_TEST(MTOCPP_TEST "${PROJECT_BINARY_DIR}/test.sh")
 SET_TESTS_PROPERTIES(MTOCPP_TEST
   PROPERTIES FAIL_REGULAR_EXPRESSION "(failed)")
 
-IF(DOXYGEN_FOUND)
-  ADD_TEST(NAME MTOCPP_DOXYTEST COMMAND ${DOXYGEN_EXECUTABLE} "${PROJECT_SOURCE_DIR}/test/Doxyfile")
-ENDIF(DOXYGEN_FOUND)
-
+ADD_TEST(NAME MTOCPP_DOXYTEST COMMAND ${DOXYGEN_EXECUTABLE} "${PROJECT_SOURCE_DIR}/test/doxygen.conf")
 # enable dashboard scripting
 INCLUDE (CTest)
 
@@ -61,7 +77,7 @@ SET (CPACK_RESOURCE_FILE_LICENSE
   "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
 SET (CPACK_PACKAGE_VERSION_MAJOR "${MTOC++_VERSION_MAJOR}")
 SET (CPACK_PACKAGE_VERSION_MINOR "${MTOC++_VERSION_MINOR}")
-SET (CPACK_PACKAGE_CONTACT "Martin Drohmann <mdrohmann@uni-muenster.de>")
+SET (CPACK_PACKAGE_CONTACT "Martin Drohmann <mdrohmann@uni-muenster.de>, Daniel Wirtz <daniel.wirtz@mathematik.uni-stuttgart.de>")
 SET (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Doxygen filter for Matlab M-files and scripts")
 SET (CPACK_PACKAGE_DESCRIPTION
   "This package includes two programs to build beautiful Doxygen documentation
