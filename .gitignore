@@ -10,4 +10,6 @@ CMakeCache.txt
 CMakeFiles
 *.sw[op]
 !test/*_ref.cc
-
+docs/
+!src/docs
+mtoc.sh
