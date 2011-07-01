@@ -21,8 +21,8 @@
 struct RunMode
 {
   RunMode() : mode(Normal), methodname(), latex_output(false),
-  print_fields(true), auto_add_fields(true),
-  auto_add_params(true), auto_add_members(true),
+  print_fields(true), auto_add_fields(false),
+  auto_add_params(false), auto_add_class_properties(false),
   auto_add_class(true)
   {}
 
@@ -39,7 +39,7 @@ struct RunMode
   bool print_fields;
   bool auto_add_fields;
   bool auto_add_params;
-  bool auto_add_members;
+  bool auto_add_class_properties;
   bool auto_add_class;
 };
 
