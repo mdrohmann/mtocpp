@@ -18,7 +18,7 @@ protected:
 
 ::gridbase::gridbase mixed_access;
 /** @var mixed_access
-  * @brief  of type ::gridbase::gridbase short help
+  * @brief  variable of type ::gridbase::gridbase storing a grid.
   *
   *
  */
@@ -270,9 +270,9 @@ static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesu
   * @retval b    b
   */
 
-static ret::substitutestart::ret::retsubstituteend test(matlabtypesubstitute a,matlabtypesubstitute b,::test2 c) {
+static ret::substitutestart::ret::retsubstituteend test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c) {
 }
-/** @fn ret::substitutestart::ret::retsubstituteend test(matlabtypesubstitute a,matlabtypesubstitute b,::test2 c)
+/** @fn ret::substitutestart::ret::retsubstituteend test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c)
   * @brief  @copybrief grid::rect::rectgrid::test()
   *
   *

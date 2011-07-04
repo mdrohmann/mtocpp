@@ -62,7 +62,7 @@ const char * ClassPartNames[] =
   in_comment_block :=
   (
    # comment line begins with a percent sign
-   [ \t]* . '%'
+   '%'
      @{ tmp_p = p+1; fout_ << " *"; }
    # and then some default characters
    . (default - '\n')* . EOL
@@ -176,15 +176,15 @@ const char * ClassPartNames[] =
             }
             fout_ << "/**"; tmp_p = p+1;
           }
-     . (default - '\n')* . EOL
-#     . ( EOL . [ \t]*
-#       . '%' @{
-#                assert(p >= tmp_p -1);
-#                fout_.write(tmp_p, p - tmp_p+1);
-#                fout_.write("* ");
-#                tmp_p = p+1;
-#              }
-#     . (default - '\n')* )* . EOL
+     . (default - '\n')*
+     . ( EOL . [ \t]*
+       . '%' @{
+                assert(p >= tmp_p -1);
+                fout_.write(tmp_p, p - tmp_p);
+                fout_ << " * ";
+                tmp_p = p+1;
+              }
+     . (default - '\n')* )* . EOL
      |
     # else: a regular comment
      ( (default - '|')
@@ -1717,9 +1717,9 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
       runMode_.auto_add_fields = false;
     }
   }
-  if(cscan_.vars_.find(string("AUTO_ADD_PARAMS"))!=cscan_.vars_.end())
+  if(cscan_.vars_.find(string("AUTO_ADD_PARAMETERS"))!=cscan_.vars_.end())
   {
-    if(cscan_.vars_[string("AUTO_ADD_PARAMS")][0] == string("true"))
+    if(cscan_.vars_[string("AUTO_ADD_PARAMETERS")][0] == string("true"))
     {
       runMode_.auto_add_params = true;
     }

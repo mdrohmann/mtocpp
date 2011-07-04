@@ -8,7 +8,7 @@ ret::substitutestart::rv::retsubstituteend doxygen(matlabtypesubstitute param1,m
 
 
 /** Comment blocks starting with %| are interpreted as Doxygen documentation
- * blocks and can include doxygen commands like
+ *  blocks and can include doxygen commands like
 */
 
 
