@@ -6,7 +6,7 @@ ret::substitutestart::rv::retsubstituteend doxygen(::testnamespace::testclass pa
 
 
 /** Comment blocks starting with %| are interpreted as Doxygen documentation
- * blocks and can include doxygen commands like
+ *  blocks and can include doxygen commands like
 */
 
 
