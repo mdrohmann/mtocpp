@@ -13,3 +13,4 @@ CMakeFiles
 docs/
 !src/docs
 mtoc.sh
+mtocpp.sh

@@ -24,8 +24,13 @@ CONFIGURE_FILE(
   )
 
 CONFIGURE_FILE(
-  "${PROJECT_SOURCE_DIR}/src/docs/mtoc.sh.in"
-  "${PROJECT_SOURCE_DIR}/src/docs/mtoc.sh"
+  "${PROJECT_SOURCE_DIR}/src/docs/mtocpp.sh.in"
+  "${PROJECT_SOURCE_DIR}/src/docs/mtocpp.sh"
+  )
+
+CONFIGURE_FILE(
+  "${PROJECT_SOURCE_DIR}/src/docs/postprocess.sh.in"
+  "${PROJECT_BINARY_DIR}/postprocess.sh"
   )
 
 
@@ -53,7 +58,9 @@ ENDIF(CMAKE_CROSSCOMPILING)
 ADD_CUSTOM_TARGET(doxygen ALL
   COMMAND "${DOXYGEN_EXECUTABLE}"
           "${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf"
-  COMMENT "Creating Documentation ..." VERBATIM
+          2> ${PROJECT_SOURCE_DIR}/docs/doxygen.err 1> ${PROJECT_SOURCE_DIR}/docs/doxygen.log
+  COMMAND ${PROJECT_BINARY_DIR}/postprocess.sh
+  COMMENT "Creating documenation... (see ${PROJECT_SOURCE_DIR}/docs/doxygen.{log,err} for output)"
   DEPENDS mtocpp mtocpp_post
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/docs"
   )

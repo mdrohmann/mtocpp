@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for i in "@PROJECT_SOURCE_DIR@/docs/"*.html
+do
+    @PROJECT_BINARY_DIR@/mtocpp_post $i
+done
