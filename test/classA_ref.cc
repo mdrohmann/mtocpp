@@ -276,12 +276,12 @@ static ret::substitutestart::ret::retsubstituteend test(::gridbase::gridbase aut
   * @brief  @copybrief grid::rect::rectgrid::test()
   *
   *
-  *  @copydetails grid::rect::rectgrid::test()
-  * 
   *  If copydetails/copydoc commands are used, "parameters" and "return
   *  values" are ignored in the derived class, except for the strings
   *  <tt>object of ...</tt> which are used to define the parameter / return value
   *  type.
+  * 
+  *  @copydetails grid::rect::rectgrid::test()
   * 
   */
 
