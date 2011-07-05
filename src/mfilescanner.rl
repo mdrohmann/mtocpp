@@ -2357,15 +2357,30 @@ void MFileScanner::end_function()
   {
     skip_parameters = true;
   }
-  if (! docubody_.empty()
-       && (docubody_[0].find("copydoc") != std::string::npos
-           || docubody_[0].find("copydetails") != std::string::npos
-           )
-     )
+  if (! docubody_.empty())
   {
-    skip_parameters = true;
+    for (unsigned int i = 0; i < docubody_.size(); ++i)
+    {
+      size_t pos_begin_copy = docubody_[i].find("copydoc");
+      if(pos_begin_copy == std::string::npos)
+      {
+        pos_begin_copy = docubody_[i].find("copydetails");
+      }
+      if(pos_begin_copy != std::string::npos)
+      {
+        size_t pos_word_begin = docubody_[i].find_first_of(" \n", pos_begin_copy + 1);
+        pos_word_begin        = docubody_[i].find_first_not_of(" \n", pos_word_begin);
+        size_t pos_word_end   = docubody_[i].find_first_of("(", pos_word_begin);
+        std::string func      = docubody_[i].substr(pos_word_begin, pos_word_end-pos_word_begin);
+        size_t pos_func_beg   = func.find_last_of(":. ");
+        func                  = func.substr(pos_func_beg+1);
+        if(func == cfuncname_)
+        {
+          skip_parameters = true;
+        }
+      }
+    }
   }
-
   if(is_class_)
   {
     if(class_part_ == Property)
