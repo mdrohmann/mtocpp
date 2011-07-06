@@ -273,6 +273,11 @@ const char * ClassPartNames[] =
                                 || class_part_ == MethodDeclaration
                                )
                           )
+                       && ( ! (
+                               methodparams_.abstr
+                               && !runMode_.remove_first_arg_in_abstract_methods
+                              )
+                          )
            )
          {
             if(paramlist_.empty())
@@ -1748,6 +1753,17 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
     else
     {
       runMode_.auto_add_class = false;
+    }
+  }
+  if(cscan_.vars_.find(string("REMOVE_FIRST_ARG_IN_ABSTRACT_METHODS"))!=cscan_.vars_.end())
+  {
+    if(cscan_.vars_[string("REMOVE_FIRST_ARG_IN_ABSTRACT_METHODS")][0] == string("true"))
+    {
+      runMode_.remove_first_arg_in_abstract_methods = true;
+    }
+    else
+    {
+      runMode_.remove_first_arg_in_abstract_methods = false;
     }
   }
 };

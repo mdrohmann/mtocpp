@@ -23,7 +23,7 @@ struct RunMode
   RunMode() : mode(Normal), methodname(), latex_output(false),
   print_fields(true), auto_add_fields(false),
   auto_add_params(false), auto_add_class_properties(false),
-  auto_add_class(true)
+  auto_add_class(true), remove_first_arg_in_abstract_methods(true)
   {}
 
   typedef enum
@@ -41,6 +41,7 @@ struct RunMode
   bool auto_add_params;
   bool auto_add_class_properties;
   bool auto_add_class;
+  bool remove_first_arg_in_abstract_methods;
 };
 
 typedef enum

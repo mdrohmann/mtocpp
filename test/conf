@@ -12,6 +12,8 @@ AUTO_ADD_CLASS_PROPERTIES := true;
 
 AUTO_ADD_CLASS := true;
 
+REMOVE_FIRST_ARG_IN_ABSTRACT_METHODS := true;
+
 ##
 
 add(params) = auto_param => """ object of type gridbase.gridbase which is not used! This documentation is added automatically! """;
