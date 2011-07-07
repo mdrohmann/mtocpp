@@ -83,6 +83,11 @@ public:
 struct PropParams
 {
   bool constant;
+  bool transient;
+  bool dependent;
+  bool hidden;
+  bool setObservable;
+  bool abstr;
 
   std::string ccprefix()
   {
@@ -94,7 +99,12 @@ struct PropParams
 
 public:
   PropParams()
-    : constant(false) {};
+    : constant(false),
+      transient(false),
+      dependent(false),
+      hidden(false),
+      setObservable(false),
+      abstr(false) {};
 
   friend std::ostream & operator<<(std::ostream & os, PropParams & pp);
 };
@@ -103,6 +113,8 @@ struct MethodParams
 {
   bool abstr;
   bool statical;
+  bool hidden;
+  bool sealed;
 
   std::string ccprefix()
   {
@@ -123,7 +135,10 @@ struct MethodParams
 
 public:
   MethodParams()
-    : abstr(false), statical(false) {};
+    : abstr(false),
+      statical(false),
+      hidden(false),
+      sealed(false) {};
 
   friend std::ostream & operator<<(std::ostream & os, MethodParams & mp);
 };
@@ -163,7 +178,11 @@ public:
 
 
 private:
+  void add_access_info(std::string);
+  void add_property_params_info();
+  void add_method_params_info();
   void end_of_class_doc();
+  std::string access_specifier_string(AccessEnum & access);
   void print_access_specifier(AccessEnum & access);
   void print_pure_function_synopsis();
   void print_function_synopsis();
