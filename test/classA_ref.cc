@@ -11,7 +11,8 @@ class classA
   *
   *  bigger help for classA
   *
- */
+ *
+  * @note This class has the class property <tt>Sealed</tt> and cannot be derived from.*/
 
 
 protected:
@@ -21,7 +22,10 @@ protected:
   * @brief  variable of type ::gridbase::gridbase storing a grid.
   *
   *
- */
+ *
+  * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
+  * @note This property has non-unique access specifier: SetAccess = privateGetAccess = protected
+  */
 
 matlabtypesubstitute mixed_access2 = 'test';
 /** @var mixed_access2
@@ -35,21 +39,30 @@ matlabtypesubstitute mixed_access2 = 'test';
       c= d;
      @endverbatim
   *
- */
+ *
+  * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
+  * @note This property has non-unique access specifier: SetAccess = privateGetAccess = protected
+  */
 
 matlabtypesubstitute DataStoreDirectory = '';
 /** @var DataStoreDirectory
   * @brief DataStoreDirectory
   *
   *
- */
+ *
+  * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
+  * @note This property has non-unique access specifier: SetAccess = privateGetAccess = protected
+  */
 
 matlabtypesubstitute SomeProp = struct('xi',[],'ti',[],'mui',[]);
 /** @var SomeProp
   * @brief SomeProp
   *
   *
- */
+ *
+  * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
+  * @note This property has non-unique access specifier: SetAccess = privateGetAccess = protected
+  */
 
 
 public:
@@ -137,6 +150,8 @@ ret::substitutestart::obj::retsubstituteend foo(matlabtypesubstitute b,matlabtyp
   * @param c    c
   *
   * @retval obj    obj
+  *
+  * @note This method has the MATLAB method property <tt>Hidden</tt> set to true.
   */
 
 
@@ -152,6 +167,8 @@ ret::substitutestart::obj::retsubstituteend bar(matlabtypesubstitute d,matlabtyp
   * @param e    e
   *
   * @retval obj    obj
+  *
+  * @note This method has the MATLAB method property <tt>Hidden</tt> set to true.
   */
 
 ret::substitutestart::obj::retsubstituteend foobar()
@@ -171,6 +188,8 @@ ret::substitutestart::obj::retsubstituteend foobar()
   *  detail for foobar
   *
   * @retval obj    obj
+  *
+  * @note This method has the MATLAB method property <tt>Hidden</tt> set to true.
   */
 
 ret::substitutestart::ret::retsubstituteend mdecl(matlabtypesubstitute b);
@@ -183,6 +202,8 @@ classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
   *
   * @param param1    param1
   * @param param2    param2
+  *
+  * @note This method has the MATLAB method property <tt>Hidden</tt> set to true.
   */
 
 public:

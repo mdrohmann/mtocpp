@@ -999,8 +999,14 @@ debug_output("in funcbody: goto main", p);
         @{
            methodparams_.statical = true;
          } )
-    | ( ('Hidden'|'Sealed')
-         . [^,)]* )
+    | ( ('Hidden' . [^,)]* )
+        @{
+           methodparams_.hidden = true;
+         } )
+    | ( ( 'Sealed' . [^,)]* )
+        @{
+           methodparams_.sealed = true;
+         } )
    );
 
   propertyparam =
@@ -1010,8 +1016,26 @@ debug_output("in funcbody: goto main", p);
         @{
            propertyparams_.constant = true;
          } )
-    | ( ('Transient'|'Dependent'|'Hidden'|'SetObservable'|'Abstract')
-         . [^,)]* )
+    | ( ( 'Transient' . [^,)]* )
+        @{
+           propertyparams_.transient = true;
+         } )
+    | ( ( 'Dependent' . [^,)]* )
+        @{
+           propertyparams_.dependent = true;
+         } )
+    | ( ( 'Hidden' . [^,)]* )
+        @{
+           propertyparams_.hidden = true;
+         } )
+    | ( ( 'SetObservable' . [^,)]* )
+        @{
+           propertyparams_.setObservable = true;
+         } )
+    | ( ( 'Abstract' . [^,)]* )
+        @{
+           propertyparams_.abstr = true;
+         } )
    );
 
   methodparams =
@@ -1440,7 +1464,12 @@ debug_output("in funcbody: goto main", p);
           . ('&' @{ fout_ << ",\n   "; } . WSOC* . superclass . WSOC*)* );
 
   classdef := (
-      'classdef' . WSOC* . ('(' . WSOC* . 'Sealed' . [^)]* . ')')? . WSOC* .
+      'classdef' . WSOC* . ('(' . WSOC*
+        . ( 'Sealed'
+          @{
+            docuextra_.push_back(std::string("@note This class has the class property 'Sealed' and cannot be derived from."));
+           }
+          ) . [^)]* . ')')? . WSOC* .
       # matlab identifier (class name stored in classname_)
       ( IDENT
           >st_tok
@@ -1608,14 +1637,21 @@ void MFileScanner :: print_function_synopsis()
     fout_ << " {\n";
 }
 
-void MFileScanner :: print_access_specifier(AccessEnum & access)
+std::string MFileScanner :: access_specifier_string(AccessEnum & access)
 {
   if(access == Public)
-    fout_ << "public:\n";
+    return "public";
   else if(access == Protected)
-    fout_ << "protected:\n";
+    return "protected";
   else if(access == Private)
-    fout_ << "private:\n";
+    return "private";
+  return "";
+}
+
+void MFileScanner :: print_access_specifier(AccessEnum & access)
+{
+  const std::string ass = access_specifier_string(access);
+  fout_ << ass << ":\n";
 }
 
 // constructor
@@ -2121,8 +2157,10 @@ void MFileScanner::end_of_class_doc()
   }
 }
 
+
 void MFileScanner::end_of_property_doc()
 {
+  add_property_params_info();
   typedef DocuBlock :: iterator                                      DBIt;
   string typen;
   for(DBIt dit = docuheader_.begin(); dit != docuheader_.end(); ++dit)
@@ -2197,6 +2235,11 @@ void MFileScanner :: cout_docuextra()
   {
     fout_ << "*\n  * ";
     write_docu_block(cscan_.docuextra_);
+  }
+  if(! docuextra_.empty())
+  {
+    fout_ << "*\n  * ";
+    write_docu_block(docuextra_);
   }
   docuextra_.clear();
 }
@@ -2362,6 +2405,57 @@ void MFileScanner::extract_typen(std::string & line, std::string & typen)
   }
 }
 
+void MFileScanner::add_access_info(std::string what)
+{
+  if (access_.get != access_.set)
+  {
+    docuextra_.push_back(std::string("@note This ") + what + std::string(" has non-unique access specifier: "));
+    std::string setAccess = access_specifier_string(access_.set);
+    std::string getAccess = access_specifier_string(access_.get);
+    docuextra_.push_back(std::string("SetAccess = ") + setAccess
+                       + std::string("GetAccess = ") + getAccess + std::string("\n"));
+  }
+}
+
+void MFileScanner::add_property_params_info()
+{
+  if (propertyparams_.hidden)
+  {
+    docuextra_.push_back(std::string("@note This property has the MATLAB parameter 'Hidden' set to true.\n"));
+  }
+  if (propertyparams_.transient)
+  {
+    docuextra_.push_back(std::string("@note This property has the MATLAB parameter 'Transient' set to true.\n"));
+  }
+  if (propertyparams_.dependent)
+  {
+    docuextra_.push_back(std::string("@note This property has the MATLAB parameter 'Dependent' set to true.\n"));
+  }
+  if (propertyparams_.setObservable)
+  {
+    docuextra_.push_back(std::string("@note This property has the MATLAB parameter 'SetObservable' set to true.\n"));
+  }
+  if (propertyparams_.setObservable)
+  {
+    docuextra_.push_back(std::string("@note This property is an @em abstract property without implementation.\n"));
+  }
+
+  add_access_info("property");
+}
+
+void MFileScanner::add_method_params_info()
+{
+  if (methodparams_.hidden)
+  {
+    docuextra_.push_back(std::string("@note This method has the MATLAB method property 'Hidden' set to true.\n"));
+  }
+  if (methodparams_.sealed)
+  {
+    docuextra_.push_back(std::string("@note This method has the MATLAB method property 'Sealed' set to true. It cannot be overwritten.\n"));
+  }
+  add_access_info("method");
+}
+
 // end a function and pretty print the documentation for this function
 void MFileScanner::end_function()
 {
@@ -2401,6 +2495,9 @@ void MFileScanner::end_function()
   {
     if(class_part_ == Property)
       return;
+
+    add_method_params_info();
+
     if(cfuncname_ == classname_)
       is_constructor = true;
     if(class_part_ == Method)

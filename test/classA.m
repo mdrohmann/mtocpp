@@ -54,7 +54,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
     protected_access2;
   end
 
-  methods; % garbage comment
+  methods(Hidden = True); % garbage comment
 
     function obj = foo(a,b,c);
       % brief doc for foo
