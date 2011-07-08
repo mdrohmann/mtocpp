@@ -1802,6 +1802,17 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
       runMode_.remove_first_arg_in_abstract_methods = false;
     }
   }
+  if(cscan_.vars_.find(string("ENABLE_OF_TYPE_PARSING"))!=cscan_.vars_.end())
+  {
+    if(cscan_.vars_[string("ENABLE_OF_TYPE_PARSING")][0] == string("true"))
+    {
+      runMode_.parse_of_type = true;
+    }
+    else
+    {
+      runMode_.parse_of_type = false;
+    }
+  }
 };
 
 // run the scanner
@@ -1927,8 +1938,13 @@ const string & MFileScanner::replace_underscore(std::string & s)
 }
 
 // pretty print the documentation block \a block
-void MFileScanner::write_docu_block(const DocuBlock & block)
+void MFileScanner::write_docu_block(const DocuBlock & block_orig)
 {
+
+  DocuBlock block = block_orig;
+  std::string temp;
+  extract_typen(block, temp, true);
+
   bool add_prefix   = false;
   bool latex_begin  = true;
   bool not_verbatim = true;
@@ -2163,11 +2179,9 @@ void MFileScanner::end_of_property_doc()
   add_property_params_info();
   typedef DocuBlock :: iterator                                      DBIt;
   string typen;
-  for(DBIt dit = docuheader_.begin(); dit != docuheader_.end(); ++dit)
-  {
-    std::string & line = *dit;
-    extract_typen(line, typen);
-  }
+  extract_typen(docuheader_, typen);
+  if(typen.empty())
+    extract_typen(docubody_, typen);
 
   if(typen.empty())
     typen = "matlabtypesubstitute";
@@ -2370,11 +2384,7 @@ void MFileScanner::get_typename(const std::string & paramname, std::string & typ
   }
 
   DocuBlock & db = *pdb;
-  for(DBIt dit = db.begin(); dit != db.end(); ++dit)
-  {
-    std::string & line = *dit;
-    extract_typen(line, typen);
-  }
+  extract_typen(db, typen);
 
   if(typen.empty())
     typen = "matlabtypesubstitute";
@@ -2382,25 +2392,47 @@ void MFileScanner::get_typename(const std::string & paramname, std::string & typ
     param_type_map_[paramname] = typen;
 }
 
-void MFileScanner::extract_typen(std::string & line, std::string & typen)
+// ATTENTION: The get_typename method changes the docublock and removes the
+// "@type " respectively "of type" strings if remove is set to true.
+void MFileScanner::extract_typen(DocuBlock & db, std::string & typen, bool remove)
 {
-  size_t found = line.find("of type");
-  if(found != std::string::npos)
+  int linenr = 1;
+  typedef DocuBlock :: iterator                                      DBIt;
+  for(DBIt dit = db.begin(); dit != db.end(); ++dit, ++linenr)
   {
-    size_t typenstart=found+string("of type").length();
-    typenstart=line.find_first_not_of( " \t", typenstart );
-    size_t typenend =
-      line.find_first_of( " \n\0", typenstart );
-    typen = line.substr(typenstart, typenend - typenstart);
-    if(typen[0] != ':')
+    std::string & line   = *dit;
+    size_t found         = std::string::npos;
+    size_t typeof_length = 0;
+    if(runMode_.parse_of_type && linenr < 2)
     {
-      for(size_t i=0; i < typen.length(); ++i)
-        if(typen.at(i) == '.')
-          typen.replace(i,1,std::string("::"));
-      typen = string("::") + typen;
+      found         = line.find("of type");
+      typeof_length = string("of type").length();
+    }
+    if(found == std::string::npos)
+    {
+      found         = line.find("@type");
+      typeof_length = string("@type").length();
+    }
+    if(found != std::string::npos)
+    {
+      size_t typenstart = found + typeof_length;
+      typenstart=line.find_first_not_of( " \t", typenstart );
+      size_t typenend =
+        line.find_first_of( " \n\0", typenstart );
+      typen = line.substr(typenstart, typenend - typenstart);
+      if(typen[0] != ':')
+      {
+        for(size_t i=0; i < typen.length(); ++i)
+          if(typen.at(i) == '.')
+            typen.replace(i,1,std::string("::"));
+        typen = string("::") + typen;
 
-      line.replace(typenstart, typenend - typenstart, typen);
-      //line.erase(found, typenend - found);
+//        line.replace(typenstart, typenend - typenstart, typen);
+      }
+      if (remove)
+      {
+        line.erase(found, typenend - found);
+      }
     }
   }
 }

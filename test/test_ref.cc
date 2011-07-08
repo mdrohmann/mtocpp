@@ -12,9 +12,9 @@ end
   * @brief  This is a test for a statical method declared outside of the classdef file
   *
   *
-  * @param auto_param     object of type ::othergrid which is not used! This documentation is added automatically! 
+  * @param auto_param     object  which is not used! This documentation is added automatically! 
   * @param b     second parameter
-  * @param c     third parameter of type ::test
+  * @param c     third parameter 
   *
   * @retval ret    ret
   */

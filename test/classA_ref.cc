@@ -19,7 +19,7 @@ protected:
 
 ::gridbase::gridbase mixed_access;
 /** @var mixed_access
-  * @brief  variable of type ::gridbase::gridbase storing a grid.
+  * @brief  variable  storing a grid.
   *
   *
  *
@@ -44,10 +44,13 @@ matlabtypesubstitute mixed_access2 = 'test';
   * @note This property has non-unique access specifier: SetAccess = privateGetAccess = protected
   */
 
-matlabtypesubstitute DataStoreDirectory = '';
+::SpecialType DataStoreDirectory = '';
 /** @var DataStoreDirectory
-  * @brief DataStoreDirectory
+  * @brief  This documentation is a test for the type keyword.
   *
+  *
+  *  This variable has a special type
+  *  
   *
  *
   * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
@@ -333,7 +336,7 @@ virtual ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubs
   * @param d      parameter 1
   * @param e      parameter 2
   *
-  * @retval a     test of type ::classA::mixed_access
+  * @retval a     test 
   */
 
 
