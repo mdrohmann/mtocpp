@@ -87,8 +87,17 @@ classdef Class
     %
 
     properties(SetAccess=private)
-        
+
         % Some comment on the property SomeClass.
+        %
+        % Properties can have specified types by use of one of the keyword
+        % strings "of type" or "@type" in its documentation header or
+        % documentation block. The word followed by this keyword string is
+        % interpreted as the typename.
+        %
+        % The "of type" keyword only works if the
+        % option "ENABLE_OF_TYPE_PARSING" is enabled and only in the first two
+        % lines of the documentation block.
         %
         % @type testing.MUnit
         %
@@ -97,12 +106,11 @@ classdef Class
     end
     
     properties
-        % Summary comment for SomeProp
+        % Summary comment for SomeProp of type int
         %
         % Detailed comment for SomeProp. Here you can write more detailed
         % text for the SomeProp property.
         %
-        % @type int
         % @default 0
         SomeProp = 0;
     end
@@ -156,6 +164,15 @@ classdef Class
             %  param2: second parameter with description
             %          @type fooType
             %
+            % Parameters and return values can have specified types by use of
+            % one of the keyword strings "of type" or "@type" in its
+            % documentation block. The word followed by this keyword string is
+            % interpreted as the typename.
+            %
+            % The "of type" keyword only works if the option
+            % "ENABLE_OF_TYPE_PARSING" is enabled and only in the first two
+            % lines of the documentation block.
+            %
             % Return values:
             %  rv: return value @type barType
             %
@@ -170,9 +187,9 @@ classdef Class
             % @note There is no technical difference as the 'See also'
             % keyword is simply replaced by @@see upon parsing. It is just
             % a convenience implementation.
-            
+
             % After the first non-comment line the function body begins:
-            
+
             %| After the first non-comment line, doxygen stops parsing
             % comments. An exception are comment blocks starting with '%%|', which
             % are interpreted as doxygen documentation blocks by mtoc++ and can

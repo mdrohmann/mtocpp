@@ -119,7 +119,7 @@ auto_param.auto_field;
   * 
   * 
   *
-  * @param auto_param     object of type ::othergrid which is not used! This documentation is added automatically! 
+  * @param auto_param     object  which is not used! This documentation is added automatically! 
   * @param param1     first parameter
   * @param param2    param2
   *
@@ -164,7 +164,7 @@ rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_in_namespac
   * @brief  a third (private) function in the test file with serveral return values
   *
   *
-  * @param auto_param     object of type ::othergrid which is not used! This documentation is added automatically! 
+  * @param auto_param     object  which is not used! This documentation is added automatically! 
   *
   * @retval d     a return value
   * @retval e    e

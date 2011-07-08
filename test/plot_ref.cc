@@ -29,7 +29,7 @@ p = plot_polygon_grid(grid,params);
   *  plot of a rectgrid via plot_polygon_grid
   *  see help plot_polygon_grid for further information
   *
-  * @param params     object of type ::plot_params
+  * @param params     object 
   *
   * @retval p    p
   * @synupdate Syntax needs to be updated! 

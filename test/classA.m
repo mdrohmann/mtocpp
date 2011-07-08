@@ -20,6 +20,10 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
     % @endverbatim
     mixed_access2 = 'test';
 
+    % This documentation is a test for the type keyword.
+    %
+    % This variable has a special type
+    % @type SpecialType
     DataStoreDirectory = '';
 
     SomeProp = struct('xi',[],'ti',[],'mui',[]);

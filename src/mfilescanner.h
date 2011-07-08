@@ -23,7 +23,8 @@ struct RunMode
   RunMode() : mode(Normal), methodname(), latex_output(false),
   print_fields(true), auto_add_fields(false),
   auto_add_params(false), auto_add_class_properties(false),
-  auto_add_class(true), remove_first_arg_in_abstract_methods(true)
+  auto_add_class(true), remove_first_arg_in_abstract_methods(true),
+  parse_of_type(true)
   {}
 
   typedef enum
@@ -42,6 +43,7 @@ struct RunMode
   bool auto_add_class_properties;
   bool auto_add_class;
   bool remove_first_arg_in_abstract_methods;
+  bool parse_of_type;
 };
 
 typedef enum
@@ -188,7 +190,7 @@ private:
   void print_function_synopsis();
   void end_of_property_doc();
   void get_typename(const std::string &, std::string &);
-  void extract_typen(std::string & line, std::string & typen);
+  void extract_typen(DocuBlock & db, std::string & typen, bool remove = false);
   void update_method_params(const std::string & methodname);
 
   void end_method();
