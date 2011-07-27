@@ -1,13 +1,30 @@
-In order to compile this program and install it on your computer, you need to
-install the Ragel state machine (http://www.complang.org/ragel/).
+mtoc++ Installation instructions
+ 
+# Software requirements
+The following programs need to be available on your machine:
+- Doxygen: mtoc++ is pretty useless witout doxygen. If not yet available, get it at http://www.doxygen.org
+- Ragel: A finite-state machine compiler. Get at http://www.complang.org/ragel
+- CMake: Cross-platform make. Get at http://www.cmake.org
 
-Afterwards you can build and install the program with cmake. Under Unix for
-example like this:
+# Compiling
+The following procedure is an example of how to compile mtoc++ on a linux machine:
 
-mkdir build
+tar -xcvf mtocpp.tar.gz
+cd mtocpp
+# Create build folder (optional, but more clean)
+mkdir build 
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=/install/directory ..
+# Run cmake
+cmake .. 
 make install
 
-Have fun!
+# Customization
+If you want the "make install" command to copy the binaries and documentation to different locations, you can choose them by setting the following variables:
+- CMAKE_INSTALL_PREFIX: Set this to whatever location you want mtoc++ to be installed. Note that the binaries are copied into a "bin" folder in that folder in order to comply with linux standards.
+- CUSTOM_DOC_DIR: This value is "CMAKE_INSTALL_PREFIX/share/doc/mtocpp" per default.
 
+So typing 
+cmake -DCMAKE_INSTALL_PREFIX="/my/root/dir" -DCUSTOM_DOC_DIR="/my/docs" ..
+will copy the binaries to /my/root/dir/bin and the documentation to /my/docs.
+
+Have fun!

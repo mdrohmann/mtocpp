@@ -1,5 +1,4 @@
-/** @defgroup tips Tips for doxygen usage with mtoc
- *
+/** @page tips Tips for doxygen usage with mtoc
  *
  * @section tip_latex Extending default LaTeX environments for doxygen
  *
