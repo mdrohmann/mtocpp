@@ -12,5 +12,5 @@ CMakeFiles
 !test/*_ref.cc
 docs/
 !src/docs
-mtoc.sh
-mtocpp.sh
+build/
+*.*~

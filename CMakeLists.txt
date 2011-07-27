@@ -1,10 +1,11 @@
 PROJECT (MTOC++)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
+SET(MTOC++_VERSION_MAJOR 1)
+SET(MTOC++_VERSION_MINOR 1)
+
 SET(CMAKE_CXX_FLAGS "-Wall")
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-SET(MTOC++_VERSION_MAJOR 1)
-SET(MTOC++_VERSION_MINOR 0)
 ENABLE_TESTING()
 
 CONFIGURE_FILE(
@@ -23,16 +24,21 @@ CONFIGURE_FILE(
   "${PROJECT_SOURCE_DIR}/test/mtoc.sh"
   )
 
+# Not longer needed as mtoc++ searches for mtoc++.conf in executing folder.
+#CONFIGURE_FILE(
+#  "${PROJECT_SOURCE_DIR}/src/docs/mtocpp.sh.in"
+#  "${PROJECT_SOURCE_DIR}/src/docs/mtocpp.sh"
+#  )
+
 CONFIGURE_FILE(
-  "${PROJECT_SOURCE_DIR}/src/docs/mtocpp.sh.in"
-  "${PROJECT_SOURCE_DIR}/src/docs/mtocpp.sh"
+  "${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf.in"
+  "${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf"
   )
 
 CONFIGURE_FILE(
   "${PROJECT_SOURCE_DIR}/src/docs/postprocess.sh.in"
   "${PROJECT_BINARY_DIR}/postprocess.sh"
   )
-
 
 INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/src")
 
@@ -53,12 +59,11 @@ IF(CMAKE_CROSSCOMPILING)
   TARGET_LINK_LIBRARIES(accesstest -lshlwapi)
 ENDIF(CMAKE_CROSSCOMPILING)
 
+#2> ${PROJECT_SOURCE_DIR}/docs/doxygen.err 1> ${PROJECT_SOURCE_DIR}/docs/doxygen.log
 ADD_CUSTOM_TARGET(doxygen ALL
-  COMMAND "${DOXYGEN_EXECUTABLE}"
-          "${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf"
-          2> ${PROJECT_SOURCE_DIR}/docs/doxygen.err 1> ${PROJECT_SOURCE_DIR}/docs/doxygen.log
+  COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf
   COMMAND ${PROJECT_BINARY_DIR}/postprocess.sh
-  COMMENT "Creating documenation... (see ${PROJECT_SOURCE_DIR}/docs/doxygen.{log,err} for output)"
+  COMMENT "Creating documentation... (see ${PROJECT_SOURCE_DIR}/docs/doxygen.log for output)"
   DEPENDS mtocpp mtocpp_post
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/docs"
   )
@@ -94,4 +99,3 @@ SET (CPACK_DEBIAN_PACKAGE_SECTION "devel")
 SET (CPACK_DEBIAN_PACKAGE_SUGGESTS "doxygen")
 
 INCLUDE (CPack)
-
