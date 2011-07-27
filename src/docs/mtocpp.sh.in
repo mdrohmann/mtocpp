@@ -1,3 +1,0 @@
-#!/bin/sh
-
-@PROJECT_BINARY_DIR@/mtocpp $1 mtocpp.conf

@@ -29,13 +29,15 @@ using std::ostringstream;
 void usage()
 {
   cout
-    << "mtoc Version " << MTOCPP_VERSION_MAJOR << "." << MTOCPP_VERSION_MINOR
-    << "\n\n"
-    << "Usage: mtoc mfile [conf]\n"
-    << "       mtoc --help\n\n"
-    << "mtoc parses a Matlab m-file 'mfile'.\n"
-    << "A configuration file needs to be given or it must exist in\n"
-    << "'./doxygen/mtoc.conf'." << endl;
+    << "This is mtoc++ Version " << MTOCPP_VERSION_MAJOR << "." << MTOCPP_VERSION_MINOR << "\n"
+    << "\n"
+    << "mtoc++ parses the Matlab m-file <mfile> and produces c++-compliant output that can be processed by doxygen.\n"
+    << "\n"
+    << "Usage: mtocpp <mfile> [<configuration-file>]\n"
+    << "       mtocpp --help\n"
+    << "\n"
+    << "If no explicit configuration file is given, mtoc++ tries to use './mtoc++.conf'\n"
+    << "and will abort if it is not found." << endl;
 }
 
 // main routine
@@ -61,7 +63,7 @@ int main(int argc, char ** argv)
     }
     catch (std::ifstream::failure e)
     {
-      cout << "Exception opening/reading file";
+      cout << "Exception opening/reading file: " << argv[1] << "\n";
       usage();
       exit(-1);
     }

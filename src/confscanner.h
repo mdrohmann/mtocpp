@@ -2,7 +2,6 @@
 
 #define CONFSCANNER_H_
 
-
 #include <cstring>
 #include <cstdlib>
 #include <iostream>

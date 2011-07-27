@@ -44,7 +44,7 @@ int main(int argc, char ** argv)
     }
     catch (std::ifstream::failure e)
     {
-      cout << "Exception opening/reading file";
+      cout << "Exception opening/reading file: " << argv[1] << "\n";
       exit(-1);
     }
     fin.exceptions(oldstate);

@@ -31,14 +31,14 @@ PROJECT_NAME           = mtoc++
 # This could be handy for archiving the generated documentation or 
 # if some version control system is used.
 
-PROJECT_NUMBER         = 1.1
+PROJECT_NUMBER         = @MTOC++_VERSION_MAJOR@.@MTOC++_VERSION_MINOR@
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 
 # If a relative path is entered, it will be relative to the location 
 # where doxygen was started. If left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = /home/dwirtz/aghhome/Projects/mtocpp/docs
+OUTPUT_DIRECTORY       = @PROJECT_SOURCE_DIR@/docs
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 
 # 4096 sub-directories (in 2 levels) under the output directory of each output 
@@ -574,7 +574,7 @@ WARN_FORMAT            = "$file:$line: $text"
 # and error messages should be written. If left blank the output is written 
 # to stderr.
 
-WARN_LOGFILE           = /home/dwirtz/aghhome/Projects/mtocpp/docs/doxygen.log
+WARN_LOGFILE           = @PROJECT_SOURCE_DIR@/docs/doxygen.log
 
 #---------------------------------------------------------------------------
 # configuration options related to the input files
@@ -585,7 +585,7 @@ WARN_LOGFILE           = /home/dwirtz/aghhome/Projects/mtocpp/docs/doxygen.log
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                 = /home/dwirtz/aghhome/Projects/mtocpp/src/docs
+INPUT                 = @PROJECT_SOURCE_DIR@/src/docs
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 
@@ -711,7 +711,7 @@ INPUT_FILTER           =
 # info on how filters are used. If FILTER_PATTERNS is empty, INPUT_FILTER 
 # is applied to all files.
 
-FILTER_PATTERNS        = *.m=/home/dwirtz/aghhome/Projects/mtocpp/build/mtocpp
+FILTER_PATTERNS        = *.m=@PROJECT_BINARY_DIR@/mtocpp
 
 # If the FILTER_SOURCE_FILES tag is set to YES, the input filter (if set using 
 # INPUT_FILTER) will be used to filter the input files when producing source 
