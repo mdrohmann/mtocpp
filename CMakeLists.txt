@@ -4,6 +4,10 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 SET(MTOC++_VERSION_MAJOR 1)
 SET(MTOC++_VERSION_MINOR 1)
 
+# Default install prefix is "/usr/local"
+SET(CUSTOM_DOC_DIR "${CMAKE_INSTALL_PREFIX}/share/doc/mtocpp"
+  CACHE PATH "Custom directory where the documentation files will be installed")
+
 SET(CMAKE_CXX_FLAGS "-Wall")
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
 ENABLE_TESTING()
@@ -24,12 +28,6 @@ CONFIGURE_FILE(
   "${PROJECT_SOURCE_DIR}/test/mtoc.sh"
   )
 
-# Not longer needed as mtoc++ searches for mtoc++.conf in executing folder.
-#CONFIGURE_FILE(
-#  "${PROJECT_SOURCE_DIR}/src/docs/mtocpp.sh.in"
-#  "${PROJECT_SOURCE_DIR}/src/docs/mtocpp.sh"
-#  )
-
 CONFIGURE_FILE(
   "${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf.in"
   "${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf"
@@ -41,9 +39,6 @@ CONFIGURE_FILE(
   )
 
 INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/src")
-
-SET(CUSTOM_DOC_DIR "${CMAKE_INSTALL_PREFIX}/share/doc/mtocpp"
-  CACHE PATH "Custom directory where the documentation files will be installed")
 
 FIND_PACKAGE(Ragel REQUIRED)
 FIND_PACKAGE(Doxygen REQUIRED)
@@ -59,7 +54,6 @@ IF(CMAKE_CROSSCOMPILING)
   TARGET_LINK_LIBRARIES(accesstest -lshlwapi)
 ENDIF(CMAKE_CROSSCOMPILING)
 
-#2> ${PROJECT_SOURCE_DIR}/docs/doxygen.err 1> ${PROJECT_SOURCE_DIR}/docs/doxygen.log
 ADD_CUSTOM_TARGET(doxygen ALL
   COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf
   COMMAND ${PROJECT_BINARY_DIR}/postprocess.sh
@@ -70,7 +64,7 @@ ADD_CUSTOM_TARGET(doxygen ALL
 
 INSTALL(TARGETS mtocpp mtocpp_post DESTINATION bin)
 INSTALL(FILES License.txt DESTINATION ${CUSTOM_DOC_DIR})
-INSTALL(DIRECTORY ${PROJECT_SOURCE_DIR}/docs DESTINATION ${CUSTOM_DOC_DIR}/html)
+INSTALL(DIRECTORY ${PROJECT_SOURCE_DIR}/docs DESTINATION ${CUSTOM_DOC_DIR})
 
 ADD_TEST(MTOCPP_TEST "${PROJECT_BINARY_DIR}/test.sh")
 SET_TESTS_PROPERTIES(MTOCPP_TEST

@@ -1,0 +1,62 @@
+# Configurations
+
+# This configuration file is not required. All default values are hardcoded in
+# mtoc++.
+
+# Flag indicating whether automatic struct fields or object members
+# documentation is generated.
+# The fields documentation types are
+#  - required fields,
+#  - optional fields and
+#  - generated fields.
+# PRINT_FIELDS := true;
+
+# Flag indicating whether undocumented field names are added to documentation
+# with documentation text equal to the field name.
+# AUTO_ADD_FIELDS := false;
+
+# Flag indicating whether undocumented parameters and return values are added
+# to documentation with documentation text equal to the parameter / return
+# value name.
+# AUTO_ADD_PARAMETERS := false;
+
+# Flag indicating whether undocumented member variables are added to
+# documentation with documentation text equal to the parameter / return value
+# name.
+# AUTO_ADD_CLASS_PROPERTIES := false;
+
+# Flag indicating whether undocumented classes are added to documentation with
+# documentation text equal to the class name.
+# AUTO_ADD_CLASSES := true;
+
+# Flag indication whether the first argument in abstract non-static methods
+# shall be a this pointer, and therefore removed in the C++ output.
+# REMOVE_FIRST_ARG_IN_ABSTRACT_METHODS := true
+
+# Flag indicating whether the string "of type" is parsed in the the first two
+# lines
+#   - of the documentation header of properties and
+#   - the documentation block of method/function parameters and return values.
+# If enabled, the word following the string "of type" is interpreted as the
+# type for the class property, the parameter or the return value. This
+# equivalent to using the mtocpp @type keyword, but enables the user to write
+# documentation also read-able in doc strings created with the MATLAB commands
+# 'help' or 'doc'.
+# ENABLE_OF_TYPE_PARSING := true;
+
+##
+
+# TODO Kommentier mal was, Daniel!
+add(params) = auto_param => """ object of type gridbase.gridbase which is not used! This documentation is added automatically! """;
+
+add(fields) = auto_struct.auto_field => """ This field's documentation has been added automatically! """;
+
+glob = * { groups = test; }
+
+glob = test {
+  add(params) = auto_param => """ object of type othergrid which is not used! This documentation is added automatically! """;
+}
+
+glob = doxygen.m { add(params) = auto_param => """ jajaja """; }
+
+# vim: set ft=perl et sw=2 :

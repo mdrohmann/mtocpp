@@ -36,8 +36,7 @@ void usage()
     << "Usage: mtocpp <mfile> [<configuration-file>]\n"
     << "       mtocpp --help\n"
     << "\n"
-    << "If no explicit configuration file is given, mtoc++ tries to use './mtoc++.conf'\n"
-    << "and will abort if it is not found." << endl;
+    << "If no explicit configuration file is given, mtoc++ also looks for './mtoc++.conf' by default." << endl;
 }
 
 // main routine
@@ -80,7 +79,7 @@ int main(int argc, char ** argv)
   {
     conffilename = std::string(argv[2]);
   }
-
+  
   char buf[1000];
   char * dummy = getcwd(buf, 1000);
   dummy = 0;
