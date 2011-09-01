@@ -4,6 +4,7 @@ mtoc
 postprocess
 accesstest
 test/html
+src/docs/doxygen.conf
 .gdbinit
 test/*.cc
 CMakeCache.txt
