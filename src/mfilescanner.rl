@@ -1780,9 +1780,9 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
       runMode_.auto_add_class_properties = false;
     }
   }
-  if(cscan_.vars_.find(string("AUTO_ADD_CLASS"))!=cscan_.vars_.end())
+  if(cscan_.vars_.find(string("AUTO_ADD_CLASSES"))!=cscan_.vars_.end())
   {
-    if(cscan_.vars_[string("AUTO_ADD_CLASS")][0] == string("true"))
+    if(cscan_.vars_[string("AUTO_ADD_CLASSES")][0] == string("true"))
     {
       runMode_.auto_add_class = true;
     }
