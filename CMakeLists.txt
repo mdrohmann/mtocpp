@@ -5,7 +5,7 @@ SET(MTOC++_VERSION_MAJOR 1)
 SET(MTOC++_VERSION_MINOR 1)
 
 # Default install prefix is "/usr/local"
-SET(CUSTOM_DOC_DIR "${CMAKE_INSTALL_PREFIX}/share/doc/mtocpp"
+SET(CUSTOM_DOC_DIR "share/doc/mtocpp"
   CACHE PATH "Custom directory where the documentation files will be installed")
 
 SET(CMAKE_CXX_FLAGS "-Wall")
@@ -34,7 +34,7 @@ CONFIGURE_FILE(
 
 CONFIGURE_FILE(
   "${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf.in"
-  "${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf"
+  "${PROJECT_BINARY_DIR}/src/docs/doxygen.conf"
   )
 
 CONFIGURE_FILE(
@@ -66,16 +66,16 @@ ENDIF(CMAKE_CROSSCOMPILING)
 
 # add target for documentation
 ADD_CUSTOM_TARGET(doxygen ALL
-  COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf
+  COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/src/docs/doxygen.conf
   COMMAND ${PROJECT_BINARY_DIR}/postprocess.sh
-  COMMENT "Creating documentation... (see ${PROJECT_SOURCE_DIR}/docs/doxygen.log for output)"
+  COMMENT "Creating documentation... (see ${PROJECT_BINARY_DIR}/docs/doxygen.log for output)"
   DEPENDS mtocpp mtocpp_post
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/docs"
   )
 
 INSTALL(TARGETS mtocpp mtocpp_post DESTINATION bin)
-INSTALL(FILES License.txt DESTINATION ${CUSTOM_DOC_DIR})
-INSTALL(DIRECTORY ${PROJECT_SOURCE_DIR}/docs DESTINATION ${CUSTOM_DOC_DIR})
+INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/License.txt DESTINATION ${CUSTOM_DOC_DIR})
+INSTALL(DIRECTORY docs DESTINATION ${CUSTOM_DOC_DIR})
 
 # add test target: test examples
 ADD_TEST(MTOCPP_TEST "${PROJECT_BINARY_DIR}/test.sh")
@@ -89,10 +89,12 @@ INCLUDE (CTest)
 SET (CTEST_PROJECT_NAME "MTOC++")
 
 # build a CPack driven installer package
+SET (CPACK_GENERATOR "DEB;TGZ")
 SET (CPACK_RESOURCE_FILE_LICENSE
   "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
 SET (CPACK_PACKAGE_VERSION_MAJOR "${MTOC++_VERSION_MAJOR}")
 SET (CPACK_PACKAGE_VERSION_MINOR "${MTOC++_VERSION_MINOR}")
+SET (CPACK_PACKAGE_VENDOR "MDDW")
 SET (CPACK_PACKAGE_CONTACT "Martin Drohmann <mdrohmann@uni-muenster.de>, Daniel Wirtz <daniel.wirtz@mathematik.uni-stuttgart.de>")
 SET (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Doxygen filter for Matlab M-files and scripts")
 SET (CPACK_PACKAGE_DESCRIPTION

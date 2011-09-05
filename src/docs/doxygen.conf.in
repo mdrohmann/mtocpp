@@ -38,7 +38,7 @@ PROJECT_NUMBER         = @MTOC++_VERSION_MAJOR@.@MTOC++_VERSION_MINOR@
 # If a relative path is entered, it will be relative to the location 
 # where doxygen was started. If left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = @PROJECT_SOURCE_DIR@/docs
+OUTPUT_DIRECTORY       = @PROJECT_BINARY_DIR@/docs
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 
 # 4096 sub-directories (in 2 levels) under the output directory of each output 
@@ -574,7 +574,7 @@ WARN_FORMAT            = "$file:$line: $text"
 # and error messages should be written. If left blank the output is written 
 # to stderr.
 
-WARN_LOGFILE           = @PROJECT_SOURCE_DIR@/docs/doxygen.log
+WARN_LOGFILE           = @PROJECT_BINARY_DIR@/docs/doxygen.log
 
 #---------------------------------------------------------------------------
 # configuration options related to the input files
