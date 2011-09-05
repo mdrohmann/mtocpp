@@ -462,8 +462,8 @@ ConfFileScanner
   //cerr << "filename" << filename << endl;
   if ( (confistream_.rdstate() & ifstream::failbit ) != 0 )
   {
-    cerr << "Error opening configuration file '" << conffile_ << "'\n";
-    exit(-2);
+    cerr << "Warning: could not open configuration file. Using default values...\n";
+    conffile_ = "";
   }
   globlist_stack_.push_back(GlobList());
   // at level 0 every file is matched ( no glob checking )
@@ -480,66 +480,69 @@ get_conffile()
 // run the conffile scanner
 int ConfFileScanner :: execute()
 {
-  std::ios::sync_with_stdio(false);
-
-  %% write init;
-
-  /* Do the first read. */
-  bool done = false;
-  while ( !done )
+  if ( ! conffile_.empty() )
   {
-    char *p = buf + have;
-    char *tmp_p = p;// *tmp_p2 = p;
-    // string for temporary tokens
-    string tmp_string;
-    // spare space in buffer
-    int space = BUFSIZE - have;
+    std::ios::sync_with_stdio(false);
 
-    if ( space == 0 )
+    %% write init;
+
+    /* Do the first read. */
+    bool done = false;
+    while ( !done )
     {
-      /* We filled up the buffer trying to scan a token. */
-      cerr << "OUT OF BUFFER SPACE" << endl;
-      exit(1);
+      char *p = buf + have;
+      char *tmp_p = p;// *tmp_p2 = p;
+      // string for temporary tokens
+      string tmp_string;
+      // spare space in buffer
+      int space = BUFSIZE - have;
+
+      if ( space == 0 )
+      {
+        /* We filled up the buffer trying to scan a token. */
+        cerr << "OUT OF BUFFER SPACE" << endl;
+        exit(1);
+      }
+
+      // read configuration file chunk in buffer
+      confistream_.read( p, space );
+      int len = confistream_.gcount();
+      char *pe = p + len;
+      char *rpe = pe;
+      char *eof = 0;
+
+      /* If we see eof then append the EOF char. */
+      if ( confistream_.eof() )
+      {
+        eof = pe;
+        done = true;
+      }
+      else
+      {
+        /* Find the last semicolon by searching backwards. This
+         * is where we will stop processing on this iteration. */
+        while ( *pe!= ';' && pe > p )
+          pe--;
+      }
+
+      //std::cerr << "execute parser" << std::endl;
+      %% write exec;
+      //std::cerr << "finish parser" << std::endl;
+
+      /* Check if we failed. */
+      if ( cs == ConfFileScanner_error )
+      {
+        /* Machine failed before finding a token. */
+        cerr << "in conffile: PARSE ERROR in line " << line << endl;
+        exit(1);
+      }
+
+      have = rpe - pe;
+      /* cerr << "memmove by " << have << "bytes\n";*/
+      memmove( buf, pe, have );
     }
-
-    // read configuration file chunk in buffer
-    confistream_.read( p, space );
-    int len = confistream_.gcount();
-    char *pe = p + len;
-    char *rpe = pe;
-    char *eof = 0;
-
-    /* If we see eof then append the EOF char. */
-    if ( confistream_.eof() )
-    {
-      eof = pe;
-      done = true;
-    }
-    else
-    {
-      /* Find the last semicolon by searching backwards. This
-       * is where we will stop processing on this iteration. */
-      while ( *pe!= ';' && pe > p )
-        pe--;
-    }
-
-    //std::cerr << "execute parser" << std::endl;
-    %% write exec;
-    //std::cerr << "finish parser" << std::endl;
-
-    /* Check if we failed. */
-    if ( cs == ConfFileScanner_error )
-    {
-      /* Machine failed before finding a token. */
-      cerr << "in conffile: PARSE ERROR in line " << line << endl;
-      exit(1);
-    }
-
-    have = rpe - pe;
-    /* cerr << "memmove by " << have << "bytes\n";*/
-    memmove( buf, pe, have );
+    //cerr << "afterwards param_list_[\"grid\"][0] " << param_list_["grid"][0];
   }
-  //cerr << "afterwards param_list_[\"grid\"][0] " << param_list_["grid"][0];
 
   return 0;
 }
