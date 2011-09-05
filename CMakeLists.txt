@@ -66,8 +66,12 @@ ENDIF(CMAKE_CROSSCOMPILING)
 
 # add target for documentation
 ADD_CUSTOM_TARGET(doxygen ALL
+  COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/DoxygenLayout.xml
+             ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/ownstyle.css
+             ${PROJECT_BINARY_DIR}/docs
   COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/src/docs/doxygen.conf
   COMMAND ${PROJECT_BINARY_DIR}/postprocess.sh
+  COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/tabs.css ${PROJECT_BINARY_DIR}/docs
   COMMENT "Creating documentation... (see ${PROJECT_BINARY_DIR}/docs/doxygen.log for output)"
   DEPENDS mtocpp mtocpp_post
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/docs"
@@ -105,5 +109,6 @@ SET (CPACK_PACKAGE_DESCRIPTION
   documentation looking more like Matlab.")
 SET (CPACK_DEBIAN_PACKAGE_SECTION "devel")
 SET (CPACK_DEBIAN_PACKAGE_SUGGESTS "doxygen")
+SET (CPACK_SOURCE_IGNORE_FILES "/CVS/;/\\.svn/;\\.swp$;\\.git/;build/;")
 
 INCLUDE (CPack)
