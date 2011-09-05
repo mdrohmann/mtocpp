@@ -57,7 +57,6 @@ RAGEL_PARSER(src/postprocess)
 ADD_EXECUTABLE(mtocpp src/mtocpp.cc mfilescanner.cc confscanner.cc)
 # create mtocpp_post
 ADD_EXECUTABLE(mtocpp_post postprocess.cc)
-ADD_EXECUTABLE(accesstest src/access.cc mfilescanner.cc confscanner.cc)
 
 # add options for cross compilation on windows
 IF(CMAKE_CROSSCOMPILING)
