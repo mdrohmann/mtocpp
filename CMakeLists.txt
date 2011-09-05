@@ -66,9 +66,6 @@ ENDIF(CMAKE_CROSSCOMPILING)
 
 # add target for documentation
 ADD_CUSTOM_TARGET(doxygen ALL
-  COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/DoxygenLayout.xml
-             ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/ownstyle.css
-             ${PROJECT_BINARY_DIR}/docs
   COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/src/docs/doxygen.conf
   COMMAND ${PROJECT_BINARY_DIR}/postprocess.sh
   COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/tabs.css ${PROJECT_BINARY_DIR}/docs
