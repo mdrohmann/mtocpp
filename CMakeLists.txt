@@ -9,9 +9,13 @@ SET(CUSTOM_DOC_DIR "${CMAKE_INSTALL_PREFIX}/share/doc/mtocpp"
   CACHE PATH "Custom directory where the documentation files will be installed")
 
 SET(CMAKE_CXX_FLAGS "-Wall")
+# path to FindRagel.cmake and WindowsToolChain.cmake
 SET(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+
+# enable make test
 ENABLE_TESTING()
 
+# files that need configuration...
 CONFIGURE_FILE(
   "${PROJECT_SOURCE_DIR}/test/test.sh.in"
   "${PROJECT_BINARY_DIR}/test.sh"
@@ -38,22 +42,30 @@ CONFIGURE_FILE(
   "${PROJECT_BINARY_DIR}/postprocess.sh"
   )
 
+# pathes where to look for header files
 INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/src")
 
 FIND_PACKAGE(Ragel REQUIRED)
 FIND_PACKAGE(Doxygen REQUIRED)
+
+# Ragel preprocessing
 RAGEL_PARSER(src/mfilescanner)
 RAGEL_PARSER(src/confscanner)
 RAGEL_PARSER(src/postprocess)
 
+# create mtocpp
 ADD_EXECUTABLE(mtocpp src/mtocpp.cc mfilescanner.cc confscanner.cc)
+# create mtocpp_post
 ADD_EXECUTABLE(mtocpp_post postprocess.cc)
 ADD_EXECUTABLE(accesstest src/access.cc mfilescanner.cc confscanner.cc)
+
+# add options for cross compilation on windows
 IF(CMAKE_CROSSCOMPILING)
   TARGET_LINK_LIBRARIES(mtocpp -lshlwapi)
   TARGET_LINK_LIBRARIES(accesstest -lshlwapi)
 ENDIF(CMAKE_CROSSCOMPILING)
 
+# add target for documentation
 ADD_CUSTOM_TARGET(doxygen ALL
   COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf
   COMMAND ${PROJECT_BINARY_DIR}/postprocess.sh
@@ -66,6 +78,7 @@ INSTALL(TARGETS mtocpp mtocpp_post DESTINATION bin)
 INSTALL(FILES License.txt DESTINATION ${CUSTOM_DOC_DIR})
 INSTALL(DIRECTORY ${PROJECT_SOURCE_DIR}/docs DESTINATION ${CUSTOM_DOC_DIR})
 
+# add test target: test examples
 ADD_TEST(MTOCPP_TEST "${PROJECT_BINARY_DIR}/test.sh")
 SET_TESTS_PROPERTIES(MTOCPP_TEST
   PROPERTIES FAIL_REGULAR_EXPRESSION "(failed)")
