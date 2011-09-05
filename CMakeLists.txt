@@ -92,6 +92,7 @@ SET (CTEST_PROJECT_NAME "MTOC++")
 
 # build a CPack driven installer package
 SET (CPACK_GENERATOR "DEB;TGZ")
+SET (CPACK_SOURCE_GENERATOR "TGZ")
 SET (CPACK_RESOURCE_FILE_LICENSE
   "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
 SET (CPACK_PACKAGE_VERSION_MAJOR "${MTOC++_VERSION_MAJOR}")
@@ -107,6 +108,6 @@ SET (CPACK_PACKAGE_DESCRIPTION
   documentation looking more like Matlab.")
 SET (CPACK_DEBIAN_PACKAGE_SECTION "devel")
 SET (CPACK_DEBIAN_PACKAGE_SUGGESTS "doxygen")
-SET (CPACK_SOURCE_IGNORE_FILES "/CVS/;/\\\\.svn/;\\\\.swp$;\\\\.git/;build/;")
+SET (CPACK_SOURCE_IGNORE_FILES "/CVS/;/\\\\.svn/;\\\\.swp$;\\\\.git/;\\\\.gitignore;build/;")
 
 INCLUDE (CPack)
