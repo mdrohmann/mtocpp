@@ -46,7 +46,7 @@ function toks = get_tokens(topic)
 function mtok = get_max_token(toks)
 
   mtok_temp = toks{1};
-  for i= length(toks)-1:-1:1
+  for i= length(toks):-1:2
     mtok = [mtok_temp, sprintf('.%s', toks{2:i})];
     if ~isempty(which(mtok))
       return;
