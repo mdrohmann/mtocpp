@@ -19,4 +19,11 @@
  * - Useful stuff: @subpage tips
  * - Licensing: @subpage licensing
  *
+ * @section downloads Downloads
+ *
+ * @par Release 1.1.1 (2011/09/05)
+ *
+ * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Linux.deb">Debian package for (Ubuntu/Debian/...)</a>
+ * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Linux.tar.gz">Build Tarball for Linux</a>
+ * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Source.tar.gz">Source Tarball</a>
  */

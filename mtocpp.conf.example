@@ -1,7 +1,7 @@
 # Configurations
 
 # This configuration file is not required. All default values are hardcoded in
-# mtoc++.
+# mtocpp.
 
 # Flag indicating whether automatic struct fields or object members
 # documentation is generated.

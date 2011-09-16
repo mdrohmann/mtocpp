@@ -38,7 +38,7 @@ PROJECT_NUMBER         = @MTOC++_VERSION_MAJOR@.@MTOC++_VERSION_MINOR@
 # If a relative path is entered, it will be relative to the location 
 # where doxygen was started. If left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = @PROJECT_SOURCE_DIR@/docs
+OUTPUT_DIRECTORY       = @PROJECT_BINARY_DIR@/docs
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 
 # 4096 sub-directories (in 2 levels) under the output directory of each output 
@@ -523,7 +523,7 @@ FILE_VERSION_FILTER    =
 # file name after the option, if omitted DoxygenLayout.xml will be used as the name 
 # of the layout file.
 
-LAYOUT_FILE            = 
+LAYOUT_FILE            = @PROJECT_SOURCE_DIR@/src/docs/DoxygenLayout.xml
 
 #---------------------------------------------------------------------------
 # configuration options related to warning and progress messages
@@ -574,7 +574,7 @@ WARN_FORMAT            = "$file:$line: $text"
 # and error messages should be written. If left blank the output is written 
 # to stderr.
 
-WARN_LOGFILE           = @PROJECT_SOURCE_DIR@/docs/doxygen.log
+WARN_LOGFILE           = @PROJECT_BINARY_DIR@/docs/doxygen.log
 
 #---------------------------------------------------------------------------
 # configuration options related to the input files
@@ -837,7 +837,7 @@ HTML_FOOTER            =
 # the style sheet file to the HTML output directory, so don't put your own 
 # stylesheet in the HTML output directory as well, or it will be erased!
 
-HTML_STYLESHEET        = 
+HTML_STYLESHEET        = @PROJECT_SOURCE_DIR@/src/docs/ownstyle.css
 
 # If the HTML_ALIGN_MEMBERS tag is set to YES, the members of classes, 
 # files or namespaces will be aligned in HTML using tables. If set to 
@@ -991,7 +991,7 @@ ENUM_VALUES_PER_LINE   = 4
 # JavaScript, DHTML, CSS and frames is required (i.e. any modern browser). 
 # Windows users are probably better off using the HTML help feature.
 
-GENERATE_TREEVIEW      = YES
+GENERATE_TREEVIEW      = NO
 
 # By enabling USE_INLINE_TREES, doxygen will generate the Groups, Directories, 
 # and Class Hierarchy pages using a tree view instead of an ordered list.

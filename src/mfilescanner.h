@@ -20,11 +20,16 @@
 
 struct RunMode
 {
-  RunMode() : mode(Normal), methodname(), latex_output(false),
-  print_fields(true), auto_add_fields(false),
-  auto_add_params(false), auto_add_class_properties(false),
-  auto_add_class(true), remove_first_arg_in_abstract_methods(true),
-  parse_of_type(true)
+  RunMode() : mode(Normal), methodname(),
+  /* configuration defaults */
+  latex_output(false),
+  print_fields(PRINT_FIELDS),
+  auto_add_fields(AUTO_ADD_FIELDS),
+  auto_add_params(AUTO_ADD_PARAMETERS),
+  auto_add_class_properties(AUTO_ADD_CLASS_PROPERTIES),
+  auto_add_class(AUTO_ADD_CLASSES),
+  remove_first_arg_in_abstract_methods(REMOVE_FIRST_ARG_IN_ABSTRACT_METHODS),
+  parse_of_type(ENABLE_OF_TYPE_PARSING)
   {}
 
   typedef enum
