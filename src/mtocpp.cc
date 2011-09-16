@@ -29,14 +29,14 @@ using std::ostringstream;
 void usage()
 {
   cout
-    << "This is mtoc++ Version " << MTOCPP_VERSION_MAJOR << "." << MTOCPP_VERSION_MINOR << "\n"
+    << "This is mtocpp Version " << MTOCPP_VERSION_MAJOR << "." << MTOCPP_VERSION_MINOR << "\n"
     << "\n"
-    << "mtoc++ parses the Matlab m-file <mfile> and produces c++-compliant output that can be processed by doxygen.\n"
+    << "mtocpp parses the Matlab m-file <mfile> and produces c++-compliant output that can be processed by doxygen.\n"
     << "\n"
     << "Usage: mtocpp <mfile> [<configuration-file>]\n"
     << "       mtocpp --help\n"
     << "\n"
-    << "If no explicit configuration file is given, mtoc++ also looks for './mtoc++.conf' by default." << endl;
+    << "If no explicit configuration file is given, mtocpp also looks for './mtocpp.conf' by default." << endl;
 }
 
 // main routine

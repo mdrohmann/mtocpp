@@ -1781,9 +1781,9 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
       runMode_.auto_add_class_properties = false;
     }
   }
-  if(cscan_.vars_.find(string("AUTO_ADD_CLASS"))!=cscan_.vars_.end())
+  if(cscan_.vars_.find(string("AUTO_ADD_CLASSES"))!=cscan_.vars_.end())
   {
-    if(cscan_.vars_[string("AUTO_ADD_CLASS")][0] == string("true"))
+    if(cscan_.vars_[string("AUTO_ADD_CLASSES")][0] == string("true"))
     {
       runMode_.auto_add_class = true;
     }
@@ -2496,6 +2496,9 @@ void MFileScanner::end_function()
   bool is_constructor = false;
   bool is_method = false;
   bool skip_parameters = false;
+  /* If copydoc or copydetails is used in the documentation body or the
+   * documentation header, the automatic parameter doc strings need to be
+   * skipped. */
   if (! docuheader_.empty()
        && docuheader_[0].find("copydoc") != std::string::npos)
   {
@@ -2514,13 +2517,19 @@ void MFileScanner::end_function()
       {
         size_t pos_word_begin = docubody_[i].find_first_of(" \n", pos_begin_copy + 1);
         pos_word_begin        = docubody_[i].find_first_not_of(" \n", pos_word_begin);
-        size_t pos_word_end   = docubody_[i].find_first_of("(", pos_word_begin);
-        std::string func      = docubody_[i].substr(pos_word_begin, pos_word_end-pos_word_begin);
-        size_t pos_func_beg   = func.find_last_of(":. ");
-        func                  = func.substr(pos_func_beg+1);
-        if(func == cfuncname_)
+        if(pos_word_begin != std::string::npos)
         {
-          skip_parameters = true;
+          size_t pos_word_end   = docubody_[i].find_first_of("(", pos_word_begin);
+          if(pos_word_end != std::string::npos)
+          {
+            std::string func      = docubody_[i].substr(pos_word_begin, pos_word_end-pos_word_begin);
+            size_t pos_func_beg   = func.find_last_of(":. ");
+            func                  = func.substr(pos_func_beg+1);
+            if(func == cfuncname_)
+            {
+              skip_parameters = true;
+            }
+          }
         }
       }
     }

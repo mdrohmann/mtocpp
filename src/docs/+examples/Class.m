@@ -162,7 +162,7 @@ classdef Class
             % Parameters:
             %  param1: first parameter of type xyz
             %  param2: second parameter with description
-            %          @type fooType
+            %          @type Class
             %
             % Parameters and return values can have specified types by use of
             % one of the keyword strings "of type" or "@type" in its
@@ -209,10 +209,10 @@ classdef Class
             % Class.
             %
             % Parameters:
-            %  arg1:     A variable of type fooType. The type information for
+            %  arg1:     A variable of type fooType . The type information for
             %            this parameter is also copied to inherited classes if
             %            @@copydoc or @@copydetails are used.
-            %  arg2:     A variable of type fooType. The type information for
+            %  arg2:     A variable of type fooType . The type information for
             %            this parameter is also copied to inherited classes if
             %            @@copydoc or @@copydetails are used. 
             %

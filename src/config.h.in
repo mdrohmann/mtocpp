@@ -1,3 +1,12 @@
 // the configured options and settings for Tutorial
 #define MTOCPP_VERSION_MAJOR @MTOC++_VERSION_MAJOR@
 #define MTOCPP_VERSION_MINOR @MTOC++_VERSION_MINOR@
+
+// defaults for config files
+#define PRINT_FIELDS                         true
+#define AUTO_ADD_FIELDS                      false
+#define AUTO_ADD_PARAMETERS                  false
+#define AUTO_ADD_CLASS_PROPERTIES            false
+#define AUTO_ADD_CLASSES                     true
+#define REMOVE_FIRST_ARG_IN_ABSTRACT_METHODS true
+#define ENABLE_OF_TYPE_PARSING               true
