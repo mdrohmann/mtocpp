@@ -1577,10 +1577,11 @@ void MFileScanner :: print_pure_function_synopsis()
   }
 
   bool first = true;
+  // is first function ==> in M-files with private functions the latter one are marked with underscores...
   if(is_first_function_)
   {
     if(is_class_ && class_part_ == AtMethod)
-      fout_ << namespace_string() << classname_ << "::";
+      fout_ << namespace_string() << classname_ << ".";
   }
   else
     fout_ << "mtoc_subst_" << fnname_ << "_tsbus_cotm_";
@@ -2422,10 +2423,11 @@ void MFileScanner::extract_typen(DocuBlock & db, std::string & typen, bool remov
       typen = line.substr(typenstart, typenend - typenstart);
       if(typen[0] != ':')
       {
-        for(size_t i=0; i < typen.length(); ++i)
-          if(typen.at(i) == '.')
-            typen.replace(i,1,std::string("::"));
-        typen = string("::") + typen;
+      // substituted colons by double colons and added prefix :: (seems unnecessary...)
+//        for(size_t i=0; i < typen.length(); ++i)
+//          if(typen.at(i) == '.')
+//            typen.replace(i,1,std::string("::"));
+//        typen = string("::") + typen;
 
 //        line.replace(typenstart, typenend - typenstart, typen);
       }
