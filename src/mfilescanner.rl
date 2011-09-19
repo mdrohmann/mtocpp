@@ -2415,7 +2415,7 @@ void MFileScanner::extract_typen(DocuBlock & db, std::string & typen, bool remov
   {
     std::string & line   = *dit;
     size_t found         = std::string::npos;
-    size_t typeof_length = 0;
+    size_t typeof_length = 0;                         // length of string "of type" respectively "@type"
     if(runMode_.parse_of_type && linenr < 2)
     {
       found         = line.find("of type");
@@ -2429,10 +2429,18 @@ void MFileScanner::extract_typen(DocuBlock & db, std::string & typen, bool remov
     if(found != std::string::npos)
     {
       size_t typenstart = found + typeof_length;
+      // find start of type name
       typenstart=line.find_first_not_of( " \t", typenstart );
+      // find end of type name
       size_t typenend =
         line.find_first_of( " \n\0", typenstart );
       typen = line.substr(typenstart, typenend - typenstart);
+      // remove trailing '.' if necessary
+      if (typen[typen.length()-1] == '.')
+      {
+        typen = typen.substr(0, typen.length() - 1);
+      }
+      // add leading '::' just to make sure, we only have global scope variables.
       if(typen[0] != ':')
       {
         for(size_t i=0; i < typen.length(); ++i)
