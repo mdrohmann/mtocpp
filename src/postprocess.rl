@@ -82,11 +82,17 @@ using std::endl;
    # matlab is typeless, so discard the type
    ('matlabtypesubstitute') => {fout << " ";};
 
+   # remove leading "::" (global namespace identifier)
+   ([(,>] . '::') => { fout.write(ts, 1); };
+
+   # replace all "::" by "."
+   ('::' . [A-Z\\a-z\-_]) => { fout << '.' << *(te-1); };
+
    # a word
-   (any - [\n <>()[\]{}\&:;_\t])+ => { fout.write(ts, te-ts); };
+   (any - [\n <>()[\]{}\&:,;_\t])+ => { fout.write(ts, te-ts); };
 
    # word separators
-   ([\n <>()[\]{}\t:;_\&]) => {fout << *ts;};
+   ([\n <>()[\]{}\t:;,_\&]) => {fout << *ts;};
    *|;
 }%%
 
