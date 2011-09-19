@@ -124,6 +124,8 @@ function [d,e,f]=third_function_with_sev_retvals(auto_param)
 % Return values:
 % d : a return value
 
+body(string, with, double quote, and percent sign, ' "%s"}') % a real comment }
+
 function [d,e,f]=third_function_without_parameters
 % function [d,e,f]=third_function_without_parameters
 % a third (private) function in the test file without parameters

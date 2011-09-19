@@ -371,13 +371,26 @@ const char * ClassPartNames[] =
 
   # a line in the function body {{{2
   funcline := |*
+    # empty line
     ([ \t]+)
       => { fout_.write(ts, te-ts); };
 
+    # line continuation
     ('...' . [ \t]* . EOL)
       => { fout_.write(ts, te-ts); };
 
-#    ('%' @{ tmp_p = p + 1; } . garble_comment_line);
+    # a string should not be parsed for comment blocks, so we handle it separately.
+    ('\'' . [^'\n]+ . '\'')
+      => {
+           // change double quotes to quotes and vice versa...
+           fout_ << '"';
+           string s(ts+1, te-ts-2);
+           std::replace(s.begin(), s.end(), '\"', '\'');
+           fout_ << s;
+           fout_ << '"';
+         };
+
+    # ('%' @{ tmp_p = p + 1; } . garble_comment_line);
     (comment_block)
       => {
            assert(p >= tmp_p-1);
