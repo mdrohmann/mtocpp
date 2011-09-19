@@ -157,6 +157,10 @@ ret::substitutestart::c::retsubstituteend mtoc_subst_doxygen_m_tsbus_cotm_second
 rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::gridbase::gridbase auto_param) {
 
 
+body(string, with, double quote, and percent sign, " '%s'}")/*  a real comment }
+*/
+
+
 }
 /** @fn rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::gridbase::gridbase auto_param)
   * @brief  a third (private) function in the test file with serveral return values
