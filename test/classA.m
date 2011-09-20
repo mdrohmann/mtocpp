@@ -179,6 +179,13 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
     % an abstract method comment below
     %
     % further comments
+
+    a = undocumented_abstract_method(t, b, f);
+
+    [b,c,d] = another_undocumented_abstract_method(t, b, c);
+
+    % documentation for next method
+    c = followed_by_document_method(t, d, e);
   end
 
   events

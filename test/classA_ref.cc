@@ -336,6 +336,42 @@ virtual mlhsInnerSubst<::classA::mixed_access,a> abstract_method(matlabtypesubst
   */
 
 
+virtual mlhsInnerSubst<matlabtypesubstitute,a> undocumented_abstract_method(matlabtypesubstitute b,matlabtypesubstitute f) = 0;
+/** @fn mlhsInnerSubst<matlabtypesubstitute,a> undocumented_abstract_method(matlabtypesubstitute b,matlabtypesubstitute f)
+  * @brief undocumented abstract method
+  *
+  *
+  * @param b    b
+  * @param f    f
+  *
+  * @retval a    a
+  */
+
+virtual mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,b> ,mlhsInnerSubst<matlabtypesubstitute,c> ,mlhsInnerSubst<matlabtypesubstitute,d> > another_undocumented_abstract_method(matlabtypesubstitute b,matlabtypesubstitute c) = 0;
+/** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,b> ,mlhsInnerSubst<matlabtypesubstitute,c> ,mlhsInnerSubst<matlabtypesubstitute,d> > another_undocumented_abstract_method(matlabtypesubstitute b,matlabtypesubstitute c)
+  * @brief another undocumented abstract method
+  *
+  *
+  * @param b    b
+  * @param c    c
+  *
+  * @retval b    b
+  * @retval c    c
+  * @retval d    d
+  */
+
+virtual mlhsInnerSubst<matlabtypesubstitute,c> followed_by_document_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;
+/** @fn mlhsInnerSubst<matlabtypesubstitute,c> followed_by_document_method(matlabtypesubstitute d,matlabtypesubstitute e)
+  * @brief  documentation for next method
+  *
+  *
+  * @param d    d
+  * @param e    e
+  *
+  * @retval c    c
+  */
+
+
 
 };
 
