@@ -70,7 +70,7 @@ using std::endl;
     # matlab identifier (1 return value)
 #    ('&lt;' . (default - [,&])*) => { cerr.write(ts+4, te - ts-4); cerr << std::endl; fout.write(ts+4, te - ts-4); };
 
-    (',' . (default - '\&')*) => { fout << " <em>"; fout.write(ts+1, te-ts-1); fout << "</em>"; };
+    (',' . (default - '\&')*) => { fout << " <span class=\"paramname\">"; fout.write(ts+1, te-ts-1); fout << "</span>"; };
 
     # end of return value
     ('&gt;') => {
