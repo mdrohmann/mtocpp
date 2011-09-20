@@ -7,6 +7,7 @@ classdef rectgrid
 
     function grid=rectgrid(varargin)
     %function rectgrid(varargin)
+    % constructor of rectgrid
     %
     % constructor of a cartesian rectangular grid in 2 dimensions with
     % axis parallel elements. General geometrical information is stored
@@ -350,7 +351,7 @@ classdef rectgrid
 
     gridpart(grid, eind);
 
-    plot(grid, params);
+    p = plot(grid, params);
 
     set_enbi(grid, nbind, values);
 

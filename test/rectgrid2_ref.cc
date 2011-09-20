@@ -513,7 +513,6 @@ rectgrid(matlabtypesubstitute varargin) {
   *         alpha * circumfere(T_i) <= h_i^(d-1) and
   *         alpha * h_i <= distance(midpoint i to any neigbour) )
   *
-  * @param varargin    varargin
   *
   * @par Required fields of params:
   * @arg \c xnumintervals&nbsp;&mdash;&nbsp;     number of elements along x directions
@@ -530,12 +529,12 @@ noret::substitute display()
 
 noret::substitute gridpart(matlabtypesubstitute eind);
 
-mlhsInnerSubst<matlabtypesubstitute,p> plot(::plot_params params);
+mlhsInnerSubst<void> plot(::plot_params params);
 
 noret::substitute set_enbi(matlabtypesubstitute nbind,matlabtypesubstitute values);
 
 public:
-static mlhsInnerSubst<matlabtypesubstitute,ret> test(::othergrid auto_param,matlabtypesubstitute b,::test c);
+static mlhsInnerSubst<void> test(::othergrid auto_param,matlabtypesubstitute b,::test c);
 
 };
 }
