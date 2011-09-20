@@ -44,6 +44,21 @@
 # 'help' or 'doc'.
 # ENABLE_OF_TYPE_PARSING := true;
 
+# Flag indicating whether the typename void shall be inserted for return values
+# with no specified type. If this is not set to true, the typename is
+# eliminated in the output by the postprocessor.
+# VOID_TYPE_IN_RETURN_VALUES := false;
+
+# Integer flag indicating whether return value names shall be printed in the
+# function synopsis. If this flag is deactivated only the type names are
+# written.
+# The flag can be set to either 0, 1 or 2:
+#   - 0: means that no return value names shall be printed at all.
+#   - 1: means that return value names shall be printed for return value lists
+#        with more than one element only.
+#   - 2: means that return value names shall be printed always.
+# PRINT_RETURN_VALUE_NAME := 2
+
 ##
 
 # TODO Kommentier mal was, Daniel!

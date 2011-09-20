@@ -136,7 +136,7 @@ matlabtypesubstitute protected_access2;
 
 public:
 
-ret::substitutestart::obj::retsubstituteend foo(matlabtypesubstitute b,matlabtypesubstitute c) {
+mlhsInnerSubst<matlabtypesubstitute,obj> foo(matlabtypesubstitute b,matlabtypesubstitute c) {
 
       function private_function
 
@@ -145,7 +145,7 @@ ret::substitutestart::obj::retsubstituteend foo(matlabtypesubstitute b,matlabtyp
 
       bar;
 }
-/** @fn ret::substitutestart::obj::retsubstituteend foo(matlabtypesubstitute b,matlabtypesubstitute c)
+/** @fn mlhsInnerSubst<matlabtypesubstitute,obj> foo(matlabtypesubstitute b,matlabtypesubstitute c)
   * @brief  brief doc for foo
   *
   *
@@ -158,11 +158,11 @@ ret::substitutestart::obj::retsubstituteend foo(matlabtypesubstitute b,matlabtyp
   */
 
 
-ret::substitutestart::obj::retsubstituteend bar(matlabtypesubstitute d,matlabtypesubstitute e) {
+mlhsInnerSubst<matlabtypesubstitute,obj> bar(matlabtypesubstitute d,matlabtypesubstitute e) {
 
       foo;
 }
-/** @fn ret::substitutestart::obj::retsubstituteend bar(matlabtypesubstitute d,matlabtypesubstitute e)
+/** @fn mlhsInnerSubst<matlabtypesubstitute,obj> bar(matlabtypesubstitute d,matlabtypesubstitute e)
   * @brief  brief doc for bar
   *
   *
@@ -174,14 +174,14 @@ ret::substitutestart::obj::retsubstituteend bar(matlabtypesubstitute d,matlabtyp
   * @note This method has the MATLAB method property <tt>Hidden</tt> set to true.
   */
 
-ret::substitutestart::obj::retsubstituteend foobar()
+mlhsInnerSubst<matlabtypesubstitute,obj> foobar()
    {
 
 
      test
 
 }
-/** @fn ret::substitutestart::obj::retsubstituteend foobar()
+/** @fn mlhsInnerSubst<matlabtypesubstitute,obj> foobar()
   
   * @brief  last function comment above
   *  brief for foobar
@@ -195,7 +195,7 @@ ret::substitutestart::obj::retsubstituteend foobar()
   * @note This method has the MATLAB method property <tt>Hidden</tt> set to true.
   */
 
-ret::substitutestart::ret::retsubstituteend mdecl(matlabtypesubstitute b);
+mlhsInnerSubst<matlabtypesubstitute,ret> mdecl(matlabtypesubstitute b);
 
 classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
 }
@@ -211,7 +211,7 @@ classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
 
 public:
 /* 
-ret::substitutestart::value::retsubstituteend protected_access()
+mlhsInnerSubst<matlabtypesubstitute,value> protected_access()
    {
 
       if a==b
@@ -277,9 +277,9 @@ noret::substitute protected_access2(matlabtypesubstitute value) {
 
 
 public:
-static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute notthis,matlabtypesubstitute c) {
+static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c) {
 }
-/** @fn rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesubstitute notthis,matlabtypesubstitute c)
+/** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c)
   * @brief  a static method
   *
   *
@@ -290,9 +290,9 @@ static rets::substitutestart::a::b::retssubstituteend static_method(matlabtypesu
   * @retval b    b
   */
 
-static ret::substitutestart::ret::retsubstituteend test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c) {
+static mlhsInnerSubst<matlabtypesubstitute,ret> test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c) {
 }
-/** @fn ret::substitutestart::ret::retsubstituteend test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c)
+/** @fn mlhsInnerSubst<matlabtypesubstitute,ret> test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c)
   * @brief  @copybrief grid::rect::rectgrid::test()
   *
   *
@@ -306,8 +306,8 @@ static ret::substitutestart::ret::retsubstituteend test(::gridbase::gridbase aut
   */
 
 public:
-static rets::substitutestart::a::b::retssubstituteend static_abstract_method(matlabtypesubstitute this,matlabtypesubstitute c) = 0;
-/** @fn rets::substitutestart::a::b::retssubstituteend static_abstract_method(matlabtypesubstitute this,matlabtypesubstitute c)
+static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_abstract_method(matlabtypesubstitute this,matlabtypesubstitute c) = 0;
+/** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_abstract_method(matlabtypesubstitute this,matlabtypesubstitute c)
   * @brief  a static abstract method
   *
   *
@@ -321,8 +321,8 @@ static rets::substitutestart::a::b::retssubstituteend static_abstract_method(mat
 
 public:
 
-virtual ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;
-/** @fn ret::substitutestart::a::retsubstituteend abstract_method(matlabtypesubstitute d,matlabtypesubstitute e)
+virtual mlhsInnerSubst<::classA::mixed_access,a> abstract_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;
+/** @fn mlhsInnerSubst<::classA::mixed_access,a> abstract_method(matlabtypesubstitute d,matlabtypesubstitute e)
   * @brief  an abstract method comment above
   *  an abstract method comment below
   *

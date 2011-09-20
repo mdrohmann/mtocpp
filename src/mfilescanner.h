@@ -29,7 +29,9 @@ struct RunMode
   auto_add_class_properties(AUTO_ADD_CLASS_PROPERTIES),
   auto_add_class(AUTO_ADD_CLASSES),
   remove_first_arg_in_abstract_methods(REMOVE_FIRST_ARG_IN_ABSTRACT_METHODS),
-  parse_of_type(ENABLE_OF_TYPE_PARSING)
+  parse_of_type(ENABLE_OF_TYPE_PARSING),
+  void_type_in_return_values(VOID_TYPE_IN_RETURN_VALUES),
+  print_return_value_name(PRINT_RETURN_VALUE_NAME)
   {}
 
   typedef enum
@@ -49,6 +51,8 @@ struct RunMode
   bool auto_add_class;
   bool remove_first_arg_in_abstract_methods;
   bool parse_of_type;
+  bool void_type_in_return_values;
+  int print_return_value_name;
 };
 
 typedef enum
@@ -194,7 +198,7 @@ private:
   void print_pure_function_synopsis();
   void print_function_synopsis();
   void end_of_property_doc();
-  void get_typename(const std::string &, std::string &);
+  void get_typename(const std::string &, std::string &, std::string voidtype = std::string("matlabtypesubstitute"));
   void extract_typen(DocuBlock & db, std::string & typen, bool remove = false);
   void update_method_params(const std::string & methodname);
 

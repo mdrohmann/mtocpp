@@ -10,3 +10,5 @@
 #define AUTO_ADD_CLASSES                     true
 #define REMOVE_FIRST_ARG_IN_ABSTRACT_METHODS true
 #define ENABLE_OF_TYPE_PARSING               true
+#define VOID_TYPE_IN_RETURN_VALUES           false
+#define PRINT_RETURN_VALUE_NAME              2

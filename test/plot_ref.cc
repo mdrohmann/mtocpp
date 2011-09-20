@@ -1,7 +1,7 @@
 #include "rectgrid.m"
 namespace grid{
 namespace rect{
-ret::substitutestart::p::retsubstituteend grid::rect::rectgrid::plot(::plot_params params) {
+mlhsInnerSubst<matlabtypesubstitute,p> grid::rect::rectgrid::plot(::plot_params params) {
 
 
 /*  Bernard Haasdonk 9.5.2007
@@ -22,7 +22,7 @@ p = plot_polygon_grid(grid,params);
 
 
 }
-/** @fn ret::substitutestart::p::retsubstituteend grid::rect::rectgrid::plot(::plot_params params)
+/** @fn mlhsInnerSubst<matlabtypesubstitute,p> grid::rect::rectgrid::plot(::plot_params params)
   * @brief plot
   *
   *
