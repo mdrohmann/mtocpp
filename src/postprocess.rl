@@ -33,6 +33,8 @@ using std::endl;
   # matlab ifdentifier without underscore characters
   IDENT_WO_US = [A-Z\\a-z\-][A-Z\\a-z0-9\-]*;
 
+  ANY_TAG = '<' . [^>]* . '>';
+
   action echo {
     fout << fpc;
     cout << fpc;
@@ -42,19 +44,67 @@ using std::endl;
 
   action echo_tok { fout.write(tmp_p, p - tmp_p); cout.write(tmp_p, p-tmp_p); }
 
-  # reconstruct return values
-  retvals:= |*
-    # matlab identifier (1 return value)
-    (IDENT) => { fout.write(ts, te - ts); };
+  rettype:= |*
 
-    # end list of return values
-    '::retssubstituteend' => { fout << "] ="; fgoto main; };
+    # matlab is typeless, so discard the type
+    ('matlabtypesubstitute') => {fout << " ";};
+
+    # replace all "::" by "."
+    ('::' . [A-Z\\a-z\-_]) => { fout << '.' << *(te-1); };
+
+    # a word
+    (any - [\n <>\&:,\t])+ => { fout.write(ts, te-ts); };
+
+    # word separators
+    ([\n <>\&:\t]) => {fout << *ts;};
+
+    # comma or &gt; end the type
+    (',') => { fhold; fret; };
+    ('&gt;') => { p -=4; fret; };
+  *|;
+
+  # reconstruct return values
+  retval:= |*
+    ('&lt;' . ('::')?) => { fcall rettype; };
+
+    # matlab identifier (1 return value)
+#    ('&lt;' . (default - [,&])*) => { cerr.write(ts+4, te - ts-4); cerr << std::endl; fout.write(ts+4, te - ts-4); };
+
+    (',' . (default - '\&')*) => { fout << " <em>"; fout.write(ts+1, te-ts-1); fout << "</em>"; };
 
     # end of return value
-    '::retsubstituteend' => { fout << " ="; fgoto main; };
+    ('&gt;') => {
+                  if(only_retval) { fout << " ="; }
+                  fret;
+                };
 
-    # return value separator
-    '::' => { fout <<", "; };
+    # white spaces
+    ([ \t\n]*) => { fout.write(ts, te - ts); };
+
+    # typebreak
+    ('<br class="typebreak"/>') => {};
+
+    # other tags
+    #(ANY_TAG) => { fout.write(ts, te-ts); };
+
+  *|;
+
+  retvals := |*
+
+    ('&lt;') => {};
+
+    ('mlhsInnerSubst') => { fcall retval; };
+
+    ('&gt;') => { fout << "] ="; fgoto main; };
+
+    # white spaces and commata
+    ([ \t\n]*) => { fout.write(ts, te - ts); };
+    ('<br class="typebreak"/>' . [ \t\n]* . ',') => { fout << ",<br class=\"typebreak\"/>\n"; };
+    (',') => { fout << ", "; };
+
+    # other tags
+    (ANY_TAG) => { fout.write(ts, te-ts); };
+
   *|;
 
   # function name
@@ -68,10 +118,10 @@ using std::endl;
 
   main:= |*
    # list of return values
-   ('rets::substitutestart::') => { fout << "function ["; fgoto retvals; };
+   ('mlhsSubst') => { fout << "function ["; only_retval = false; fgoto retvals; };
 
    # one return value
-   ('ret::substitutestart::') => { fout << "function "; fgoto retvals; };
+   ('mlhsInnerSubst') => { fout << "function "; only_retval = true; fcall retval; fout << " ="; };
 
    # no return values
    ('noret::substitute') => {fout << "function ";};
@@ -84,6 +134,7 @@ using std::endl;
 
    # remove leading "::" (global namespace identifier)
    ([(,>] . '::') => { fout.write(ts, 1); };
+   ('&lt;' . '::') => { fout.write(ts, 4); };
 
    # replace all "::" by "."
    ('::' . [A-Z\\a-z\-_]) => { fout << '.' << *(te-1); };
@@ -104,7 +155,8 @@ public:
   PostProcess(const string & filename) :
     filename_(filename),
     line(1),
-    ts(0), te(0), have(0)
+    ts(0), te(0), have(0),
+    top(0), only_retval(false)
   { }
 
   // run postprocessor
@@ -158,6 +210,7 @@ public:
     {
       /* Machine failed before finding a token. */
       cerr << filename_ << ": PARSE ERROR in line " << line << endl;
+      cerr.write(p, 100);
       exit(-1);
     }
 
@@ -173,8 +226,9 @@ private:
   char        *ts              , *te;
   int          act             , have;
   int          cs;
-  /*int          top;
-  int          stack[5];*/
+  int          top;
+  int          stack[5];
+  bool         only_retval;
 
 };
 

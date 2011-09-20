@@ -1,4 +1,4 @@
-ret::substitutestart::rv::retsubstituteend doxygen(::testnamespace::testclass param1,matlabtypesubstitute param2,::gridbase::gridbase auto_param) {
+mlhsInnerSubst<matlabtypesubstitute,rv> doxygen(::testnamespace::testclass param1,matlabtypesubstitute param2,::gridbase::gridbase auto_param) {
 
 
 /*  After the first non-comment line the function body begins:
@@ -37,7 +37,7 @@ auto_param.auto_field;
 /** @file "./doxygen.m"
   * @ingroup test
   */
-/** @fn ret::substitutestart::rv::retsubstituteend doxygen(::testnamespace::testclass param1,matlabtypesubstitute param2,::gridbase::gridbase auto_param)
+/** @fn mlhsInnerSubst<matlabtypesubstitute,rv> doxygen(::testnamespace::testclass param1,matlabtypesubstitute param2,::gridbase::gridbase auto_param)
   * @brief  Here comes a short description text
   *
   *
@@ -142,10 +142,10 @@ auto_param.auto_field;
   * @arg \c auto_added&nbsp;&mdash;&nbsp;    auto added
   * @arg \c sub.auto_added&nbsp;&mdash;&nbsp;    sub.auto added
   */
-ret::substitutestart::c::retsubstituteend mtoc_subst_doxygen_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b) {
+mlhsInnerSubst<matlabtypesubstitute,c> mtoc_subst_doxygen_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b) {
 
 }
-/** @fn ret::substitutestart::c::retsubstituteend mtoc_subst_doxygen_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b)
+/** @fn mlhsInnerSubst<matlabtypesubstitute,c> mtoc_subst_doxygen_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b)
   * @brief second function without docu
   *
   *
@@ -154,7 +154,7 @@ ret::substitutestart::c::retsubstituteend mtoc_subst_doxygen_m_tsbus_cotm_second
   *
   * @retval c    c
   */
-rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::gridbase::gridbase auto_param) {
+mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,e> ,mlhsInnerSubst<matlabtypesubstitute,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::gridbase::gridbase auto_param) {
 
 
 body(string, with, double quote, and percent sign, " '%s'}")/*  a real comment }
@@ -162,7 +162,7 @@ body(string, with, double quote, and percent sign, " '%s'}")/*  a real comment }
 
 
 }
-/** @fn rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::gridbase::gridbase auto_param)
+/** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,e> ,mlhsInnerSubst<matlabtypesubstitute,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::gridbase::gridbase auto_param)
   * @brief  a third (private) function in the test file with serveral return values
   *
   *
@@ -172,7 +172,7 @@ body(string, with, double quote, and percent sign, " '%s'}")/*  a real comment }
   * @retval e    e
   * @retval f    f
   */
-rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
+mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,e> ,mlhsInnerSubst<matlabtypesubstitute,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
    {
 
 
@@ -181,7 +181,7 @@ rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cot
 
 
 }
-/** @fn rets::substitutestart::d::e::f::retssubstituteend mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
+/** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,e> ,mlhsInnerSubst<matlabtypesubstitute,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
   
   * @brief  a third (private) function in the test file without parameters
   *

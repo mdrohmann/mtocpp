@@ -200,6 +200,26 @@ classdef Class
             sdflkdjsf
         end
 
+        function [ret1, ret2, ret3] = many_return_args(this, arg1, arg2)%#ok
+            % This is a base function with three left hand side arguments!
+            %
+            % This are function details described in the class
+            % Class. To all three return values, one can attach type
+            % information and documentation.
+            %
+            % Parameters:
+            %  arg1:     A variable of type fooType.
+            %  arg2:     A variable of type fooType.
+            %
+            % Return values:
+            %   ret1:    A return value of type fooType.
+            %   ret2:    A return value of type Class.
+            %   ret3:    A return value with no specified type.
+            %
+            %
+            % Blah. Blah.
+            returnarg = arg1;
+        end
         
         function returnarg = iwillbeoverridden(this, arg1, arg2)%#ok
             % This is a base function which will be overridden in a

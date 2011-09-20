@@ -1576,16 +1576,27 @@ void MFileScanner :: print_pure_function_synopsis()
   else{
     if(returnlist_.size() == 0)
       fout_ << "noret::substitute ";
-    else if(returnlist_.size() == 1)
-      fout_ << "ret::substitutestart::" << returnlist_[0] << "::retsubstituteend ";
     else
     {
-      fout_ << "rets::substitutestart::";
+      if(returnlist_.size() > 1)
+        fout_ << "mlhsSubst<";
       for(unsigned int i=0; i < returnlist_.size(); ++i)
       {
-        fout_ << returnlist_[i] << "::";
+        std::string typen;
+        if(runMode_.void_type_in_return_values)
+          get_typename(returnlist_[i], typen, "void");
+        else
+          get_typename(returnlist_[i], typen);
+
+        fout_ << "mlhsInnerSubst<" << typen;
+        if (runMode_.print_return_value_name - (returnlist_.size() == 1) > 0)
+          fout_ << "," << returnlist_[i];
+        fout_ << "> ";
+        if (i < returnlist_.size() - 1)
+          fout_ << ",";
       }
-      fout_ << "retssubstituteend ";
+      if(returnlist_.size() > 1)
+        fout_ << "> ";
     }
   }
 
@@ -1619,11 +1630,12 @@ void MFileScanner :: print_pure_function_synopsis()
       get_typename(paramlist_[i], typen);
       fout_ << typen << " " << paramlist_[i];
     }
-    for(unsigned int i=0; i < returnlist_.size(); ++i)
+/*    for(unsigned int i=0; i < returnlist_.size(); ++i)
     {
       std::string typen;// = "matlabtypesubstitute";
       get_typename(returnlist_[i], typen);
     }
+*/
     fout_ << ")";
   }
 }
@@ -1824,6 +1836,33 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
     else
     {
       runMode_.parse_of_type = false;
+    }
+  }
+  if(cscan_.vars_.find(string("VOID_TYPE_IN_RETURN_VALUES"))!=cscan_.vars_.end())
+  {
+    if(cscan_.vars_[string("VOID_TYPE_IN_RETURN_VALUES")][0] == string("true"))
+    {
+      runMode_.void_type_in_return_values = true;
+    }
+    else
+    {
+      runMode_.void_type_in_return_values = false;
+    }
+  }
+  if(cscan_.vars_.find(string("PRINT_RETURN_VALUE_NAME"))!=cscan_.vars_.end())
+  {
+    string tmp = cscan_.vars_[string("PRINT_RETURN_VALUE_NAME")][0];
+    if(tmp == string("0"))
+    {
+      runMode_.print_return_value_name = 0;
+    }
+    else if(tmp == string("1"))
+    {
+      runMode_.print_return_value_name = 1;
+    }
+    else
+    {
+      runMode_.print_return_value_name = 2;
     }
   }
 };
@@ -2364,7 +2403,7 @@ void MFileScanner::end_method()
   docuextra_.clear();
 }
 
-void MFileScanner::get_typename(const std::string & paramname, std::string & typen)
+void MFileScanner::get_typename(const std::string & paramname, std::string & typen, std::string voidtype)
 {
   typedef DocuList :: iterator                                       DLIt;
   typedef DocuBlock :: iterator                                      DBIt;
@@ -2389,7 +2428,7 @@ void MFileScanner::get_typename(const std::string & paramname, std::string & typ
           pdb   = &(it->second);
         else
         {
-          typen="matlabtypesubstitute";
+          typen=voidtype;
           return;
         }
       }
@@ -2400,7 +2439,7 @@ void MFileScanner::get_typename(const std::string & paramname, std::string & typ
   extract_typen(db, typen);
 
   if(typen.empty())
-    typen = "matlabtypesubstitute";
+    typen = voidtype;
   else
     param_type_map_[paramname] = typen;
 }
