@@ -57,7 +57,7 @@
 #   - 1: means that return value names shall be printed for return value lists
 #        with more than one element only.
 #   - 2: means that return value names shall be printed always.
-# PRINT_RETURN_VALUE_NAME := 2
+# PRINT_RETURN_VALUE_NAME := 2;
 
 ##
 
