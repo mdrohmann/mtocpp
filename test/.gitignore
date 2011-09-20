@@ -1,3 +1,4 @@
 *.cc
+!*_ref.cc
 .gdbinit
 mtoc.sh

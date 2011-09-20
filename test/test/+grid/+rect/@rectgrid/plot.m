@@ -1,5 +1,6 @@
 function p = plot(grid,params)
 %function p = plot(grid [,params])
+% plot function
 %
 % Parameters:
 %   params: object of type plot_params
