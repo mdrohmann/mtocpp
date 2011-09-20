@@ -61,7 +61,6 @@ ADD_EXECUTABLE(mtocpp_post postprocess.cc)
 # add options for cross compilation on windows
 IF(CMAKE_CROSSCOMPILING)
   TARGET_LINK_LIBRARIES(mtocpp -lshlwapi)
-  TARGET_LINK_LIBRARIES(accesstest -lshlwapi)
 ENDIF(CMAKE_CROSSCOMPILING)
 
 # add target for documentation
