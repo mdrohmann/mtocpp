@@ -133,8 +133,8 @@ using std::endl;
    ('matlabtypesubstitute') => {fout << " ";};
 
    # remove leading "::" (global namespace identifier)
-   ([(,>] . '::') => { fout.write(ts, 1); };
-   ('&lt;' . '::') => { fout.write(ts, 4); };
+   ([(,>] . '::') => { fout.write(ts, 1); fout << " "; };
+   ('&lt;' . '::') => { fout.write(ts, 4); fout << " ";};
 
    # replace all "::" by "."
    ('::' . [A-Z\\a-z\-_]) => { fout << '.' << *(te-1); };
