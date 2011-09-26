@@ -2158,7 +2158,8 @@ void MFileScanner::write_docu_list(const DocuList & list,
         if(param_type_map_entry != param_type_map_.end())
         {
           // ... or copy documentation brief text from class documentation ...
-          fout_ << oss.str() << "@copybrief " << (*param_type_map_entry).second << "::" << s << "\n  ";
+          string temp = s.substr(0, s.find_first_of("."));
+          fout_ << oss.str() << "@copybrief " << (*param_type_map_entry).second << "::" << temp << "\n  ";
         }
         else
         {
