@@ -148,7 +148,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
       %
       % If copydetails/copydoc commands are used, "parameters" and "return
       % values" are ignored in the derived class, except for the strings
-      % 'object of ...' which are used to define the parameter / return value
+      % 'of type ...' which are used to define the parameter / return value
       % type.
       %
       % @copydetails grid::rect::rectgrid::test()

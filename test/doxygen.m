@@ -75,6 +75,7 @@ function rv = doxygen(param1, param2, auto_param)
 %
 % Parameters:
 %  param1: first parameter of type testnamespace.testclass.
+%  auto_param: of type ::gridbase
 %
 % Return values:
 %  rv: return value
@@ -120,6 +121,9 @@ function c=second_function_without_docu(a,b)
 
 function [d,e,f]=third_function_with_sev_retvals(auto_param)
 % a third (private) function in the test file with serveral return values
+%
+% Parameters:
+%   auto_param: @type ::rectgrid
 %
 % Return values:
 % d : a return value
