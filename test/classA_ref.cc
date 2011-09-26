@@ -283,8 +283,8 @@ static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabty
   * @brief  a static method
   *
   *
-  * @param c    c
   * @param notthis    notthis
+  * @param c    c
   *
   * @retval a    a
   * @retval b    b
@@ -311,8 +311,8 @@ static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabty
   * @brief  a static abstract method
   *
   *
-  * @param c    c
   * @param this    this
+  * @param c    c
   *
   * @retval a    a
   * @retval b    b

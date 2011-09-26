@@ -120,18 +120,18 @@ auto_param.auto_field;
   * 
   * 
   *
-  * @param auto_param     object  which is not used! This documentation is added automatically! 
   * @param param1     first parameter
+  * @param auto_param     object  which is not used! This documentation is added automatically! 
   *
   * @retval rv     return value
-  *
-  * @par Required fields of auto_param:
-  * @arg \c auto_field&nbsp;&mdash;&nbsp;    @copybrief ::othergrid::auto_field
   *
   * @par Required fields of param1:
   * @arg \c test&nbsp;&mdash;&nbsp;     Description for required field param1.test
   *
   * @par Required fields of param2:
+  *
+  * @par Required fields of auto_param:
+  * @arg \c auto_field&nbsp;&mdash;&nbsp;    @copybrief ::othergrid::auto_field
   *
   * @par Optional fields of param2:
   * @arg \c test2&nbsp;&mdash;&nbsp;     Description for optional field param2.test2

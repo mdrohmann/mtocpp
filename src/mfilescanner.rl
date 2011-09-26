@@ -2111,12 +2111,13 @@ void MFileScanner::write_docu_block(const DocuBlock & block_orig)
 // is normally read in by the confscanner.
 void MFileScanner::write_docu_list(const DocuList & list,
                                    const string & item_text,
-                                   const DocuList & alternative,
+                                   const AltDocuList & alternative,
                                    bool add_undocumented = false,
                                    const string separator = string(),
                                    const string docu_list_name = string())
 {
-  typedef DocuList :: const_iterator list_iterator;
+  typedef DocuList :: const_iterator                                 list_iterator;
+  typedef AltDocuList :: const_iterator                              alt_list_iterator;
   list_iterator lit = list.begin();
   // iterate over documentation blocks
   for(; lit != list.end(); ++lit)
@@ -2143,7 +2144,7 @@ void MFileScanner::write_docu_list(const DocuList & list,
     {
       // then look for alternative documentation block from global
       // configuration file ...
-      list_iterator alit = alternative.find((*lit).first);
+      alt_list_iterator alit = alternative.find((*lit).first);
       if(alit == alternative.end() || (*alit).second.empty())
       {
         string s((*lit).first);
@@ -2186,9 +2187,10 @@ void MFileScanner::write_docu_list(const DocuList & list,
 // \a text. If listmap entry is empty, \a altlistmap is used instead.
 void MFileScanner::write_docu_listmap(const DocuListMap & listmap,
                                       const string & text,
-                                      const DocuListMap & altlistmap)
+                                      const AltDocuListMap & altlistmap)
 {
-  typedef DocuListMap :: const_iterator map_iterator;
+  typedef DocuListMap :: const_iterator                              map_iterator;
+  typedef AltDocuListMap :: const_iterator                           alt_map_iterator;
   if(!listmap.empty())
   {
     map_iterator mit = listmap.begin();
@@ -2196,10 +2198,10 @@ void MFileScanner::write_docu_listmap(const DocuListMap & listmap,
     {
       fout_ << "*\n  ";
       fout_ << "* " << text << (*mit).first << ":\n  ";
-      map_iterator amit = altlistmap.find((*mit).first);
+      alt_map_iterator amit = altlistmap.find((*mit).first);
       write_docu_list((*mit).second,
                       "@arg \\c",
-                      ( amit != altlistmap.end() ? (*amit).second : DocuList() ),
+                      ( amit != altlistmap.end() ? (*amit).second : AltDocuList() ),
                       runMode_.auto_add_fields,
                       "&nbsp;&mdash;&nbsp;",
                       (*mit).first );
@@ -2421,6 +2423,7 @@ void MFileScanner::end_method()
 void MFileScanner::get_typename(const std::string & paramname, std::string & typen, std::string voidtype)
 {
   typedef DocuList :: iterator                                       DLIt;
+  typedef AltDocuList :: iterator                                    ADLIt;
   typedef DocuBlock :: iterator                                      DBIt;
   DLIt it  = param_list_.find(paramname);
   DocuBlock * pdb;
@@ -2433,14 +2436,14 @@ void MFileScanner::get_typename(const std::string & paramname, std::string & typ
       pdb   = &(it->second);
     else
     {
-      it = cscan_.param_list_.find(paramname);
-      if(it != cscan_.param_list_.end() && !(it->second).empty())
-        pdb   = &(it->second);
+      ADLIt ait = cscan_.param_list_.find(paramname);
+      if(ait != cscan_.param_list_.end() && !(ait->second).empty())
+        pdb   = &(ait->second);
       else
       {
-        it = cscan_.return_list_.find(paramname);
-        if(it != cscan_.return_list_.end() && !(it->second).empty())
-          pdb   = &(it->second);
+        ait = cscan_.return_list_.find(paramname);
+        if(ait != cscan_.return_list_.end() && !(ait->second).empty())
+          pdb   = &(ait->second);
         else
         {
           typen=voidtype;
