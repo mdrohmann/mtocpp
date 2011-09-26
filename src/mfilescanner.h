@@ -258,18 +258,17 @@ private:
 
   void write_docu_list(const DocuList & list,
                        const std::string & item_text,
-                       const AltDocuList & alternative,
+                       const DocuList & alternative,
                        bool,
                        const std::string separator,
                        const std::string docu_list_name);
 
   void write_docu_listmap(const DocuListMap & listmap,
                           const std::string & text,
-                          const AltDocuListMap & altlistmap);
+                          const DocuListMap & altlistmap);
 
 
   void debug_output(const std::string & msg, char * p);
-
 
 private:
   std::istream & fin_;
