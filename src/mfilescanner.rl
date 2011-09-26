@@ -2616,11 +2616,11 @@ void MFileScanner::end_function()
     {
       if(! runMode_.latex_output && ! is_class_)
       {
-          // Then make a file documentation block
-          fout_ << "/** @file \"" << filename_ << "\"\n  ";
-
+        // Then make a file documentation block
+        fout_ << "/** @file \"" << filename_ << "\"\n  ";
         cout_ingroup();
-
+        fout_ << "* @brief ";
+        cout_docuheader(cfuncname_);
         fout_ << "*/\n";
       }
     }
