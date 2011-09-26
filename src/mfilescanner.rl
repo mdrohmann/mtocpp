@@ -299,9 +299,9 @@ const char * ClassPartNames[] =
 }
 #endif
            // add an empty docu block for parameter \a s
-           if(param_list_.find(s) == param_list_.end())
+           if(key_find(param_list_, s) == param_list_.end())
            {
-             param_list_[s] = DocuBlock();
+             param_list_.push_back(make_pair(s, DocuBlock()));
            }
 #ifdef DEBUG
 {
@@ -326,9 +326,9 @@ const char * ClassPartNames[] =
             string s(tmp_p, p - tmp_p);
             returnlist_.push_back(s);
             // add an empty docu block for return value \a s
-            if(return_list_.find(s) == return_list_.end())
+            if(key_find(return_list_, s) == return_list_.end())
             {
-              return_list_[s] = DocuBlock();
+              return_list_.push_back(make_pair(s, DocuBlock()));
             }
           }
         )
@@ -348,9 +348,9 @@ const char * ClassPartNames[] =
              returnlist_.push_back(s);
              // add an empty docu block for single return value \a s
 
-             if(return_list_.find(s) == return_list_.end())
+             if(key_find(return_list_, s) == return_list_.end())
              {
-               return_list_[s] = DocuBlock();
+               return_list_.push_back(make_pair(s, DocuBlock()));
              }
 #ifdef DEBUG
   cerr << "\n In return list: " << endl;
@@ -428,17 +428,22 @@ const char * ClassPartNames[] =
         // ... check wether its found field is still missing a DocuBlock in the
         // retval list.
         bool missing = true;
-        map_iterator rvoit = retval_list_.find(tmp_string);
-        if(rvoit != retval_list_.end())
+        map_iterator rvoit = key_find(retval_list_, tmp_string);
+        if(rvoit == retval_list_.end())
         {
-          list_iterator lit = (*rvoit).second.find(s);
+          retval_list_.push_back(make_pair(tmp_string, DocuList()));
+          rvoit = retval_list_.end() - 1;
+        }
+        else
+        {
+          list_iterator lit = key_find((*rvoit).second, s);
           if(lit != (*rvoit).second.end())
             missing = false;
         }
         // if it is missing, add an empty docu block
         if(missing)
         {
-          retval_list_[tmp_string][s] = DocuBlock();
+          (*rvoit).second.push_back(make_pair(s, DocuBlock()));
         }
       }
     };
@@ -471,34 +476,39 @@ const char * ClassPartNames[] =
         // ... check wether its found field is still missing a DocuBlock in the
         // return, optional and the required list.
         bool missing = true;
-        map_iterator rvoit = retval_list_.find(tmp_string);
+        map_iterator rvoit = key_find(retval_list_, tmp_string);
         if(rvoit != retval_list_.end())
         {
-          list_iterator lit = (*rvoit).second.find(s);
+          list_iterator lit = key_find((*rvoit).second, s);
           // found match in retval list
           if(lit != (*rvoit).second.end())
             missing = false;
         }
-        map_iterator moit = optional_list_.find(tmp_string);
+        map_iterator moit = key_find(optional_list_, tmp_string);
         if(moit != optional_list_.end())
         {
           // found match in optional list
-          list_iterator lit = (*moit).second.find(s);
+          list_iterator lit = key_find((*moit).second, s);
           if(lit != (*moit).second.end())
             missing = false;
         }
-        map_iterator roit = required_list_.find(tmp_string);
-        if(roit != required_list_.end())
+        map_iterator roit = key_find(required_list_, tmp_string);
+        if(roit == required_list_.end())
+        {
+          required_list_.push_back(make_pair(tmp_string, DocuList()));
+          roit = required_list_.end() - 1;
+        }
+        else
         {
           // found match in required list
-          list_iterator lit = (*roit).second.find(s);
+          list_iterator lit = key_find((*roit).second, s);
           if(lit != (*roit).second.end())
             missing = false;
         }
         // in case it IS missing, add an empty field to the required block.
         if(missing)
         {
-          required_list_[tmp_string][s] = DocuBlock();
+          (*roit).second.push_back(make_pair(s, DocuBlock()));
         }
       }
     };
@@ -659,7 +669,7 @@ debug_output("in funcbody: goto main", p);
       tmp_string.assign(tmp_p3, tmp_p2 - tmp_p3);
       //    std::fout_ << tmp_string << '\n';
       assert(p >= tmp_p);
-      (*clist_)[tmp_string].push_back(string(tmp_p+1, p - tmp_p));
+      key_find(*clist_,tmp_string)->second.push_back(string(tmp_p+1, p - tmp_p));
     };
 
   # expand the paragraph for last argument matched
@@ -678,7 +688,7 @@ debug_output("in funcbody: goto main", p);
     => {
       assert(p+1 >= tmp_p);
       string s(tmp_p, p - tmp_p + 1);
-      (*clist_)[tmp_string].push_back(s);
+      key_find(*clist_,tmp_string)->second.push_back(s);
       /*fout_ << "add something results in\n" << (*clist_)[tmp_string];*/
     };
 
@@ -709,7 +719,7 @@ debug_output("in funcbody: goto main", p);
     )
       => {
         //fout_ << tmp_string << '\n';
-        clist_ = &(required_list_[tmp_string]);
+        clist_ = &(key_find(required_list_,tmp_string)->second);
         docline = false;
         fcall fill_list;
       };
@@ -722,7 +732,7 @@ debug_output("in funcbody: goto main", p);
           %(string_tok) )
       . [ \t]* . ':' . [ \t]* . EOL )
       => {
-        clist_ = &(optional_list_[tmp_string]);
+        clist_ = &(key_find(optional_list_,tmp_string)->second);
         docline = false;
         fcall fill_list;
       };
@@ -735,7 +745,7 @@ debug_output("in funcbody: goto main", p);
           %(string_tok) )
       . [ \t]* . ':' . [ \t]* . EOL )
       => {
-        clist_ = &(retval_list_[tmp_string]);
+        clist_ = &(key_find(retval_list_,tmp_string)->second);
         docline = false;
         fcall fill_list;
       };
@@ -2111,12 +2121,13 @@ void MFileScanner::write_docu_block(const DocuBlock & block_orig)
 // is normally read in by the confscanner.
 void MFileScanner::write_docu_list(const DocuList & list,
                                    const string & item_text,
-                                   const DocuList & alternative,
+                                   const AltDocuList & alternative,
                                    bool add_undocumented = false,
                                    const string separator = string(),
                                    const string docu_list_name = string())
 {
-  typedef DocuList :: const_iterator list_iterator;
+  typedef DocuList :: const_iterator                                 list_iterator;
+  typedef AltDocuList :: const_iterator                              alt_list_iterator;
   list_iterator lit = list.begin();
   // iterate over documentation blocks
   for(; lit != list.end(); ++lit)
@@ -2143,7 +2154,7 @@ void MFileScanner::write_docu_list(const DocuList & list,
     {
       // then look for alternative documentation block from global
       // configuration file ...
-      list_iterator alit = alternative.find((*lit).first);
+      alt_list_iterator alit = alternative.find((*lit).first);
       if(alit == alternative.end() || (*alit).second.empty())
       {
         string s((*lit).first);
@@ -2186,9 +2197,10 @@ void MFileScanner::write_docu_list(const DocuList & list,
 // \a text. If listmap entry is empty, \a altlistmap is used instead.
 void MFileScanner::write_docu_listmap(const DocuListMap & listmap,
                                       const string & text,
-                                      const DocuListMap & altlistmap)
+                                      const AltDocuListMap & altlistmap)
 {
-  typedef DocuListMap :: const_iterator map_iterator;
+  typedef DocuListMap :: const_iterator                              map_iterator;
+  typedef AltDocuListMap :: const_iterator                           alt_map_iterator;
   if(!listmap.empty())
   {
     map_iterator mit = listmap.begin();
@@ -2196,10 +2208,10 @@ void MFileScanner::write_docu_listmap(const DocuListMap & listmap,
     {
       fout_ << "*\n  ";
       fout_ << "* " << text << (*mit).first << ":\n  ";
-      map_iterator amit = altlistmap.find((*mit).first);
+      alt_map_iterator amit = altlistmap.find((*mit).first);
       write_docu_list((*mit).second,
                       "@arg \\c",
-                      ( amit != altlistmap.end() ? (*amit).second : DocuList() ),
+                      ( amit != altlistmap.end() ? (*amit).second : AltDocuList() ),
                       runMode_.auto_add_fields,
                       "&nbsp;&mdash;&nbsp;",
                       (*mit).first );
@@ -2421,26 +2433,27 @@ void MFileScanner::end_method()
 void MFileScanner::get_typename(const std::string & paramname, std::string & typen, std::string voidtype)
 {
   typedef DocuList :: iterator                                       DLIt;
+  typedef AltDocuList :: iterator                                    ADLIt;
   typedef DocuBlock :: iterator                                      DBIt;
-  DLIt it  = param_list_.find(paramname);
+  DLIt it  = key_find(param_list_, paramname);
   DocuBlock * pdb;
   if(it != param_list_.end() && !(it->second).empty())
     pdb   = &(it->second);
   else
   {
-    it = return_list_.find(paramname);
+    it = key_find(return_list_, paramname);
     if(it != return_list_.end() && !(it->second).empty())
       pdb   = &(it->second);
     else
     {
-      it = cscan_.param_list_.find(paramname);
-      if(it != cscan_.param_list_.end() && !(it->second).empty())
-        pdb   = &(it->second);
+      ADLIt ait = cscan_.param_list_.find(paramname);
+      if(ait != cscan_.param_list_.end() && !(ait->second).empty())
+        pdb   = &(ait->second);
       else
       {
-        it = cscan_.return_list_.find(paramname);
-        if(it != cscan_.return_list_.end() && !(it->second).empty())
-          pdb   = &(it->second);
+        ait = cscan_.return_list_.find(paramname);
+        if(ait != cscan_.return_list_.end() && !(ait->second).empty())
+          pdb   = &(ait->second);
         else
         {
           typen=voidtype;
