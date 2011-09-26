@@ -127,7 +127,7 @@ auto_param.auto_field;
   * @par Required fields of param1:
   * @arg \c test&nbsp;&mdash;&nbsp;     Description for required field param1.test
   * @arg \c auto_added&nbsp;&mdash;&nbsp;    @copybrief ::testnamespace::testclass::auto_added
-  * @arg \c sub.auto_added&nbsp;&mdash;&nbsp;    @copybrief ::testnamespace::testclass::sub.auto_added
+  * @arg \c sub.auto_added&nbsp;&mdash;&nbsp;    @copybrief ::testnamespace::testclass::sub
   *
   * @par Required fields of param2:
   * @arg \c auto_added&nbsp;&mdash;&nbsp;    auto added
