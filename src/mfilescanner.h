@@ -155,28 +155,49 @@ public:
 };
 
 template <class ST>
-typename std::vector<std::pair<std::string, ST> >::iterator
-  key_find(std::vector<std::pair<std::string, ST> > unsorted_map,
-           const std::string & key)
+class ordered_map : public std::vector<std::pair<std::string, ST> >
 {
-  typedef typename std :: vector< std :: pair< std :: string, ST > >
-            :: iterator                                              iterator;
+public:
 
-  iterator it = unsorted_map.begin();
-  for(; it!= unsorted_map.end(); ++it)
+  typedef std :: pair< std :: string, ST >                           item;
+  typedef std :: vector< item >                                      base_type;
+  typedef typename base_type :: iterator                             iterator;
+  typedef typename base_type :: const_iterator                       const_iterator;
+
+public:
+
+  ordered_map() : base_type()
+  {};
+
+  item & operator[](const std::string & key)
   {
-    if ((*it).first == key)
-      break;
+    iterator it = this->find(key);
+    if (it == this->end())
+    {
+      this->push_back(make_pair(key, ST()));
+      it = this->end() - 1;
+    }
+    return *it;
   }
-  return it;
-}
+
+  iterator find(const std::string & key)
+  {
+    iterator it = this->begin();
+    for (; it != this->end(); ++it)
+    {
+      if (it->first == key)
+        break;
+    }
+    return it;
+  }
+};
 
 class MFileScanner
 {
 public:
   typedef std :: vector< std :: string >                             DocuBlock;
-  typedef std :: vector< std :: pair< std :: string, DocuBlock > >   DocuList;
-  typedef std :: vector< std :: pair< std :: string, DocuList > >    DocuListMap;
+  typedef std :: ordered_map< DocuBlock >                            DocuList;
+  typedef std :: ordered_map< DocuList >                             DocuListMap;
   typedef std :: map< std :: string, DocuBlock >                     AltDocuList;
   typedef std :: map< std :: string, AltDocuList >                   AltDocuListMap;
   typedef std :: set< std :: string >                                GroupSet;
