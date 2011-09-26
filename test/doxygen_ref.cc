@@ -118,22 +118,22 @@ auto_param.auto_field;
   * 
   * 
   *
-  * @param auto_param     object  which is not used! This documentation is added automatically! 
   * @param param1     first parameter 
   * @param param2    param2
+  * @param auto_param     object  which is not used! This documentation is added automatically! 
   *
   * @retval rv     return value
   *
-  * @par Required fields of auto_param:
-  * @arg \c auto_field&nbsp;&mdash;&nbsp;    @copybrief ::gridbase::auto_field
-  *
   * @par Required fields of param1:
+  * @arg \c test&nbsp;&mdash;&nbsp;     Description for required field param1.test
   * @arg \c auto_added&nbsp;&mdash;&nbsp;    @copybrief ::testnamespace::testclass::auto_added
   * @arg \c sub.auto_added&nbsp;&mdash;&nbsp;    @copybrief ::testnamespace::testclass::sub.auto_added
-  * @arg \c test&nbsp;&mdash;&nbsp;     Description for required field param1.test
   *
   * @par Required fields of param2:
   * @arg \c auto_added&nbsp;&mdash;&nbsp;    auto added
+  *
+  * @par Required fields of auto_param:
+  * @arg \c auto_field&nbsp;&mdash;&nbsp;    @copybrief ::gridbase::auto_field
   *
   * @par Optional fields of param2:
   * @arg \c test2&nbsp;&mdash;&nbsp;     Description for optional field param2.test2

@@ -169,7 +169,7 @@ public:
   ordered_map() : base_type()
   {};
 
-  item & operator[](const std::string & key)
+  ST & operator[](const std::string & key)
   {
     iterator it = this->find(key);
     if (it == this->end())
@@ -177,7 +177,7 @@ public:
       this->push_back(make_pair(key, ST()));
       it = this->end() - 1;
     }
-    return *it;
+    return it->second;
   }
 
   iterator find(const std::string & key)
@@ -196,8 +196,8 @@ class MFileScanner
 {
 public:
   typedef std :: vector< std :: string >                             DocuBlock;
-  typedef std :: ordered_map< DocuBlock >                            DocuList;
-  typedef std :: ordered_map< DocuList >                             DocuListMap;
+  typedef ordered_map< DocuBlock >                                   DocuList;
+  typedef ordered_map< DocuList >                                    DocuListMap;
   typedef std :: map< std :: string, DocuBlock >                     AltDocuList;
   typedef std :: map< std :: string, AltDocuList >                   AltDocuListMap;
   typedef std :: set< std :: string >                                GroupSet;
@@ -258,14 +258,14 @@ private:
 
   void write_docu_list(const DocuList & list,
                        const std::string & item_text,
-                       const DocuList & alternative,
+                       const AltDocuList & alternative,
                        bool,
                        const std::string separator,
                        const std::string docu_list_name);
 
   void write_docu_listmap(const DocuListMap & listmap,
                           const std::string & text,
-                          const DocuListMap & altlistmap);
+                          const AltDocuListMap & altlistmap);
 
 
   void debug_output(const std::string & msg, char * p);

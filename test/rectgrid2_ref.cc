@@ -516,8 +516,8 @@ rectgrid(matlabtypesubstitute varargin) {
   *
   * @par Required fields of params:
   * @arg \c xnumintervals&nbsp;&mdash;&nbsp;     number of elements along x directions
-  * @arg \c xrange&nbsp;&mdash;&nbsp;     interval covered along the x-axes
   * @arg \c ynumintervals&nbsp;&mdash;&nbsp;     number of elements along y directions
+  * @arg \c xrange&nbsp;&mdash;&nbsp;     interval covered along the x-axes
   * @arg \c yrange&nbsp;&mdash;&nbsp;     interval covered along the y-axes
   */
 
