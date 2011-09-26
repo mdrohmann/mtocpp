@@ -207,7 +207,7 @@ private:
   std::string namespace_string();
 
   void cout_ingroup();
-  void cout_docuheader(std::string);
+  void cout_docuheader(std::string, bool clear = true);
   void cout_docubody();
   void cout_docuextra();
   const std::string & replace_underscore(std::string & s);

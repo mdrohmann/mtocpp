@@ -36,6 +36,7 @@ auto_param.auto_field;
 }
 /** @file "./doxygen.m"
   * @ingroup test
+  * @brief  Here comes a short description text
   */
 /** @fn mlhsInnerSubst<matlabtypesubstitute,rv> doxygen(::testnamespace::testclass param1,matlabtypesubstitute param2,::gridbase::gridbase auto_param)
   * @brief  Here comes a short description text

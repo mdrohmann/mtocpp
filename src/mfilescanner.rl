@@ -2260,7 +2260,7 @@ void MFileScanner::end_of_property_doc()
   docuextra_.clear();
 }
 
-void MFileScanner::cout_docuheader(string altheader)
+void MFileScanner::cout_docuheader(string altheader, bool clear)
 {
   if(docuheader_.empty() && cscan_.docuheader_.empty())
   {
@@ -2277,7 +2277,8 @@ void MFileScanner::cout_docuheader(string altheader)
       write_docu_block(cscan_.docuheader_);
     }
   }
-  docuheader_.clear();
+  if(clear)
+    docuheader_.clear();
 }
 
 void MFileScanner :: cout_docubody()
@@ -2620,7 +2621,7 @@ void MFileScanner::end_function()
         fout_ << "/** @file \"" << filename_ << "\"\n  ";
         cout_ingroup();
         fout_ << "* @brief ";
-        cout_docuheader(cfuncname_);
+        cout_docuheader(cfuncname_, false);
         fout_ << "*/\n";
       }
     }
