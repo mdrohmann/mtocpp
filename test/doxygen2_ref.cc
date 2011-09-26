@@ -1,4 +1,4 @@
-mlhsInnerSubst<void> doxygen(::testnamespace::testclass param1,matlabtypesubstitute param2,::gridbase::gridbase auto_param) {
+mlhsInnerSubst<void> doxygen(::testnamespace::testclass param1,matlabtypesubstitute param2,::gridbase auto_param) {
 
 
 /*  After the first non-comment line the function body begins:
@@ -38,7 +38,7 @@ auto_param.auto_field;
   * @ingroup test
   * @brief  Here comes a short description text
   */
-/** @fn mlhsInnerSubst<void> doxygen(::testnamespace::testclass param1,matlabtypesubstitute param2,::gridbase::gridbase auto_param)
+/** @fn mlhsInnerSubst<void> doxygen(::testnamespace::testclass param1,matlabtypesubstitute param2,::gridbase auto_param)
   * @brief  Here comes a short description text
   *
   *
@@ -124,7 +124,7 @@ auto_param.auto_field;
   * @retval rv     return value
   *
   * @par Required fields of auto_param:
-  * @arg \c auto_field&nbsp;&mdash;&nbsp;    @copybrief ::gridbase::gridbase::auto_field
+  * @arg \c auto_field&nbsp;&mdash;&nbsp;    @copybrief ::gridbase::auto_field
   *
   * @par Required fields of param1:
   * @arg \c auto_added&nbsp;&mdash;&nbsp;    @copybrief ::testnamespace::testclass::auto_added
@@ -142,7 +142,7 @@ auto_param.auto_field;
 mlhsInnerSubst<void> mtoc_subst_doxygen_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b) {
 
 }
-mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::gridbase::gridbase auto_param) {
+mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::rectgrid auto_param) {
 
 
 body(string, with, double quote, and percent sign, " '%s'}")/*  a real comment }
@@ -150,7 +150,7 @@ body(string, with, double quote, and percent sign, " '%s'}")/*  a real comment }
 
 
 }
-/** @fn mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::gridbase::gridbase auto_param)
+/** @fn mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::rectgrid auto_param)
   * @brief  a third (private) function in the test file with serveral return values
   *
   *

@@ -298,7 +298,7 @@ static mlhsInnerSubst<matlabtypesubstitute,ret> test(::gridbase::gridbase auto_p
   *
   *  If copydetails/copydoc commands are used, "parameters" and "return
   *  values" are ignored in the derived class, except for the strings
-  *  <tt>object of ...</tt> which are used to define the parameter / return value
+  *  <tt>of type ...</tt> which are used to define the parameter / return value
   *  type.
   * 
   *  @copydetails grid::rect::rectgrid::test()

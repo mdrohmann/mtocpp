@@ -2124,10 +2124,24 @@ void MFileScanner::write_docu_list(const DocuList & list,
     ostringstream oss;
     oss << "* " << item_text << " " << (*lit).first << separator << "    ";
     const DocuBlock & block = (*lit).second;
-    // block is empty?
-    if(block.empty())
+
+    bool use_alternative = false;
+    if(block.size() == 1)
     {
-      // then look for alternative documentation block form global
+      size_t typeof_length = 0;
+      if (block[0].substr(0, 9) == std::string(" of type "))
+        typeof_length = 9;
+      else if (block[0].substr(0, 7) == std::string(" @type "))
+        typeof_length = 7;
+
+      if (typeof_length > 0
+           && block[0].find_first_of(" ", typeof_length) == std::string::npos)
+        use_alternative = true;
+    }
+
+    if(block.empty() || use_alternative)
+    {
+      // then look for alternative documentation block from global
       // configuration file ...
       list_iterator alit = alternative.find((*lit).first);
       if(alit == alternative.end() || (*alit).second.empty())
