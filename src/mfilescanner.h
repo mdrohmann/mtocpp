@@ -154,12 +154,31 @@ public:
   friend std::ostream & operator<<(std::ostream & os, MethodParams & mp);
 };
 
+template <class ST>
+typename std::vector<std::pair<std::string, ST> >::iterator
+  key_find(std::vector<std::pair<std::string, ST> > unsorted_map,
+           const std::string & key)
+{
+  typedef typename std :: vector< std :: pair< std :: string, ST > >
+            :: iterator                                              iterator;
+
+  iterator it = unsorted_map.begin();
+  for(; it!= unsorted_map.end(); ++it)
+  {
+    if ((*it).first == key)
+      break;
+  }
+  return it;
+}
+
 class MFileScanner
 {
 public:
   typedef std :: vector< std :: string >                             DocuBlock;
-  typedef std :: map< std :: string, DocuBlock >                     DocuList;
-  typedef std :: map< std :: string, DocuList >                      DocuListMap;
+  typedef std :: vector< std :: pair< std :: string, DocuBlock > >   DocuList;
+  typedef std :: vector< std :: pair< std :: string, DocuList > >    DocuListMap;
+  typedef std :: map< std :: string, DocuBlock >                     AltDocuList;
+  typedef std :: map< std :: string, AltDocuList >                   AltDocuListMap;
   typedef std :: set< std :: string >                                GroupSet;
 
 public:
@@ -218,17 +237,18 @@ private:
 
   void write_docu_list(const DocuList & list,
                        const std::string & item_text,
-                       const DocuList & alternative,
+                       const AltDocuList & alternative,
                        bool,
                        const std::string separator,
                        const std::string docu_list_name);
 
   void write_docu_listmap(const DocuListMap & listmap,
                           const std::string & text,
-                          const DocuListMap & altlistmap);
+                          const AltDocuListMap & altlistmap);
 
 
   void debug_output(const std::string & msg, char * p);
+
 
 private:
   std::istream & fin_;
