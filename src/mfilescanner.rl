@@ -362,9 +362,7 @@ const char * ClassPartNames[] =
           . ']'
           )
       )
-      . ([ \t]*
-#          @{ buffer_.append(*p); }
-        )
+      . ( [ \t]+ | ([ \t].'...'.[ \t]*.EOL))*
       :> '=' . WSOC*
     );
     # }}}2
