@@ -2038,7 +2038,10 @@ void MFileScanner::write_docu_block(const DocuBlock & block_orig)
       {
         if(j != s.size() && s[j] == '\'' && !last_char_escaped)
         {
-          fout_ << "<tt>" << s.substr(i+1, j-i-1) << "</tt>";
+          if(j==i+1)
+            fout_ << '\'';
+          else
+            fout_ << "<tt>" << s.substr(i+1, j-i-1) << "</tt>";
           ++j;
         }
         else
