@@ -161,7 +161,7 @@ classdef Class
             %
             % Parameters:
             %  param1: first parameter of type xyz
-            %  param2: second parameter with description
+            %  param2: second parameter with description @default 12
             %          @type Class
             %
             % Parameters and return values can have specified types by use of

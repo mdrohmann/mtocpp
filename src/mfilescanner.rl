@@ -1626,6 +1626,8 @@ void MFileScanner :: print_pure_function_synopsis()
 
       std::string typen;// = "matlabtypesubstitute";
       get_typename(paramlist_[i], typen);
+      std::string defvalue;
+      get_default(paramlist_[i], defvalue);
       fout_ << typen << " " << paramlist_[i];
     }
 /*    for(unsigned int i=0; i < returnlist_.size(); ++i)
@@ -2253,6 +2255,9 @@ void MFileScanner::end_of_property_doc()
   if(typen.empty())
     extract_typen(docubody_, typen);
 
+  string defval;
+  extract_default(docubody_, defval);
+
   if(typen.empty())
     typen = "matlabtypesubstitute";
 
@@ -2358,6 +2363,7 @@ void MFileScanner::clear_lists()
   std::cerr << "clear lists" << endl;
 #endif
   paramlist_.clear();
+  /* param_defaults_.clear(); */
   returnlist_.clear();
   param_list_.clear();
   return_list_.clear();
@@ -2420,6 +2426,66 @@ void MFileScanner::end_method()
   docuheader_.clear();
   docubody_.clear();
   docuextra_.clear();
+}
+
+void MFileScanner::extract_default(DocuBlock & db, std::string & defvalue)
+{
+  typedef DocuBlock :: iterator                                      DBIt;
+
+  for(DBIt dit = db.begin(); dit != db.end(); ++dit)
+  {
+    std::string & line   = *dit;
+    size_t found         = std::string::npos;
+    size_t deflength     = std::string("(default").length();
+    found                = line.find("(default");
+    if(found != std::string::npos)
+    {
+      size_t tmp;
+      if(line[found+1] == '=')
+        tmp = found + deflength + 1;
+      else if (line[found+2] == '=')
+        tmp = found + deflength + 2;
+      else
+        found = std::string::npos;
+
+      if (found != std::string::npos)
+      {
+        defvalue = line.substr(tmp+1);
+        defvalue = defvalue.substr(0, defvalue.length() - 1);
+      }
+    }
+    if(found == std::string::npos)
+    {
+      deflength     = string("@default ").length();
+      found         = line.find("@default ");
+      if (found != std::string::npos)
+      {
+        defvalue = line.substr(found + deflength + 1);
+        line[found]   = '(';
+        line[found+8] = '=';
+        line = line.substr(0, line.length()-1) + ")\n";
+      }
+      else
+      {
+        defvalue = std::string("");
+      }
+    }
+  }
+}
+
+void MFileScanner::get_default(const std::string & paramname, std::string & defvalue)
+{
+  typedef DocuList :: iterator                                       DLIt;
+  DLIt it  = param_list_.find(paramname);
+  if(it != param_list_.end() && !(it->second).empty())
+  {
+    DocuBlock & db   = it->second;
+    extract_default(db, defvalue);
+  }
+  else
+  {
+    defvalue = std::string("");
+  }
 }
 
 void MFileScanner::get_typename(const std::string & paramname, std::string & typen, std::string voidtype)
