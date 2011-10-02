@@ -239,7 +239,9 @@ private:
   void print_function_synopsis();
   void end_of_property_doc();
   void get_typename(const std::string &, std::string &, std::string voidtype = std::string("matlabtypesubstitute"));
+  void get_default(const std::string &, std::string &);
   void extract_typen(DocuBlock & db, std::string & typen, bool remove = false);
+  void extract_default(DocuBlock &, std::string &);
   void update_method_params(const std::string & methodname);
 
   void end_method();
@@ -297,6 +299,7 @@ private:
   DocuBlock    docubody_;
   DocuBlock    docuextra_;
   DocuBlock    paramlist_;
+/*  AltDocuList  param_defaults_;*/
   std::string  cfuncname_;
   GroupSet     groupset_;
   bool         is_script_;
