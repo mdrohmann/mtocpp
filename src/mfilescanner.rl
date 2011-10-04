@@ -116,7 +116,7 @@ const char * ClassPartNames[] =
         }
         else
         {
-          cerr << "missing class part handling for class part: " << ClassPartNames[class_part_] << endl;
+          cerr << "MTOCPP: missing class part handling for class part: " << ClassPartNames[class_part_] << endl;
         }
       }
       else
@@ -1317,7 +1317,7 @@ debug_output("in funcbody: goto main", p);
         fgoto methods;
       }
       else{
-        cerr << "Do not know where to go from here. Classpart " << ClassPartNames[class_part_] << " is not handled.\n";
+        cerr << "MTOCPP: Do not know where to go from here. Classpart " << ClassPartNames[class_part_] << " is not handled.\n";
       }
     }
     else
@@ -1562,7 +1562,7 @@ void MFileScanner :: update_method_params(const std::string & methodname)
   }
   catch (ifstream::failure e)
   {
-    std::cerr << "Warning: No method params for @-function " << methodname << " found!\n";
+    std::cerr << "MTOCPP Warning: No method params for @-function " << methodname << " found!\n";
   }
 }
 
@@ -1889,7 +1889,7 @@ int MFileScanner :: execute()
     if ( space == 0 )
     {
       /* We filled up the buffer trying to scan a token. */
-      cerr << "OUT OF BUFFER SPACE" << endl;
+      cerr << "MTOCPP: OUT OF BUFFER SPACE" << endl;
       exit(-1);
     }
 
@@ -1936,7 +1936,7 @@ int MFileScanner :: execute()
     if ( cs == MFileScanner_error )
     {
       /* Machine failed before finding a token. */
-      cerr << std::string(filename_) << ": PARSE ERROR in line " << line << endl;
+      cerr << "MTOCPP:" << std::string(filename_) << ": PARSE ERROR in line " << line << endl;
       debug_output("Grrrr!!!!", p);
       exit(-1);
     }
@@ -2402,7 +2402,8 @@ void MFileScanner::end_method()
       }
       catch (ifstream::failure e)
       {
-        std::cerr << "Warning: No definition for function " << cfuncname_ << " found!\n";
+        std::cerr << "MTOCPP Warning: No definition for function " << cfuncname_
+          << " found in class " << classname_ << "!\n";
       }
     }
 
