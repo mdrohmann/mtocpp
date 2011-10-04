@@ -2381,7 +2381,9 @@ void MFileScanner::end_method()
   if (!cfuncname_.empty())
   {
 
-    if(runMode_.mode != RunMode::ParseMethodParams && docuheader_.empty())
+    if(runMode_.mode != RunMode::ParseMethodParams
+       && docuheader_.empty()
+       && !methodparams_.abstr)
     {
       istream  *fcin;
       ifstream  fin;
