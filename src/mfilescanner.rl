@@ -377,6 +377,9 @@ const char * ClassPartNames[] =
     ('...' . [ \t]* . EOL)
       => { fout_.write(ts, te-ts); };
 
+    # two single quote in a row need to be changed to nothing
+    ('\'\'');
+
     # a string should not be parsed for comment blocks, so we handle it separately.
     ('\'' . [^'\n]+ . '\'')
       => {
