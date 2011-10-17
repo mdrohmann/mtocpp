@@ -384,11 +384,11 @@ const char * ClassPartNames[] =
     ('\'' . [^'\n]+ . '\'')
       => {
            // change double quotes to quotes and vice versa...
-           fout_ << '"';
+           fout_ << "\" ";
            string s(ts+1, te-ts-2);
            std::replace(s.begin(), s.end(), '\"', '\'');
            fout_ << s;
-           fout_ << '"';
+           fout_ << " \"";
          };
 
     # ('%' @{ tmp_p = p + 1; } . garble_comment_line);
