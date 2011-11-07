@@ -9,7 +9,7 @@ classdef InheritedClass < Class
     %
     % Here could be some additional information regarding the subclass.
     %
-    % @new{0,2,dw,2011-03-17} Added this subclass to extend the
+    % @new{0,1,dw,2011-03-17} Added this subclass to extend the
     % documentation examples.
     
     properties

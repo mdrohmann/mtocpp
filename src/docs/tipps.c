@@ -1,9 +1,5 @@
 /** @page tips Tips for doxygen usage with mtoc
  *
- * @section tip_latex Extending default LaTeX environments for doxygen
- *
- * EXTRA_PACKAGES...
- *
  * @section tip_versioning Feature and change tracking information
  *
  *  @subsection dg_featchange New feature and change log commands

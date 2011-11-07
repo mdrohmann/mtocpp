@@ -449,7 +449,11 @@ void ConfFileScanner :: check_glob_level_up()
   level_++;
 }
 
-// constructor
+/**
+ * @class ConfFileScanner
+ * 
+ * @change{1,1,dw,2011-11-07} Giving correct error message when no configuration file is given or found.
+ */
 ConfFileScanner
 :: ConfFileScanner(const std::string & filename, const std::string & conffilename)
  : buf(new char[BUFSIZE]), line(1), have(0), top(0), opt(true),
@@ -462,7 +466,7 @@ ConfFileScanner
   //cerr << "filename" << filename << endl;
   if ( (confistream_.rdstate() & ifstream::failbit ) != 0 )
   {
-    cerr << "Warning: could not open configuration file. Using default values...\n";
+    cerr << "mtoc++ No configuration file specified or file not found. Using default values." << endl;
     conffile_ = "";
   }
   globlist_stack_.push_back(GlobList());
