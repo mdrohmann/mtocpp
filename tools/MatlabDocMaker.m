@@ -9,6 +9,9 @@ classdef MatlabDocMaker
     %
     % @author Daniel Wirtz @date 2011-10-13
     %
+    % @change{1,1,dw,2011-11-07} Fixed a recursion bug caused by copy and paste. Now the preferences
+    % are stored on an per-application basis.
+    %
     % @change{1,1,dw,2011-11-04} Changed the name to MatlabDocMaker in
     % order to export it into the mtoc++ distribution later.
     %
@@ -47,9 +50,6 @@ classdef MatlabDocMaker
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% End of user defined methods.
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    properties(Constant)
-        PrefTag = 'MTOCPP';
-    end
     
     methods(Static, Sealed)
         % The KerMor documentation directory, i.e. where createDocs places
@@ -242,7 +242,7 @@ classdef MatlabDocMaker
         
         function value = getProjPrefTag
             str = MatlabDocMaker.getProjectName;
-            value = [MatlabDocMaker.getProjPrefTag '_' str(regexp(str,'[a-zA-z]'))];
+            value = ['MTOCPP_' str(regexp(str,'[a-zA-z]'))];
         end
         
         function createUnix
