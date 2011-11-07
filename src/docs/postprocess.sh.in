@@ -1,6 +1,0 @@
-#!/bin/sh
-
-for i in "@PROJECT_BINARY_DIR@/docs/"*.html
-do
-    @PROJECT_BINARY_DIR@/mtocpp_post@CMAKE_EXECUTABLE_SUFFIX@ $i
-done

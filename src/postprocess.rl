@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <cstdlib>
+#include <dirent.h> // New for directory recursion
 
 using std::cin;
 using std::cout;
@@ -147,32 +148,64 @@ using std::endl;
    *|;
 }%%
 
-class PostProcess
-{
+class PostProcess {
+
+private:
+  string docdir_;
+  int          line            , col;
+  char        *ts              , *te;
+  int          act             , have;
+  int          cs;
+  int          top;
+  int          stack[5];
+  bool         only_retval;
 
 public:
+  /**
+   * @class PostProcess
+   * 
+   * @change{1,1,dw,2011-11-04} Changed the postprocessor interface from taking a single file argument to
+   * assuming the passed string to be a folder whos contents are to be postprocessed. 
+   */
   // constructor
-  PostProcess(const string & filename) :
-    filename_(filename),
+  PostProcess(const string &docdir) :
+    docdir_(docdir),
     line(1),
     ts(0), te(0), have(0),
     top(0), only_retval(false)
   { }
+  
+  int execute() {
+	  DIR *dp;
+	  if ((dp  = opendir(docdir_.c_str())) == NULL) {
+		  cerr << "Error opening directory " << docdir_ << endl;
+		  return -1;
+	  }
+	  
+	  struct dirent* dirp;
+	  string file;
+	  while ((dirp = readdir(dp)) != NULL) {
+		  file = string(dirp->d_name);
+		  // Process only html files
+		  if (file.substr(file.find_last_of(".") + 1) == "html" && file.find("8rl") == string::npos) {
+			  postprocess(docdir_ + string("/") + file);
+		  }
+	  }
+	  closedir(dp);
+	  return 0;
+  }
 
   // run postprocessor
-  int execute()
+  int postprocess(string file)
   {
     std::ios::sync_with_stdio(false);
 
     %% write init;
 
     ifstream is;
-    try
-    {
-      is.open(filename_.c_str());
-    }
-    catch (std::ifstream::failure e)
-    {
+    try {
+      is.open(file.c_str());
+    } catch (std::ifstream::failure e) {
       cerr << "Exception opening/reading file";
       exit(-1);
     }
@@ -181,20 +214,17 @@ public:
     int length = is.tellg();
     is.seekg(0, ios_base::beg);
 
-    char * buf = new char[(int)(1.1*length)];
-    char * p = buf;
+    char* buf = new char[(int)(1.1*length)];
+    char* p = buf;
 //    char * tmp_p = p;
 
     is.read(buf, length);
     is.close();
-
+    
     ofstream fout;
-    try
-    {
-      fout.open(filename_.c_str(), ios_base::trunc);
-    }
-    catch (std::ofstream::failure e)
-    {
+    try {
+      fout.open(file.c_str(), ios_base::trunc);
+    } catch (std::ofstream::failure e) {
       cerr << "Exception opening/writing file";
       exit(-1);
     }
@@ -209,7 +239,7 @@ public:
     if ( cs == PostProcess_error )
     {
       /* Machine failed before finding a token. */
-      cerr << filename_ << ": PARSE ERROR in line " << line << endl;
+      cerr << file << ": PARSE ERROR in line " << line << endl;
       cerr.write(p, 100);
       exit(-1);
     }
@@ -219,17 +249,6 @@ public:
 
     return 0;
   }
-
-private:
-  string filename_;
-  int          line            , col;
-  char        *ts              , *te;
-  int          act             , have;
-  int          cs;
-  int          top;
-  int          stack[5];
-  bool         only_retval;
-
 };
 
 void usage()
@@ -241,7 +260,7 @@ void usage()
 
 int main(int argc, char ** argv)
 {
-  string filename;
+  string docdir;
   if(argc >= 2)
   {
     if (std::string("--help") == std::string(argv[1]))
@@ -249,7 +268,7 @@ int main(int argc, char ** argv)
       usage();
       return 0;
     }
-    filename = argv[1];
+    docdir = argv[1];
   }
   else
   {
@@ -257,7 +276,9 @@ int main(int argc, char ** argv)
     exit(-2);
   }
 
-  PostProcess scanner(filename);
+  cout << "Running mtoc++ postprocessor on directory " << docdir << endl;
+  
+  PostProcess scanner(docdir);
   scanner.execute();
   return 0;
 }

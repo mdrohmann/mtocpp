@@ -34,12 +34,7 @@ CONFIGURE_FILE(
 
 CONFIGURE_FILE(
   "${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf.in"
-  "${PROJECT_BINARY_DIR}/src/docs/doxygen.conf"
-  )
-
-CONFIGURE_FILE(
-  "${PROJECT_SOURCE_DIR}/src/docs/postprocess.sh.in"
-  "${PROJECT_BINARY_DIR}/postprocess.sh"
+  "${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf"
   )
 
 # pathes where to look for header files
@@ -65,8 +60,8 @@ ENDIF(CMAKE_CROSSCOMPILING)
 
 # add target for documentation
 ADD_CUSTOM_TARGET(doxygen ALL
-  COMMAND ${DOXYGEN_EXECUTABLE} ${PROJECT_BINARY_DIR}/src/docs/doxygen.conf
-  COMMAND ${PROJECT_BINARY_DIR}/postprocess.sh
+  COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf
+  COMMAND ${PROJECT_BINARY_DIR}/mtocpp_post ${PROJECT_BINARY_DIR}/docs
   COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/tabs.css ${PROJECT_BINARY_DIR}/docs
   COMMENT "Creating documentation... (see ${PROJECT_BINARY_DIR}/docs/doxygen.log for output)"
   DEPENDS mtocpp mtocpp_post
@@ -75,7 +70,7 @@ ADD_CUSTOM_TARGET(doxygen ALL
 
 INSTALL(TARGETS mtocpp mtocpp_post DESTINATION bin)
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/License.txt DESTINATION ${CUSTOM_DOC_DIR})
-INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/mtocpp.conf.example DESTINATION ${CUSTOM_DOC_DIR})
+#INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/mtocpp.conf.example DESTINATION ${CUSTOM_DOC_DIR})
 INSTALL(DIRECTORY ${PROJECT_BINARY_DIR}/docs DESTINATION ${CUSTOM_DOC_DIR})
 
 # add test target: test examples

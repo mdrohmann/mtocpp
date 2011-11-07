@@ -160,9 +160,9 @@ classdef Class
             % of argument respectively return argument descriptions.
             %
             % Parameters:
-            %  param1: first parameter of type xyz
-            %  param2: second parameter with description @default 12
-            %          @type Class
+            %  param1: first parameter of type double
+            %  param2: second parameter with description @type Class @default []
+            %          
             %
             % Parameters and return values can have specified types by use of
             % one of the keyword strings "of type" or "@type" in its
