@@ -452,7 +452,7 @@ void ConfFileScanner :: check_glob_level_up()
 /**
  * @class ConfFileScanner
  * 
- * @change{1,1,dw,2011-11-07} Giving correct error message when no configuration file is given or found.
+ * @change{1,2,dw,2011-11-07} Giving correct error message when no configuration file is given or found.
  */
 ConfFileScanner
 :: ConfFileScanner(const std::string & filename, const std::string & conffilename)
@@ -537,7 +537,7 @@ int ConfFileScanner :: execute()
       if ( cs == ConfFileScanner_error )
       {
         /* Machine failed before finding a token. */
-        cerr << "in conffile: PARSE ERROR in line " << line << endl;
+        cerr << "PARSE ERROR in mtoc++ config file, line " << line << endl;
         exit(1);
       }
 

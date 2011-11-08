@@ -164,7 +164,7 @@ public:
   /**
    * @class PostProcess
    * 
-   * @change{1,1,dw,2011-11-04} Changed the postprocessor interface from taking a single file argument to
+   * @change{1,2,dw,2011-11-04} Changed the postprocessor interface from taking a single file argument to
    * assuming the passed string to be a folder whos contents are to be postprocessed. 
    */
   // constructor

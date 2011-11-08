@@ -2,7 +2,7 @@ PROJECT (MTOC++)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 SET(MTOC++_VERSION_MAJOR 1)
-SET(MTOC++_VERSION_MINOR 1)
+SET(MTOC++_VERSION_MINOR 2)
 
 # Default install prefix is "/usr/local"
 SET(CUSTOM_DOC_DIR "share/doc/mtocpp"
@@ -60,10 +60,10 @@ ENDIF(CMAKE_CROSSCOMPILING)
 
 # add target for documentation
 ADD_CUSTOM_TARGET(doxygen ALL
-  COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf
-  COMMAND ${PROJECT_BINARY_DIR}/mtocpp_post ${PROJECT_BINARY_DIR}/docs
+  COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf 1>/dev/null 2>&1
+  COMMAND ${PROJECT_BINARY_DIR}/mtocpp_post ${PROJECT_BINARY_DIR}/docs 1>/dev/null
   COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/tabs.css ${PROJECT_BINARY_DIR}/docs
-  COMMENT "Creating documentation... (see ${PROJECT_BINARY_DIR}/docs/doxygen.log for output)"
+  COMMENT "Creating documentation... (see ${PROJECT_BINARY_DIR}/docs/doxygen.log for warnings)"
   DEPENDS mtocpp mtocpp_post
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/docs"
   )
