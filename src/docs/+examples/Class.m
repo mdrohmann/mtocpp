@@ -149,11 +149,6 @@ classdef Class
             v = this.SomeProp * 5;
         end
         
-        function [ret, ret2] = ex_fcn3(foo1, foo2)
-         	bla = 6;
-         	ret = 2;
-        end
-        
         function rv = example_function(this, param1, param2)%#ok
             % function rv = example_function(this, param1, param2) is ignored
             % First line: short description text for example function
