@@ -9,6 +9,9 @@ classdef MatlabDocMaker
     %
     % @author Daniel Wirtz @date 2011-10-13
     %
+    % @change{1,2,dw,2011-11-08} Improved the createUnix method by displaying the warnings and writing the output to
+    % a log file afterwards. Not using cprintf anymore as this is 3rd party software.
+    %
     % @change{1,2,dw,2011-11-07} Fixed a recursion bug caused by copy and paste. Now the preferences
     % are stored on an per-application basis.
     %
