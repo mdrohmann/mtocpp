@@ -9,13 +9,13 @@ classdef MatlabDocMaker
     %
     % @author Daniel Wirtz @date 2011-10-13
     %
-    % @change{1,1,dw,2011-11-07} Fixed a recursion bug caused by copy and paste. Now the preferences
+    % @change{1,2,dw,2011-11-07} Fixed a recursion bug caused by copy and paste. Now the preferences
     % are stored on an per-application basis.
     %
-    % @change{1,1,dw,2011-11-04} Changed the name to MatlabDocMaker in
+    % @change{1,2,dw,2011-11-04} Changed the name to MatlabDocMaker in
     % order to export it into the mtoc++ distribution later.
     %
-    % @new{1,1,dw,2011-10-13} Added this class and moved documentation related
+    % @new{1,2,dw,2011-10-13} Added this class and moved documentation related
     % stuff here from the KerMor class.
     %
     % This class is part of the mtoc++ tool
@@ -252,31 +252,33 @@ classdef MatlabDocMaker
             % Create "configured" binary
             cbin = fullfile(cdir,'mtocpp_filter.sh');
             f = fopen(cbin,'w');
-            fprintf(f,'#!/bin/bash\nmtocpp $1 %s',fullfile(cdir,'mtoc.conf'));
+            fprintf(f,'#!/bin/bash\nmtocpp $1 %s',fullfile(cdir,'mtocpp.conf'));
             fclose(f);
             unix(['chmod +x ' cbin]);
             
             % Process macros in the Doxyfile.m4 file using m4
-            system(sprintf('m4 -D @OutputDir=%s -D @SourceDir=%s -D @ConfDir=%s -D @ProjectName="%s" @ProjectVersion=%s %s/Doxyfile.m4 > %s/Doxyfile',...
+            system(sprintf('m4 -D _OutputDir_="%s" -D _SourceDir_="%s" -D _ConfDir_="%s" -D _ProjectName_="%s" -D _ProjectVersion_="%s" "%s/Doxyfile.m4" > "%s/Doxyfile"',...
                  MatlabDocMaker.getOutputDirectory, MatlabDocMaker.getSourceDirectory, cdir,...
                  MatlabDocMaker.getProjectName, MatlabDocMaker.getProjectVersion, cdir, cdir));
             
             tex = fullfile(cdir,'latexextras.m4');
             if exist(tex,'file') == 2
                 % # Parse the kermorlatex include style file
-                system(sprintf('m4 -D @ConfDir=%s %s > %s/latexextras.sty',...
+                system(sprintf('m4 -D _ConfDir_="%s" "%s" > "%s/latexextras.sty"',...
                     cdir,tex,cdir));
             else
                 % Create empty file
                 system(sprintf('touch %s/latexextras.sty',cdir));
             end
-            
+
             %% Call doxygen
-            [s,r] = system(sprintf('%s %s/Doxyfile 2>&1 1>%s/doxygen.log | grep -v synupdate | grep -v docupdate | grep -v display | grep -v subsref | tee %s/doxygen.err',...
-                 MatlabDocMaker.getDoxygenBin,cdir,MatlabDocMaker.getOutputDirectory, MatlabDocMaker.getOutputDirectory));
+            b = MatlabDocMaker.getDoxygenBin;
+            fprintf('Running doxygen (%s) with mtoc++ filter...\n',b);
+            [~,warn] = system(sprintf('%s %s/Doxyfile 1>/dev/null',b, cdir));
              
             %% Postprocess
-            [s,pr] = system(sprintf('mtocpp_post %s',MatlabDocMaker.getOutputDirectory));
+            fprintf('Running mtoc++ postprocessor...\n');
+            [~,~] = system(sprintf('mtocpp_post %s',MatlabDocMaker.getOutputDirectory));
             
             %% Tidy up
             delete(cbin);
@@ -284,16 +286,11 @@ classdef MatlabDocMaker
             delete(fullfile(cdir,'Doxyfile'));
             
             %% Process warnings
-            wpos = strfind(r,'Logged warnings:');
-            if ~isempty(wpos)
-                endpos = strfind(r,'Complete log file');
-                cprintf([0 .5 0],r(1:wpos-1));
-                cprintf([1,.4,0],strrep(r(wpos:endpos-1),'\','\\'));
-                cprintf([0 .5 0],r(endpos:end));
-            else
-                cprintf([0 .5 0],strrep(r,'\','\\'));
-            end
-            fprintf('\n');
+            fprintf(['Warnings generated during documentation creation:\n' strrep(warn,'\','\\') '\n']);
+            % Write to log file later
+            log = fullfile(MatlabDocMaker.getOutputDirectory,'warnings.log');
+            f = fopen(log,'w'); fprintf(f,'%s',warn); fclose(f);
+            fprintf('Log file at %s.\nMatlabDocMaker finished.\n',log);
         end
         
         function createWindows

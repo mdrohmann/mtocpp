@@ -5,37 +5,35 @@
 # taylor the output towards your needs. However there are some useful hints
 # and warnings which you should be aware of in order to keep mtoc++ running
 # nice & smoothly with doxygen.
-# You probably want to change the values for PROJECT_BRIEF and
+# You probably want to change the values for PROJECT_NAME, PROJECT_BRIEF and
 # PROJECT_LOGO as they are of course custom to each project.
 #
 # Most importantly, this file gets processed by m4 in order to replace some
 # values:
-# - @ProjectName: The project's name
-#		Used for the tag PROJECT_NAME and inside the ALIASES declarations.
-#		If you use the supplied MatlabDocMaker this value is substituted MatlabDocMaker.getProjectName inside MatLab.
-# - @ProjectVersion: The project version.
-#		If you use the supplied MatlabDocMaker this value is substituted MatlabDocMaker.getProjectVersion inside MatLab.
-#		We decided to keep this flexible as project versions change over time and the documentation
+# - _ProjectVersion_: Is substituted by the value returned by 
+#       MatlabDocMaker.getProjectVersion inside MatLab. We decided to keep
+#       this flexible as project versions change over time and the documentation
 #       should of course reflect that with minimum effort (thus, only a change
 #       inside Matlab is necessary, where you're expected to be working anyways)
-# - @OutputDir: The output directory for the created documentation
-# - @SourceDir: The source directory containing the files of the project
-# - @ConfDir: The configuration directory for mtoc++, containing this file
+# - _OutputDir_: The output directory for the created documentation
+# - _SourceDir_: The source directory containing the files of the project
+# - _ConfDir_: The configuration directory for mtoc++, containing this file
 #       and some more.
 # Use these tags wherever you would insert the respective values.
 #
 # Furthermore, there are some settings that are included as convenience
-# (e.g. the @new tags) that can be removed if unneeded. If you decide to use them, you might want to 
-# replace the MY PROJECT NAME strings inside the ALIASes.
-# Check the ALIASES setting in the doxygen documentation.
+# (e.g. the @new tags) that can be removed (but will likely cause errors if
+# done wrongly). Check the ALIASES setting in the doxygen documentation.
 #
 # The following tags should not be changed in order to keep mtoc++ running:
-# EXTENSION_MAPPING = .m=C++                        (assign C++-styled code interpretion to .m files)
-# WARN_LOGFILE      = @OutputDir/warnings.log       (is processed in MatlabDocMaker)
-# INPUT             = @SourceDir                    (input is configured by MatlabDocMaker)
-# FILE_PATTERNS     = *.m                           (doxygen bothers to look at .m files at all)
-# FILTER_PATTERNS   = *.m=@ConfDir/mtocpp_filter.sh (the link between mtoc++ and doxygen)
-# LATEX_BATCHMODE   = YES                           (NO will cause doxygen to stop when LaTeX errors occur)
+# EXTENSION_MAPPING = .m=C++                            (assign C++-styled code interpretion to .m files)
+# WARN_LOGFILE      = _OutputDir_/warnings.log          (is processed in MatlabDocMaker)
+# INPUT             = _SourceDir_                       (input is configured by MatlabDocMaker)
+# FILE_PATTERNS     = *.m                               (doxygen bothers to look at .m files at all)
+# FILTER_PATTERNS   = *.m=_ConfDir_/mtocpp_filter.sh    (the link between mtoc++ and doxygen)
+# LATEX_BATCHMODE   = YES                               (NO will cause doxygen to stop when LaTeX errors occur)
+# EXTRA_PACKAGES    = _ConfDir_/latexextras             (latex styles inclusion file)
+# WARN_LOGFILE      =                                   (leave empty so MatLab can capture doxygens warnings)
 #
 # We recommend to leave
 # EXTRACT_PRIVATE   = NO
@@ -49,7 +47,7 @@
 ###########################################################################
 ################## List of changes: #######################################
 #
-# mtoc++ 1.1.1: First version to contain this file.
+# mtoc++ 1.2: First version to contain this file.
 #
 ###########################################################################
 
@@ -77,33 +75,34 @@ DOXYFILE_ENCODING      = UTF-8
 # The PROJECT_NAME tag is a single word (or a sequence of words surrounded
 # by quotes) that should identify the project.
 
-PROJECT_NAME           = @ProjectName
+PROJECT_NAME           = _ProjectName_
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number.
 # This could be handy for archiving the generated documentation or
 # if some version control system is used.
 
-PROJECT_NUMBER         = @ProjectVersion
+PROJECT_NUMBER         = _ProjectVersion_
 
 # Using the PROJECT_BRIEF tag one can provide an optional one line description
 # for a project that appears at the top of each page and should give viewer
 # a quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF          = "Brief for my mtoc++ powered project. Change me!"
+PROJECT_BRIEF          = "My brief description for the mtoc++ powered project"
 
 # With the PROJECT_LOGO tag one can specify an logo or icon that is
 # included in the documentation. The maximum height of the logo should not
 # exceed 55 pixels and the maximum width should not exceed 200 pixels.
 # Doxygen will copy the logo to the output directory.
+# Recall that you can use all the macros like _ConfDir_ at this setting, too.
 
-PROJECT_LOGO           = 
+PROJECT_LOGO           =
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute)
 # base path where the generated documentation will be put.
 # If a relative path is entered, it will be relative to the location
 # where doxygen was started. If left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = @OutputDir
+OUTPUT_DIRECTORY       = _OutputDir_
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create
 # 4096 sub-directories (in 2 levels) under the output directory of each output
@@ -256,10 +255,12 @@ TAB_SIZE               = 8
 
 ALIASES                = "synupdate=\xrefitem synupdate \"Syntax Update\" \"Syntax needs to be updated\"" \
                          "docupdate=\xrefitem docupdate \"Documentation Update\" \"Documentation needs to be updated\"" \
-                         "changexref{2}=\xrefitem changelog\1\2 \"Change in \1.\2\" \"Changes in @ProjectName \1.\2\"" \
+                         "default=\par Default:\n" \
+                         "type=<br><b>Type</b>: " \
+                         "changexref{2}=\xrefitem changelog\1\2 \"Change in \1.\2\" \"Changes in _ProjectName_ Version \1.\2\"" \
                          "change{4} = \changexref{\1,\2} (\ref \3, \4) " \
                          "change{3} = \changexref{\1,\2} (\ref \3, undated) " \
-                         "newxref{2}=\xrefitem newfeat\1\2 \"New in \1.\2\" \"New features in @ProjectName \1.\2\"" \
+                         "newxref{2}=\xrefitem newfeat\1\2 \"New in \1.\2\" \"New features in _ProjectName_ Version \1.\2\"" \
                          "new{4} = \newxref{\1,\2} (\ref \3, \4) " \
                          "new{3} = \newxref{\1,\2} (\ref \3, undated) " \
                          "propclass{1}=\xrefitem propclass_\1 \"Property class \1\" \"Properties with level \1\""
@@ -662,7 +663,8 @@ WARN_FORMAT            = "$file:$line: $text"
 # and error messages should be written. If left blank the output is written
 # to stderr.
 
-WARN_LOGFILE           = @OutputDir/warnings.log
+WARN_LOGFILE           =
+#WARN_LOGFILE           = _OutputDir_/warnings.log
 
 #---------------------------------------------------------------------------
 # configuration options related to the input files
@@ -673,7 +675,7 @@ WARN_LOGFILE           = @OutputDir/warnings.log
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = @SourceDir
+INPUT                  = _SourceDir_
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -803,7 +805,7 @@ INPUT_FILTER           =
 # info on how filters are used. If FILTER_PATTERNS is empty or if
 # non of the patterns match the file name, INPUT_FILTER is applied.
 
-FILTER_PATTERNS        = *.m=@ConfDir/mtocpp_filter.sh
+FILTER_PATTERNS        = *.m=_ConfDir_/mtocpp_filter.sh
 
 # If the FILTER_SOURCE_FILES tag is set to YES, the input filter (if set using
 # INPUT_FILTER) will be used to filter the input files when producing source
@@ -911,7 +913,7 @@ GENERATE_HTML          = YES
 # If a relative path is entered the value of OUTPUT_DIRECTORY will be
 # put in front of it. If left blank `html' will be used as the default path.
 
-HTML_OUTPUT            = @OutputDir
+HTML_OUTPUT            = _OutputDir_
 
 # The HTML_FILE_EXTENSION tag can be used to specify the file extension for
 # each generated HTML page (for example: .htm,.php,.asp). If it is left blank
@@ -1290,7 +1292,7 @@ PAPER_TYPE             = a4wide
 # The EXTRA_PACKAGES tag can be to specify one or more names of LaTeX
 # packages that should be included in the LaTeX output.
 
-EXTRA_PACKAGES         = @ConfDir/kermorlatex
+EXTRA_PACKAGES         = _ConfDir_/latexextras
 
 # The LATEX_HEADER tag can be used to specify a personal LaTeX header for
 # the generated latex document. The header should contain everything until
@@ -1689,8 +1691,7 @@ GROUP_GRAPHS           = YES
 # collaboration diagrams in a style similar to the OMG's Unified Modeling
 # Language.
 
-# Processed by make.sh / m4 to UML_LOOK = {YES|NO}
-UMLSWITCH
+UML_LOOK               = NO
 
 # If set to YES, the inheritance and collaboration graphs will show the
 # relations between templates and their instances.

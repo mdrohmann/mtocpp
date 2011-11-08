@@ -1,5 +1,5 @@
 /**
- * @mainpage mtoc++ 1.1.1 Software Documentation
+ * @mainpage mtoc++ 1.2 Software Documentation
  * @section intro Introduction
  *
  * The mtoc++ software comprises two programs to build nice Doxygen documentation for Matlab projects.
@@ -23,12 +23,9 @@
  * - @subpage licensing
  *
  * @section Downloads
- * For all available downloads check @ref download. The current version can be downloaded below.
+ * For all available downloads check @ref download. The most current version can be downloaded below.
  *
- * @par Release 1.1.1 (2011/09/05)
- *
- * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Linux.deb">Debian package for (Ubuntu/Debian/...)</a>
- * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Linux.tar.gz">Build Tarball for Linux</a>
- * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Source.tar.gz">Source Tarball</a>
+ * @par Release 1.2 (2011/11/08)
+ * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_1.2.tar.gz">Source tarball</a>
  *
  */

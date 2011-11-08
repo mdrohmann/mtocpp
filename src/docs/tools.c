@@ -58,6 +58,10 @@
  * 	- 2: means that return value names shall be printed always.
  *
  * Moreover, default descriptions/values for recurring entries like parameters or field names can be specified.
+ *
+ * @attention Note that the configuration file sections for variables above and rules below have to be separated
+ * by a single line containing only a double hash '##'. ONLY use '##' for that purpose.
+ *
  * @par Parameter default descriptions
  * Use the syntax
  * @code add(params) = 	<parameter1_name> => """Your parameter1 description text in triple quotes""",

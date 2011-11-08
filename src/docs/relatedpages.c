@@ -10,9 +10,15 @@
  * Once you've obtained your copy check out the @ref install
  *
  * @section git Obtaining mtoc++ via the GIT versioning system
- * @todo
+ * In order to always stay up-to-date with the latest mtoc++ versions, simply pull it from our git repository and
+ * recompile it when a new release is available.
  *
- * @section mtoc111 mtoc++ 1.1.1
+ * This possibility will be provided in mtoc++ 1.3.
+ *
+ * @section mtoc12 mtoc++ release 1.2 (2011/11/08)
+ * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_1.2.tar.gz">Source tarball</a>
+ *
+ * @section mtoc111 mtoc++ release 1.1.1 (2011/09/05)
  * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Linux.deb">Debian package for (Ubuntu/Debian/...)</a>
  * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Linux.tar.gz">Build Tarball for Linux</a>
  * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Source.tar.gz">Source Tarball</a>
