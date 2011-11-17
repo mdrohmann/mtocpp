@@ -2494,7 +2494,8 @@ void MFileScanner::extract_default(DocuBlock & db, std::string & defvalue)
         defvalue = line.substr(start, end - start);
         line[found]   = '(';
         line[found+8] = '=';
-        line = line.substr(0, end) + ")" + line.substr(end+1);
+        line = line.substr(0, found) + "( @b default = "
+          + line.substr(found+9,end-found-9) + " )" + line.substr(end);
       }
       else
       {
@@ -2591,7 +2592,7 @@ void MFileScanner::extract_typen(DocuBlock & db, std::string & typen, bool remov
       {
         // read in next line
         if (remove)
-          (*dit).erase(found);
+          (*dit).erase(found, line.length() - found - 1);
 
         ++dit;
         if (dit == db.end())

@@ -177,10 +177,6 @@ mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,unused1> ,mlhsInnerSubst<matlabtyp
    {
 
 
-/** \docupdate
-*/
-
-
 }
 /** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,unused1> ,mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,unused2> ,mlhsInnerSubst<matlabtypesubstitute,unused3> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
   
@@ -188,4 +184,37 @@ mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,unused1> ,mlhsInnerSubst<matlabtyp
   *
   *
   * @retval d     a return value
+  */
+noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters(::bool uml,::bool open) {
+
+
+}
+/** @fn noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters(::bool uml,::bool open)
+  * @brief  function with two default parameters
+  *
+  *
+  * @param uml     Set to true to create UML-like graphics output
+  *          ( @b default = false )
+  * @param open     Set to true if the documentation should be opened after
+  *         successful compilation 
+  *          ( @b default = false )
+  */
+noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml,::bool open) {
+
+
+
+/** \docupdate
+*/
+
+
+}
+/** @fn noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml,::bool open)
+  * @brief  function with two default parameters
+  *
+  *
+  * @param uml     Set to true to create UML-like graphics output
+  *         ( @b default = false ) 
+  * @param open     Set to true if the documentation should be opened after
+  *         successful compilation 
+  *          ( @b default = false )
   */
