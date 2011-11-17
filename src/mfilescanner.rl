@@ -2555,7 +2555,7 @@ void MFileScanner::extract_typen(DocuBlock & db, std::string & typen, bool remov
   typedef DocuBlock :: iterator                                      DBIt;
   for(DBIt dit = db.begin(); dit != db.end(); ++dit, ++linenr)
   {
-    std::string & line   = *dit;
+    std::string line   = *dit;
     size_t found         = std::string::npos;
     size_t typeof_length = 0;                         // length of string "of type" respectively "@type"
     if(runMode_.parse_of_type && linenr < 2)
@@ -2572,7 +2572,20 @@ void MFileScanner::extract_typen(DocuBlock & db, std::string & typen, bool remov
     {
       size_t typenstart = found + typeof_length;
       // find start of type name
-      typenstart=line.find_first_not_of( " \t", typenstart );
+      typenstart=line.find_first_not_of( " \t\n\0", typenstart );
+      if (typenstart == std::string::npos)
+      {
+        // read in next line
+        if (remove)
+          (*dit).erase(found);
+
+        ++dit;
+        if (dit == db.end())
+          break;
+        line = *dit;
+        found = 0;
+        typenstart = line.find_first_not_of( " \t");
+      }
       // find end of type name
       size_t typenend =
         line.find_first_of( " \n\0", typenstart );
@@ -2590,11 +2603,11 @@ void MFileScanner::extract_typen(DocuBlock & db, std::string & typen, bool remov
             typen.replace(i,1,std::string("::"));
         typen = string("::") + typen;
 
-//        line.replace(typenstart, typenend - typenstart, typen);
+//        (*dit).replace(typenstart, typenend - typenstart, typen);
       }
       if (remove)
       {
-        line.erase(found, typenend - found);
+        (*dit).erase(found, typenend - found);
       }
     }
   }
