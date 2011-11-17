@@ -2484,10 +2484,17 @@ void MFileScanner::extract_default(DocuBlock & db, std::string & defvalue)
       found         = line.find("@default ");
       if (found != std::string::npos)
       {
-        defvalue = line.substr(found + deflength + 1);
+        size_t end = line.find("@", found+1);
+        if (end == std::string::npos)
+          end = line.find("of type");
+        if (end == std::string::npos)
+          end = line.length();
+        end = end - 1;
+        size_t start = found + deflength + 1;
+        defvalue = line.substr(start, end - start);
         line[found]   = '(';
         line[found+8] = '=';
-        line = line.substr(0, line.length()-1) + ")\n";
+        line = line.substr(0, end) + ")" + line.substr(end+1);
       }
       else
       {
