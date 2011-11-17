@@ -131,7 +131,6 @@ auto_param.auto_field;
   * @par Required fields of param2:
   *
   * @par Required fields of auto_param:
-  * @arg \c auto_field&nbsp;&mdash;&nbsp;    @copybrief ::othergrid::auto_field
   *
   * @par Optional fields of param2:
   * @arg \c test2&nbsp;&mdash;&nbsp;     Description for optional field param2.test2

@@ -28,6 +28,7 @@ struct RunMode
   auto_add_params(AUTO_ADD_PARAMETERS),
   auto_add_class_properties(AUTO_ADD_CLASS_PROPERTIES),
   auto_add_class(AUTO_ADD_CLASSES),
+  copy_typified_field_docu(COPY_TYPIFIED_FIELD_DOCU),
   remove_first_arg_in_abstract_methods(REMOVE_FIRST_ARG_IN_ABSTRACT_METHODS),
   parse_of_type(ENABLE_OF_TYPE_PARSING),
   void_type_in_return_values(VOID_TYPE_IN_RETURN_VALUES),
@@ -49,6 +50,7 @@ struct RunMode
   bool auto_add_params;
   bool auto_add_class_properties;
   bool auto_add_class;
+  bool copy_typified_field_docu;
   bool remove_first_arg_in_abstract_methods;
   bool parse_of_type;
   bool void_type_in_return_values;

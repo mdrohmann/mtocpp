@@ -1775,6 +1775,17 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
       runMode_.print_fields = false;
     }
   }
+  if(cscan_.vars_.find(string("COPY_TYPIFIED_FIELD_DOCU"))!=cscan_.vars_.end())
+  {
+    if(cscan_.vars_[string("COPY_TYPIFIED_FIELD_DOCU")][0] == string("true"))
+    {
+      runMode_.copy_typified_field_docu = true;
+    }
+    else
+    {
+      runMode_.copy_typified_field_docu = false;
+    }
+  }
   if(cscan_.vars_.find(string("AUTO_ADD_FIELDS"))!=cscan_.vars_.end())
   {
     if(cscan_.vars_[string("AUTO_ADD_FIELDS")][0] == string("true"))
@@ -2156,7 +2167,7 @@ void MFileScanner::write_docu_list(const DocuList & list,
         string s((*lit).first);
         typedef map< string, string > :: iterator                  MapIterator;
         MapIterator param_type_map_entry = param_type_map_.end();
-        if(!docu_list_name.empty())
+        if(!docu_list_name.empty() && runMode_.copy_typified_field_docu)
         {
           param_type_map_entry = param_type_map_.find(docu_list_name);
         }
