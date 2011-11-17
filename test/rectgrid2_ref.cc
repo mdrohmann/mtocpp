@@ -27,7 +27,7 @@ rectgrid(matlabtypesubstitute varargin) {
 */
 
     if (nargin>0) & ...
-          isa(varargin[1],"rectgrid")
+          isa(varargin[1]," rectgrid ")
       grid= varargin[1];
     else
 /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -163,7 +163,7 @@ rectgrid(matlabtypesubstitute varargin) {
 
         if max([xdiff1,xdiff2,xdiff3,xdiff4, ...
     	    ydiff1,ydiff2,ydiff3,ydiff4] > eps)
-          error("vertex coordinate and element midpoint consistency!!");
+          error(" vertex coordinate and element midpoint consistency!! ");
         end;
       end;
 
@@ -244,8 +244,8 @@ rectgrid(matlabtypesubstitute varargin) {
 */
 
 
-      bnd_ind = [NBI(bnd_i1,1)"-nx, NBI(bnd_i2,2)"-nx*ny, ...
-    	     NBI(bnd_i3,3)"+nx, NBI(bnd_i4,4)"+nx*ny];
+      bnd_ind = [NBI(bnd_i1,1)" -nx, NBI(bnd_i2,2) "-nx*ny, ...
+    	     NBI(bnd_i3,3)" +nx, NBI(bnd_i4,4) "+nx*ny];
 
 /*   disp('halt 1');
 */
@@ -254,7 +254,7 @@ rectgrid(matlabtypesubstitute varargin) {
 */
 
 
-      if ~isfield(params, "bnd_rect_index")
+      if ~isfield(params, " bnd_rect_index ")
         params.bnd_rect_index= [];
       end
 
@@ -263,7 +263,7 @@ rectgrid(matlabtypesubstitute varargin) {
 */
 
         if (max(params.bnd_rect_index)>0)
-          error("boundary indices must be negative!");
+          error(" boundary indices must be negative! ");
         end;
         if size(params.bnd_rect_corner1,1) == 1
           params.bnd_rect_corner1= params.bnd_rect_corner1';
@@ -336,7 +336,7 @@ rectgrid(matlabtypesubstitute varargin) {
 /*     plot_element_data(grid,grid.NBI,params);
 */
 
-        disp("neighbour indices are not consistent!!");
+        disp(" neighbour indices are not consistent!! ");
         keyboard;
       end;
 
@@ -425,7 +425,7 @@ rectgrid(matlabtypesubstitute varargin) {
       grid.DS= grid.DC;
       grid.nneigh= 4;
 
-      grid = class(grid,"rectgrid");
+      grid = class(grid," rectgrid ");
 
 }
 /** @fn rectgrid(matlabtypesubstitute varargin)
