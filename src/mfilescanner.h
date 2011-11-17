@@ -274,6 +274,8 @@ private:
 
   void debug_output(const std::string & msg, char * p);
 
+  void postprocess_unused_params(std::string &, DocuList & );
+
 private:
   std::istream & fin_;
   std::ostream & fout_;

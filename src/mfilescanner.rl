@@ -257,7 +257,7 @@ const char * ClassPartNames[] =
      | ( '=' . default_arg ) )+
      |
      # matlab identifier (parameter)
-     (IDENT)
+     (IDENT | '~' )
        >st_tok
        %{
          assert(p >= tmp_p);
@@ -298,6 +298,7 @@ const char * ClassPartNames[] =
   debug_output(oss.str(), p);
 }
 #endif
+           postprocess_unused_params(s, param_list_);
            // add an empty docu block for parameter \a s
            if(param_list_.find(s) == param_list_.end())
            {
@@ -320,10 +321,11 @@ const char * ClassPartNames[] =
     ( (WSOC | [\n])+
       | ','
       # matlab identifier (return value)
-      | ( IDENT > st_tok
+      | ( (IDENT | '~') > st_tok
           %{
             assert(p >= tmp_p);
             string s(tmp_p, p - tmp_p);
+            postprocess_unused_params(s, return_list_);
             returnlist_.push_back(s);
             // add an empty docu block for return value \a s
             if(return_list_.find(s) == return_list_.end())
@@ -340,11 +342,12 @@ const char * ClassPartNames[] =
       (
         (
          # matlab identifier
-         IDENT
+         ( IDENT | '~' )
            >st_tok
            %{
              assert(p >= tmp_p);
              string s(tmp_p, p - tmp_p);
+             postprocess_unused_params(s, return_list_);
              returnlist_.push_back(s);
              // add an empty docu block for single return value \a s
 
@@ -2139,8 +2142,12 @@ void MFileScanner::write_docu_list(const DocuList & list,
   // iterate over documentation blocks
   for(; lit != list.end(); ++lit)
   {
+    std::string name = (*lit).first;
+    if (name.substr(0, 6) == std::string("unused")
+        && name.find_first_not_of("0123456789", 7) == std::string::npos)
+      continue;
     ostringstream oss;
-    oss << "* " << item_text << " " << (*lit).first << separator << "    ";
+    oss << "* " << item_text << " " << name << separator << "    ";
     const DocuBlock & block = (*lit).second;
 
     bool use_alternative = false;
@@ -2833,6 +2840,27 @@ void MFileScanner::debug_output(const std::string & msg, char * p)
     << propertyparams_ << methodparams_ << access_;
   std::cerr << "\n------------------------------------\n";
 }
+
+void MFileScanner::postprocess_unused_params(std::string & param, DocuList & doculist)
+{
+  if (param == std::string("~"))
+  {
+    int counter = 1;
+    bool found = true;
+    while ( found )
+    {
+      std::ostringstream oss;
+      oss << "unused" << counter;
+      if (doculist.find(oss.str()) == doculist.end())
+      {
+        param = oss.str();
+        found = false;
+      }
+      ++counter;
+    }
+  }
+}
+
 
 std::ostream & operator<<(std::ostream & os, AccessStruct & as)
 {

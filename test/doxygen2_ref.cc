@@ -139,7 +139,7 @@ auto_param.auto_field;
 mlhsInnerSubst<void> mtoc_subst_doxygen_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b) {
 
 }
-mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::rectgrid auto_param) {
+mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(matlabtypesubstitute unused1,::rectgrid auto_param,matlabtypesubstitute unused2,matlabtypesubstitute unused3) {
 
 
 body(string, with, double quote, and percent sign, "  '%s'} ")/*  a real comment }
@@ -147,7 +147,7 @@ body(string, with, double quote, and percent sign, "  '%s'} ")/*  a real comment
 
 
 }
-/** @fn mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::rectgrid auto_param)
+/** @fn mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(matlabtypesubstitute unused1,::rectgrid auto_param,matlabtypesubstitute unused2,matlabtypesubstitute unused3)
   * @brief  a third (private) function in the test file with serveral return values
   *
   *
@@ -155,7 +155,7 @@ body(string, with, double quote, and percent sign, "  '%s'} ")/*  a real comment
   *
   * @retval d     a return value
   */
-mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
+mlhsSubst<mlhsInnerSubst<void,unused1> ,mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,unused2> ,mlhsInnerSubst<void,unused3> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
    {
 
 
@@ -164,7 +164,7 @@ mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f>
 
 
 }
-/** @fn mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
+/** @fn mlhsSubst<mlhsInnerSubst<void,unused1> ,mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,unused2> ,mlhsInnerSubst<void,unused3> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
   
   * @brief  a third (private) function in the test file without parameters
   *
