@@ -227,12 +227,12 @@ noret::substitute protected_access(matlabtypesubstitute value) {
 /* 
 noret::substitute DataStoreDirectory(matlabtypesubstitute ds) {
 if ~isdir(ds)
-        fprintf("Creating directory %s\n",ds);
+        fprintf(" Creating directory %s\n ",ds);
         mkdir(ds);
       end
-      setpref("KERMOR","DATASTORE",ds);
+      setpref(" KERMOR "," DATASTORE ",ds);
       this.DataStoreDirectory= ds;
-      fprintf("Simulation and model data: %s\n",ds);
+      fprintf(" Simulation and model data: %s\n ",ds);
 }
 */
 

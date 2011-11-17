@@ -158,7 +158,7 @@ mlhsInnerSubst<matlabtypesubstitute,c> mtoc_subst_doxygen_m_tsbus_cotm_second_fu
 mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,e> ,mlhsInnerSubst<matlabtypesubstitute,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(::rectgrid auto_param) {
 
 
-body(string, with, double quote, and percent sign, " '%s'}")/*  a real comment }
+body(string, with, double quote, and percent sign, "  '%s'} ")/*  a real comment }
 */
 
 
