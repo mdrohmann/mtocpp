@@ -2620,7 +2620,7 @@ void MFileScanner::add_access_info(std::string what)
     docuextra_.push_back(std::string("@note This ") + what + std::string(" has non-unique access specifier: "));
     std::string setAccess = access_specifier_string(access_.set);
     std::string getAccess = access_specifier_string(access_.get);
-    docuextra_.push_back(std::string("SetAccess = ") + setAccess
+    docuextra_.push_back(std::string("SetAccess = ") + setAccess + ", "
                        + std::string("GetAccess = ") + getAccess + std::string("\n"));
   }
 }

@@ -24,7 +24,7 @@ protected:
   *
  *
   * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
-  * @note This property has non-unique access specifier: SetAccess = privateGetAccess = protected
+  * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
   */
 
 matlabtypesubstitute mixed_access2 = 'test';
@@ -41,7 +41,7 @@ matlabtypesubstitute mixed_access2 = 'test';
   *
  *
   * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
-  * @note This property has non-unique access specifier: SetAccess = privateGetAccess = protected
+  * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
   */
 
 ::SpecialType DataStoreDirectory = '';
@@ -54,7 +54,7 @@ matlabtypesubstitute mixed_access2 = 'test';
   *
  *
   * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
-  * @note This property has non-unique access specifier: SetAccess = privateGetAccess = protected
+  * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
   */
 
 matlabtypesubstitute SomeProp = struct('xi',[],'ti',[],'mui',[]);
