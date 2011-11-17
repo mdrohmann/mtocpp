@@ -332,7 +332,7 @@ virtual mlhsInnerSubst<::classA::mixed_access,a> abstract_method(matlabtypesubst
   * @param d      parameter 1
   * @param e      parameter 2
   *
-  * @retval a     test 
+  * @retval a     test object  which has a line break in it
   */
 
 

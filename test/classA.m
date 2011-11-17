@@ -174,7 +174,8 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
     %  e:  parameter 2
     %
     % Return values:
-    %   a: test of type classA::mixed_access
+    %   a: test object of type
+    %        classA.mixed_access which has a line break in it
     [a] = abstract_method(this,d,e);
     % an abstract method comment below
     %
