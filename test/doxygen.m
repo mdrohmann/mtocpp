@@ -137,4 +137,27 @@ function [~ , d, ~, ~]=third_function_without_parameters
 % Return values:
 % d : a return value
 
+function default_parameters(uml, open)
+% function default_parameters(uml, open)
+% function with two default parameters
+%
+% Parameters:
+%   uml: Set to true to create UML-like graphics output
+%        @type bool @default false
+%   open: Set to true if the documentation should be opened after
+%        successful compilation 
+%        @type bool @default false
+
+function default_parameters2(uml, open)
+% function default_parameters(uml, open)
+% function with two default parameters
+%
+% Parameters:
+%   uml: Set to true to create UML-like graphics output
+%        @default false @type bool
+%   open: Set to true if the documentation should be opened after
+%        successful compilation 
+%        @type bool @default false
+
+
 %| \docupdate
