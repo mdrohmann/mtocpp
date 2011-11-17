@@ -119,7 +119,7 @@ auto_param.auto_field;
 
 function c=second_function_without_docu(a,b)
 
-function [d,e,f]=third_function_with_sev_retvals(auto_param)
+function [d,e,f]=third_function_with_sev_retvals(~, auto_param, ~, ~)
 % a third (private) function in the test file with serveral return values
 %
 % Parameters:
@@ -130,8 +130,8 @@ function [d,e,f]=third_function_with_sev_retvals(auto_param)
 
 body(string, with, double quote, and percent sign, ' "%s"}') % a real comment }
 
-function [d,e,f]=third_function_without_parameters
-% function [d,e,f]=third_function_without_parameters
+function [~ , d, ~, ~]=third_function_without_parameters
+% function [~ , d,e,f]=third_function_without_parameters
 % a third (private) function in the test file without parameters
 %
 % Return values:
