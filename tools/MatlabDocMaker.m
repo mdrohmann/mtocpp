@@ -1,10 +1,9 @@
 classdef MatlabDocMaker
-    % MatlabDocMaker: Class for information & tasks concerning the KerMor
-    % documentation.
+    % MatlabDocMaker: Automated documentation creation using doxygen and mtoc++ from within MatLab
     %
     % Prerequisites:
-    % - \c doxygen: mtoc++ is merely a filter for doxygen
     % - \c mtocpp, \c mtocpp_post on the search/environment paths
+    % - \c doxygen (mtoc++ is a filter for doxygen)
     % - \c m4: A macro parser [Unix only]
     %
     % @author Daniel Wirtz @date 2011-10-13
