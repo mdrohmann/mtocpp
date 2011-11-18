@@ -21,8 +21,8 @@ classdef MatlabDocMaker
     % stuff here from the KerMor class.
     %
     % This class is part of the mtoc++ tool
-    % - \c Homepage http://www.morepas.org/software/mtocpp
-    % - \c License http://www.morepas.org/software/mtocpp/licensing.html
+    % - \c Homepage http://www.morepas.org/software/mtocpp/
+    % - \c License http://www.morepas.org/software/mtocpp/docs/licensing.html
     
     methods(Static)
         function name = getProjectName
