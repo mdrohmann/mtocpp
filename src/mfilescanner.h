@@ -17,7 +17,6 @@
 
 #define stringify( name ) #name
 
-
 struct RunMode
 {
   RunMode() : mode(Normal), methodname(),
@@ -194,6 +193,19 @@ public:
   }
 };
 
+/**
+ * @class MFileScanner
+ *
+ * @change{1,2,md,2011-11-17}
+ * - Fixed a bug that messed up the documentation if a new line was started after a @@type tag and added a test case to classA.m
+ * - Non-standard access modifier strings are now separated by a comma
+ * - Fixed a parse error occuring with the new ~-notation in newer MatLab versions. Calls like <tt>foo = bar(par1, ~, par3)</tt> now work.
+ * - The order of @@default and @@type tags in parameters (if occurring) is no longer fixed.
+ *
+ * @new{1,2,md,2011-11-17} New config flag COPY_TYPIFIED_FIELD_DOCU which allows to toggle the automatic insertion of required fields for method parameters.
+ * This flag sets whether the documentation of fields in 'Required fields of param', 'Optional fields of param' or 'Generated fields of retval' shall be copied
+ * in case the Parameter 'param' or 'retval' have a type.
+ */
 class MFileScanner
 {
 public:

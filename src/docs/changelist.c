@@ -12,6 +12,8 @@
  * from the MatlabDocMaker as an example. So the list below is not necessarily complete, but the sites referenced above contain all
  * new features / changes!
  *
+ * @change{1,2,md,2011-11-17} Updated the test reference files
+ *
  * @new{1,2,dw,2011-11-07} Created the initial mtoc++ documentation structure
  *
  * @change{1,2,dw,2011-11-07} Reordered the source code files and tools in more concise folders.
