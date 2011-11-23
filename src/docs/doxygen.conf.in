@@ -33,6 +33,10 @@ PROJECT_NAME           = mtoc++
 
 PROJECT_NUMBER         = @MTOC++_VERSION_MAJOR@.@MTOC++_VERSION_MINOR@
 
+PROJECT_BRIEF          = "mtoc++: Doxygen filter for MatLab .m files"
+
+PROJECT_LOGO       	   = @PROJECT_SOURCE_DIR@/src/docs/logo.jpg
+
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
 # base path where the generated documentation will be put. 
 # If a relative path is entered, it will be relative to the location 
