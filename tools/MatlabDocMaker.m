@@ -33,7 +33,7 @@ classdef MatlabDocMaker
             % key also depends on it.
             %
             % Return values:
-            % name: The project name
+            % name: The project name @type char
             name = 'My mtoc++ powered project';
         end
         
@@ -44,7 +44,7 @@ classdef MatlabDocMaker
             % Doxyfile.m4 support two-level versioning a la X.X.
             %
             % Return values:
-            % version: The project version
+            % version: The project version @type char
             version = '0.1';
         end
     end
