@@ -23,6 +23,7 @@
  * - \c Doxyfile.m4 - @ref config_doxy
  * - \c mtocpp.conf - @ref config_mtocpp
  * - \c latexextras.m4 - @ref config_latex
+ * - \c class_substitutes.c - @ref config_fakeclasses
  *
  * @subsection config_doxy Configuration options for doxygen
  * It will get parsed by m4 to replace tags for specific folders etc. and contains any other configuration settings you want doxygen to use.
@@ -122,6 +123,12 @@
  * \usepackage{amsfonts}
  * \usepackage{subfig}
  * \usepackage{bbm} @endcode
+ *
+ * @subsection config_fakeclasses Fake classes for typical MatLab data types
+ * This c-file includes some class descriptions for typical MatLab data types like handle or logical, but also introduces
+ * custom types like colvec or rowvec that can be used with the @@type tag for property, parameter or return value types.
+ *
+ * Add new classes to this file or change existing ones as you need.
  *
  * @section tools_docmaker Using the MatlabDocMaker
  * The most convenient way of using mtoc++ within your matlab project is to use the MatlabDocMaker class coming with mtoc++.
