@@ -18,8 +18,7 @@ classdef InheritedClass < Class
         % Detailed comment for SomeProp. Here you can write more detailed
         % text for the SomeProp property.
         %
-        % @type int
-        % @default 0
+        % @type integer @default 0
         SomeProp = 0;
     end
     
@@ -27,6 +26,8 @@ classdef InheritedClass < Class
         % Short description for a dependent property.
         %
         % Equals SomeProp times five.
+        %
+        % @type integer @default 0
         %
         % See also: SomeProp
         % @see SomeProp
@@ -55,9 +56,12 @@ classdef InheritedClass < Class
             % </div>
             %
             % Parameters:
-            %   arg1: of type barType
+            %   arg1: of type sparsematrix
             %   arg2: further documentation is ignored because of
             %         @@copydoc/@@copydetails command
+            %
+            % Return values:
+            % returnarg: The return value. @type matrix
             
             % Call superclass method
             returnarg = iwillbeoverridden@Class(this, arg1);
@@ -73,6 +77,8 @@ classdef InheritedClass < Class
             %
             % Here are more details on the no real arguments function.
             % And even some more!
+            %
+            % The first argument corresponds to the auto-included object self-reference and is not processed but removed by mtoc++.
         end
     end
     

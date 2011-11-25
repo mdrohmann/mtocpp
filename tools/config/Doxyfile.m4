@@ -26,14 +26,14 @@
 # done wrongly). Check the ALIASES setting in the doxygen documentation.
 #
 # The following tags should not be changed in order to keep mtoc++ running:
-# EXTENSION_MAPPING = .m=C++                            (assign C++-styled code interpretion to .m files)
-# WARN_LOGFILE      = _OutputDir_/warnings.log          (is processed in MatlabDocMaker)
-# INPUT             = _SourceDir_                       (input is configured by MatlabDocMaker)
-# FILE_PATTERNS     = *.m                               (doxygen bothers to look at .m files at all)
-# FILTER_PATTERNS   = *.m=_ConfDir_/mtocpp_filter.sh    (the link between mtoc++ and doxygen)
-# LATEX_BATCHMODE   = YES                               (NO will cause doxygen to stop when LaTeX errors occur)
-# EXTRA_PACKAGES    = _ConfDir_/latexextras             (latex styles inclusion file)
-# WARN_LOGFILE      =                                   (leave empty so MatLab can capture doxygens warnings)
+# EXTENSION_MAPPING = .m=C++                            		(assign C++-styled code interpretion to .m files)
+# WARN_LOGFILE      = _OutputDir_/warnings.log          		(is processed in MatlabDocMaker)
+# INPUT             = _SourceDir_ _ConfDir_/class_substitutes.c (input is configured by MatlabDocMaker)
+# FILE_PATTERNS     = *.m                               		(doxygen bothers to look at .m files at all)
+# FILTER_PATTERNS   = *.m=_ConfDir_/mtocpp_filter.sh    		(the link between mtoc++ and doxygen)
+# LATEX_BATCHMODE   = YES                               		(NO will cause doxygen to stop when LaTeX errors occur)
+# EXTRA_PACKAGES    = _ConfDir_/latexextras             		(latex styles inclusion file)
+# WARN_LOGFILE      =                                   		(leave empty so MatLab can capture doxygens warnings)
 #
 # We recommend to leave
 # EXTRACT_PRIVATE   = NO
@@ -675,7 +675,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories
 # with spaces.
 
-INPUT                  = _SourceDir_
+INPUT                  = _SourceDir_ _ConfDir_/class_substitutes.c
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
