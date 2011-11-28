@@ -15,7 +15,7 @@
  *
  * This possibility will be provided in mtoc++ 1.3.
  *
- * @section mtoc12 mtoc++ release 1.2 (2011/11/08)
+ * @section mtoc12 mtoc++ release 1.2 (2011/11/25)
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_1.2.tar.gz">Source tarball</a>
  *
  * @section mtoc111 mtoc++ release 1.1.1 (2011/09/05)
