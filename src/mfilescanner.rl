@@ -1181,7 +1181,7 @@ debug_output("in funcbody: goto main", p);
             ([ =]+ %st_tok . ( matrix | [^[{;])* .';')
             @{
               defaultprop_ = string(tmp_p, p - tmp_p);
-              for (int i = 0; i < defaultprop_.length(); ++i)
+              for (unsigned int i = 0; i < defaultprop_.length(); ++i)
               {
                 if(defaultprop_[i] == '.' && defaultprop_[i+1] == '.' && defaultprop_[i+2] == '.')
                 {
