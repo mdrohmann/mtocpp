@@ -99,10 +99,10 @@ classdef Class
         % option "ENABLE_OF_TYPE_PARSING" is enabled and only in the first two
         % lines of the documentation block.
         %
-        % @type testing.MUnit
+        % @type Class
         %
-        % See also: testing.MUnit
-        SomeClass = testing.MUnit;
+        % See also: Class
+        SomeClass = Class;
     end
     
     properties
@@ -111,14 +111,22 @@ classdef Class
         % Detailed comment for SomeProp. Here you can write more detailed
         % text for the SomeProp property.
         %
-        % @default 0
+        % @default 0 @type integer
         SomeProp = 0;
+        
+        % Some row vector property.
+        %
+        % @type rowvec @default [1 2 3]
+        %
+        MyRowVec = [1 2 3]; 
     end
     
     properties(Dependent)
         % Short description for a dependent property.
         %
         % Equals SomeProp times five.
+        %
+        % @type integer @default 0
         %
         % See also: SomeProp
         % @see SomeProp
@@ -229,10 +237,10 @@ classdef Class
             % Class.
             %
             % Parameters:
-            %  arg1:     A variable of type fooType . The type information for
+            %  arg1:     A variable of type matrix . The type information for
             %            this parameter is also copied to inherited classes if
             %            @@copydoc or @@copydetails are used.
-            %  arg2:     A variable of type fooType . The type information for
+            %  arg2:     A variable of type matrix . The type information for
             %            this parameter is also copied to inherited classes if
             %            @@copydoc or @@copydetails are used. 
             %
@@ -241,7 +249,7 @@ classdef Class
         end
     end
     
-    methods(Sealed,Access=private)
+    methods(Sealed, Access=protected)
         function noRealArguments(this)
             % This is the function brief description.
             %

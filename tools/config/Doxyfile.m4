@@ -2,9 +2,9 @@
 ################# mtoc++ related information ###############################
 ############################################################################
 # Feel free to make any changes within this doxygen configuration file to 
-# taylor the output towards your needs. However there are some useful hints
-# and warnings which you should be aware of in order to keep mtoc++ running
-# nice & smoothly with doxygen.
+# taylor the output towards your needs. Any changes made by us to the doxygen
+# config file are moved to the END of the file in order to easily keep custom
+# changes over new mtoc++ versions.
 # You probably want to change the values for PROJECT_NAME, PROJECT_BRIEF and
 # PROJECT_LOGO as they are of course custom to each project.
 #
@@ -25,16 +25,6 @@
 # (e.g. the @new tags) that can be removed (but will likely cause errors if
 # done wrongly). Check the ALIASES setting in the doxygen documentation.
 #
-# The following tags should not be changed in order to keep mtoc++ running:
-# EXTENSION_MAPPING = .m=C++                            (assign C++-styled code interpretion to .m files)
-# WARN_LOGFILE      = _OutputDir_/warnings.log          (is processed in MatlabDocMaker)
-# INPUT             = _SourceDir_                       (input is configured by MatlabDocMaker)
-# FILE_PATTERNS     = *.m                               (doxygen bothers to look at .m files at all)
-# FILTER_PATTERNS   = *.m=_ConfDir_/mtocpp_filter.sh    (the link between mtoc++ and doxygen)
-# LATEX_BATCHMODE   = YES                               (NO will cause doxygen to stop when LaTeX errors occur)
-# EXTRA_PACKAGES    = _ConfDir_/latexextras             (latex styles inclusion file)
-# WARN_LOGFILE      =                                   (leave empty so MatLab can capture doxygens warnings)
-#
 # We recommend to leave
 # EXTRACT_PRIVATE   = NO
 # if you make extensive use of classes as these methods are of course not
@@ -46,6 +36,10 @@
 #
 ###########################################################################
 ################## List of changes: #######################################
+#
+# mtoc++ 1.2: Restructured this file during tests for Windows doc creation.
+#             - Config stuff is now at the END of the file.
+#             - New m4 macro _MTOCFILTER_ for .sh and .bat file support.
 #
 # mtoc++ 1.2: First version to contain this file.
 #
@@ -290,18 +284,6 @@ OPTIMIZE_FOR_FORTRAN   = NO
 # VHDL.
 
 OPTIMIZE_OUTPUT_VHDL   = NO
-
-# Doxygen selects the parser to use depending on the extension of the files it
-# parses. With this tag you can assign which parser to use for a given extension.
-# Doxygen has a built-in mapping, but you can override or extend it using this
-# tag. The format is ext=language, where ext is a file extension, and language
-# is one of the parsers supported by doxygen: IDL, Java, Javascript, CSharp, C,
-# C++, D, PHP, Objective-C, Python, Fortran, VHDL, C, C++. For instance to make
-# doxygen treat .inc files as Fortran files (default is PHP), and .f files as C
-# (default is Fortran), use: inc=Fortran f=C. Note that for custom extensions
-# you also need to set FILE_PATTERNS otherwise the files are not read by doxygen.
-
-EXTENSION_MAPPING      = .m=C++
 
 # If you use STL classes (i.e. std::string, std::vector, etc.) but do not want
 # to include (a tag file for) the STL sources as input, then you should
@@ -659,23 +641,9 @@ WARN_NO_PARAMDOC       = YES
 
 WARN_FORMAT            = "$file:$line: $text"
 
-# The WARN_LOGFILE tag can be used to specify a file to which warning
-# and error messages should be written. If left blank the output is written
-# to stderr.
-
-WARN_LOGFILE           =
-#WARN_LOGFILE           = _OutputDir_/warnings.log
-
 #---------------------------------------------------------------------------
 # configuration options related to the input files
 #---------------------------------------------------------------------------
-
-# The INPUT tag can be used to specify the files and/or directories that contain
-# documented source files. You may enter file names like "myfile.cpp" or
-# directories like "/usr/src/myproject". Separate the files or directories
-# with spaces.
-
-INPUT                  = _SourceDir_
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is
@@ -684,46 +652,6 @@ INPUT                  = _SourceDir_
 # the list of possible encodings.
 
 INPUT_ENCODING         = UTF-8
-
-# If the value of the INPUT tag contains directories, you can use the
-# FILE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp
-# and *.h) to filter out the source-files in the directories. If left
-# blank the following patterns are tested:
-# *.c *.cc *.cxx *.cpp *.c++ *.d *.java *.ii *.ixx *.ipp *.i++ *.inl *.h *.hh
-# *.hxx *.hpp *.h++ *.idl *.odl *.cs *.php *.php3 *.inc *.m *.mm *.dox *.py
-# *.f90 *.f *.for *.vhd *.vhdl
-
-FILE_PATTERNS          = *.c \
-                         *.cc \
-                         *.cxx \
-                         *.cpp \
-                         *.c++ \
-                         *.d \
-                         *.java \
-                         *.ii \
-                         *.ixx \
-                         *.ipp \
-                         *.i++ \
-                         *.inl \
-                         *.h \
-                         *.hh \
-                         *.hxx \
-                         *.hpp \
-                         *.h++ \
-                         *.idl \
-                         *.odl \
-                         *.cs \
-                         *.php \
-                         *.php3 \
-                         *.inc \
-                         *.m \
-                         *.mm \
-                         *.dox \
-                         *.py \
-                         *.f90 \
-                         *.f \
-                         *.vhd \
-                         *.vhdl
 
 # The RECURSIVE tag can be used to turn specify whether or not subdirectories
 # should be searched for input files as well. Possible values are YES and NO.
@@ -795,17 +723,6 @@ IMAGE_PATH             =
 # ignored.
 
 INPUT_FILTER           =
-
-# The FILTER_PATTERNS tag can be used to specify filters on a per file pattern
-# basis.
-# Doxygen will compare the file name with each pattern and apply the
-# filter if there is a match.
-# The filters are a list of the form:
-# pattern=filter (like *.cpp=my_cpp_filter). See INPUT_FILTER for further
-# info on how filters are used. If FILTER_PATTERNS is empty or if
-# non of the patterns match the file name, INPUT_FILTER is applied.
-
-FILTER_PATTERNS        = *.m=_ConfDir_/mtocpp_filter.sh
 
 # If the FILTER_SOURCE_FILES tag is set to YES, the input filter (if set using
 # INPUT_FILTER) will be used to filter the input files when producing source
@@ -1289,11 +1206,6 @@ COMPACT_LATEX          = NO
 
 PAPER_TYPE             = a4wide
 
-# The EXTRA_PACKAGES tag can be to specify one or more names of LaTeX
-# packages that should be included in the LaTeX output.
-
-EXTRA_PACKAGES         = _ConfDir_/latexextras
-
 # The LATEX_HEADER tag can be used to specify a personal LaTeX header for
 # the generated latex document. The header should contain everything until
 # the first chapter. If it is left blank doxygen will generate a
@@ -1320,13 +1232,6 @@ PDF_HYPERLINKS         = YES
 # higher quality PDF documentation.
 
 USE_PDFLATEX           = YES
-
-# If the LATEX_BATCHMODE tag is set to YES, doxygen will add the \\batchmode.
-# command to the generated LaTeX files. This will instruct LaTeX to keep
-# running if errors occur, instead of asking the user for help.
-# This option is also used when generating formulas in HTML.
-
-LATEX_BATCHMODE        = YES
 
 # If LATEX_HIDE_INDICES is set to YES then doxygen will not
 # include the index chapters (such as File Index, Compound Index, etc.)
@@ -1809,3 +1714,29 @@ GENERATE_LEGEND        = YES
 # the various graphs.
 
 DOT_CLEANUP            = YES
+
+############### MTOC++ RELATED CONFIGURATION ##############################
+# The following tags should not be changed in order to keep mtoc++ running
+###########################################################################
+# assign C++-styled code interpretion to .m files
+EXTENSION_MAPPING = .m=C++
+# input is configured by MatlabDocMaker
+INPUT             = _SourceDir_ _ConfDir_/class_substitutes.c 
+# doxygen bothers to look at .m files at all
+FILE_PATTERNS     = *.m \
+                    *.c \
+                    *.cc \
+                    *.cpp \
+                    *.h \
+                    *.hh \
+                    *.hpp \
+# the link between mtoc++ and doxygen
+FILTER_PATTERNS   = *.m=_ConfDir_/_MTOCFILTER_
+# NO will cause doxygen to stop when LaTeX errors occur
+LATEX_BATCHMODE   = YES             		
+# latex styles inclusion file
+EXTRA_PACKAGES    = _ConfDir_/latexextras
+# leave empty so MatlabDocMaker can capture doxygen warnings
+WARN_LOGFILE      =		
+# disable latex stopping upon compile errors
+LATEX_BATCHMODE        = YES
