@@ -2,7 +2,7 @@ PROJECT (MTOC++)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 SET(MTOC++_VERSION_MAJOR 1)
-SET(MTOC++_VERSION_MINOR 2)
+SET(MTOC++_VERSION_MINOR 3)
 
 # Default install prefix is "/usr/local"
 SET(CUSTOM_DOC_DIR "share/doc/mtocpp"
