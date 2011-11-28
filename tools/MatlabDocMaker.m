@@ -190,6 +190,9 @@ classdef MatlabDocMaker
             f = fopen(cbin,'w');
             fprintf(f,'%smtocpp %s %s',strs.silencer,strs.farg,fullfile(cdir,'mtocpp.conf'));
             fclose(f);
+            if isunix
+                unix(['chmod +x ' cbin]);
+            end
             
             % Process macros in the Doxyfile.m4 file using m4
             system(sprintf('m4 -D _OutputDir_="%s" -D _SourceDir_="%s" -D _ConfDir_="%s" -D _ProjectName_="%s" -D _ProjectVersion_="%s" -D _MTOCFILTER_=%s "%s/Doxyfile.m4" > "%s/Doxyfile"',...
@@ -200,17 +203,16 @@ classdef MatlabDocMaker
             tex = fullfile(cdir,'latexextras.m4');
             if exist(tex,'file') == 2
                 % # Parse the kermorlatex include style file
-                system(sprintf('m4 -D _ConfDir_="%s" "%s" > "%s/latexextras.sty"',...
-                    cdir,tex,cdir));
+                system(sprintf('m4 -D _ConfDir_="%s" "%s" > "%s%slatexextras.sty"',...
+                    cdir,tex,cdir,filesep));
             else
                 % Create empty file
-                system(sprintf('echo "" > %s/latexextras.sty',cdir));
+                system(sprintf('echo "" > %s%slatexextras.sty',cdir,filesep));
             end
 
             % Call doxygen
-            b = MatlabDocMaker.getDoxygenBin;
-            fprintf('Running doxygen (%s) with mtoc++ filter...\n',b);
-            [~,warn] = system(sprintf('%s %s/Doxyfile 1>%s',b, cdir, strs.null));
+            fprintf('Running doxygen with mtoc++ filter...\n');
+            [~,warn] = system(sprintf('doxygen "%s%sDoxyfile" 1>%s', cdir, filesep, strs.null));
              
             % Postprocess
             fprintf('Running mtoc++ postprocessor...\n');
