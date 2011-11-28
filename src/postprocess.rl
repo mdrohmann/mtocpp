@@ -4,7 +4,13 @@
 #include <fstream>
 #include <iostream>
 #include <cstdlib>
-#include <dirent.h> // New for directory recursion
+// New for directory recursion
+#ifdef WIN32
+	#include <dirent_msvc.h>
+#else
+	#include <dirent.h>
+#endif
+
 
 using std::cin;
 using std::cout;

@@ -1,12 +1,14 @@
+#include "config.h"
 #include "confscanner.h"
 
 #ifdef WIN32
-#include <windows.h>
-#include <shlwapi.h>
+	#include <windows.h>
+	#include <shlwapi.h>
+	#pragma comment (lib, "shlwapi.lib")
 #else
-extern "C" {
-#include <fnmatch.h>
-}
+	extern "C" {
+		#include <fnmatch.h>
+	}
 #endif
 
 using std::cerr;

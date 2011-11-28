@@ -8,19 +8,23 @@ body, table, div, p, dl {
 /* @group Heading Levels */
 
 h1 {
-	font-size: 180%;
+	font-size: 200%;
+	color: #1C833E;
 }
 
 h2 {
-	font-size: 120%;
-	padding: 10px 0px;
-	background-color: #B8B6BB;
-	border-top: 2px solid black;
+	font-size: 160%;
+	padding-top: 10px;
+	padding-bottom: 0px;
+	/*background-color: #EBE9FF;*/
+	border-bottom: 2px solid #8BB9E0;
+	color: #1C833E;
 }
 
 h3 {
-	font-size: 100%;
+	font-size: 120%;
 	color: #1C833E;
+	border-bottom: 1px solid #8BB9E0;
 }
 
 h4 {

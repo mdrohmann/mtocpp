@@ -6,9 +6,6 @@
 #include <iostream>
 #include <algorithm>
 #include <iterator>
-extern "C" {
-#include <unistd.h>
-}
 
 using std::cerr;
 using std::cout;
@@ -39,6 +36,9 @@ void usage()
     << "If no explicit configuration file is given, mtocpp also looks for './mtocpp.conf' by default." << endl;
 }
 
+/** 
+ * @change{1,2,dw,2011-11-27} Included a new option \c --verbose for short mtoc++ version output.
+ */
 // main routine
 int main(int argc, char ** argv)
 {
@@ -50,6 +50,11 @@ int main(int argc, char ** argv)
     if (string(argv[1]) == string("--help"))
     {
       usage();
+      exit(0);
+    }
+	if (string(argv[1]) == string("--version"))
+    {
+      cout << MTOCPP_VERSION_MAJOR << "." << MTOCPP_VERSION_MINOR << endl;
       exit(0);
     }
     std::ios_base::iostate oldstate = fin.exceptions();
