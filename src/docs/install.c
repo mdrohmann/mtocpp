@@ -3,20 +3,48 @@
  *
  * Make sure you have the latest version of mtoc++, see @ref download. Next step after installation is @ref tools
  *
- * @section inst_req Software requirements
- * The following programs need to be available on your machine in order to build mtoc++:
- * - Tar: Tar archive tool http://www.gnu.org/software/tar/
+ * @section inst_req Software requirements and recommendations
+ * The following programs need to be available on your machine in order to use mtoc++:
+ * - \c doxygen: mtoc++ is a filter for doxygen. If not yet available, get it at http://www.doxygen.org
+ * - m4: A macro processor http://www.gnu.org/s/m4/ (For Windows we included a m4 executable in the download!)
+ *
+ * The following programs will highly improve your documentation creation experience if available:
+ * - \c dot: A Graphviz tool that allows doxygen to create nice graphics for inheritance trees and collaboration diagrams.
+ * - \c latex: Required to use LaTeX processing capabilities of doxygen (e.g. http://www.latex-project.org/ftp.html).
+ *  mtoc++ comes with some markups for better latex inclusion into the text flow.
+ *  Also, easy inclusion of external latex sources and styles is included in mtoc++'s tools.
+ *
+ * If you want to build mtoc++ from source, you will also need:
  * - Ragel: A finite-state machine compiler. Get at http://www.complang.org/ragel
  * - CMake: Cross-platform make. Get at http://www.cmake.org
- * - Doxygen: mtoc++ is pretty useless witout doxygen. If not yet available, get it at http://www.doxygen.org
- *  (this is not really a requirement for compiling but we made cmake check for doxygen)
  *
- * In order to use mtoc++ most conveniently you also need
- * - m4: A macro processor http://www.gnu.org/s/m4/
- * - latex: Required to use LaTeX processing capabilities of doxygen (e.g. http://www.latex-project.org/ftp.html)
+ * @section inst_binaries Using precompiled binaries
+ * @subsection inst_binaries_win Windows users
  *
+ * If you are a windows user you can directly download the binaries at @ref download.
+ * Then simply place the binaries in a folder of your choice and add them to the PATH environment variable.
  *
- * @section inst_comp Compiling mtoc++
+ * @note If you intend to use the MatlabDocMaker, you can also copy the binaries into the "documentation configuration files" folder
+ * for your/each project, this path will be added to PATH by MatLab locally.
+ *
+ * We are trying to always compile current Windows binaries for \c mtocpp and \c mtocpp_post and include them for direct download.
+ *
+ * @subsection inst_binaries_unix Unix binaries
+ * For unix users we recommend to compile the sources following @ref inst_comp.
+ * However, on the download site you can also find some precompiled linux binaries/packages.
+ *
+ * If you find a matching choice you can use it and all you have to do is to ensure that the binaries can be found on the environment PATH.
+ *
+ * @section inst_comp Compiling mtoc++ from source
+ * Please check the @ref inst_req when you intend to build mtoc++ yourself.
+ *
+ * mtoc++ is built using the cmake (cross-platform make) tool. This tool is available for both unix and Windows,
+ * however, we only tested compiling our sources on linux and MS Visual Studio 2010.
+ *
+ * For Windows compilation, you need a Windows C++ compiler (e.g. MinGW or Visual Studio). Then running
+ * the CMake GUI allows you to choose a compiler, specify any CMake configuration settings and create the
+ * makefiles/Visual Studio projects needed for compilation.
+ *
  * The following procedure is an example of how to compile mtoc++ on a linux machine:
  * @code tar -xcvf mtocpp.tar.gz
  * cd mtocpp
@@ -30,7 +58,10 @@
  * make install
  * @endcode
  *
- * @subsection inst_cust Installation folders and customization
+ * @subsection inst_cust CMake options: Installation folders and customization
+ *
+ * @note These options are explained for the linux case, for windows the CMake GUI allows to set the relevant options.
+ *
  * The default value for the install prefix is \c /usr/local, so the mtocpp binaries \c mtocpp and \c mtocpp_post go to \c /usr/local/bin
  * and the documentation is created inside \c /usr/local/share/doc/mtocpp.
  *
@@ -49,6 +80,8 @@
  * Run the tests by typing
  * @code make test @endcode
  * in the same folder where you called \c cmake.
+ *
+ * On Windows, dedendent on your compiler, you will either have makefiles for the test cases or a separate Visual Studio project to run the tests.
  *
  * Have fun!
  */
