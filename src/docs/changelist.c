@@ -12,6 +12,9 @@
  * from the MatlabDocMaker as an example. So the list below is not necessarily complete, but the sites referenced above contain all
  * new features / changes!
  *
+ * @change{1,2,md,2011-11-28}
+ * Allow long (including line breaks) default values for properties
+ *
  * @new{1,2,dw,2011-11-27}
  * - Reordered the Doxyfile.m4 so that changes from our side are all collected to the bottom. This makes keeping custom settings 
  * over different versions easier.
