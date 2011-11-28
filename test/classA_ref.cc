@@ -67,6 +67,19 @@ matlabtypesubstitute SomeProp = struct('xi',[],'ti',[],'mui',[]);
   * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
   */
 
+matlabtypesubstitute SteadyStates = [[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0  \
+      [0, 3.0824e-5, 0.1713]*models.pcd.BasePCDSystem.ya0  \
+      [.2, 0.1990, 0.0070]*models.pcd.BasePCDSystem.xi0  \
+      [.2, 0.2, 0.0287]*models.pcd.BasePCDSystem.yi0];
+/** @var SteadyStates
+  * @brief  variable with very long default value
+  *
+  *
+ *
+  * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
+  * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
+  */
+
 
 public:
 static const matlabtypesubstitute aConstant = 1;
@@ -90,7 +103,7 @@ static const matlabtypesubstitute cConstant = 3;
   *
  */
 
-static const matlabtypesubstitute dConstant = { [ 1, 2; 3, 4]; 'test'; [ 1 2; [ [3 [3 [3 4] 4] ] ] ] };
+static const matlabtypesubstitute dConstant = { [ 1, 2, 3, 4], 'test', [ 1 2, [ [3 [3 [3 4] 4] ] ] ] };
 /** @var dConstant
   * @brief  test
   *
