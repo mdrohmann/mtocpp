@@ -4,8 +4,9 @@
  *
  * The sources for mtoc++ are accessible as
  * - Source tarball
- * - Via the git versioning system
+ * - Windows binaries
  * - Precompiled Debian packages
+ * - Soon: Via the git versioning system
  *
  * Once you've obtained your copy check out the @ref install
  *
@@ -15,8 +16,9 @@
  *
  * This possibility will be provided in mtoc++ 1.3.
  *
- * @section mtoc12 mtoc++ release 1.2 (2011/11/25)
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_1.2.tar.gz">Source tarball</a>
+ * @section mtoc12 mtoc++ release 1.2 (2011/11/28)
+ * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.2.tar.gz">Source tarball</a>
+ * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win32_1.2.zip">Windows binaries (32bit)</a> (including tools)
  *
  * @section mtoc111 mtoc++ release 1.1.1 (2011/09/05)
  * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Linux.deb">Debian package for (Ubuntu/Debian/...)</a>
