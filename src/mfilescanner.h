@@ -12,6 +12,14 @@
 #include <sstream>
 #include <fstream>
 
+#ifdef WIN32
+	#include <direct.h>
+#else
+	extern "C" {
+		#include <unistd.h>
+	}
+#endif
+
 // 160 KB
 #define BUFSIZE 100*16384
 

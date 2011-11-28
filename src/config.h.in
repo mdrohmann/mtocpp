@@ -13,3 +13,8 @@
 #define ENABLE_OF_TYPE_PARSING               true
 #define VOID_TYPE_IN_RETURN_VALUES           false
 #define PRINT_RETURN_VALUE_NAME              2
+
+// Damn arbitrary flag naming..
+#if defined(_WIN32) || defined (_WIN64) // MS VS 2010 (any hopefully others) define _WINXX on windows platforms
+	#define WIN32 1
+#endif

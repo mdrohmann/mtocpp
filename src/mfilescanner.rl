@@ -6,9 +6,6 @@
 #include <iostream>
 #include <algorithm>
 #include <iterator>
-extern "C" {
-#include <unistd.h>
-}
 
 using std::cerr;
 using std::cout;

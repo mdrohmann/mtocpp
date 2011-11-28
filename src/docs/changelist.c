@@ -12,6 +12,10 @@
  * from the MatlabDocMaker as an example. So the list below is not necessarily complete, but the sites referenced above contain all
  * new features / changes!
  *
+ * @new{1,2,dw,2011-11-27}
+ * - Reordered the Doxyfile.m4 so that changes from our side are all collected to the bottom. This makes keeping custom settings 
+ * over different versions easier.
+ *
  * @new{1,2,dw,2011-11-25} Included a file class_substitutes.c into the config directory that introduces fake classes for
  * common matlab data types.
  *
