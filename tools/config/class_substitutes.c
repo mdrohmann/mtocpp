@@ -43,6 +43,25 @@
  * @brief A MatLab struct
  *
  * This class is an artificially created class in doxygen to allow more precise type declarations
+ *
+ * @class varargin
+ * @brief A variable number of input arguments
+ *
+ * This class is an artificially created class in doxygen to allow more precise type declarations.
+ *
+ * For more information about the varargin argument see the
+ * <a href="http://www.mathworks.de/help/techdoc/ref/varargin.html" target="_blank">
+ * MatLab documentation on varargin</a>.
+ *
+ *
+ * @class varargout
+ * @brief A variable number of output arguments
+ *
+ * This class is an artificially created class in doxygen to allow more precise type declarations.
+ *
+ * For more information about the varargout argument see the
+ * <a href="http://www.mathworks.de/help/techdoc/ref/varargout.html" target="_blank">
+ * MatLab documentation on varargout</a>.
  */
 
 class matrix {
