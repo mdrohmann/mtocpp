@@ -515,12 +515,10 @@ int ConfFileScanner :: execute()
       int len = confistream_.gcount();
       char *pe = p + len;
       char *rpe = pe;
-      char *eof = 0;
 
       /* If we see eof then append the EOF char. */
       if ( confistream_.eof() )
       {
-        eof = pe;
         done = true;
       }
       else
