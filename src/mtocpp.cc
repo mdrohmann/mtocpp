@@ -84,10 +84,8 @@ int main(int argc, char ** argv)
   {
     conffilename = std::string(argv[2]);
   }
-  
+
   char buf[1000];
-  char * dummy = getcwd(buf, 1000);
-  dummy = 0;
 
   string::size_type found = 0;
   string cwd(buf);
