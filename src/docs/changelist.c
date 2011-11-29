@@ -13,6 +13,9 @@
  * from the MatlabDocMaker as an example. So the list below is not necessarily complete, but the sites referenced above contain all
  * new features / changes!
  *
+ * @change{1,3,dw,2011-11-29} Added the new fake classes varargin and varargout to the class_substitutes.c file with links to
+ * the MatLab online documentation.
+ *
  * @new{1,3,dw,2011-11-28} Started mtoc++ 1.3.
  *
  * @change{1,2,md,2011-11-28}
