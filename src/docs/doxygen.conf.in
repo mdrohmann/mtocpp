@@ -596,7 +596,7 @@ WARN_LOGFILE           = @PROJECT_BINARY_DIR@/docs/doxygen.log
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                 = @PROJECT_SOURCE_DIR@/tools/MatlabDocMaker.m @PROJECT_SOURCE_DIR@/src @PROJECT_SOURCE_DIR@/tools/config/class_substitutes.c
+INPUT                 = @PROJECT_SOURCE_DIR@/tools/MatlabDocMaker.m @PROJECT_SOURCE_DIR@/src/docs @PROJECT_SOURCE_DIR@/tools/config/class_substitutes.c
 
 # This tag can be used to specify the character encoding of the source files 
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding, which is 
