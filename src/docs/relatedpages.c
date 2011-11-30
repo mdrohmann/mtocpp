@@ -18,6 +18,7 @@
  *
  * @section mtoc12 mtoc++ release 1.2 (2011/11/28)
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.2.tar.gz">Source tarball</a>
+ * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win32bins_1.2.zip">Windows binaries (32bit)</a>
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win32_1.2.zip">Windows binaries (32bit)</a> (including tools)
  *
  * @section mtoc111 mtoc++ release 1.1.1 (2011/09/05)
