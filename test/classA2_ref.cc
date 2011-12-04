@@ -72,6 +72,16 @@ matlabtypesubstitute SteadyStates = [[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSy
   * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
   */
 
+matlabtypesubstitute Property_without_semicolon;
+/** @var Property_without_semicolon
+  * @brief  commented anyways
+  *
+  *
+ *
+  * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
+  * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
+  */
+
 
 public:
 static const matlabtypesubstitute aConstant = 1;
