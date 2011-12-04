@@ -169,9 +169,9 @@ private:
 public:
   /**
    * @class PostProcess
-   * 
+   *
    * @change{1,2,dw,2011-11-04} Changed the postprocessor interface from taking a single file argument to
-   * assuming the passed string to be a folder whos contents are to be postprocessed. 
+   * assuming the passed string to be a folder whos contents are to be postprocessed.
    */
   // constructor
   PostProcess(const string &docdir) :
@@ -180,25 +180,26 @@ public:
     ts(0), te(0), have(0),
     top(0), only_retval(false)
   { }
-  
-  int execute() {
-	  DIR *dp;
-	  if ((dp  = opendir(docdir_.c_str())) == NULL) {
-		  cerr << "Error opening directory " << docdir_ << endl;
-		  return -1;
-	  }
-	  
-	  struct dirent* dirp;
-	  string file;
-	  while ((dirp = readdir(dp)) != NULL) {
-		  file = string(dirp->d_name);
-		  // Process only html files
-		  if (file.substr(file.find_last_of(".") + 1) == "html" && file.find("8rl") == string::npos) {
-			  postprocess(docdir_ + string("/") + file);
-		  }
-	  }
-	  closedir(dp);
-	  return 0;
+
+  int execute()
+  {
+    DIR *dp;
+    if ((dp  = opendir(docdir_.c_str())) == NULL) {
+      cerr << "Error opening directory " << docdir_ << endl;
+      return -1;
+    }
+
+    struct dirent* dirp;
+    string file;
+    while ((dirp = readdir(dp)) != NULL) {
+      file = string(dirp->d_name);
+      // Process only html files
+      if (file.substr(file.find_last_of(".") + 1) == "html" && file.find("8rl") == string::npos) {
+        postprocess(docdir_ + string("/") + file);
+      }
+    }
+    closedir(dp);
+    return 0;
   }
 
   // run postprocessor

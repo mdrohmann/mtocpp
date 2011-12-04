@@ -34,6 +34,8 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
       [.2; 0.1990; 0.0070]*models.pcd.BasePCDSystem.xi0...
       [.2; 0.2; 0.0287]*models.pcd.BasePCDSystem.yi0];
 
+  Property_without_semicolon   % commented anyways
+
   end; % garbage comment
 
   properties (Constant); % garbage comment

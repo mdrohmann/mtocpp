@@ -231,6 +231,12 @@ const char * ClassPartNames[] =
       | ('...'.[ \t]*.EOL)
     );
 
+  # white space or line continuation
+  WS =
+    ( [ \t]+
+      | ('...'.[\t]*.EOL)
+    );
+
   # matlab identifier
   IDENTEND = [A-Za-z0-9_];
   IDENT = [A-Za-z_]IDENTEND**;
@@ -1176,9 +1182,9 @@ debug_output("in funcbody: goto main", p);
 //            fout_ << propertyparams_.ccprefix() << " " << s;
             }
           )
-        . ( ';' @{defaultprop_ = "";}
+        . WS* . ( ( '%' @{ fhold; } | ';' | EOL )  @{defaultprop_ = "";}
             |
-            ([ =]+ %st_tok . ( matrix | [^[{;])* .';')
+            ( ('=' . [ ]*) %st_tok . ( matrix | [^[{;\n%])* . (';' | EOL | '%' @{ fhold; } ))
             @{
               defaultprop_ = string(tmp_p, p - tmp_p);
               for (unsigned int i = 0; i < defaultprop_.length(); ++i)
