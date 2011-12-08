@@ -23,7 +23,7 @@
  * - @subpage licensing
  *
  * @section Downloads
- * For all available downloads check @ref download. The most current version can be downloaded below.
+ * For all available downloads check @ref download. The most current release can be downloaded below.
  *
  * @par Release 1.2 (2011/11/28)
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.2.tar.gz">Source tarball</a>
