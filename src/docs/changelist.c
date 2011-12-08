@@ -13,7 +13,9 @@
  * from the MatlabDocMaker as an example. So the list below is not necessarily complete, but the sites referenced above contain all
  * new features / changes!
  *
- * @change{1,2,md,2011-12-04} Bugfix reported by Evgeny Pr on mathworks: allow property definitions not ended by semicolons.
+ * @change{1,3,dw,2011-12-08} Bugfix: The CUSTOM_DOC_DIR path is not longer extended by a \c docs/ folder.
+ *
+ * @change{1,3,md,2011-12-04} Bugfix reported by Evgeny Pr on mathworks: allow property definitions not ended by semicolons.
  *
  * @change{1,3,dw,2011-11-29} Added the new fake classes varargin and varargout to the class_substitutes.c file with links to
  * the MatLab online documentation.
