@@ -42,7 +42,8 @@ matlabtypesubstitute mixed_access2 = 'test';
  *
   * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
   * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
-  */
+  * @b Default: 'test'
+*/
 
 ::SpecialType DataStoreDirectory = '';
 /** @var DataStoreDirectory
@@ -55,7 +56,8 @@ matlabtypesubstitute mixed_access2 = 'test';
  *
   * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
   * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
-  */
+  * @b Default: ''
+*/
 
 matlabtypesubstitute SomeProp = struct('xi',[],'ti',[],'mui',[]);
 
@@ -70,7 +72,11 @@ matlabtypesubstitute SteadyStates = [[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSy
  *
   * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
   * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
-  */
+  * @b Default: [[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0  \
+      [0, 3.0824e-5, 0.1713]*models.pcd.BasePCDSystem.ya0  \
+      [.2, 0.1990, 0.0070]*models.pcd.BasePCDSystem.xi0  \
+      [.2, 0.2, 0.0287]*models.pcd.BasePCDSystem.yi0]
+*/
 
 matlabtypesubstitute Property_without_semicolon;
 /** @var Property_without_semicolon
@@ -89,28 +95,33 @@ static const matlabtypesubstitute aConstant = 1;
   * @brief  help text
   *
   *
- */
+ * @b Default: 1
+*/
 
 static const matlabtypesubstitute bConstant = 2;
 /** @var bConstant
   * @brief  help text for bConstant
   *
   *
- */
+ * @b Default: 2
+*/
 
 static const matlabtypesubstitute cConstant = 3;
 /** @var cConstant
   * @brief  help text for cConstant
   *
   *
- */
+ * @b Default: 3
+*/
 
+static const matlabtypesubstitute vectorConst = [ 1, 2, 3 ];
 static const matlabtypesubstitute dConstant = { [ 1, 2, 3, 4], 'test', [ 1 2, [ [3 [3 [3 4] 4] ] ] ] };
 /** @var dConstant
   * @brief  test
   *
   *
- */
+ * @b Default: { [ 1, 2, 3, 4], 'test', [ 1 2, [ [3 [3 [3 4] 4] ] ] ] }
+*/
 
 static const matlabtypesubstitute dConstant = struct('a', [], 'b', {'c', 'd'}, 'e', [1 2 3]);
 
