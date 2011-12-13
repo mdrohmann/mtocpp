@@ -46,6 +46,8 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
 
     cConstant = 3; % help text for cConstant
 
+    vectorConst = [ 1; 2; 3 ]
+
     % test
     dConstant = { [ 1, 2; 3, 4]; 'test'; [ 1 2; [ [3 [3 [3 4] 4] ] ] ] };
 
