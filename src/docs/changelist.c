@@ -13,6 +13,12 @@
  * from the MatlabDocMaker as an example. So the list below is not necessarily complete, but the sites referenced above contain all
  * new features / changes!
  *
+ * @change{1,3,md,2011-12-13} changed format for documentation of default properties and parameters
+ *
+ * @change{1,3,md,2011-12-13} Default arguments for properties are added to the properties documentation block
+ *
+ * @change{1,3,md,2011-12-13} Bugfix: observable properties have been documented as abstract ones.
+ *
  * @change{1,3,dw,2011-12-08} Bugfix: The CUSTOM_DOC_DIR path is not longer extended by a \c docs/ folder.
  *
  * @change{1,3,md,2011-12-04} Bugfix reported by Evgeny Pr on mathworks: allow property definitions not ended by semicolons.

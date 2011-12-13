@@ -2512,8 +2512,8 @@ void MFileScanner::extract_default(DocuBlock & db, std::string & defvalue)
         defvalue = line.substr(start, end - start);
         line[found]   = '(';
         line[found+8] = '=';
-        line = line.substr(0, found) + "( @b default = "
-          + line.substr(found+9,end-found-9) + " )" + line.substr(end);
+        line = line.substr(0, found) + "@b Default: "
+          + line.substr(found+9,end-found-9) + " " + line.substr(end);
       }
       else
       {
