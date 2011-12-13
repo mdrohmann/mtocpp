@@ -2315,6 +2315,10 @@ void MFileScanner::end_of_property_doc()
     cout_docubody();
     fout_ << "*\n ";
     cout_docuextra();
+    if(!defaultprop_.empty())
+    {
+      fout_ << "* @b Default: " << defaultprop_ << "\n";
+    }
     fout_ << "*/\n";
   }
   docuheader_.clear();

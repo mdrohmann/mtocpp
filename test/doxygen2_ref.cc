@@ -176,10 +176,10 @@ noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters(::bool uml,
   *
   *
   * @param uml     Set to true to create UML-like graphics output
-  *          ( @b default = false )
+  *          @b Default: false 
   * @param open     Set to true if the documentation should be opened after
   *         successful compilation 
-  *          ( @b default = false )
+  *          @b Default: false 
   */
 noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml,::bool open) {
 
@@ -195,8 +195,8 @@ noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml
   *
   *
   * @param uml     Set to true to create UML-like graphics output
-  *         ( @b default = false ) 
+  *         @b Default: false  
   * @param open     Set to true if the documentation should be opened after
   *         successful compilation 
-  *          ( @b default = false )
+  *          @b Default: false 
   */
