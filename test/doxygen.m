@@ -146,7 +146,7 @@ function default_parameters(uml, open)
 %        @type bool @default false
 %   open: Set to true if the documentation should be opened after
 %        successful compilation 
-%        @type bool @default false
+%        @type bool @default [1;2;3]
 
 function default_parameters2(uml, open)
 % function default_parameters(uml, open)
