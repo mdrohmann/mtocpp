@@ -2680,7 +2680,7 @@ void MFileScanner::add_property_params_info()
   {
     docuextra_.push_back(std::string("@note This property has the MATLAB parameter 'SetObservable' set to true.\n"));
   }
-  if (propertyparams_.setObservable)
+  if (propertyparams_.abstr)
   {
     docuextra_.push_back(std::string("@note This property is an @em abstract property without implementation.\n"));
   }
