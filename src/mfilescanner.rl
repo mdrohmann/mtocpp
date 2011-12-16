@@ -1184,9 +1184,9 @@ debug_output("in funcbody: goto main", p);
           )
         . WS* . ( ( '%' @{ fhold; } | ';' | EOL )  @{defaultprop_ = "";}
             |
-            ( ('=' . [ ]*) %st_tok . ( matrix | [^[{;\n%])* . (';' | EOL | '%' @{ fhold; } ))
+            ( ('=' . [ ]*) %{tmp_p2 = p;} . ( matrix | [^[{;\n%] | ('...'.[ \t]*.EOL) )* . (';' | EOL | '%' @{ fhold; } ))
             @{
-              defaultprop_ = string(tmp_p, p - tmp_p);
+              defaultprop_ = string(tmp_p2, p - tmp_p2);
               for (unsigned int i = 0; i < defaultprop_.length(); ++i)
               {
                 if(defaultprop_[i] == '.' && defaultprop_[i+1] == '.' && defaultprop_[i+2] == '.')

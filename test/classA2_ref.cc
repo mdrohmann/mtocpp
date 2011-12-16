@@ -61,6 +61,10 @@ matlabtypesubstitute mixed_access2 = 'test';
 
 matlabtypesubstitute SomeProp = struct('xi',[],'ti',[],'mui',[]);
 
+matlabtypesubstitute SomeOtherProp = struct(  \
+      'xi', [], 'ti',   \
+      []);
+
 matlabtypesubstitute SteadyStates = [[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0  \
       [0, 3.0824e-5, 0.1713]*models.pcd.BasePCDSystem.ya0  \
       [.2, 0.1990, 0.0070]*models.pcd.BasePCDSystem.xi0  \
