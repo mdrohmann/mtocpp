@@ -36,7 +36,7 @@ void usage()
     << "If no explicit configuration file is given, mtocpp also looks for './mtocpp.conf' by default." << endl;
 }
 
-/** 
+/**
  * @change{1,2,dw,2011-11-27} Included a new option \c --verbose for short mtoc++ version output.
  */
 // main routine
@@ -52,7 +52,7 @@ int main(int argc, char ** argv)
       usage();
       exit(0);
     }
-	if (string(argv[1]) == string("--version"))
+    if (string(argv[1]) == string("--version"))
     {
       cout << MTOCPP_VERSION_MAJOR << "." << MTOCPP_VERSION_MINOR << endl;
       exit(0);
@@ -86,6 +86,11 @@ int main(int argc, char ** argv)
   }
 
   char buf[1000];
+#ifdef WIN32
+  _getcwd(buf, 1000);
+#else
+  getcwd(buf, 1000);
+#endif
 
   string::size_type found = 0;
   string cwd(buf);
