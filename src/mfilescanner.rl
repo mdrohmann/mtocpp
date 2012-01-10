@@ -1056,6 +1056,7 @@ debug_output("in funcbody: goto main", p);
         @{
            propertyparams_.abstr = true;
          } )
+    | ( 'AbortSet' . [^,)]* )
    );
 
   methodparams =
