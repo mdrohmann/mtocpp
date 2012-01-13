@@ -13,11 +13,24 @@
  * from the MatlabDocMaker as an example. So the list below is not necessarily complete, but the sites referenced above contain all
  * new features / changes!
  *
- * @change{1,3,md,2011-12-13} changed format for documentation of default properties and parameters
+ * @change{1,3,dw,2012-01-14} Bugfix: Moved the mtoc++ developers page declaration into a separate file inside the tools/config folder, so that
+ * error messages like "changelog1:13: warning: unable to resolve reference to `dw' for \ref command" do not appear anymore.
  *
- * @change{1,3,md,2011-12-13} Default arguments for properties are added to the properties documentation block
+ * @new{1,3,md,2012-01-10}
+ * - "Bugfix": Allowing the use of the \c AbortSet tag in property declarations, however, to extra action (e.g. inserting
+ * a note in documentation) is taken so far.
+ * - Some minor modifications for the postprocessor regarding dots '.' and '::'
  *
- * @change{1,3,md,2011-12-13} Bugfix: observable properties have been documented as abstract ones.
+ * @new{1,3,md,2011-12-16} Allowing multiple lines for default values in property comments & code and added a test case.
+ *
+ * @change{1,3,md,2011-12-16} Bugfix: On Windows platforms the wrong \c getcwd command was issued and is now fixed.
+ *
+ * @change{1,3,md,2011-12-13}
+ * - Bugfix: Now handling the \b Abstract property correctly (was previously added for \b SetObservable declarations due to copy&paste)
+ * - Added a test case for default properties containing semicolons
+ * - Changed format for documentation of default properties and parameters
+ * - Default arguments for properties are added to the properties documentation block
+ * - Bugfix: observable properties have been documented as abstract ones.
  *
  * @change{1,3,dw,2011-12-08} Bugfix: The CUSTOM_DOC_DIR path is not longer extended by a \c docs/ folder.
  *

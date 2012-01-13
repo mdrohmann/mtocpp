@@ -204,6 +204,12 @@ public:
 /**
  * @class MFileScanner
  *
+ * @new{1,3,md,2012-01-10} Added a rule for \c AbortSet tag in parameter properties.
+ *
+ * @new{1,3,md,2011-12-16} Allowing multiple line comments for default values.
+ *
+ * @change{1,3,md,2011-12-13} Adding a bold "Default:" line in property documentation blocks if a default value/default tag is set in either code or property comment.
+ *
  * @change{1,2,md,2011-11-17}
  * - Fixed a bug that messed up the documentation if a new line was started after a @@type tag and added a test case to classA.m
  * - Non-standard access modifier strings are now separated by a comma

@@ -21,6 +21,9 @@ classdef MatlabDocMaker
 %
 % @author Daniel Wirtz @date 2011-10-13
 %
+% @change{1,3,dw,2012-01-14} Not displaying the "generated warnings"-text if there have not
+% been any during documentation creation.
+%
 % @change{1,2,dw,2011-11-27}
 % - Included documentation creation for the Windows platform and
 % combined the old methods into one (small effective differences)
@@ -223,19 +226,25 @@ classdef MatlabDocMaker
             delete(fullfile(cdir,'latexextras.sty'));
             delete(fullfile(cdir,'Doxyfile'));
             
-            % Process warnings
-            fprintf(['Warnings generated during documentation creation:\n' strrep(warn,'\','\\') '\n']);
-            % Write to log file later
-            log = fullfile(MatlabDocMaker.getOutputDirectory,'warnings.log');
-            f = fopen(log,'w'); fprintf(f,'%s',warn); fclose(f);
-            fprintf('Log file at %s.\nMatlabDocMaker finished.\n',log);
-            
             %% Post generation phase 
             cd(curdir);
             
             % Restore PATH to previous value
             curpath = getenv('PATH');
             setenv('PATH',curpath(1:end-length(pathadd)));
+            
+            % Process warnings
+            warn = strtrim(warn);
+            if ~isempty(warn)
+                fprintf(['Warnings generated during documentation creation:\n' strrep(warn,'\','\\') '\n']);
+                % Write to log file later
+                log = fullfile(MatlabDocMaker.getOutputDirectory,'warnings.log');
+                f = fopen(log,'w'); fprintf(f,'%s',warn); fclose(f);
+                fprintf('Log file at %s.\n',log);
+                fprintf(2,'MatlabDocMaker finished with warnings!\n');
+            else
+                fprintf('MatlabDocMaker finished successfully.\n');
+            end
             
             % Open index.html if wanted
             if open
