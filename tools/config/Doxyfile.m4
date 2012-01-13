@@ -1721,7 +1721,7 @@ DOT_CLEANUP            = YES
 # assign C++-styled code interpretion to .m files
 EXTENSION_MAPPING = .m=C++
 # input is configured by MatlabDocMaker
-INPUT             = _SourceDir_ _ConfDir_/class_substitutes.c 
+INPUT             = _SourceDir_ _ConfDir_ 
 # doxygen bothers to look at .m files at all
 FILE_PATTERNS     = *.m \
                     *.c \
