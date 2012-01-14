@@ -5,7 +5,5 @@ mkdir $tmpdir
 cp -r tools src cmake CMakeLists.txt License.txt INSTALL test $tmpdir
 zip -r mtoc++_mlfex_$1.zip $tmpdir
 rm -rf $tmpdir
-wbins=mtoc++_win32bins_$1.zip
-echo "Packing current windows binaries from win32 into $wbins..."
-zip $wbins win32/*
-mv $wbins ~/aghwww/MoRePaS/software/mtocpp
+# Also create the windows binaries only
+make_win32binszip.sh $1
