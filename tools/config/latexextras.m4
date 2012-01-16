@@ -6,9 +6,9 @@
 % Default packages
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{amsfonts}
-\usepackage{subfig}
-\usepackage{bbm}
+%\usepackage{amsfonts}
+%\usepackage{subfig}
+%\usepackage{bbm}
 
 % Inclusion example:
 %\input{_ConfDir_/myexternalstyle.sty}
