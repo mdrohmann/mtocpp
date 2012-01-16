@@ -13,6 +13,11 @@
  * from the MatlabDocMaker as an example. So the list below is not necessarily complete, but the sites referenced above contain all
  * new features / changes!
  *
+ * @change{1,3,dw,2012-01-16} Bugfix: The setting EXTRA_PACKAGES in the doxygen configuration file had a forwardslash "/" hardcoded
+ * for the inclusion of the latexextras.sty file. However, while doxygen can handle "/" for both unix and windows, latex does not.
+ * So the inclusion failed and caused no formulas to be generated on windows. We fixed this by including a new placeholder "_FileSep_"
+ * which is being processed by MatlabDocMaker (any any tools to come) and set to the correct file separator character for your platform.
+ *
  * @change{1,3,dw,2012-01-14} Bugfix: Moved the mtoc++ developers page declaration into a separate file inside the tools/config folder, so that
  * error messages like "changelog1:13: warning: unable to resolve reference to `dw' for \ref command" do not appear anymore.
  *
