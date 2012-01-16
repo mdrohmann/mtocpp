@@ -21,6 +21,10 @@ classdef MatlabDocMaker
 %
 % @author Daniel Wirtz @date 2011-10-13
 %
+% @change{1,3,dw,2012-01-16}
+% - Properly using the correct file separators everywhere now
+% - Hyperlinked the log file so it can be opened directly
+%
 % @change{1,3,dw,2012-01-14} Not displaying the "generated warnings"-text if there have not
 % been any during documentation creation.
 %
@@ -70,7 +74,7 @@ classdef MatlabDocMaker
             %
             % Return values:
             % name: The project name @type char
-            name = 'My mtoc++ powered project';
+            name = 'My mtoc++-powered project';
         end
         
         function version = getProjectVersion
@@ -198,26 +202,27 @@ classdef MatlabDocMaker
             end
             
             % Process macros in the Doxyfile.m4 file using m4
+            doxyfile = fullfile(cdir,'Doxyfile');
             system(sprintf(['m4 -D _OutputDir_="%s" -D _SourceDir_="%s" -D _ConfDir_="%s" -D _ProjectName_="%s"'...
                            ' -D _ProjectVersion_="%s" -D _MTOCFILTER_="%s" -D _FileSep_="%s"'...
-                           ' "%s/Doxyfile.m4" > "%s/Doxyfile"'],...
+                           ' "%sDoxyfile.m4" > "%s"'],...
                  MatlabDocMaker.getOutputDirectory, MatlabDocMaker.getSourceDirectory, cdir,...
-                 MatlabDocMaker.getProjectName, MatlabDocMaker.getProjectVersion, strs.filter, filesep, cdir, cdir));
+                 MatlabDocMaker.getProjectName, MatlabDocMaker.getProjectVersion, strs.filter, filesep, [cdir filesep], doxyfile));
             
             % Process latex extras
-            tex = fullfile(cdir,'latexextras.m4');
-            if exist(tex,'file') == 2
+            texm4 = fullfile(cdir,'latexextras.m4');
+            tex = fullfile(cdir,'latexextras.sty');
+            if exist(texm4,'file') == 2
                 % # Parse the kermorlatex include style file
-                system(sprintf('m4 -D _ConfDir_="%s" "%s" > "%s%slatexextras.sty"',...
-                    cdir,tex,cdir,filesep));
+                system(sprintf('m4 -D _ConfDir_="%s" "%s" > "%s"',cdir,texm4,tex));
             else
                 % Create empty file
-                system(sprintf('echo "" > %s%slatexextras.sty',cdir,filesep));
+                system(sprintf('echo "" > "%s"',tex));
             end
 
             % Call doxygen
             fprintf('Running doxygen with mtoc++ filter...\n');
-            [~,warn] = system(sprintf('doxygen "%s%sDoxyfile" 1>%s', cdir, filesep, strs.null));
+            [~,warn] = system(sprintf('doxygen "%s" 1>%s', doxyfile, strs.null));
              
             % Postprocess
             fprintf('Running mtoc++ postprocessor...\n');
@@ -225,8 +230,8 @@ classdef MatlabDocMaker
             
             % Tidy up
             delete(cbin);
-            delete(fullfile(cdir,'latexextras.sty'));
-            delete(fullfile(cdir,'Doxyfile'));
+            %delete(tex);
+            %delete(doxyfile);
             
             %% Post generation phase 
             cd(curdir);
@@ -242,7 +247,7 @@ classdef MatlabDocMaker
                 % Write to log file later
                 log = fullfile(MatlabDocMaker.getOutputDirectory,'warnings.log');
                 f = fopen(log,'w'); fprintf(f,'%s',warn); fclose(f);
-                fprintf('Log file at %s.\n',log);
+                fprintf('Complete log file at <a href="matlab:edit(''%s'')">%s</a>.\n',log,log);
                 fprintf(2,'MatlabDocMaker finished with warnings!\n');
             else
                 fprintf('MatlabDocMaker finished successfully.\n');
