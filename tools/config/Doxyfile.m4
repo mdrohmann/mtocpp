@@ -8,8 +8,10 @@
 # You probably want to change the values for PROJECT_NAME, PROJECT_BRIEF and
 # PROJECT_LOGO as they are of course custom to each project.
 #
-# Most importantly, this file gets processed by m4 in order to replace some
-# values:
+# Most importantly, this file gets processed (when using our tools, e.g. 
+# MatlabDocMaker) by m4 in order to replace some values:
+# - _ProjectName_: The project name configured in the tools
+#       (in MatlabDocMaker:MatlabDocMaker.getProjectVersion) 
 # - _ProjectVersion_: Is substituted by the value returned by 
 #       MatlabDocMaker.getProjectVersion inside MatLab. We decided to keep
 #       this flexible as project versions change over time and the documentation
@@ -19,6 +21,7 @@
 # - _SourceDir_: The source directory containing the files of the project
 # - _ConfDir_: The configuration directory for mtoc++, containing this file
 #       and some more.
+# - _FileSep_: The file separator character, "/" for linux and "\" for windows.
 # Use these tags wherever you would insert the respective values.
 #
 # Furthermore, there are some settings that are included as convenience
@@ -36,6 +39,10 @@
 #
 ###########################################################################
 ################## List of changes: #######################################
+#
+# mtoc++ 1.3: Included a new placeholder "_FILESEP_", as doxygen itself can manage
+#             using only "/" as file separator, however, the EXTRA_PACKAGES command
+#             leads to an inclusion line inside latex, which is not that tolerant.
 #
 # mtoc++ 1.2: Restructured this file during tests for Windows doc creation.
 #             - Config stuff is now at the END of the file.
@@ -937,14 +944,14 @@ GENERATE_DOCSET        = NO
 # documentation sets from a single provider (such as a company or product suite)
 # can be grouped.
 
-DOCSET_FEEDNAME        = "Doxygen generated KerMor documentation"
+DOCSET_FEEDNAME        = "_ProjectName_ documentation"
 
 # When GENERATE_DOCSET tag is set to YES, this tag specifies a string that
 # should uniquely identify the documentation set bundle. This should be a
 # reverse domain-name style string, e.g. com.mycompany.MyDocSet. Doxygen
 # will append .docset to the name.
 
-DOCSET_BUNDLE_ID       = agh.kermor
+DOCSET_BUNDLE_ID       = _ProjectName_._ProjectVersion_
 
 # When GENERATE_PUBLISHER_ID tag specifies a string that should uniquely identify
 # the documentation publisher. This should be a reverse domain-name style
@@ -954,7 +961,7 @@ DOCSET_PUBLISHER_ID    = org.doxygen.Publisher
 
 # The GENERATE_PUBLISHER_NAME tag identifies the documentation publisher.
 
-DOCSET_PUBLISHER_NAME  = Publisher
+DOCSET_PUBLISHER_NAME  = _ProjectName_
 
 # If the GENERATE_HTMLHELP tag is set to YES, additional index files
 # will be generated that can be used as input for tools like the
@@ -1734,8 +1741,8 @@ FILE_PATTERNS     = *.m \
 FILTER_PATTERNS   = *.m=_ConfDir_/_MTOCFILTER_
 # NO will cause doxygen to stop when LaTeX errors occur
 LATEX_BATCHMODE   = YES             		
-# latex styles inclusion file
-EXTRA_PACKAGES    = _ConfDir_/latexextras
+# latex styles inclusion file (the `' separates the macros)
+EXTRA_PACKAGES    = _ConfDir_`'_FileSep_`'latexextras
 # leave empty so MatlabDocMaker can capture doxygen warnings
 WARN_LOGFILE      =		
 # disable latex stopping upon compile errors
