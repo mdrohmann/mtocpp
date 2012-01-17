@@ -1,10 +1,21 @@
+# DOXYGEN CONFIGURATION FILE
+#
+# IMPORTANT NOTICE: This file is included with the tool "mtoc++", and contains some changes
+# in order to make mtoc++ run together with doxygen. The settings in this file are a default
+# configuration for Doxygen which we thought might be useful in a MatLab setting/project.
+# USING MTOC++ DOES NOT EXCLUDE THE REQUIREMENT TO KNOW AND UNDERSTAND DOXYGEN ITSELF!
+# We've had lots of feedback and problem reports which actually had to do with settings purely
+# regarding doxygen, so we strongly recommend having a look through this file before contacting
+# us. Thanks!
+#
 ############################################################################
 ################# mtoc++ related information ###############################
 ############################################################################
 # Feel free to make any changes within this doxygen configuration file to 
 # taylor the output towards your needs. Any changes made by us to the doxygen
-# config file are moved to the END of the file in order to easily keep custom
-# changes over new mtoc++ versions.
+# config file in order to have mtoc++ running smoothly have been moved to the
+# END of the file in order to easily keep custom changes over new mtoc++ versions.
+#
 # You probably want to change the values for PROJECT_NAME, PROJECT_BRIEF and
 # PROJECT_LOGO as they are of course custom to each project.
 #
@@ -39,6 +50,11 @@
 #
 ###########################################################################
 ################## List of changes: #######################################
+#
+# mtoc++ 1.3: - Changed the default value of SHOW_FILES to YES in order to avoid more
+#               confusion about what mtoc++ actually does (NOT replacing the 
+#               requirement to know doxygen)
+#             - Included a warning in the beginning of this file
 #
 # mtoc++ 1.3: Included a new placeholder "_FILESEP_", as doxygen itself can manage
 #             using only "/" as file separator, however, the EXTRA_PACKAGES command
@@ -575,7 +591,7 @@ SHOW_DIRECTORIES       = NO
 # This will remove the Files entry from the Quick Index and from the
 # Folder Tree View (if specified). The default is YES.
 
-SHOW_FILES             = NO
+SHOW_FILES             = YES
 
 # Set the SHOW_NAMESPACES tag to NO to disable the generation of the
 # Namespaces page.
@@ -1727,8 +1743,10 @@ DOT_CLEANUP            = YES
 ###########################################################################
 # assign C++-styled code interpretion to .m files
 EXTENSION_MAPPING = .m=C++
+
 # input is configured by MatlabDocMaker
 INPUT             = _SourceDir_ _ConfDir_ 
+
 # doxygen bothers to look at .m files at all
 FILE_PATTERNS     = *.m \
                     *.c \
@@ -1737,14 +1755,19 @@ FILE_PATTERNS     = *.m \
                     *.h \
                     *.hh \
                     *.hpp \
+
 # the link between mtoc++ and doxygen (the `' separates the macros)
 FILTER_PATTERNS   = *.m="_ConfDir_`'_FileSep_`'_MTOCFILTER_"
+
 # NO will cause doxygen to stop when LaTeX errors occur
 LATEX_BATCHMODE   = YES             		
+
 # latex styles inclusion file
 EXTRA_PACKAGES    = _LatexExtras_
 #EXTRA_PACKAGES    = "_ConfDir_`'_FileSep_`'latexextras"
+
 # leave empty so MatlabDocMaker can capture doxygen warnings
 WARN_LOGFILE      =		
+
 # disable latex stopping upon compile errors
 LATEX_BATCHMODE        = YES
