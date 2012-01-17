@@ -26,7 +26,11 @@
  * If you are a windows user you can directly download the binaries at @ref download.
  * Then simply place the binaries in a folder of your choice and add them to the PATH environment variable.
  *
- * @note If you intend to use the MatlabDocMaker, you can also copy the binaries into the "documentation configuration files" folder
+ * @note Doxygen and mtoc++ expect certain programs to be available via the PATH environment variable, e.g. \c latex.exe or \c gswin32c.exe
+ * must be present in order for doxygen to work. Make sure that you have all requirements available. You can check/change your Windows
+ * PATH environment variable via the sequence
+ * @code Computer \ Properties \ Advanced system settings \ Environment Variables \ Edit Path @endcode
+ * If you intend to use the MatlabDocMaker, you can also copy the binaries into the "documentation configuration files" folder
  * for your/each project, this path will be added to PATH by MatLab locally.
  *
  * We are trying to always compile current Windows binaries for \c mtocpp and \c mtocpp_post and include them for direct download.
