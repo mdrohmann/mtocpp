@@ -25,6 +25,14 @@
  * - \c latexextras.m4 - @ref config_latex
  * - \c class_substitutes.c - @ref config_fakeclasses
  *
+ *@attention USING MTOC++ DOES NOT EXCLUDE THE REQUIREMENT TO KNOW AND UNDERSTAND DOXYGEN ITSELF!<br>
+ * The settings in the "Doxygen.m4" file inside the \c /tools/config folder are a default
+ * configuration for Doxygen which we thought might be useful in a MatLab setting/project and 
+ * contains some changes in order to make mtoc++ run together with doxygen.
+ * We've had lots of feedback and problem reports which actually had to do with settings purely
+ * regarding doxygen, so we strongly recommend having a look through @ref config_doxy and the 
+ * references therein before contacting us. Thanks!
+ *
  * @subsection config_doxy Configuration options for doxygen
  * It will get parsed by m4 to replace tags for specific folders etc. and contains any other configuration settings you want doxygen to use.
  * This way, the configuration files can be included into the versioning system as local developers paths are stored outside the configuration file

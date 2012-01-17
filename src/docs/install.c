@@ -13,6 +13,8 @@
  * - \c latex: Required to use LaTeX processing capabilities of doxygen (e.g. http://www.latex-project.org/ftp.html).
  *  mtoc++ comes with some markups for better latex inclusion into the text flow.
  *  Also, easy inclusion of external latex sources and styles is included in mtoc++'s tools.
+ * - \c ghostscript: If using formulas with doxygen and you are not using pdflatex or are on a windows machine, this
+ *  is a prerequisite (see http://www.stack.nl/~dimitri/doxygen/install.html#install_bin_windows)
  *
  * If you want to build mtoc++ from source, you will also need:
  * - Ragel: A finite-state machine compiler. Get at http://www.complang.org/ragel
