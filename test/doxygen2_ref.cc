@@ -198,5 +198,5 @@ noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml
   *         @b Default: false  
   * @param open     Set to true if the documentation should be opened after
   *         successful compilation 
-  *          @b Default: false 
+  *         
   */

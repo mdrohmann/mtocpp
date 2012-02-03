@@ -157,7 +157,7 @@ function default_parameters2(uml, open)
 %        @default false @type bool
 %   open: Set to true if the documentation should be opened after
 %        successful compilation 
-%        @type bool @default false
+%        @type bool
 
 
 %| \docupdate

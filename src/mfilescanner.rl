@@ -1594,6 +1594,12 @@ void MFileScanner :: update_method_params(const std::string & methodname)
   }
 }
 
+/** prints the c++ function synopsis into the c++ source file and the frist
+ * line of the corresponding documentation block.
+ *
+ * @new{1,2, md, 2012-02-03} Print a warning message to stderr when optional
+ * parameter in methods of functions are not documented with default values.
+ */
 void MFileScanner :: print_pure_function_synopsis()
 {
   // do we have a constructor?
@@ -1645,6 +1651,8 @@ void MFileScanner :: print_pure_function_synopsis()
     cerr << "paramlist size of " << cfuncname_ << ": " << paramlist_.size() << " first element: " << paramlist_[0] << endl;
 #endif
     fout_ << "(";
+
+    bool is_default_necessary = false;
     for(unsigned int i=0; i < paramlist_.size(); ++i)
     {
       if(!first)
@@ -1656,6 +1664,18 @@ void MFileScanner :: print_pure_function_synopsis()
       get_typename(paramlist_[i], typen);
       std::string defvalue;
       get_default(paramlist_[i], defvalue);
+      if (defvalue.empty())
+      {
+        if (is_default_necessary)
+        {
+          std::cerr << "MTOC++: Warning: Default value for optional parameter "
+                    << paramlist_[i] << " in method "
+                    << cfuncname_ << " has not been specified\n";
+        }
+      }
+      else
+        is_default_necessary = true;
+
       fout_ << typen << " " << paramlist_[i];
     }
 /*    for(unsigned int i=0; i < returnlist_.size(); ++i)
