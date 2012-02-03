@@ -1,4 +1,4 @@
-# DOXYGEN CONFIGURATION FILE
+# DOXYGEN CONFIGURATION FILE (Doxygen version => 1.7.3)
 #
 # IMPORTANT NOTICE: This file is included with the tool "mtoc++", and contains some changes
 # in order to make mtoc++ run together with doxygen. The settings in this file are a default
