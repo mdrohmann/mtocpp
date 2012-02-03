@@ -53,14 +53,13 @@ matlabtypesubstitute mixed_access2 = 'test';
   *
   *
   *  This variable has a special type
-  *  
+  *   @b Default: empty string 
   *
  *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
-  * <br/>@b Default: ''
-*/
+  */
 
 matlabtypesubstitute SomeProp = struct('xi',[],'ti',[],'mui',[]);
 

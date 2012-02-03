@@ -2298,9 +2298,6 @@ void MFileScanner::end_of_property_doc()
   if(typen.empty())
     extract_typen(docubody_, typen);
 
-  string defval;
-  extract_default(docubody_, defval);
-
   if(typen.empty())
     typen = "matlabtypesubstitute";
 
@@ -2309,6 +2306,11 @@ void MFileScanner::end_of_property_doc()
     fout_ << ";\n";
   else
     fout_ << " = " << defaultprop_ << ";\n";
+
+  string defval;
+  extract_default(docubody_, defval);
+  if (!defval.empty())
+    defaultprop_.clear();
 
   if (!docuheader_.empty() || runMode_.auto_add_class_properties)
   {
@@ -2516,16 +2518,12 @@ void MFileScanner::extract_default(DocuBlock & db, std::string & defvalue)
         if (end == std::string::npos)
           end = line.length();
         end = end - 1;
-        size_t start = found + deflength + 1;
+        size_t start = found + deflength;
         defvalue = line.substr(start, end - start);
         line[found]   = '(';
         line[found+8] = '=';
         line = line.substr(0, found) + "@b Default: "
           + line.substr(found+9,end-found-9) + " " + line.substr(end);
-      }
-      else
-      {
-        defvalue = std::string("");
       }
     }
   }
