@@ -235,8 +235,8 @@ classdef MatlabDocMaker
             
             % Tidy up
             delete(cbin);
-            %delete(tex);
-            %delete(doxyfile);
+            delete(tex);
+            delete(doxyfile);
             
             %% Post generation phase 
             cd(curdir);
