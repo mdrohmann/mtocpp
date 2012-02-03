@@ -205,20 +205,75 @@ public:
 /**
  * @class MFileScanner
  *
- * @new{1,3,md,2012-01-10} Added a rule for \c AbortSet tag in parameter properties.
+ * @change{1,3,md,2012-03-02} Bugfix: Default values were printed twice if
+ * documented in the documenation block and given as property default values.
+ * Now, the documentated default value is preferred.
  *
- * @new{1,3,md,2011-12-16} Allowing multiple line comments for default values.
+ * @change{1,3,md,2012-02-03} Improved the automatic documentation text for
+ * MATLAB specific attributes of properties and methods, add a link to the
+ * online MATLAB documentation.
  *
- * @change{1,3,md,2011-12-13} Adding a bold "Default:" line in property documentation blocks if a default value/default tag is set in either code or property comment.
+ * @new{1,3, md, 2012-02-03} Print a warning message to stderr when optional
+ * parameter in methods of functions are not documented with default values.
  *
- * @change{1,2,md,2011-11-17}
- * - Fixed a bug that messed up the documentation if a new line was started after a @@type tag and added a test case to classA.m
- * - Non-standard access modifier strings are now separated by a comma
- * - Fixed a parse error occuring with the new ~-notation in newer MatLab versions. Calls like <tt>foo = bar(par1, ~, par3)</tt> now work.
- * - The order of @@default and @@type tags in parameters (if occurring) is no longer fixed.
+ * @new{1,3,md,2012-01-10} "Bugfix": Allowing the use of the \c AbortSet tag in
+ * property declarations, however, to extra action (e.g. inserting a note in
+ * documentation) is taken so far.
  *
- * @new{1,2,md,2011-11-17} New config flag COPY_TYPIFIED_FIELD_DOCU which allows to toggle the automatic insertion of required fields for method parameters.
- * This flag sets whether the documentation of fields in 'Required fields of param', 'Optional fields of param' or 'Generated fields of retval' shall be copied
+ * @change{1,3,md,2012-01-10} Some minor modifications for the postprocessor
+ * regarding dots '.' and '::'
+ *
+ * @new{1,3,md,2011-12-16} Allowing multiple lines for default values in
+ * property comments & code and added a test case.
+ *
+ * @change{1,3,md,2011-12-16} Bugfix: On Windows platforms the wrong \c getcwd
+ * command was issued and is now fixed.
+ *
+ * @change{1,3,md,2011-12-13} Bugfix: Now handling the \b Abstract property
+ * correctly (was previously added for \b SetObservable declarations due to
+ * copy&paste)
+ *
+ * @change{1,3,md,2012-01-13}  Added a test case for default properties
+ * containing semicolons
+ *
+ * @change{1,3,md,2012-01-13} Changed format for documentation of default
+ * properties and parameters
+ *
+ * @change{1,3,md,2012-01-13} Default arguments for properties are added to the
+ * properties documentation block
+ *
+ * @change{1,3,md,2012-01-13} Bugfix: observable properties have been
+ * documented as abstract ones.
+ *
+ * @change{1,3,md,2011-12-13} Adding a bold "Default:" line in property
+ * documentation blocks if a default value/default tag is set in either code or
+ * property comment.
+ *
+ * @change{1,3,md,2011-12-04} Bugfix reported by Evgeny Pr on mathworks: allow
+ * property definitions not ended by semicolons.
+ *
+ * @change{1,2,md,2011-11-28}
+ * Allow long (including line breaks) default values for properties
+ *
+ * @change{1,2,md,2011-11-17} Fixed a bug that messed up the documentation if a
+ * new line was started after a @@type tag and added a test case to classA.m
+ *
+ * @change{1,2,md,2011-11-17} Non-standard access modifier strings are now
+ * separated by a comma
+ *
+ * @change{1,2,md,2011-11-17} Fixed a parse error occuring with the new
+ * ~-notation in newer MatLab versions. Calls like <tt>foo = bar(par1, ~,
+ * par3)</tt> now work.
+ *
+ * @change{1,2,md,2011-11-17} The order of @@default and @@type tags in
+ * parameters (if occurring) is no longer fixed.
+ *
+ * @new{1,2,md,2011-11-17} New config flag COPY_TYPIFIED_FIELD_DOCU which
+ * allows to toggle the automatic insertion of required fields for method
+ * parameters.
+ * This flag sets whether the documentation of fields in 'Required fields of
+ * param', 'Optional fields of param' or 'Generated fields of retval' shall be
+ * copied
  * in case the Parameter 'param' or 'retval' have a type.
  */
 class MFileScanner
