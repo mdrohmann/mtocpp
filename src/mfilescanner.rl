@@ -1597,8 +1597,6 @@ void MFileScanner :: update_method_params(const std::string & methodname)
 /** prints the c++ function synopsis into the c++ source file and the frist
  * line of the corresponding documentation block.
  *
- * @new{1,2, md, 2012-02-03} Print a warning message to stderr when optional
- * parameter in methods of functions are not documented with default values.
  */
 void MFileScanner :: print_pure_function_synopsis()
 {
@@ -2312,9 +2310,6 @@ void MFileScanner::end_of_class_doc()
 /** print the documentation block for a property after all information about
  * its declaration has been gathered.
  *
- * @change{1,3,md,2012-03-02} Bugfix: Default values were printed twice if
- * documented in the documenation block and given as property default values.
- * Now, the documentated default value is preferred.
  */
 void MFileScanner::end_of_property_doc()
 {
@@ -2694,9 +2689,6 @@ void MFileScanner::add_access_info(std::string what)
 /** adds a block at the end of the documentation with information on uesed
  * attributes of a property.
  *
- * @change{1,3,md,2012-02-03} Improved the automatic documentation text for
- * MATLAB specific attributes of properties and methods, add a link to the
- * online MATLAB documentation.
  */
 void MFileScanner::add_property_params_info()
 {
