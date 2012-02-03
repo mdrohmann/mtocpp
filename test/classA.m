@@ -23,7 +23,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
     % This documentation is a test for the type keyword.
     %
     % This variable has a special type
-    % @type SpecialType
+    % @type SpecialType @default empty string
     DataStoreDirectory = '';
 
     SomeProp = struct('xi',[],'ti',[],'mui',[]);
