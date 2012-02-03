@@ -108,6 +108,7 @@ struct PropParams
   bool hidden;
   bool setObservable;
   bool abstr;
+  bool abortSet;
 
   std::string ccprefix()
   {

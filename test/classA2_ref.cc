@@ -23,8 +23,9 @@ protected:
   *
   *
  *
-  * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
-  * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
+  * @note This property has the MATLAB attribute @c Transient set to true.
+  * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Documentation of property attributes.</a>
   */
 
 matlabtypesubstitute mixed_access2 = 'test';
@@ -40,9 +41,10 @@ matlabtypesubstitute mixed_access2 = 'test';
      @endverbatim
   *
  *
-  * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
-  * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
-  * @b Default: 'test'
+  * @note This property has the MATLAB attribute @c Transient set to true.
+  * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Documentation of property attributes.</a>
+  * <br/>@b Default: 'test'
 */
 
 ::SpecialType DataStoreDirectory = '';
@@ -54,9 +56,10 @@ matlabtypesubstitute mixed_access2 = 'test';
   *  
   *
  *
-  * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
-  * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
-  * @b Default: ''
+  * @note This property has the MATLAB attribute @c Transient set to true.
+  * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Documentation of property attributes.</a>
+  * <br/>@b Default: ''
 */
 
 matlabtypesubstitute SomeProp = struct('xi',[],'ti',[],'mui',[]);
@@ -74,9 +77,10 @@ matlabtypesubstitute SteadyStates = [[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSy
   *
   *
  *
-  * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
-  * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
-  * @b Default: [[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0  \
+  * @note This property has the MATLAB attribute @c Transient set to true.
+  * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Documentation of property attributes.</a>
+  * <br/>@b Default: [[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0  \
       [0, 3.0824e-5, 0.1713]*models.pcd.BasePCDSystem.ya0  \
       [.2, 0.1990, 0.0070]*models.pcd.BasePCDSystem.xi0  \
       [.2, 0.2, 0.0287]*models.pcd.BasePCDSystem.yi0]
@@ -88,8 +92,9 @@ matlabtypesubstitute Property_without_semicolon;
   *
   *
  *
-  * @note This property has the MATLAB parameter <tt>Transient</tt> set to true.
-  * @note This property has non-unique access specifier: SetAccess = private, GetAccess = protected
+  * @note This property has the MATLAB attribute @c Transient set to true.
+  * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Documentation of property attributes.</a>
   */
 
 
@@ -99,7 +104,7 @@ static const matlabtypesubstitute aConstant = 1;
   * @brief  help text
   *
   *
- * @b Default: 1
+ * <br/>@b Default: 1
 */
 
 static const matlabtypesubstitute bConstant = 2;
@@ -107,7 +112,7 @@ static const matlabtypesubstitute bConstant = 2;
   * @brief  help text for bConstant
   *
   *
- * @b Default: 2
+ * <br/>@b Default: 2
 */
 
 static const matlabtypesubstitute cConstant = 3;
@@ -115,7 +120,7 @@ static const matlabtypesubstitute cConstant = 3;
   * @brief  help text for cConstant
   *
   *
- * @b Default: 3
+ * <br/>@b Default: 3
 */
 
 static const matlabtypesubstitute vectorConst = [ 1, 2, 3 ];
@@ -124,7 +129,7 @@ static const matlabtypesubstitute dConstant = { [ 1, 2, 3, 4], 'test', [ 1 2, [ 
   * @brief  test
   *
   *
- * @b Default: { [ 1, 2, 3, 4], 'test', [ 1 2, [ [3 [3 [3 4] 4] ] ] ] }
+ * <br/>@b Default: { [ 1, 2, 3, 4], 'test', [ 1 2, [ [3 [3 [3 4] 4] ] ] ] }
 */
 
 static const matlabtypesubstitute dConstant = struct('a', [], 'b', {'c', 'd'}, 'e', [1 2 3]);
@@ -176,7 +181,8 @@ mlhsInnerSubst<void> foo(matlabtypesubstitute b,matlabtypesubstitute c) {
   *
   *
   *
-  * @note This method has the MATLAB method property <tt>Hidden</tt> set to true.
+  * @note This method has the MATLAB method attribute @c Hidden set to true.
+  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">Documentation of method attributes.</a>
   */
 
 
@@ -190,7 +196,8 @@ mlhsInnerSubst<void> bar(matlabtypesubstitute d,matlabtypesubstitute e) {
   *
   *
   *
-  * @note This method has the MATLAB method property <tt>Hidden</tt> set to true.
+  * @note This method has the MATLAB method attribute @c Hidden set to true.
+  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">Documentation of method attributes.</a>
   */
 
 mlhsInnerSubst<void> foobar()
@@ -210,7 +217,8 @@ mlhsInnerSubst<void> foobar()
   *  detail for foobar
   *
   *
-  * @note This method has the MATLAB method property <tt>Hidden</tt> set to true.
+  * @note This method has the MATLAB method attribute @c Hidden set to true.
+  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">Documentation of method attributes.</a>
   */
 
 mlhsInnerSubst<void> mdecl(matlabtypesubstitute b);
@@ -222,7 +230,8 @@ classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
   *
   *
   *
-  * @note This method has the MATLAB method property <tt>Hidden</tt> set to true.
+  * @note This method has the MATLAB method attribute @c Hidden set to true.
+  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">Documentation of method attributes.</a>
   */
 
 public:

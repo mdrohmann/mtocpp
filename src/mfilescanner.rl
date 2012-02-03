@@ -1056,7 +1056,10 @@ debug_output("in funcbody: goto main", p);
         @{
            propertyparams_.abstr = true;
          } )
-    | ( 'AbortSet' . [^,)]* )
+    | ( ( 'AbortSet' . [^,)]* )
+        @{
+           propertyparams_.abortSet = true;
+         } )
    );
 
   methodparams =
@@ -2227,8 +2230,8 @@ void MFileScanner::write_docu_list(const DocuList & list,
   }
 }
 
-// pretty print a documentation block list map \a listmap with prepended title
-// \a text. If listmap entry is empty, \a altlistmap is used instead.
+//! pretty print a documentation block list map \a listmap with prepended title
+//! \a text. If listmap entry is empty, \a altlistmap is used instead.
 void MFileScanner::write_docu_listmap(const DocuListMap & listmap,
                                       const string & text,
                                       const AltDocuListMap & altlistmap)
@@ -2318,7 +2321,7 @@ void MFileScanner::end_of_property_doc()
     cout_docuextra();
     if(!defaultprop_.empty())
     {
-      fout_ << "* @b Default: " << defaultprop_ << "\n";
+      fout_ << "* <br/>@b Default: " << defaultprop_ << "\n";
     }
     fout_ << "*/\n";
   }
@@ -2655,51 +2658,84 @@ void MFileScanner::add_access_info(std::string what)
 {
   if (access_.get != access_.set)
   {
-    docuextra_.push_back(std::string("@note This ") + what + std::string(" has non-unique access specifier: "));
+    docuextra_.push_back(std::string("@note This ") + what + std::string(" has non-unique access specifier: <tt>"));
     std::string setAccess = access_specifier_string(access_.set);
     std::string getAccess = access_specifier_string(access_.get);
     docuextra_.push_back(std::string("SetAccess = ") + setAccess + ", "
-                       + std::string("GetAccess = ") + getAccess + std::string("\n"));
+                       + std::string("GetAccess = ") + getAccess + std::string("</tt>\n"));
   }
 }
 
+/** adds a block at the end of the documentation with information on uesed
+ * attributes of a property.
+ *
+ * @change{1,3,md,2012-02-03} Improved the automatic documentation text for
+ * MATLAB specific attributes of properties and methods, add a link to the
+ * online MATLAB documentation.
+ */
 void MFileScanner::add_property_params_info()
 {
+  bool any_property_set = false;
   if (propertyparams_.hidden)
   {
-    docuextra_.push_back(std::string("@note This property has the MATLAB parameter 'Hidden' set to true.\n"));
+    any_property_set = true;
+    docuextra_.push_back(std::string("@note This property has the MATLAB attribute @c Hidden set to true.\n"));
   }
   if (propertyparams_.transient)
   {
-    docuextra_.push_back(std::string("@note This property has the MATLAB parameter 'Transient' set to true.\n"));
+    any_property_set = true;
+    docuextra_.push_back(std::string("@note This property has the MATLAB attribute @c Transient set to true.\n"));
   }
   if (propertyparams_.dependent)
   {
-    docuextra_.push_back(std::string("@note This property has the MATLAB parameter 'Dependent' set to true.\n"));
+    any_property_set = true;
+    docuextra_.push_back(std::string("@note This property has the MATLAB attribute @c Dependent set to true.\n"));
   }
   if (propertyparams_.setObservable)
   {
-    docuextra_.push_back(std::string("@note This property has the MATLAB parameter 'SetObservable' set to true.\n"));
+    any_property_set = true;
+    docuextra_.push_back(std::string("@note This property has the MATLAB attribute @c SetObservable set to true.\n"));
   }
   if (propertyparams_.abstr)
   {
+    any_property_set = true;
     docuextra_.push_back(std::string("@note This property is an @em abstract property without implementation.\n"));
+  }
+  if (propertyparams_.abortSet)
+  {
+    any_property_set = true;
+    docuextra_.push_back(std::string("@note This property has the MATLAB attribute @c AbortSet set to true.\n"));
   }
 
   add_access_info("property");
+
+  if (access_.get != access_.set)
+    any_property_set = true;
+
+  if (any_property_set)
+    docuextra_.push_back("@note <a href=\"http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html\">Matlab documentation of property attributes.</a>\n");
 }
 
 void MFileScanner::add_method_params_info()
 {
+  bool any_property_set = false;
   if (methodparams_.hidden)
   {
-    docuextra_.push_back(std::string("@note This method has the MATLAB method property 'Hidden' set to true.\n"));
+    any_property_set = true;
+    docuextra_.push_back(std::string("@note This method has the MATLAB method attribute @c Hidden set to true.\n"));
   }
   if (methodparams_.sealed)
   {
-    docuextra_.push_back(std::string("@note This method has the MATLAB method property 'Sealed' set to true. It cannot be overwritten.\n"));
+    any_property_set = true;
+    docuextra_.push_back(std::string("@note This method has the MATLAB method attribute @c Sealed set to true. It cannot be overwritten.\n"));
   }
   add_access_info("method");
+
+  if (access_.get != access_.set)
+    any_property_set = true;
+
+  if (any_property_set)
+    docuextra_.push_back("@note <a href=\"http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html\">matlab documentation of method attributes.</a>\n");
 }
 
 // end a function and pretty print the documentation for this function
