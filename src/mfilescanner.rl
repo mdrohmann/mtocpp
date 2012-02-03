@@ -2309,6 +2309,13 @@ void MFileScanner::end_of_class_doc()
 }
 
 
+/** print the documentation block for a property after all information about
+ * its declaration has been gathered.
+ *
+ * @change{1,3,md,2012-03-02} Bugfix: Default values were printed twice if
+ * documented in the documenation block and given as property default values.
+ * Now, the documentated default value is preferred.
+ */
 void MFileScanner::end_of_property_doc()
 {
   add_property_params_info();
