@@ -118,9 +118,9 @@ using std::endl;
   mtocsubst:= |*
     '_';
 
-    (IDENT_WO_US);
+    (IDENT_WO_US) => { fout.write(ts, te-ts); };
 
-    '_tsbus_cotm' => { fgoto main; };
+    '_m_tsbus_cotm_' => { fout << "&gt;"; fgoto main; };
   *|;
 
   main:= |*
