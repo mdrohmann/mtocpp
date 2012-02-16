@@ -35,6 +35,9 @@
  *
  * We are trying to always compile current Windows binaries for \c mtocpp and \c mtocpp_post and include them for direct download.
  *
+ * @note For Windows binaries from this page you might need to install the Microsoft Visual C++ 2010 redistributables,
+ * which can be found <a href="http://www.microsoft.com/download/en/confirmation.aspx?id=8328" target="_blank">here</a>.
+ *
  * @subsection inst_binaries_unix Unix binaries
  * For unix users we recommend to compile the sources following @ref inst_comp.
  * However, on the download site you can also find some precompiled linux binaries/packages.

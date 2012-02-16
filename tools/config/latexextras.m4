@@ -12,6 +12,3 @@
 
 % Inclusion example:
 %\input{_ConfDir_/myexternalstyle.sty}
-
-% On Windows you might have to use \ instead of /:
-%\input{_ConfDir_\myexternalstyle.sty}

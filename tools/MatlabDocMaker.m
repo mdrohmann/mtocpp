@@ -219,7 +219,7 @@ classdef MatlabDocMaker
             tex = fullfile(cdir,'latexextras.sty');
             if exist(texm4,'file') == 2
                 % # Parse the kermorlatex include style file
-                system(sprintf('m4 -D _ConfDir_="%s" "%s" > "%s"',cdir,texm4,tex));
+                system(sprintf('m4 -D _ConfDir_="%s" "%s" > "%s"',strrep(cdir,'\','/'),texm4,tex));
             else
                 % Create empty file
                 system(sprintf('echo "" > "%s"',tex));

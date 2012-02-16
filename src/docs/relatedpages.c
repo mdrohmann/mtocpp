@@ -10,11 +10,14 @@
  *
  * Once you've obtained your copy check out the @ref install
  *
+ * @note For Windows binaries from this page you might need to install the Microsoft Visual C++ 2010 redistributables,
+ * which can be found <a href="http://www.microsoft.com/download/en/confirmation.aspx?id=8328" target="_blank">here</a>.
+ *
  * @section git Obtaining mtoc++ via the GIT versioning system
  * In order to always stay up-to-date with the latest mtoc++ versions, simply pull it from our git repository and
  * recompile it when a new release is available.
  *
- * This possibility will be provided by the final version of mtoc++ 1.3.
+ * This possibility will be provided soon.
  *
  * @section mtoc13 mtoc++ 1.3 (current development)
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.3.tar.gz">Source tarball</a>
