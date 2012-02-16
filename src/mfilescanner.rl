@@ -587,7 +587,6 @@ const char * ClassPartNames[] =
 
       #}}}4
 
-      # things that could end the function body {{{4
       # line not beginning with words 'function' or 'end'
       ([ \t]*
        . ( (default - [ \r\t\n%])+ - ('function'|'end') )
@@ -601,6 +600,7 @@ debug_output("in funcbody: goto funcline", p);
           fgoto funcline;
         };
 
+      # things that could end the function body {{{4
       # line only containing word 'end'
       # the keyword needs to be in the same indentation level as beginning function
       ([ \t]* . 'end' . ';'* . (WSOC | EOL ) )
@@ -630,8 +630,10 @@ debug_output("in funcbody: goto funcline 2", p);
       # line beginning with word 'function'
       ([ \t]*. 'function ')
       {
+        tmp_string.assign(ts,p-ts+1);
         p = ts-1;
-        if (!is_class_)
+
+        if (!is_class_ && tmp_string.find("f") <= funcindent_)
         {
           // end the previous function if existent
           end_function();
@@ -1467,8 +1469,7 @@ debug_output("in funcbody: goto main", p);
       comment_block @in_c_block
       | [ \t]*. EOL
     )*
-    . [\t]* . 'function'
-    . funcdef
+    . ([\t]*) . 'function' . funcdef
   ) $eof( end_of_file ) ; #}}}2
 
   # no function definition => a script {{{2
@@ -1545,6 +1546,17 @@ debug_output("in funcbody: goto main", p);
     . [\t]*
     . ( 'function' @{
                      p=tmp_p;
+                     char *tp;
+                     for(tp=p-9; *tp == ' ' || *tp == '\t'; --tp)
+                       ;
+                     funcindent_ = (int)(p - 9 - tp);
+#if DEBUG
+                     {
+                       ostringstream oss;
+                       oss << "in expect_function_script_or_class funcindent: " << funcindent_ << " " << (size_t) p << " " <<(size_t)tp;
+                       debug_output(oss.str(), p);
+                     }
+#endif
                      if(is_class_ && class_part_ == Header)
                        class_part_ = AtMethod;
                      fgoto funct;

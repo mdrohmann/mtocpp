@@ -207,6 +207,9 @@ public:
 /**
  * @class MFileScanner
  *
+ * @change{1,3,md,2012-02-15} We totally ignore functions which are locally
+ * defined inside another function.
+ *
  * @change{1,3,md,2012-02-15} Added config GENERATE_SUBFUNTION_DOCUMENTATION
  * and format for output of subfunctions.
  *
