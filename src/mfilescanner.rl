@@ -1933,10 +1933,6 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
       runMode_.generate_subfunction_documentation = false;
     }
   }
-  if (runMode_.generate_subfunction_documentation)
-    std::cerr << "true";
-  else
-    std::cerr << "false";
 };
 
 // run the scanner

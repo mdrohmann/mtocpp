@@ -250,7 +250,7 @@ public:
     if ( cs == PostProcess_error )
     {
       /* Machine failed before finding a token. */
-      cerr << file << ": PARSE ERROR in line " << line << endl;
+      cerr << file << ": PARSE ERROR " << endl;
       cerr.write(p, 100);
       exit(-1);
     }
