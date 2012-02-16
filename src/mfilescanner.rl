@@ -1172,9 +1172,11 @@ debug_output("in funcbody: goto main", p);
    #}}}4
 
   matrix_or_cell := (
-      '[' . ( [^[{\]] | [[{] @{fhold; fcall matrix_or_cell;} )* . ']' @{ fret; }
+      '\'' . ( [^'] | "\\\'")* . '\'' @{ fret; }
       |
-      '{' . ( [^[{}]  | [[{] @{fhold; fcall matrix_or_cell;} )* . '}' @{ fret; }
+      '[' . ( [^[{'\]] | [[{'] @{fhold; fcall matrix_or_cell;} )* . ']' @{ fret; }
+      |
+      '{' . ( [^[{}']  | [[{'] @{fhold; fcall matrix_or_cell;} )* . '}' @{ fret; }
       );
 
   matrix = ([[{] @{fhold; fcall matrix_or_cell;} );
@@ -1182,15 +1184,19 @@ debug_output("in funcbody: goto main", p);
 
   # single property {{{4
   prop = ( ( [ \t]* . (IDENT) >st_tok
-                 %{
-            string s(tmp_p, p - tmp_p);
-            property_list_.push_back(s);
-//            fout_ << propertyparams_.ccprefix() << " " << s;
+            %{
+              end_of_property_doc();
+              string s(tmp_p, p - tmp_p);
+              if (s == "end")
+                fgoto classbody;
+              property_list_.push_back(s);
+              //            fout_ << propertyparams_.ccprefix() << " " << s;
+              undoced_prop_ = true;
             }
           )
         . WS* . ( ( '%' @{ fhold; } | ';' | EOL )  @{defaultprop_ = "";}
             |
-            ( ('=' . [ ]*) %{tmp_p2 = p;} . ( matrix | [^[{;\n%] | ('...'.[ \t]*.EOL) )* . (';' | EOL | '%' @{ fhold; } ))
+            ( ('=' . [ ]*) %{tmp_p2 = p;} . ( matrix | [^[{;\n%] | ('...'.[ \t]*.EOL) )* . (';' | EOL | '%' @{fhold; } ))
             @{
               defaultprop_ = string(tmp_p2, p - tmp_p2);
               for (unsigned int i = 0; i < defaultprop_.length(); ++i)
@@ -1199,7 +1205,7 @@ debug_output("in funcbody: goto main", p);
                 {
                   defaultprop_[i]   = ' ';
                   defaultprop_[i+1] = ' ';
-                  defaultprop_[i+2] = '\\';
+                  defaultprop_[i+2] = ' ';
                 }
 /*                else if(defaultprop_[i] == '[')
                   defaultprop_[i] = '{';
@@ -1207,22 +1213,30 @@ debug_output("in funcbody: goto main", p);
                   defaultprop_[i] = '}'; */
                 else if(defaultprop_[i] == ';' && i < defaultprop_.length() - 1)
                   defaultprop_[i] = ',';
+                else if(defaultprop_[i] == '\'')
+                  defaultprop_[i] = '\"';
+                else if(defaultprop_[i] == '\n')
+                {
+                  defaultprop_.insert(i, 1, '\\');
+                  ++i;
+                }
               }
              }
           )
-            . [ \t]* .
-        ( '%' %st_tok . ( default - [\r\n] )*
-          . EOL
-            @{
-               docuheader_.push_back(string(tmp_p, p - tmp_p+1));
-               end_of_property_doc();
-             } | EOL @{ end_of_property_doc(); }
-        )
+#        . [ \t]* .
+#        (
+#          ( '%' %st_tok . ( default - [\r\n] )*
+#          . EOL
+#            @{
+#               docuheader_.push_back(string(tmp_p, p - tmp_p+1));
+#               end_of_property_doc();
+#             }
+#             | ( EOL @{ end_of_property_doc(); } )
+#          )?
+#        )
       );
 
   #}}}4
-
-  property := ( prop* );
 
   #property body {{{4
   propertybody = (
@@ -1233,7 +1247,7 @@ debug_output("in funcbody: goto main", p);
     |
     (prop)
     |
-    ( (empty_line) @{ fout_ << "\n";} )
+    ( (empty_line) @{ end_of_property_doc(); fout_ << "\n";} )
     |
     ( ([ \t]* . '%') @{ fhold; fgoto expect_doxyblock; } )
     );
@@ -1754,7 +1768,8 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
   classname_(), funcindent_(0), eventindent_(0),
   class_part_(Header),
   access_(), propertyparams_(), methodparams_(), property_list_(),
-  runMode_(runMode)
+  runMode_(runMode),
+  undoced_prop_(false)
 {
   string::size_type found = fnname_.find_last_of('/');
   if(found != string::npos)
@@ -2336,45 +2351,49 @@ void MFileScanner::end_of_class_doc()
  */
 void MFileScanner::end_of_property_doc()
 {
-  add_property_params_info();
-  typedef DocuBlock :: iterator                                      DBIt;
-  string typen;
-  extract_typen(docuheader_, typen);
-  if(typen.empty())
-    extract_typen(docubody_, typen);
-
-  if(typen.empty())
-    typen = "matlabtypesubstitute";
-
-  fout_ << propertyparams_.ccprefix() << typen << " " << property_list_.back();
-  if(defaultprop_.empty())
-    fout_ << ";\n";
-  else
-    fout_ << " = " << defaultprop_ << ";\n";
-
-  string defval;
-  extract_default(docubody_, defval);
-  if (!defval.empty())
-    defaultprop_.clear();
-
-  if (!docuheader_.empty() || runMode_.auto_add_class_properties)
+  if (undoced_prop_)
   {
-    fout_ << "/** @var " << property_list_.back() << "\n  ";
-    fout_ << "* @brief ";
-    cout_docuheader(property_list_.back());
-    fout_ << "*\n  ";
-    cout_docubody();
-    fout_ << "*\n ";
-    cout_docuextra();
-    if(!defaultprop_.empty())
+    add_property_params_info();
+    typedef DocuBlock :: iterator                                    DBIt;
+    string typen;
+    extract_typen(docuheader_, typen);
+    if(typen.empty())
+      extract_typen(docubody_, typen);
+
+    if(typen.empty())
+      typen = "matlabtypesubstitute";
+
+    fout_ << propertyparams_.ccprefix() << typen << " " << property_list_.back();
+    if(defaultprop_.empty())
+      fout_ << ";\n";
+    else
+      fout_ << " = " << defaultprop_ << ";\n";
+
+    string defval;
+    extract_default(docubody_, defval);
+    if (!defval.empty())
+      defaultprop_.clear();
+
+    if (!docuheader_.empty() || runMode_.auto_add_class_properties)
     {
-      fout_ << "* <br/>@b Default: " << defaultprop_ << "\n";
+      fout_ << "/** @var " << property_list_.back() << "\n  ";
+      fout_ << "* @brief ";
+      cout_docuheader(property_list_.back());
+      fout_ << "*\n  ";
+      cout_docubody();
+      fout_ << "*\n ";
+      cout_docuextra();
+      if(!defaultprop_.empty())
+      {
+        fout_ << "* <br/>@b Default: " << defaultprop_ << "\n";
+      }
+      fout_ << "*/\n";
     }
-    fout_ << "*/\n";
+    docuheader_.clear();
+    docubody_.clear();
+    docuextra_.clear();
   }
-  docuheader_.clear();
-  docubody_.clear();
-  docuextra_.clear();
+  undoced_prop_ = false;
 }
 
 void MFileScanner::cout_docuheader(string altheader, bool clear)
