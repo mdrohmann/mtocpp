@@ -148,29 +148,10 @@ auto_param.auto_field;
 mlhsInnerSubst<matlabtypesubstitute,c> mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b) {
 
 }
-/** @fn mlhsInnerSubst<matlabtypesubstitute,c> mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b)
-  * @brief second function without docu
-  *
-  *
-  * @param a    a
-  * @param b    b
-  *
-  * @retval c    c
-  */
 mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,e> ,mlhsInnerSubst<matlabtypesubstitute,f> > mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_with_sev_retvals(::othergrid auto_param) {
 
 
 }
-/** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,e> ,mlhsInnerSubst<matlabtypesubstitute,f> > mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_with_sev_retvals(::othergrid auto_param)
-  * @brief  a third (private) function in the test file with serveral return values
-  *
-  *
-  * @param auto_param     object  which is not used! This documentation is added automatically! 
-  *
-  * @retval d     a return value
-  * @retval e    e
-  * @retval f    f
-  */
 mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,e> ,mlhsInnerSubst<matlabtypesubstitute,f> > mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_without_parameters()
    {
 
@@ -180,14 +161,5 @@ mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubst
 
 
 }
-/** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,e> ,mlhsInnerSubst<matlabtypesubstitute,f> > mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_without_parameters()
-  
-  * @brief  a third (private) function in the test file without parameters
-  *
-  *
-  * @retval d     a return value
-  * @retval e    e
-  * @retval f    f
-  */
 };
 };
