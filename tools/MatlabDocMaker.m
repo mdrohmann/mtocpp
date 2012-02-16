@@ -233,11 +233,11 @@ classdef MatlabDocMaker
             end
             % Call doxygen
             fprintf('Running doxygen with mtoc++ filter...\n');
-            [~,warn] = system(sprintf('doxygen "%s" 1>%s',ldpath, doxyfile, strs.null));
+            [~,warn] = system(sprintf('%sdoxygen "%s" 1>%s',ldpath, doxyfile, strs.null));
              
             % Postprocess
             fprintf('Running mtoc++ postprocessor...\n');
-            [~,~] = system(sprintf('mtocpp_post %s', ldpath, ...
+            [~,~] = system(sprintf('%smtocpp_post %s', ldpath, ...
                 MatlabDocMaker.getOutputDirectory));
             
             % Tidy up
@@ -348,7 +348,11 @@ classdef MatlabDocMaker
                 hasall = false;                
             end
             fprintf('[Required] Checking for mtoc++... ');
-            [st, vers] = system('mtocpp --version');
+            ldpath = '';
+            if isunix
+                ldpath = 'LD_LIBRARY_PATH= ';
+            end
+            [st, vers] = system(sprintf('%smtocpp --version',ldpath));
             if st == 0
                 fprintf(' found %s\n',vers(1:end-1));
             else
