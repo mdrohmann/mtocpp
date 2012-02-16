@@ -14,6 +14,12 @@
  *
  * This class is an artificially created class in doxygen to allow more precise type declarations.
  * Matlab types associated with this class are all int-types (int8, uint8 etc).
+ *
+ * @class double
+ * @brief A double value
+ *
+ * This class is an artificially created class in doxygen to allow more precise type declarations.
+ * The MatLab type associated with this class is double.
  * 
  * @class logical
  * @brief A boolean value
