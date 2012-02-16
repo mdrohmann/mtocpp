@@ -65,6 +65,9 @@ using std::endl;
     # word separators
     ([\n <>\&:\t]) => {fout << *ts;};
 
+    # bugfix: allow '>' in the end of typenames for Daniel's generic types
+    ('&lt;' . [^&]* . '&gt;') => { fout.write(ts, te-ts); };
+
     # comma or &gt; end the type
     (',') => { fhold; fret; };
     ('&gt;') => { p -=4; fret; };
@@ -78,9 +81,6 @@ using std::endl;
 #    ('&lt;' . (default - [,&])*) => { cerr.write(ts+4, te - ts-4); cerr << std::endl; fout.write(ts+4, te - ts-4); };
 
     (',' . (default - '\&')*) => { fout << " <span class=\"paramname\">"; fout.write(ts+1, te-ts-1); fout << "</span>"; };
-
-    # bugfix: allow '>' in the end of typenames for Daniel's generic types
-    ('&gt;,') => { fout << "&gt;"; --p; };
 
     # end of return value
     ('&gt;') => {
