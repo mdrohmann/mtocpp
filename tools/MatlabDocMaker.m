@@ -225,13 +225,20 @@ classdef MatlabDocMaker
                 system(sprintf('echo "" > "%s"',tex));
             end
 
+            % Fix for unix systems where the MatLab installation uses older
+            % GLIBSTD libraries than doxygen/mtoc++
+            ldpath = '';
+            if isunix
+                ldpath = 'LD_LIBRARY_PATH= ';
+            end
             % Call doxygen
             fprintf('Running doxygen with mtoc++ filter...\n');
-            [~,warn] = system(sprintf('doxygen "%s" 1>%s', doxyfile, strs.null));
+            [~,warn] = system(sprintf('doxygen "%s" 1>%s',ldpath, doxyfile, strs.null));
              
             % Postprocess
             fprintf('Running mtoc++ postprocessor...\n');
-            [~,~] = system(sprintf('mtocpp_post %s',MatlabDocMaker.getOutputDirectory));
+            [~,~] = system(sprintf('mtocpp_post %s', ldpath, ...
+                MatlabDocMaker.getOutputDirectory));
             
             % Tidy up
             delete(cbin);
