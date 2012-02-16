@@ -1764,7 +1764,6 @@ LATEX_BATCHMODE   = YES
 
 # latex styles inclusion file
 EXTRA_PACKAGES    = _LatexExtras_
-#EXTRA_PACKAGES    = "_ConfDir_`'_FileSep_`'latexextras"
 
 # leave empty so MatlabDocMaker can capture doxygen warnings
 WARN_LOGFILE      =		
