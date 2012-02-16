@@ -146,15 +146,6 @@ auto_param.auto_field;
 mlhsInnerSubst<matlabtypesubstitute,c> mtoc_subst_doxygen_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b) {
 
 }
-/** @fn mlhsInnerSubst<matlabtypesubstitute,c> mtoc_subst_doxygen_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b)
-  * @brief second function without docu
-  *
-  *
-  * @param a    a
-  * @param b    b
-  *
-  * @retval c    c
-  */
 mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,e> ,mlhsInnerSubst<matlabtypesubstitute,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(matlabtypesubstitute unused1,::rectgrid auto_param,matlabtypesubstitute unused2,matlabtypesubstitute unused3) {
 
 
@@ -163,42 +154,15 @@ body(string, with, double quote, and percent sign, "  '%s'} ")/*  a real comment
 
 
 }
-/** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,e> ,mlhsInnerSubst<matlabtypesubstitute,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(matlabtypesubstitute unused1,::rectgrid auto_param,matlabtypesubstitute unused2,matlabtypesubstitute unused3)
-  * @brief  a third (private) function in the test file with serveral return values
-  *
-  *
-  * @param auto_param     object  which is not used! This documentation is added automatically! 
-  *
-  * @retval d     a return value
-  * @retval e    e
-  * @retval f    f
-  */
 mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,unused1> ,mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,unused2> ,mlhsInnerSubst<matlabtypesubstitute,unused3> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
    {
 
 
 }
-/** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,unused1> ,mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,unused2> ,mlhsInnerSubst<matlabtypesubstitute,unused3> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
-  
-  * @brief  a third (private) function in the test file without parameters
-  *
-  *
-  * @retval d     a return value
-  */
 noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters(::bool uml,::bool open) {
 
 
 }
-/** @fn noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters(::bool uml,::bool open)
-  * @brief  function with two default parameters
-  *
-  *
-  * @param uml     Set to true to create UML-like graphics output
-  *          @b Default: false 
-  * @param open     Set to true if the documentation should be opened after
-  *         successful compilation 
-  *          @b Default: [1;2;3] 
-  */
 noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml,::bool open) {
 
 
@@ -208,13 +172,3 @@ noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml
 
 
 }
-/** @fn noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml,::bool open)
-  * @brief  function with two default parameters
-  *
-  *
-  * @param uml     Set to true to create UML-like graphics output
-  *         @b Default: false  
-  * @param open     Set to true if the documentation should be opened after
-  *         successful compilation 
-  *         
-  */

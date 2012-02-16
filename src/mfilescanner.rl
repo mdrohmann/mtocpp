@@ -1922,6 +1922,21 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
       runMode_.print_return_value_name = 2;
     }
   }
+  if(cscan_.vars_.find(string("GENERATE_SUBFUNTION_DOCUMENTATION"))!=cscan_.vars_.end())
+  {
+    if(cscan_.vars_[string("GENERATE_SUBFUNTION_DOCUMENTATION")][0] == string("true"))
+    {
+      runMode_.generate_subfunction_documentation = true;
+    }
+    else
+    {
+      runMode_.generate_subfunction_documentation = false;
+    }
+  }
+  if (runMode_.generate_subfunction_documentation)
+    std::cerr << "true";
+  else
+    std::cerr << "false";
 };
 
 // run the scanner
@@ -2816,7 +2831,9 @@ void MFileScanner::end_function()
     fout_ << "}\n";
   if(is_getter_ || is_setter_)
     fout_ << "*/\n";
-  if (!docuheader_.empty() || runMode_.auto_add_class_properties)
+  if ( ( !docuheader_.empty() || runMode_.auto_add_class_properties )
+      && ( is_first_function_ || runMode_.generate_subfunction_documentation )
+     )
   {
     // is the first function?
     if(is_first_function_)
@@ -2867,7 +2884,7 @@ void MFileScanner::end_function()
       {
         fout_ << "*\n  ";
         write_docu_list(param_list_, "@param", cscan_.param_list_,
-                        runMode_.auto_add_params);
+            runMode_.auto_add_params);
       }
 
       // return values
@@ -2875,7 +2892,7 @@ void MFileScanner::end_function()
       {
         fout_ << "*\n  ";
         write_docu_list(return_list_, "@retval", cscan_.return_list_,
-                        runMode_.auto_add_params);
+            runMode_.auto_add_params);
       }
 
       if(runMode_.print_fields)
@@ -2890,9 +2907,9 @@ void MFileScanner::end_function()
         write_docu_listmap(retval_list_, "@par Generated fields of ", cscan_.field_docu_);
       }
     }
-    #ifdef DEBUG
-      std::cerr << "CLEARING LISTS!";
-    #endif
+#ifdef DEBUG
+    std::cerr << "CLEARING LISTS!";
+#endif
     clear_lists();
 
     // extra docu fields
@@ -2902,7 +2919,7 @@ void MFileScanner::end_function()
       fout_ << "* @synupdate Syntax needs to be updated! \n  ";
     }
     fout_ << "*/\n";
-    }
+  }
   else
   {
     clear_lists();

@@ -27,3 +27,8 @@ function rv = structArgFunc(struct1, struct2)
   % fields of return values that are assigned somewhere in the function body are
   % also added automatically to the list of generated fields
   rv.auto_added  = 1;
+
+function dummy = subFunction(a, b)
+  % documentation of a subfunction
+
+  nope;

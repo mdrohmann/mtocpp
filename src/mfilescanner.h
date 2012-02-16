@@ -39,7 +39,8 @@ struct RunMode
   remove_first_arg_in_abstract_methods(REMOVE_FIRST_ARG_IN_ABSTRACT_METHODS),
   parse_of_type(ENABLE_OF_TYPE_PARSING),
   void_type_in_return_values(VOID_TYPE_IN_RETURN_VALUES),
-  print_return_value_name(PRINT_RETURN_VALUE_NAME)
+  print_return_value_name(PRINT_RETURN_VALUE_NAME),
+  generate_subfunction_documentation(GENERATE_SUBFUNTION_DOCUMENTATION)
   {}
 
   typedef enum
@@ -62,6 +63,7 @@ struct RunMode
   bool parse_of_type;
   bool void_type_in_return_values;
   int print_return_value_name;
+  bool generate_subfunction_documentation;
 };
 
 typedef enum
@@ -205,7 +207,10 @@ public:
 /**
  * @class MFileScanner
  *
- * @change{1,3,md,2012-03-02} Bugfix: Default values were printed twice if
+ * @change{1,3,md,2012-02-15} Added config GENERATE_SUBFUNTION_DOCUMENTATION
+ * and format for output of subfunctions.
+ *
+ * @change{1,3,md,2012-02-03} Bugfix: Default values were printed twice if
  * documented in the documenation block and given as property default values.
  * Now, the documentated default value is preferred.
  *
