@@ -153,6 +153,8 @@ using std::endl;
    # a word
    (any - [\n <>()[\]{}\&:.,;_\t])+ => { fout.write(ts, te-ts); };
 
+   (')=0') => { fout << ")"; };
+
    # word separators
    ([\n <>()[\]{}\t:.;,_\&]) => {fout << *ts;};
 

@@ -207,6 +207,11 @@ public:
 /**
  * @class MFileScanner
  *
+ * @change{1,3,md,2012-02-15} remove =0 for purely virtual class methods
+ *
+ * @change{1,3,md,2012-02-15} bugfix: no Grrr! messages for complex property
+ * declarations.
+ *
  * @change{1,3,md,2012-02-15} We totally ignore functions which are locally
  * defined inside another function.
  *
