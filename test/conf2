@@ -20,6 +20,8 @@ VOID_TYPE_IN_RETURN_VALUES := true;
 
 PRINT_RETURN_VALUE_NAME := 1;
 
+GENERATE_SUBFUNTION_DOCUMENTATION := true;
+
 ##
 
 add(params) = auto_param => """ object of type gridbase.gridbase which is not used! This documentation is added automatically! """;
