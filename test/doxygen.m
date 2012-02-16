@@ -128,6 +128,10 @@ function [d,e,f]=third_function_with_sev_retvals(~, auto_param, ~, ~)
 % Return values:
 % d : a return value
 
+  function totally_ignored_subfunction(a, b, c)
+  % documentation string for the totally ignored subfunction
+  end
+
 body(string, with, double quote, and percent sign, ' "%s"}') % a real comment }
 
 function [~ , d, ~, ~]=third_function_without_parameters
