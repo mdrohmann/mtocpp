@@ -79,6 +79,9 @@ using std::endl;
 
     (',' . (default - '\&')*) => { fout << " <span class=\"paramname\">"; fout.write(ts+1, te-ts-1); fout << "</span>"; };
 
+    # bugfix: allow '>' in the end of typenames for Daniel's generic types
+    ('&gt;,') => { fout << "&gt;"; --p; };
+
     # end of return value
     ('&gt;') => {
                   if(only_retval) { fout << " ="; }
