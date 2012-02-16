@@ -142,6 +142,12 @@ mlhsInnerSubst<void> mtoc_subst_doxygen_m_tsbus_cotm_second_function_without_doc
 mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(matlabtypesubstitute unused1,::rectgrid auto_param,matlabtypesubstitute unused2,matlabtypesubstitute unused3) {
 
 
+  function totally_ignored_subfunction(a, b, c)
+/*  documentation string for the totally ignored subfunction
+*/
+
+  end
+
 body(string, with, double quote, and percent sign, "  '%s'} ")/*  a real comment }
 */
 

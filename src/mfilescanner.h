@@ -414,6 +414,7 @@ private:
   std::string  dirname_;
 
   std::map<std::string,std::string> param_type_map_;
+  bool undoced_prop_;
 };
 
 /* vim: set et sw=2: */
