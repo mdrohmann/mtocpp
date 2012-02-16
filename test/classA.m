@@ -63,6 +63,19 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
 
     % longer help for public_access2
     public_access2;
+    
+    complexpropertywithoutsemicolon = [['af]adgdg'
+        'adgadg']]
+    followingpropwithoutsemicolon = 4
+    antoheroneWITH;
+    
+    % with comments version!
+    complexpropertywithoutsemicolon_c = [['af]a"§/$"''dgdg'
+        'adgadg']]
+    % with comments version! GRR
+    followingpropwithoutsemicolon_c = 4
+    % with comments version
+    antoheroneWITH_c;
   end
 
   properties (Access = protected)
