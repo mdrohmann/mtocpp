@@ -21,6 +21,14 @@ classdef MatlabDocMaker
 %
 % @author Daniel Wirtz @date 2011-10-13
 %
+% @change{1,3,dw,2012-02-16}
+% - Now also collecting error messages from mtocpp_post and adding them to
+% the warnings.log file.
+% - Added the directive "LD_LIBRARY_PATH= " for unix systems, as MatLab
+% sets it inside its executing environment. This can lead to errors if
+% doxygen and/or mtoc++ have been built using never GLIBC (libstd) versions
+% than the one shipped with MatLab.
+%
 % @change{1,3,dw,2012-01-16}
 % - Properly using the correct file separators everywhere now
 % - Hyperlinked the log file so it can be opened directly
