@@ -237,8 +237,11 @@ classdef MatlabDocMaker
              
             % Postprocess
             fprintf('Running mtoc++ postprocessor...\n');
-            [~,~] = system(sprintf('%smtocpp_post %s', ldpath, ...
-                MatlabDocMaker.getOutputDirectory));
+            [~,postwarn] = system(sprintf('%smtocpp_post "%s" 1>%s',ldpath,...
+                MatlabDocMaker.getOutputDirectory, strs.null));
+            if ~isempty(postwarn)
+                warn = [warn sprintf('mtoc++ postprocessor messages:\n') postwarn];
+            end
             
             % Tidy up
             delete(cbin);
