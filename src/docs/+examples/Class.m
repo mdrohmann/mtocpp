@@ -260,11 +260,12 @@ classdef Class
             % on a function or property level!
         end
     end
-    
-    %     events
-    %         % This is the Test event's commentary.
-    %         Test;
-    %     end
-    
+
+    events
+        % This is the Test event's commentary.
+        Test;
+
+        UndocumentedEvent;
+    end
 end
 

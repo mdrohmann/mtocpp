@@ -501,6 +501,30 @@ virtual mlhsInnerSubst<matlabtypesubstitute,c> followed_by_document_method(matla
 
 public:
 
+EVENT documentedEvent;
+/** @var documentedEvent
+  * @brief  a documented event
+  *
+  *
+  * @event documentedEvent
+  */
+
+EVENT undocumentedEvent;
+/** @var undocumentedEvent
+  * @brief undocumentedEvent
+  *
+  *
+  * @event undocumentedEvent
+  */
+EVENT followingUndocumentedEvent;
+/** @var followingUndocumentedEvent
+  * @brief followingUndocumentedEvent
+  *
+  *
+  * @event followingUndocumentedEvent
+  */
+
+
 /** @var DataStoreDirectory
  *
  *@note This property has custom functionality when its value is changed.

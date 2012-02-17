@@ -223,6 +223,8 @@ public:
 /**
  * @class MFileScanner
  *
+ * @change{1,3,md,2012-02-17} added events section
+ *
  * @change{1,3,md,2012-02-15} improved documentation for dependent flags
  *
  * @change{1,3,md,2012-02-15} remove =0 for purely virtual class methods
@@ -426,7 +428,6 @@ private:
   bool         is_getter_;
   std::string  classname_;
   std::string::size_type funcindent_;
-  std::string::size_type eventindent_;
   ClassPart    class_part_;
   AccessStruct access_;
   PropParams   propertyparams_;
