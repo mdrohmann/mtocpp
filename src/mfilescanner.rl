@@ -102,7 +102,7 @@ const char * ClassPartNames[] =
         {
           fgoto funcdef;
         }
-        else if(class_part_ == Property)
+        else if(class_part_ == Property || class_part_ == Event)
         {
           fgoto propertybody;
         }
@@ -915,7 +915,7 @@ debug_output("in funcbody: goto main", p);
 #endif
             fgoto funcdef;
           }
-          else if(class_part_ == Property)
+          else if(class_part_ == Property || class_part_ == Event)
           {
 #ifdef DEBUG
   debug_output("  in_doxy_get_brief: method: goto propertybody",p);
@@ -1078,19 +1078,6 @@ debug_output("in funcbody: goto main", p);
     . ( WSOC* . ',' . WSOC* . propertyparam )* . WSOC* . ')'
    ); #}}}2
 
-  # swallowing events {{{2
-  events := (
-    ( ([ \t]* .  'e') >st_tok
-      . 'nd' . [ \t;]* . EOL
-        @{ tmp_string.assign(tmp_p, p - tmp_p);
-                if(tmp_string.find("e") == eventindent_)
-                  {
-                  fgoto classbody;
-                  }
-              }
-      | (default* - 'end') . EOL )*
-   ); #}}}2
-
   # methods and properties {{{2
   # methods {{{4
   methods := |*
@@ -1225,28 +1212,12 @@ debug_output("in funcbody: goto main", p);
               }
              }
           )
-#        . [ \t]* .
-#        (
-#          ( '%' %st_tok . ( default - [\r\n] )*
-#          . EOL
-#            @{
-#               docuheader_.push_back(string(tmp_p, p - tmp_p+1));
-#               end_of_property_doc();
-#             }
-#             | ( EOL @{ end_of_property_doc(); } )
-#          )?
-#        )
       );
 
   #}}}4
 
   #property body {{{4
   propertybody = (
-#    ( [ \t]* . ( 'end' . [ \t;]* ) . ('%' . garble_comment_line_wo_eol )? . EOL )
-#      @{
-#         fgoto classbody;
-#       }
-#    |
     (prop)
     |
     ( (empty_line) @{ end_of_property_doc(); fout_ << "\n";} )
@@ -1329,10 +1300,10 @@ debug_output("in funcbody: goto main", p);
       };
     ([ \t]* . 'events')
       => {
-        std::string tmp_string(ts, te-ts);
-        eventindent_ = tmp_string.find("e");
+        propertyparams_ = PropParams();
+        access_ = AccessStruct();
         class_part_ = Event;
-        fgoto events;
+        fgoto properties;
       };
   *|; #}}}2
 
@@ -1379,7 +1350,7 @@ debug_output("in funcbody: goto main", p);
           fgoto funcbody;
         }
       }
-      else if(class_part_ == Property)
+      else if(class_part_ == Property || class_part_ == Event)
       {
         fgoto propertybody;
       }
@@ -1793,7 +1764,7 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
   opt(false), new_syntax_(false),
   is_script_(false), is_first_function_(true),
   is_class_(false), is_setter_(false), is_getter_(false),
-  classname_(), funcindent_(0), eventindent_(0),
+  classname_(), funcindent_(0),
   class_part_(Header),
   access_(), propertyparams_(), methodparams_(), property_list_(),
   runMode_(runMode),
@@ -2384,12 +2355,17 @@ void MFileScanner::end_of_property_doc()
     add_property_params_info();
     typedef DocuBlock :: iterator                                    DBIt;
     string typen;
-    extract_typen(docuheader_, typen);
-    if(typen.empty())
-      extract_typen(docubody_, typen);
+    if (class_part_ == Event)
+      typen = "EVENT";
+    else
+    {
+      extract_typen(docuheader_, typen);
+      if(typen.empty())
+        extract_typen(docubody_, typen);
 
-    if(typen.empty())
-      typen = "matlabtypesubstitute";
+      if(typen.empty())
+        typen = "matlabtypesubstitute";
+    }
 
     fout_ << propertyparams_.ccprefix() << typen << " " << property_list_.back();
     if(defaultprop_.empty())
@@ -2402,19 +2378,21 @@ void MFileScanner::end_of_property_doc()
     if (!defval.empty())
       defaultprop_.clear();
 
-    if (!docuheader_.empty() || runMode_.auto_add_class_properties)
+    if (!docuheader_.empty() || runMode_.auto_add_class_properties || class_part_ == Event)
     {
       fout_ << "/** @var " << property_list_.back() << "\n  ";
       fout_ << "* @brief ";
       cout_docuheader(property_list_.back());
       fout_ << "*\n  ";
       cout_docubody();
-      fout_ << "*\n ";
+      fout_ << "*\n  ";
       cout_docuextra();
       if(!defaultprop_.empty())
       {
         fout_ << "* <br/>@b Default: " << defaultprop_ << "\n";
       }
+      if (class_part_ == Event)
+        fout_ << "* @event " << property_list_.back() << "\n  ";
       fout_ << "*/\n";
     }
     docuheader_.clear();
@@ -2871,7 +2849,7 @@ void MFileScanner::end_function()
   }
   if(is_class_)
   {
-    if(class_part_ == Property)
+    if(class_part_ == Property || class_part_ == Event)
       return;
 
     add_method_params_info();

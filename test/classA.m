@@ -217,6 +217,12 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
   end
 
   events
+
+    % a documented event
+    documentedEvent
+
+    undocumentedEvent
+    followingUndocumentedEvent;
   end
 
 end

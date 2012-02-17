@@ -272,6 +272,7 @@ TAB_SIZE               = 8
 
 ALIASES                = "synupdate=\xrefitem synupdate \"Syntax Update\" \"Syntax needs to be updated\"" \
                          "docupdate=\xrefitem docupdate \"Documentation Update\" \"Documentation needs to be updated\"" \
+                         "event=\xrefitem event \"Events\" \"List of all Events\"" \
                          "default=\par Default:\n" \
                          "type=<br><b>Type</b>: " \
                          "changexref{2}=\xrefitem changelog\1\2 \"Change in \1.\2\" \"Changes in _ProjectName_ Version \1.\2\"" \
