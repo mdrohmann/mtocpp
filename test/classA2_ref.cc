@@ -22,7 +22,7 @@ protected:
   * @brief  variable  storing a grid.
   *
   *
- *
+  *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
@@ -40,7 +40,7 @@ matlabtypesubstitute mixed_access2 = "test";
       c= d;
      @endverbatim
   *
- *
+  *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
@@ -56,7 +56,7 @@ matlabtypesubstitute mixed_access2 = "test";
   *  This variable has a special type
   *   @b Default: empty string 
   *
- *
+  *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
@@ -79,7 +79,7 @@ matlabtypesubstitute SteadyStates = [[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSy
   * @brief  variable with very long default value
   *
   *
- *
+  *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
@@ -95,7 +95,7 @@ matlabtypesubstitute Property_without_semicolon;
   * @brief  commented anyways
   *
   *
- *
+  *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
@@ -111,7 +111,7 @@ static const matlabtypesubstitute aConstant = 1;
   * @brief  help text
   *
   *
- * <br/>@b Default: 1
+  * <br/>@b Default: 1
 */
 
 static const matlabtypesubstitute bConstant = 2;
@@ -119,7 +119,7 @@ static const matlabtypesubstitute bConstant = 2;
   * @brief  help text for bConstant
   *
   *
- * <br/>@b Default: 2
+  * <br/>@b Default: 2
 */
 
 
@@ -128,7 +128,7 @@ static const matlabtypesubstitute cConstant = 3;
   * @brief  help text for cConstant
   *
   *
- * <br/>@b Default: 3
+  * <br/>@b Default: 3
 */
 
 static const matlabtypesubstitute vectorConst = [ 1, 2, 3 ];
@@ -138,7 +138,7 @@ static const matlabtypesubstitute dConstant = { [ 1, 2, 3, 4], "test", [ 1 2, [ 
   * @brief  test
   *
   *
- * <br/>@b Default: { [ 1, 2, 3, 4], "test", [ 1 2, [ [3 [3 [3 4] 4] ] ] ] }
+  * <br/>@b Default: { [ 1, 2, 3, 4], "test", [ 1 2, [ [3 [3 [3 4] 4] ] ] ] }
 */
 
 
@@ -151,14 +151,14 @@ matlabtypesubstitute public_access;
   * @brief  short help for public_access
   *
   *
- */
+  */
 
 matlabtypesubstitute public_access2;
 /** @var public_access2
   * @brief  longer help for public_access2
   *
   *
- */
+  */
 
 
 matlabtypesubstitute complexpropertywithoutsemicolon = [["af]adgdg"\
@@ -174,7 +174,7 @@ matlabtypesubstitute complexpropertywithoutsemicolon_c = [["af]a"§/$"""dgdg"\
   *  with comments version! GRR
   *
   *
- * <br/>@b Default: [["af]a"§/$"""dgdg"\
+  * <br/>@b Default: [["af]a"§/$"""dgdg"\
         "adgadg"]]
 */
 matlabtypesubstitute followingpropwithoutsemicolon_c = 4;
@@ -182,7 +182,7 @@ matlabtypesubstitute followingpropwithoutsemicolon_c = 4;
   * @brief  with comments version
   *
   *
- * <br/>@b Default: 4
+  * <br/>@b Default: 4
 */
 matlabtypesubstitute antoheroneWITH_c;
 
@@ -193,14 +193,14 @@ matlabtypesubstitute protected_access;
   * @brief  short help for protected_access
   *
   *
- */
+  */
 
 matlabtypesubstitute protected_access2;
 /** @var protected_access2
   * @brief  longer help text for protected_access2
   *
   *
- */
+  */
 
 
 public:
@@ -291,9 +291,9 @@ mlhsInnerSubst<void> protected_access()
 
 }
 */
-/** @var protected_access
-  * @par Getter is implemented
-  * getter enriching property help text of protected_access
+/** @fn mlhsInnerSubst<void> protected_access()
+  
+  * @brief  getter enriching property help text of protected_access
   *
   */
 
@@ -303,9 +303,8 @@ noret::substitute protected_access(matlabtypesubstitute value) {
       a;
 }
 */
-/** @var protected_access
-  * @par Setter is implemented
-  * setter comment is parsed too
+/** @fn noret::substitute protected_access(matlabtypesubstitute value)
+  * @brief  setter comment is parsed too
   *
   */
 
@@ -395,7 +394,20 @@ virtual mlhsInnerSubst<void> followed_by_document_method(matlabtypesubstitute d,
   *
   */
 
+public:
 
+/** @var DataStoreDirectory
+ *
+ *@note This property has custom functionality when its value is changed.
+ */
+/** @var protected_access
+ *
+ *@note This property has custom functionality when its value is retrieved or changed.
+ */
+/** @var protected_access2
+ *
+ *@note This property has custom functionality when its value is changed.
+ */
 
 };
 
