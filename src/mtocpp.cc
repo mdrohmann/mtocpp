@@ -85,15 +85,24 @@ int main(int argc, char ** argv)
     conffilename = std::string(argv[2]);
   }
 
-  char buf[1000];
 #ifdef WIN32
+  char buf[1000];
   _getcwd(buf, 1000);
+  string cwd(buf);
 #else
-  getcwd(buf, 1000);
+  string cwd;
+  for (unsigned int bufsize = 1000; bufsize < PATH_MAX; bufsize*=2)
+  {
+    char buf[bufsize];
+    if (getcwd(buf, bufsize) != 0 || errno != ERANGE)
+    {
+      cwd = buf;
+      break;
+    }
+  }
 #endif
 
   string::size_type found = 0;
-  string cwd(buf);
   found = filename.find(cwd);
   if(found!=string::npos)
   {
