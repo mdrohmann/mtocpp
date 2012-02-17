@@ -15,6 +15,8 @@
  * as an example. So the list below is not necessarily complete, but the sites
  * referenced above contain all new features / changes!
  *
+ * @new{1,4,md,2012-02-17} Started mtoc++ 1.4.
+ *
  * @change{1,3,dw,2012-01-16} Changed the \c SHOW_FILES default value in the
  * doxygen configuration file from "NO" to "YES".
  *
