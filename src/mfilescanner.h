@@ -13,11 +13,13 @@
 #include <fstream>
 
 #ifdef WIN32
-	#include <direct.h>
+  #include <direct.h>
 #else
-	extern "C" {
-		#include <unistd.h>
-	}
+extern "C" {
+  #include <unistd.h>
+  #include <errno.h>
+}
+#include <climits>
 #endif
 
 // 160 KB
