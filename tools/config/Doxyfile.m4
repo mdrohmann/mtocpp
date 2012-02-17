@@ -51,6 +51,8 @@
 ###########################################################################
 ################## List of changes: #######################################
 #
+# mtoc++ 1.4: - added alias for an @events tag, creating a page of all events
+#
 # mtoc++ 1.3: - Changed the default value of SHOW_FILES to YES in order to avoid more
 #               confusion about what mtoc++ actually does (NOT replacing the 
 #               requirement to know doxygen)
