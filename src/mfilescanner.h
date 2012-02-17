@@ -132,6 +132,20 @@ public:
   friend std::ostream & operator<<(std::ostream & os, PropParams & pp);
 };
 
+struct PropExtraInformation
+{
+  bool dependent;
+  bool setter;
+  bool getter;
+
+public:
+  PropExtraInformation()
+    : dependent(false),
+    setter(false),
+    getter(false)
+  {};
+};
+
 struct MethodParams
 {
   bool abstr;
@@ -206,6 +220,8 @@ public:
 
 /**
  * @class MFileScanner
+ *
+ * @change{1,3,md,2012-02-15} improved documentation for dependent flags
  *
  * @change{1,3,md,2012-02-15} remove =0 for purely virtual class methods
  *
@@ -420,6 +436,7 @@ private:
 
   std::map<std::string,std::string> param_type_map_;
   bool undoced_prop_;
+  std::map<std::string, PropExtraInformation> specifier_;
 };
 
 /* vim: set et sw=2: */

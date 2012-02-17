@@ -1189,6 +1189,8 @@ debug_output("in funcbody: goto main", p);
               string s(tmp_p, p - tmp_p);
               if (s == "end")
                 fgoto classbody;
+              if (propertyparams_.dependent)
+                specifier_[s].dependent = true;
               property_list_.push_back(s);
               //            fout_ << propertyparams_.ccprefix() << " " << s;
               undoced_prop_ = true;
@@ -1240,11 +1242,11 @@ debug_output("in funcbody: goto main", p);
 
   #property body {{{4
   propertybody = (
-    ( [ \t]* . ( 'end' . [ \t;]* ) . ('%' . garble_comment_line_wo_eol )? . EOL )
-      @{
-         fgoto classbody;
-       }
-    |
+#    ( [ \t]* . ( 'end' . [ \t;]* ) . ('%' . garble_comment_line_wo_eol )? . EOL )
+#      @{
+#         fgoto classbody;
+#       }
+#    |
     (prop)
     |
     ( (empty_line) @{ end_of_property_doc(); fout_ << "\n";} )
@@ -1277,6 +1279,32 @@ debug_output("in funcbody: goto main", p);
     (EOL) => { fout_ << "\n"; };
 
     ('end' . [ \t]* ';'?) => {
+      std::map<std::string, PropExtraInformation>::iterator specIt;
+      for (specIt = specifier_.begin(); specIt != specifier_.end(); specIt++)
+      {
+        fout_ << "/** @var " << (*specIt).first << "\n *\n *";
+        if ( (*specIt).second.dependent)
+        {
+          if( (*specIt).second.getter && ! (*specIt).second.setter )
+          {
+            fout_ << "@note [readonly]\n *";
+          }
+        }
+        else
+        {
+          fout_ << "@note This property has custom functionality when its value is ";
+          if ((*specIt).second.getter)
+          {
+            fout_ << "retrieved";
+            if ((*specIt).second.setter)
+              fout_ << " or changed";
+          }
+          else if ((*specIt).second.setter)
+            fout_ << "changed";
+          fout_ << ".";
+        }
+        fout_ << "\n */\n";
+      }
       fout_ << "\n};\n";
       for(  list<string>::iterator it = namespaces_.begin();
             it != namespaces_.end(); ++it)
@@ -2858,8 +2886,13 @@ void MFileScanner::end_function()
     fout_ << "}\n";
   if(is_getter_ || is_setter_)
     fout_ << "*/\n";
-  if ( ( !docuheader_.empty() || runMode_.auto_add_class_properties )
-      && ( is_first_function_ || runMode_.generate_subfunction_documentation )
+  if(is_setter_)
+    specifier_[cfuncname_].setter = true;
+  if(is_getter_)
+    specifier_[cfuncname_].getter = true;
+
+  if (  ( !docuheader_.empty() || runMode_.auto_add_class_properties )
+     && ( is_first_function_ || runMode_.generate_subfunction_documentation )
      )
   {
     // is the first function?
@@ -2881,13 +2914,6 @@ void MFileScanner::end_function()
       cout_ingroup();
       fout_ << "\n  ";
     }
-    if(is_setter_ || is_getter_)
-    {
-      fout_ << "* @var " << cfuncname_ << "\n  ";
-      string temp = (is_setter_ ? "Setter" : "Getter");
-      fout_ << "* @par " << temp << " is implemented\n  *";
-    }
-    else
     {
       // specify the @fn part
       fout_ << "* @fn ";
