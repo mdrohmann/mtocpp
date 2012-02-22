@@ -6,6 +6,11 @@
 #include <iostream>
 #include <algorithm>
 #include <iterator>
+#ifndef WIN32
+#include <linux/limits.h>
+#else
+#define PATH_MAX 4096
+#endif
 
 using std::cerr;
 using std::cout;
@@ -65,7 +70,7 @@ int main(int argc, char ** argv)
       fcin = &fin;
       filename = argv[1];
     }
-    catch (std::ifstream::failure e)
+    catch (std::ifstream::failure &e)
     {
       cout << "Exception opening/reading file: " << argv[1] << "\n";
       usage();
