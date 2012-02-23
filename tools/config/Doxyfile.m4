@@ -51,7 +51,11 @@
 ###########################################################################
 ################## List of changes: #######################################
 #
-# mtoc++ 1.4: - added alias for an @events tag, creating a page of all events
+# mtoc++ 1.4: - Added alias for an @events tag, creating a page of all events
+#			  - Changed naming convention for alias-tags new and change as newer doxygen
+#               versions seem not to recognize \1\2-like combinations of arguments any more (?)
+#               now pages named "newfeat\1_\2" with underscore are created, please update your static
+#               references in your misc documentation files
 #
 # mtoc++ 1.3: - Changed the default value of SHOW_FILES to YES in order to avoid more
 #               confusion about what mtoc++ actually does (NOT replacing the 
@@ -264,26 +268,6 @@ SEPARATE_MEMBER_PAGES  = NO
 # Doxygen uses this value to replace tabs by spaces in code fragments.
 
 TAB_SIZE               = 8
-
-# This tag can be used to specify a number of aliases that acts
-# as commands in the documentation. An alias has the form "name=value".
-# For example adding "sideeffect=\par Side Effects:\n" will allow you to
-# put the command \sideeffect (or @sideeffect) in the documentation, which
-# will result in a user-defined paragraph with heading "Side Effects:".
-# You can put \n's in the value part of an alias to insert newlines.
-
-ALIASES                = "synupdate=\xrefitem synupdate \"Syntax Update\" \"Syntax needs to be updated\"" \
-                         "docupdate=\xrefitem docupdate \"Documentation Update\" \"Documentation needs to be updated\"" \
-                         "event=\xrefitem event \"Events\" \"List of all Events\"" \
-                         "default=\par Default:\n" \
-                         "type=<br><b>Type</b>: " \
-                         "changexref{2}=\xrefitem changelog\1\2 \"Change in \1.\2\" \"Changes in _ProjectName_ Version \1.\2\"" \
-                         "change{4} = \changexref{\1,\2} (\ref \3, \4) " \
-                         "change{3} = \changexref{\1,\2} (\ref \3, undated) " \
-                         "newxref{2}=\xrefitem newfeat\1\2 \"New in \1.\2\" \"New features in _ProjectName_ Version \1.\2\"" \
-                         "new{4} = \newxref{\1,\2} (\ref \3, \4) " \
-                         "new{3} = \newxref{\1,\2} (\ref \3, undated) " \
-                         "propclass{1}=\xrefitem propclass_\1 \"Property class \1\" \"Properties with level \1\""
 
 # Set the OPTIMIZE_OUTPUT_FOR_C tag to YES if your project consists of C
 # sources only. Doxygen will then generate output that is more tailored for C.
@@ -1744,6 +1728,26 @@ DOT_CLEANUP            = YES
 ############### MTOC++ RELATED CONFIGURATION ##############################
 # The following tags should not be changed in order to keep mtoc++ running
 ###########################################################################
+# This tag can be used to specify a number of aliases that acts
+# as commands in the documentation. An alias has the form "name=value".
+# For example adding "sideeffect=\par Side Effects:\n" will allow you to
+# put the command \sideeffect (or @sideeffect) in the documentation, which
+# will result in a user-defined paragraph with heading "Side Effects:".
+# You can put \n's in the value part of an alias to insert newlines.
+
+ALIASES                = "synupdate=\xrefitem synupdate \"Syntax Update\" \"Syntax needs to be updated\"" \
+                         "docupdate=\xrefitem docupdate \"Documentation Update\" \"Documentation needs to be updated\"" \
+                         "event=\xrefitem event \"Events\" \"List of all Events\"" \
+                         "default=\par Default:\n" \
+                         "type=<br><b>Type</b>: " \
+                         "changexref{2}=\xrefitem changelog\1_\2 \"Change in \1.\2\" \"Changes in _ProjectName_ Version \1.\2\"" \
+                         "change{4} = \changexref{\1,\2} (\ref \3, \4) " \
+                         "change{3} = \changexref{\1,\2} (\ref \3, undated) " \
+                         "newxref{2}=\xrefitem newfeat\1_\2 \"New in \1.\2\" \"New features in _ProjectName_ Version \1.\2\"" \
+                         "new{4} = \newxref{\1,\2} (\ref \3, \4) " \
+                         "new{3} = \newxref{\1,\2} (\ref \3, undated) " \
+                         "propclass{1}=\xrefitem propclass_\1 \"Property class \1\" \"Properties with level \1\""
+                         
 # assign C++-styled code interpretion to .m files
 EXTENSION_MAPPING = .m=C++
 

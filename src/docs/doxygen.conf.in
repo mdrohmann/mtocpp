@@ -196,10 +196,10 @@ TAB_SIZE               = 8
 ALIASES                = "synupdate=\xrefitem synupdate \"Syntax Update\" \"Syntax needs to be updated\"" \
                          "docupdate=\xrefitem docupdate \"Documentation Update\" \"Documentation needs to be updated\"" \
                          "event=\xrefitem event \"Events\" \"List of all Events\"" \
-                         "changexref{2}=\xrefitem changelog\1\2 \"Change in \1.\2\" \"Changes in mtoc++ \1.\2\"" \
+                         "changexref{2}=\xrefitem changelog\1_\2 \"Change in \1.\2\" \"Changes in mtoc++ \1.\2\"" \
                          "change{4} = \changexref{\1,\2} (\ref \3, \4) " \
                          "change{3} = \changexref{\1,\2} (\ref \3, undated) " \
-                         "newxref{2}=\xrefitem newfeat\1\2 \"New in \1.\2\" \"New features in mtoc++ \1.\2\"" \
+                         "newxref{2}=\xrefitem newfeat\1_\2 \"New in \1.\2\" \"New features in mtoc++ \1.\2\"" \
                          "new{4} = \newxref{\1,\2} (\ref \3, \4) " \
                          "new{3} = \newxref{\1,\2} (\ref \3, undated) " \
 

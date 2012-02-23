@@ -3,9 +3,10 @@
  * @short Changelog and new feature list for mtoc++
  *
  * Here are all the changes/new features sorted by versions of mtoc++:
- * - @subpage newfeat01  - @subpage changelog01
- * - @subpage newfeat12  - @subpage changelog12
- * - @subpage newfeat13  - @subpage changelog13
+ * - @subpage newfeat0_1  - @subpage changelog0_1
+ * - @subpage newfeat1_2  - @subpage changelog1_2
+ * - @subpage newfeat1_3  - @subpage changelog1_3
+ * - @subpage newfeat1_4  - @subpage changelog1_4
  *
  * @attention The repeated occurence of the new features/changes in this
  * specific site below is just due to the fact that the mtoc++ features/changes
@@ -15,7 +16,13 @@
  * as an example. So the list below is not necessarily complete, but the sites
  * referenced above contain all new features / changes!
  *
- * @new{1,4,md,2012-02-17} Started mtoc++ 1.4.
+ * @new{1,4,md,2012-02-17}
+ *- Started mtoc++ 1.4.
+ *- Added alias for an "events" tag, creating a page of all events in default documentation
+ *- Changed naming convention for alias-tags new and change as newer doxygen
+ *  versions seem not to recognize \1\2-like combinations of arguments any more (?)
+ *  now pages named "newfeat\1_\2" with underscore are created, please update your static
+ *  references in your misc documentation files
  *
  * @change{1,3,dw,2012-01-16} Changed the \c SHOW_FILES default value in the
  * doxygen configuration file from "NO" to "YES".
@@ -56,36 +63,45 @@
  * @change{1,2,dw,2011-11-07} Reordered the source code files and tools in more
  * concise folders.
  *
- * @page newfeat01 New features in mtoc++ 0.1
+ * @page newfeat0_1 New features in mtoc++ 0.1
  * @short Demo features of the demo classes and examples
  *
- * See also @ref changelog01
+ * See also @ref changelog0_1
  *
- * @page changelog01 Changes in mtoc++ 0.1
+ * @page changelog0_1 Changes in mtoc++ 0.1
  * @short Demo changes of the demo classes and examples
  *
- * See also @ref newfeat01
+ * See also @ref newfeat0_1
  *
- * @page newfeat12 New features in mtoc++ 1.2
+ * @page newfeat1_2 New features in mtoc++ 1.2
  * @short First "stable" release with windows/unix support.
  *
- * See also @ref changelog12
+ * See also @ref changelog1_2
  *
  *
- * @page changelog12 Changes in mtoc++ 1.2
+ * @page changelog1_2 Changes in mtoc++ 1.2
  * @short First "stable" release with windows/unix support.
  *
- * See also @ref newfeat12
+ * See also @ref newfeat1_2
  *
- * @page newfeat13 New features in mtoc++ 1.3
+ * @page newfeat1_3 New features in mtoc++ 1.3
+ * @short Improved stability for Windows platforms, event handling
+ *
+ * See also @ref changelog1_3
+ *
+ * @page changelog1_3 Changes in mtoc++ 1.3
+ * @short Improved stability for Windows platforms, event handling
+ *
+ * See also @ref newfeat1_3
+ *
+ * @page newfeat1_4 New features in mtoc++ 1.4
  * @short Current development
  *
- * See also @ref changelog13
+ * See also @ref changelog1_4
  *
  *
- * @page changelog13 Changes in mtoc++ 1.3
+ * @page changelog1_4 Changes in mtoc++ 1.4
  * @short Current development
  *
- * See also @ref newfeat13
- *
+ * See also @ref newfeat1_4
  */

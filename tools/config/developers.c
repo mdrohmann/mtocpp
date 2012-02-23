@@ -13,13 +13,13 @@
  * @section md Martin Drohmann
  * http://wwwmath.uni-muenster.de/u/martin.drohmann
  *
- * - Lead Programmer
- * - Ragel expert :-)
+ *- Lead Programmer
+ *- Ragel expert :-)
  *
  * @section dw Daniel Wirtz
  * http://www.agh.ians.uni-stuttgart.de/orga/people/wirtz
  *
- * - Programming
- * - Maintenance Matlab File Exchange
- * - Windows binaries (VS2010)
+ *- Programming
+ *- Maintenance Matlab File Exchange
+ *- Windows binaries (VS2010)
  */
