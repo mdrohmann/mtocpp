@@ -223,6 +223,9 @@ public:
 /**
  * @class MFileScanner
  *
+ * @change{1,4,md,2012-02-24} ignore comments in front of classdef (fixes
+ * Grrr message from Jesse Hopkins)
+ *
  * @change{1,3,md,2012-02-17} added events section
  *
  * @change{1,3,md,2012-02-15} improved documentation for dependent flags
