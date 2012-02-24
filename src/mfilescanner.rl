@@ -1609,7 +1609,7 @@ debug_output("in funcbody: goto main", p);
                      fgoto funct;
                     }
       | 'classdef' @{
-                     p=tmp_p;
+                     p-=8;
                      fgoto classdef;
                     }
       ) )
