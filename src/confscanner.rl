@@ -141,7 +141,6 @@ using std::ifstream;
     cerr << " on top of globlist_stack " << endl;*/
     //cerr_stack();
 //    cerr << "\n";
-    // TODO: use globlist_map
     globlist_stack_.back().push_back(tmp_string);
   }
 
