@@ -21,6 +21,7 @@
  * - @subpage tips
  * - @subpage changes
  * - @subpage licensing
+ * - @subpage troubleshooting
  *
  * @section Downloads
  * For all available downloads check @ref download. The most current (official) release can be downloaded below.

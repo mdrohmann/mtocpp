@@ -6,7 +6,7 @@
  * - Source tarball
  * - Windows binaries
  * - Precompiled Debian packages
- * - Soon: Via the git versioning system
+ * - Via the <a href="http://git-scm.com/" target="_blank">GIT</a> versioning system
  *
  * Once you've obtained your copy check out the @ref install
  *
@@ -14,33 +14,15 @@
  * which can be found <a href="http://www.microsoft.com/download/en/confirmation.aspx?id=8328" target="_blank">here</a>.
  *
  * @section git Obtaining mtoc++ via the GIT versioning system
- * In order to always stay up-to-date with the latest mtoc++ versions, simply pull it from our git repository and
- * recompile it when a new release is available.
+ * In order to always stay up-to-date with the latest (development) mtoc++ versions, simply pull it from our GIT repository and
+ * recompile it when a new release is available. For more information about GIT checkout their <a href="http://git-scm.com/" target="_blank">website</a>
  *
- * This possibility will be provided soon.
+ * The GIT repository can currently be found at http://www.ians.uni-stuttgart.de:8080/agh/gitblit/git/software/matlab/mtocpp.
  *
- * @section mtoc14 mtoc++ 1.4 (current development)
+ * @section mtoc14 mtoc++ 1.4 (latest release)
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.4.tar.gz">Source tarball</a>
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win32bins_1.4.zip">Windows binaries (32bit)</a>
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win32_1.4.zip">Windows binaries (32bit)</a> (including tools)
- *
- * @section mtoc13 mtoc++ release 1.3 (2012/02/17)
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.3.tar.gz">Source tarball</a>
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win32bins_1.3.zip">Windows binaries (32bit)</a>
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win32_1.3.zip">Windows binaries (32bit)</a> (including tools)
- * - <a href="http://www.morepas.org/software/mtocpp/docs/1.3/">Documentation for mtoc++ 1.3</a>
- *
- * @section mtoc12 mtoc++ release 1.2 (2011/11/28)
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.2.tar.gz">Source tarball</a>
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win32bins_1.2.zip">Windows binaries (32bit)</a>
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win32_1.2.zip">Windows binaries (32bit)</a> (including tools)
- * - <a href="http://www.morepas.org/software/mtocpp/docs/1.2/">Documentation for mtoc++ 1.2</a>
- *
- * @section mtoc111 mtoc++ release 1.1.1 (2011/09/05)
- * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Linux.deb">Debian package for (Ubuntu/Debian/...)</a>
- * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Linux.tar.gz">Build Tarball for Linux</a>
- * - <a href="http://wwwmath.uni-muenster.de/u/martin.drohmann/mtocpp/MTOC++-1.1.1-Source.tar.gz">Source Tarball</a>
- *
  *
  * @page licensing mtoc++ license conditions
  * @short This software is available under the BSD license http://www.opensource.org/licenses/bsd-license.php

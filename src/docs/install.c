@@ -41,7 +41,7 @@
  *
  * @subsection inst_binaries_unix Unix binaries
  * For unix users we recommend to compile the sources following @ref inst_comp.
- * However, on the download site you can also find some precompiled linux binaries/packages.
+ * However, we also plan to provide some precompiled linux binaries/packages soon.
  *
  * If you find a matching choice you can use it and all you have to do is to ensure that the binaries can be found on the environment PATH.
  *
@@ -71,6 +71,9 @@
  * make install
  * @endcode
  *
+ * @attention Please be aware that, depending on your installation location, you might need different access/write permissions.
+ * For most cases, a @code sudo make install@endcode will do the job if the above snippet fails.
+ *
  * @subsection inst_cust CMake options: Installation folders and customization
  *
  * @note These options are explained for the linux case, for windows the CMake GUI allows to set the relevant options.
@@ -97,4 +100,17 @@
  * On Windows, dedendent on your compiler, you will either have makefiles for the test cases or a separate Visual Studio project to run the tests.
  *
  * Have fun!
+ *
+ * @page troubleshooting Troubleshooting
+ * @short Some hopefully useful hints when things dont go as they should!
+ *
+ * @section sec_ts Troubleshooting mtoc++
+ * @attention The first and most important message: <b>KNOWLEDGE OF DOXYGEN IS ESSENTIAL!</b>
+ *
+ * mtoc++ is designed as a filter for MatLab m-files, so that they can be processed by doxygen as if they were C source files.
+ * Everything else regarding tags, conventions and possible formatting of display is completely defined by Doxygen.
+ * So, unless explicitly explained as "feature" of mtoc++ here, one should look into Doxygen's <a href="http://www.stack.nl/~dimitri/doxygen/manual.html" target="_blank">documentation pages</a>
+ * first before complaining about some stuff that mtoc++ surprisingly cannot do.
+ *
+ * In this context, the file @code Doxyfile.m4 @endcode included in the tools folder is essential to connect mtoc++ successfully to Doxygen.
  */
