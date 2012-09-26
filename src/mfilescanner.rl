@@ -1159,11 +1159,9 @@ debug_output("in funcbody: goto main", p);
    #}}}4
 
   matrix_or_cell := (
-      '\'' . ( [^'] | "\\\'")* . '\'' @{ fret; }
+      '[' . ( [^[{\]] | [[{] @{fhold; fcall matrix_or_cell;} )* . ']' @{ fret; }
       |
-      '[' . ( [^[{'\]] | [[{'] @{fhold; fcall matrix_or_cell;} )* . ']' @{ fret; }
-      |
-      '{' . ( [^[{}']  | [[{'] @{fhold; fcall matrix_or_cell;} )* . '}' @{ fret; }
+      '{' . ( [^[{}]  | [[{] @{fhold; fcall matrix_or_cell;} )* . '}' @{ fret; }
       );
 
   matrix = ([[{] @{fhold; fcall matrix_or_cell;} );
@@ -1188,7 +1186,38 @@ debug_output("in funcbody: goto main", p);
             ( ('=' . [ ]*) %{tmp_p2 = p;} . ( matrix | [^[{;\n%] | ('...'.[ \t]*.EOL) )* . (';' | EOL | '%' @{fhold; } ))
             @{
               defaultprop_ = string(tmp_p2, p - tmp_p2);
-              for (unsigned int i = 0; i < defaultprop_.length(); ++i)
+              string::size_type last_elem = defaultprop_.length() -1;
+              if(defaultprop_[0] == '\'' && defaultprop_[last_elem] == '\'')
+              {
+                defaultprop_[0] = '\"';
+                defaultprop_[last_elem] = '\"';
+              }
+              string::size_type first_paren = defaultprop_.find_first_of("([{");
+              string::size_type last_paren;
+              if (first_paren == string::npos)
+              {
+                first_paren = 1;
+                last_paren = last_elem;
+              }
+              else
+              {
+                last_paren = defaultprop_.find_last_of(")]}");
+                if (last_paren == string::npos)
+                  last_paren=last_elem-1;
+                else
+                {
+                  if((first_paren >0 && defaultprop_[first_paren] == '(') || defaultprop_[first_paren] == '{')
+                  {
+                    first_paren++;
+                    last_paren--;
+                  }
+                  defaultprop_.insert(first_paren, 1,'"');
+                  defaultprop_.insert(last_paren+2, 1,'"');
+                  first_paren++;
+                  last_paren++;
+                }
+              }
+              for (unsigned int i = first_paren; i < last_paren; ++i)
               {
                 if(defaultprop_[i] == '.' && defaultprop_[i+1] == '.' && defaultprop_[i+2] == '.')
                 {
@@ -1202,8 +1231,13 @@ debug_output("in funcbody: goto main", p);
                   defaultprop_[i] = '}'; */
                 else if(defaultprop_[i] == ';' && i < defaultprop_.length() - 1)
                   defaultprop_[i] = ',';
-                else if(defaultprop_[i] == '\'')
-                  defaultprop_[i] = '\"';
+                else if(defaultprop_[i] == '\"')
+                  defaultprop_[i] = '\'';
+                else if(defaultprop_[i] == '@')
+                {
+                  defaultprop_.insert(i, 1, '\\');
+                  ++i;
+                }
                 else if(defaultprop_[i] == '\n')
                 {
                   defaultprop_.insert(i, 1, '\\');
@@ -1575,7 +1609,7 @@ debug_output("in funcbody: goto main", p);
                      fgoto funct;
                     }
       | 'classdef' @{
-                     p=tmp_p;
+                     p-=8;
                      fgoto classdef;
                     }
       ) )

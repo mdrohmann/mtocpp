@@ -6,10 +6,14 @@
 #include <iostream>
 #include <algorithm>
 #include <iterator>
-#ifndef WIN32
-#include <linux/limits.h>
-#else
+#ifdef WIN32
 #define PATH_MAX 4096
+#else
+#ifdef __APPLE__
+#include <limits.h>
+#else
+#include <linux/limits.h>
+#endif
 #endif
 
 using std::cerr;
