@@ -63,18 +63,18 @@ matlabtypesubstitute mixed_access2 = "test";
   */
 
 
-matlabtypesubstitute SomeProp = struct("xi",[],"ti",[],"mui",[]);
+matlabtypesubstitute SomeProp = struct("'xi',[],'ti',[],'mui',[]");
 
 
-matlabtypesubstitute SomeOtherProp = struct(   \
-      "xi", [], "ti",    \
-      []);
+matlabtypesubstitute SomeOtherProp = struct("   \
+      'xi', [], 'ti',    \
+      []");
 
 
-matlabtypesubstitute SteadyStates = [[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0   \
+matlabtypesubstitute SteadyStates = "[[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0   \
       [0, 3.0824e-5, 0.1713]*models.pcd.BasePCDSystem.ya0   \
       [.2, 0.1990, 0.0070]*models.pcd.BasePCDSystem.xi0   \
-      [.2, 0.2, 0.0287]*models.pcd.BasePCDSystem.yi0];
+      [.2, 0.2, 0.0287]*models.pcd.BasePCDSystem.yi0]";
 /** @var SteadyStates
   * @brief  variable with very long default value
   *
@@ -83,10 +83,10 @@ matlabtypesubstitute SteadyStates = [[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSy
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
-  * <br/>@b Default: [[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0   \
+  * <br/>@b Default: "[[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0   \
       [0, 3.0824e-5, 0.1713]*models.pcd.BasePCDSystem.ya0   \
       [.2, 0.1990, 0.0070]*models.pcd.BasePCDSystem.xi0   \
-      [.2, 0.2, 0.0287]*models.pcd.BasePCDSystem.yi0]
+      [.2, 0.2, 0.0287]*models.pcd.BasePCDSystem.yi0]"
 */
 
 
@@ -131,18 +131,18 @@ static const matlabtypesubstitute cConstant = 3;
   * <br/>@b Default: 3
 */
 
-static const matlabtypesubstitute vectorConst = [ 1, 2, 3 ];
+static const matlabtypesubstitute vectorConst = "[ 1, 2, 3 ]";
 
-static const matlabtypesubstitute dConstant = { [ 1, 2, 3, 4], "test", [ 1 2, [ [3 [3 [3 4] 4] ] ] ] };
+static const matlabtypesubstitute dConstant = {" [ 1, 2, 3, 4], 'test', [ 1 2, [ [3 [3 [3 4] 4] ] ] ] "};
 /** @var dConstant
   * @brief  test
   *
   *
-  * <br/>@b Default: { [ 1, 2, 3, 4], "test", [ 1 2, [ [3 [3 [3 4] 4] ] ] ] }
+  * <br/>@b Default: {" [ 1, 2, 3, 4], 'test', [ 1 2, [ [3 [3 [3 4] 4] ] ] ] "}
 */
 
 
-static const matlabtypesubstitute dConstant = struct("a", [], "b", {"c", "d"}, "e", [1 2 3]);
+static const matlabtypesubstitute dConstant = struct("'a', [], 'b', {'c', 'd'}, 'e', [1 2 3]");
 
 
 public:
@@ -161,21 +161,21 @@ matlabtypesubstitute public_access2;
   */
 
 
-matlabtypesubstitute complexpropertywithoutsemicolon = [["af]adgdg"\
-        "adgadg"]];
+matlabtypesubstitute complexpropertywithoutsemicolon = "[['af]adgdg'\
+        'adgadg']]";
 matlabtypesubstitute followingpropwithoutsemicolon = 4;
 matlabtypesubstitute antoheroneWITH;
 
 
-matlabtypesubstitute complexpropertywithoutsemicolon_c = [["af]a"§/$"""dgdg"\
-        "adgadg"]];
+matlabtypesubstitute complexpropertywithoutsemicolon_c = "[['af]a'§/$'''dgdg'\
+        'adgadg']]";
 /** @var complexpropertywithoutsemicolon_c
   * @brief  with comments version!
   *  with comments version! GRR
   *
   *
-  * <br/>@b Default: [["af]a"§/$"""dgdg"\
-        "adgadg"]]
+  * <br/>@b Default: "[['af]a'§/$'''dgdg'\
+        'adgadg']]"
 */
 matlabtypesubstitute followingpropwithoutsemicolon_c = 4;
 /** @var followingpropwithoutsemicolon_c
