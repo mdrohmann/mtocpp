@@ -19,6 +19,7 @@
  * If you want to build mtoc++ from source, you will also need:
  * - Ragel: A finite-state machine compiler. Get at http://www.complang.org/ragel
  * - CMake: Cross-platform make. Get at http://www.cmake.org
+ * - dirent.h (We included a Visual Studio API implementation by Tony Ronkko for Windows)
  *
  * @section inst_binaries Using precompiled binaries
  * @subsection inst_binaries_win Windows users
@@ -53,6 +54,9 @@
  * For Windows compilation, you need a Windows C++ compiler (e.g. MinGW or Visual Studio). Then running
  * the CMake GUI allows you to choose a compiler, specify any CMake configuration settings and create the
  * makefiles/Visual Studio projects needed for compilation.
+ * Furthermore, we're using the \c dirent.h library for file access. As this is a linux library we've included a file
+ * \c dirent_msvc.h in our source, which implements the dirent api for Microsoft Visual Studio and was written by Tony Ronkko.
+ * More information and downloads can be found at http://www.softagalleria.net/dirent.php.
  *
  * The following procedure is an example of how to compile mtoc++ on a linux machine:
  * @code tar -xcvf mtocpp.tar.gz
