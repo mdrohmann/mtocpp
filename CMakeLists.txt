@@ -48,6 +48,11 @@ RAGEL_PARSER(src/mfilescanner)
 RAGEL_PARSER(src/confscanner)
 RAGEL_PARSER(src/postprocess)
 
+# Explicitly define where the binaries should go (needed for custom target documentation)
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR})
+
 # create mtocpp
 ADD_EXECUTABLE(mtocpp src/mtocpp.cc mfilescanner.cc confscanner.cc)
 # create mtocpp_post
@@ -59,14 +64,14 @@ IF(CMAKE_CROSSCOMPILING)
 ENDIF(CMAKE_CROSSCOMPILING)
 
 # add target for documentation
-ADD_CUSTOM_TARGET(doxygen ALL
-  COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf 1>/dev/null 2>&1
-  COMMAND ${PROJECT_BINARY_DIR}/mtocpp_post ${PROJECT_BINARY_DIR}/docs 1>/dev/null
-  COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/tabs.css ${PROJECT_BINARY_DIR}/docs
+ADD_CUSTOM_TARGET(documentation ALL
   COMMENT "Creating documentation... (see ${PROJECT_BINARY_DIR}/docs/doxygen.log for warnings)"
+  COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf
+  COMMAND ${PROJECT_BINARY_DIR}/mtocpp_post ${PROJECT_BINARY_DIR}/docs
+  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/tabs.css ${PROJECT_BINARY_DIR}/docs/
   DEPENDS mtocpp mtocpp_post
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/docs"
-  )
+)
 
 INSTALL(TARGETS mtocpp mtocpp_post DESTINATION bin)
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/License.txt DESTINATION ${CUSTOM_DOC_DIR})
