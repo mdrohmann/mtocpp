@@ -112,12 +112,41 @@
  * @short Some hopefully useful hints when things dont go as they should!
  *
  * @section sec_ts Troubleshooting mtoc++
- * @attention The first and most important message: <b>KNOWLEDGE OF DOXYGEN IS ESSENTIAL!</b>
+ * @subsection ssec_doxyknowledge KNOWLEDGE OF DOXYGEN IS ESSENTIAL!
  *
  * mtoc++ is designed as a filter for MatLab m-files, so that they can be processed by doxygen as if they were C source files.
  * Everything else regarding tags, conventions and possible formatting of display is completely defined by Doxygen.
  * So, unless explicitly explained as "feature" of mtoc++ here, one should look into Doxygen's <a href="http://www.stack.nl/~dimitri/doxygen/manual.html" target="_blank">documentation pages</a>
  * first before complaining about some stuff that mtoc++ surprisingly cannot do.
  *
+ * So, if you want to connect mtoc++ to your MatLab project without using the MatlabDocMaker, you need to understand some of the principals on how doxygen and mtoc++ work together.
  * In this context, the file @code Doxyfile.m4 @endcode included in the tools folder is essential to connect mtoc++ successfully to Doxygen.
+ * Everything related to mtoc++ has been put to the very bottom of the file:
+ * @code
+ * EXTENSION_MAPPING = .m=C++
+ * INPUT             = _SourceDir_ _ConfDir_
+ * FILE_PATTERNS     = *.m
+ * FILTER_PATTERNS   = *.m="_ConfDir_`'_FileSep_`'_MTOCFILTER_"
+ * @endcode
+ * Here, the underscored values will get replaced by the MatlabDocMaker in order to insert the correct values.
+ * Essentially:
+ * - \c EXTENSION_MAPPING tells doxygen to regard \c .m-Files as if they were \c C++ files, style-wise.
+ * - \c INPUT tells doxygen where to look for files.
+ * - \c FILE_PATTERNS lets doxygen also look for \c .m-Files.
+ * - \c FILTER_PATTERNS is the most important line of the configuration. Here, you need to define scripts that should be called by doxygen before certain files are processed.
+ * The MatlabDocMaker automatically generates and inserts a correct script there in order to "inject" mtoc++ into doxygen for every file read by doxygen.
+ * If you dont use the tool, you will need to define your own filter script that passes the argument to mtoc++, using a possible configuration file.
+ *
+ * @subsection ssec_debug Debugging mtoc++
+ * For hard cases like segfaults there is also hope!
+ *
+ * You can build your mtoc++ binaries with the \c Debug build type (starting in the source folder):
+ * @code
+ * mkdir build
+ * cd build
+ * cmake -DCMAKE_BUILD_TYPE=Debug ..
+ * make
+ * @endcode
+ * Then, send the compiled binaries along with the used source code to us and we will try to figure out what the heck is wrong with it!
+ *
  */
