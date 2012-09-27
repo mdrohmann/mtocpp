@@ -36,6 +36,7 @@
 # - _ConfDir_: The configuration directory for mtoc++, containing this file
 #       and some more.
 # - _FileSep_: The file separator character, "/" for linux and "\" for windows.
+# - _HaveDot_: "YES" or "NO" depending on automatic GraphViz detection on MatlabDocMaker.create
 # Use these tags wherever you would insert the respective values.
 #
 # Furthermore, there are some settings that are included as convenience
@@ -1573,7 +1574,7 @@ HIDE_UNDOC_RELATIONS   = YES
 # toolkit from AT&T and Lucent Bell Labs. The other options in this section
 # have no effect if this option is set to NO (the default)
 
-HAVE_DOT               = NO
+HAVE_DOT               = _HaveDot_
 
 # The DOT_NUM_THREADS specifies the number of dot invocations doxygen is
 # allowed to run in parallel. When set to 0 (the default) doxygen will
