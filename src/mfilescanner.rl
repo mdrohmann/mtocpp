@@ -1585,18 +1585,23 @@ debug_output("in funcbody: goto main", p);
   (
     # either we find a function or classdef definition with a possibly
     # preceding comment block or we have a script
-    ( any @{ fhold; tmp_p = p; } .
+    ( any
+       @{
+          fhold;
+          tmp_p = p;
+        }
+      .
     (
       [ \t]*. '%' . (any - '\n')* . EOL
       | [ \t]*. EOL
     )*
     . [\t]*
     . ( 'function' @{
-                     p=tmp_p;
+                     p-=8;
                      char *tp;
-                     for(tp=p-9; *tp == ' ' || *tp == '\t'; --tp)
+                     for(tp=p; *tp == ' ' || *tp == '\t'; --tp)
                        ;
-                     funcindent_ = (int)(p - 9 - tp);
+                     funcindent_ = (int)(p - tp);
 #if DEBUG
                      {
                        ostringstream oss;
