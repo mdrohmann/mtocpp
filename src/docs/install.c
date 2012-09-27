@@ -81,6 +81,15 @@
  * @attention Please be aware that, depending on your installation location, you might need different access/write permissions.
  * For most cases, a @code sudo make install@endcode will do the job if the above snippet fails.
  *
+ * @subsection inst_comp_apple Apple hints
+ * For installation under recent Apple OS like 10.8.2, the <a href="http://www.macports.org/">MacPorts</a> project is a very useful tool
+ * to obtain prerequisites for mtoc++ compilation. Once installed, get \c ragel and \c doxygen via
+ * @code
+ * sudo port
+ * > install ragel
+ * > install doxygen
+ * @endcode
+ *
  * @subsection inst_cust CMake options: Installation folders and customization
  *
  * @note These options are explained for the linux case, for windows the CMake GUI allows to set the relevant options.
