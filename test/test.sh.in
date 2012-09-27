@@ -22,13 +22,13 @@ function doit() {
 
 FILES="test/+grid/+rect/@rectgrid/*.m test/+grid/+rect/doxygen_in_namespace.m ./*.m"
 
-cd @PROJECT_SOURCE_DIR@/test
+cd @CMAKE_CURRENT_SOURCE_DIR@/test
 
-if [ -x @PROJECT_BINARY_DIR@/mtocpp ];
+if [ -x @CMAKE_CURRENT_BINARY_DIR@/mtocpp ];
 then
-    MTOCPP=@PROJECT_BINARY_DIR@/mtocpp
+    MTOCPP=@CMAKE_CURRENT_BINARY_DIR@/mtocpp
 else
-    MTOCPP="wine @PROJECT_BINARY_DIR@/mtocpp.exe"
+    MTOCPP="wine @CMAKE_CURRENT_BINARY_DIR@/mtocpp.exe"
 fi
 
 doit ""

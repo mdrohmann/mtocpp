@@ -1,4 +1,4 @@
-# DOXYGEN CONFIGURATION FILE (Doxygen version => 1.7.3)
+# DOXYGEN CONFIGURATION FILE (Doxygen version => 1.8.2)
 #
 # IMPORTANT NOTICE: This file is included with the tool "mtoc++", and contains some changes
 # in order to make mtoc++ run together with doxygen. The settings in this file are a default
@@ -18,6 +18,9 @@
 #
 # You probably want to change the values for PROJECT_NAME, PROJECT_BRIEF and
 # PROJECT_LOGO as they are of course custom to each project.
+#
+# Depending on the output preferred style, checkout the 
+# OPTIMIZE_OUTPUT_FOR_C and OPTIMIZE_OUTPUT_FOR_JAVA settings.
 #
 # Most importantly, this file gets processed (when using our tools, e.g. 
 # MatlabDocMaker) by m4 in order to replace some values:
@@ -50,6 +53,8 @@
 #
 ###########################################################################
 ################## List of changes: #######################################
+#
+# mtoc++ 1.4: - Updated the doxyfile config to version 1.8.
 #
 # mtoc++ 1.4: - Added alias for an @events tag, creating a page of all events
 #			  - Changed naming convention for alias-tags new and change as newer doxygen
@@ -267,7 +272,14 @@ SEPARATE_MEMBER_PAGES  = NO
 # The TAB_SIZE tag can be used to set the number of spaces in a tab.
 # Doxygen uses this value to replace tabs by spaces in code fragments.
 
-TAB_SIZE               = 8
+TAB_SIZE               = 4
+
+# This tag can be used to specify a number of word-keyword mappings (TCL only).
+# A mapping has the form "name=value". For example adding
+# "class=itcl::class" will allow you to use the command class in the
+# itcl::class meaning.
+
+TCL_SUBST              =
 
 # Set the OPTIMIZE_OUTPUT_FOR_C tag to YES if your project consists of C
 # sources only. Doxygen will then generate output that is more tailored for C.
@@ -294,6 +306,22 @@ OPTIMIZE_FOR_FORTRAN   = NO
 # VHDL.
 
 OPTIMIZE_OUTPUT_VHDL   = NO
+
+# If MARKDOWN_SUPPORT is enabled (the default) then doxygen pre-processes all
+# comments according to the Markdown format, which allows for more readable
+# documentation. See http://daringfireball.net/projects/markdown/ for details.
+# The output of markdown processing is further processed by doxygen, so you
+# can mix doxygen, HTML, and XML commands with Markdown formatting.
+# Disable only in case of backward compatibilities issues.
+
+MARKDOWN_SUPPORT       = YES
+
+# When enabled doxygen tries to link words that correspond to documented classes,
+# or namespaces to their corresponding documentation. Such a link can be
+# prevented in individual cases by by putting a % sign in front of the word or
+# globally by setting AUTOLINK_SUPPORT to NO.
+
+AUTOLINK_SUPPORT       = YES
 
 # If you use STL classes (i.e. std::string, std::vector, etc.) but do not want
 # to include (a tag file for) the STL sources as input, then you should
@@ -364,6 +392,17 @@ TYPEDEF_HIDES_STRUCT   = NO
 # corresponding to a cache size of 2^16 = 65536 symbols
 
 SYMBOL_CACHE_SIZE      = 0
+
+# Similar to the SYMBOL_CACHE_SIZE the size of the symbol lookup cache can be
+# set using LOOKUP_CACHE_SIZE. This cache is used to resolve symbols given
+# their name and scope. Since this can be an expensive process and often the
+# same symbol appear multiple times in the code, doxygen keeps a cache of
+# pre-resolved symbols. If the cache is too small doxygen will become slower.
+# If the cache is too large, memory is wasted. The cache size is given by this
+# formula: 2^(16+LOOKUP_CACHE_SIZE). The valid range is 0..9, the default is 0,
+# corresponding to a cache size of 2^16 = 65536 symbols.
+
+LOOKUP_CACHE_SIZE      = 0
 
 #---------------------------------------------------------------------------
 # Build related configuration options
@@ -567,12 +606,6 @@ MAX_INITIALIZER_LINES  = 30
 # list will mention the files that were used to generate the documentation.
 
 SHOW_USED_FILES        = YES
-
-# If the sources in your project are distributed over multiple directories
-# then setting the SHOW_DIRECTORIES tag to YES will show the directory hierarchy
-# in the documentation. The default is NO.
-
-SHOW_DIRECTORIES       = NO
 
 # Set the SHOW_FILES tag to NO to disable the generation of the Files page.
 # This will remove the Files entry from the Quick Index and from the
@@ -915,12 +948,6 @@ HTML_COLORSTYLE_GAMMA  = 80
 
 HTML_TIMESTAMP         = YES
 
-# If the HTML_ALIGN_MEMBERS tag is set to YES, the members of classes,
-# files or namespaces will be aligned in HTML using tables. If set to
-# NO a bullet list will be used.
-
-HTML_ALIGN_MEMBERS     = YES
-
 # If the HTML_DYNAMIC_SECTIONS tag is set to YES then the generated HTML
 # documentation will contain sections that can be hidden and shown after the
 # page has loaded. For this to work a browser that supports
@@ -1102,11 +1129,6 @@ ENUM_VALUES_PER_LINE   = 4
 # Windows users are probably better off using the HTML help feature.
 
 GENERATE_TREEVIEW      = ALL
-
-# By enabling USE_INLINE_TREES, doxygen will generate the Groups, Directories,
-# and Class Hierarchy pages using a tree view instead of an ordered list.
-
-USE_INLINE_TREES       = NO
 
 # If the treeview is enabled (see GENERATE_TREEVIEW) then this tag can be
 # used to set the initial width (in pixels) of the frame in which the tree
@@ -1551,7 +1573,7 @@ HIDE_UNDOC_RELATIONS   = YES
 # toolkit from AT&T and Lucent Bell Labs. The other options in this section
 # have no effect if this option is set to NO (the default)
 
-HAVE_DOT               = YES
+HAVE_DOT               = NO
 
 # The DOT_NUM_THREADS specifies the number of dot invocations doxygen is
 # allowed to run in parallel. When set to 0 (the default) doxygen will

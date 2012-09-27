@@ -16,6 +16,12 @@
  * as an example. So the list below is not necessarily complete, but the sites
  * referenced above contain all new features / changes!
  *
+ * @change{1,4,dw,2012-09-27} Optimized compilation under Visual Studio 2010, now can also build the mtoc++ documentation locally.
+ *
+ * @change{1,4,md,2012-09-27}
+ * - Added check for HAVE_DOT in doxygen.conf.in
+ * - Bugfix for function-only M-files reported by Francois Rongere
+ *
  * @new{1,4,md,2012-02-17}
  *- Started mtoc++ 1.4.
  *- Added alias for an "events" tag, creating a page of all events in default documentation
