@@ -27,28 +27,28 @@ ENDIF(DOXYGEN_DOT_FOUND)
 
 # files that need configuration...
 CONFIGURE_FILE(
-  "${PROJECT_SOURCE_DIR}/test/test.sh.in"
-  "${PROJECT_BINARY_DIR}/test.sh"
+  "${CMAKE_CURRENT_SOURCE_DIR}/test/test.sh.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/test.sh"
   @ONLY
   )
 
 CONFIGURE_FILE(
-  "${PROJECT_SOURCE_DIR}/src/config.h.in"
-  "${PROJECT_BINARY_DIR}/config.h"
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/config.h"
   )
 
 CONFIGURE_FILE(
-  "${PROJECT_SOURCE_DIR}/test/mtoc.sh.in"
-  "${PROJECT_SOURCE_DIR}/test/mtoc.sh"
+  "${CMAKE_CURRENT_SOURCE_DIR}/test/mtoc.sh.in"
+  "${CMAKE_CURRENT_SOURCE_DIR}/test/mtoc.sh"
   )
 
 CONFIGURE_FILE(
-  "${PROJECT_SOURCE_DIR}/src/docs/doxygen.conf.in"
+  "${CMAKE_CURRENT_SOURCE_DIR}/src/docs/doxygen.conf.in"
   "${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf"
   )
 
 # pathes where to look for header files
-INCLUDE_DIRECTORIES("${PROJECT_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/src")
+INCLUDE_DIRECTORIES("${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 # Ragel preprocessing
 RAGEL_PARSER(src/mfilescanner)
@@ -56,9 +56,9 @@ RAGEL_PARSER(src/confscanner)
 RAGEL_PARSER(src/postprocess)
 
 # Explicitly define where the binaries should go (needed for custom target documentation)
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${PROJECT_BINARY_DIR})
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${PROJECT_BINARY_DIR})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_BINARY_DIR})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_BINARY_DIR})
 
 # create mtocpp
 ADD_EXECUTABLE(mtocpp src/mtocpp.cc mfilescanner.cc confscanner.cc)
@@ -72,10 +72,10 @@ ENDIF(CMAKE_CROSSCOMPILING)
 
 # add target for documentation
 ADD_CUSTOM_TARGET(documentation ALL
-  COMMENT "Creating documentation... (see ${PROJECT_BINARY_DIR}/docs/doxygen.log for warnings)"
+  COMMENT "Creating documentation... (see ${CMAKE_CURRENT_BINARY_DIR}/docs/doxygen.log for warnings)"
   COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf
-  COMMAND ${PROJECT_BINARY_DIR}/mtocpp_post ${PROJECT_BINARY_DIR}/docs
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/tabs.css ${PROJECT_BINARY_DIR}/docs/
+  COMMAND ${CMAKE_CURRENT_BINARY_DIR}/mtocpp_post ${CMAKE_CURRENT_BINARY_DIR}/docs
+  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/tabs.css ${CMAKE_CURRENT_BINARY_DIR}/docs/
   DEPENDS mtocpp mtocpp_post
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/docs"
 )
@@ -83,14 +83,14 @@ ADD_CUSTOM_TARGET(documentation ALL
 INSTALL(TARGETS mtocpp mtocpp_post DESTINATION bin)
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/License.txt DESTINATION ${CUSTOM_DOC_DIR})
 #INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/mtocpp.conf.example DESTINATION ${CUSTOM_DOC_DIR})
-INSTALL(DIRECTORY ${PROJECT_BINARY_DIR}/docs/ DESTINATION ${CUSTOM_DOC_DIR})
+INSTALL(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/docs/ DESTINATION ${CUSTOM_DOC_DIR})
 
 # add test target: test examples
-ADD_TEST(MTOCPP_TEST "${PROJECT_BINARY_DIR}/test.sh")
+ADD_TEST(MTOCPP_TEST "${CMAKE_CURRENT_BINARY_DIR}/test.sh")
 SET_TESTS_PROPERTIES(MTOCPP_TEST
   PROPERTIES FAIL_REGULAR_EXPRESSION "(failed)")
 
-ADD_TEST(NAME MTOCPP_DOXYTEST COMMAND ${DOXYGEN_EXECUTABLE} "${PROJECT_SOURCE_DIR}/test/doxygen.conf")
+ADD_TEST(NAME MTOCPP_DOXYTEST COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/test/doxygen.conf")
 # enable dashboard scripting
 INCLUDE (CTest)
 
