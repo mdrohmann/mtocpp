@@ -13,7 +13,7 @@
  *
  * See the @ref examples.Class class for detailed examples on how to use mtoc++ with Matlab.
  * The documentation has been created using mtoc++.
- * 
+ *
  * @section Contents
  * - @subpage download
  * - @subpage install

@@ -4,17 +4,65 @@
  *
  * Make sure you have followed the @ref install.
  *
- * As \c mtoc++ itself is only a filter to plug into doxygen, there is little sense in calling the binaries directly.
- * Thus, mtoc++ comes with a series of tools that take over the documentation generation process for different interfaces.
- * Those tools can be found inside the \c <mtoc++-source-dir>/tools folder.
- *
  * @par Contents
+ * - @ref tools_doc
+ *  - @ref tools_docmaker
+ *  - @ref tools_direct
+ *  - @ref tools_python
  * - @ref tools_config
  *  - @ref config_doxy
  *  - @ref config_mtocpp
  *  - @ref config_latex
- * - @ref tools_docmaker
- * - @ref tools_python
+ *
+ * @section tools_doc Documentation creation
+ * As \c mtoc++ itself is only a filter to plug into doxygen, there is little sense in calling the binaries directly.
+ *
+ * Thus, mtoc++ comes with a series of tools that take over the documentation generation process for different interfaces.
+ *
+ * Those tools can be found inside the \c <mtoc++-source-dir>/tools folder.
+ *
+ * @note At some stage you will need to have access to the involved binaries like \c doxygen, \c mtocpp, \c mtocpp_post or \c latex.
+ * It is your responsibility to ensure the availability of the binaries in whatever environment you want to create the documentation.
+ * The most obvious way is to place all binaries inside a directory contained in your local PATH variable (both unix/windows).
+ * We've had reported issues with MAC users, that dont have the environment set when launching MatLab from the Dock. See @ref troubleshooting for more information.
+ *
+ * @subsection tools_docmaker Using the MatlabDocMaker
+ * The most convenient way of using mtoc++ within your matlab project is to use the MatlabDocMaker class coming with mtoc++.
+ * The MatlabDocMaker is a MatLab native class that can be directly used from within MatLab in order to create the project documentation.
+ *
+ * Follow these simple steps in order to quickly get your first documentation:
+ * - Place the MatlabDocMaker.m file somewhere on your project's MatLab path.
+ * - Change the MatlabDocMaker.getProjectName method to return your project's name
+ * - Copy the contents of the \c <mtoc++-source-dir>/tools/config folder into e.g. a subfolder of your MatLab project
+ * - Call the MatlabDocMaker.setup method and use the folder from the previous step as your "documentation configuration files directory".
+ * - Use the MatlabDocMaker.create method to generate your documentation and look at it in a web browser.
+ *
+ * See the MatlabDocMaker class description for more details on how to use it.
+ * @note You may of course keep the MatlabDocMaker.m and the configuration files where you initially placed your mtoc++ source and point to the
+ * appropriate directories during setup.<br>
+ * However, if you want to use multiple projects with mtoc++ you probably want to have different configurations for each project, so that is why we recommend to create local copies of your
+ * tools and configuration within each project.<br>
+ * The way the MatlabDocMaker works it can be easily inserted into whatever versioning system your project uses.
+ * As it stores important folders in MatLab preferences each developer will still have his local documentation settings (after running MatlabDocMaker.setup on each machine, of course).
+ *
+ * @subsection tools_direct Using mtoc++ directly
+ * Okay, so you're a crack and want to control everything. That's fine with us!
+ * In this case we also assume you're familiar with whatever your operating environment is and you have solid knowledge of what's going on.
+ * First, you could simply reverse-engineer what the MatlabDocMaker is doing, otherwise, here are the basic steps required to get started with mtoc++ directly:
+ * - Compile things as necessary and make binaries accessible
+ * - Modify your \c doxygen configuration file:
+ *  - Setup your doxygen as usual, including the sources and output directories
+ *  - Make \c doxygen parse Matlab files
+ *  - Register mtoc++ as a filter for those files
+ *  - If you have a custom mtocpp.conf you want mtoc++ to use, you need to create a shell/batch script that passes this file to mtoc++ and use this file as filter executable
+ *  - Check if you are using latex-features of mtoc++, if so, add latex-support and provide necessary style files
+ * - Run doxygen
+ * - Run \c mtocpp_post passing the folder containing your HTML output as argument
+ * - Look at some nice documentation, be happy!
+ * - If your'e not happy, try starting with the provided Doxyfile.m4 in the \c tools/ directory and inserting proper values for all the placeholders we're using.
+ *
+ * @subsection tools_python Using the python script from a unix shell
+ * @todo python script, yet to come
  *
  * @section tools_config Configuring mtoc++ and doxygen
  *
@@ -34,14 +82,14 @@
  * references therein before contacting us. Thanks!
  *
  * @subsection config_doxy Configuration options for doxygen
- * It will get parsed by m4 to replace tags for specific folders etc. and contains any other configuration settings you want doxygen to use.
+ * The \c Doxyfile.m4 file will get parsed by m4 to replace tags for specific folders etc. and contains any other configuration settings you want doxygen to use.
  * This way, the configuration files can be included into the versioning system as local developers paths are stored outside the configuration file
  * and are provided by the different tools coming with mtoc++.
  *
  * See http://www.stack.nl/~dimitri/doxygen/config.html for more information on doxygen configuration.
  *
  * @subsection config_mtocpp Configuration options for the mtoc++ filter
- * The configuration file for the mtoc++ parser.
+ * The file \c mtocpp.conf contains additional configuration for the mtoc++ parser.
  *
  * The following is a short list of options that can be specified for the mtoc++ filter.
  * All options are declared by the syntax @code <option> := <value> @endcode and are optional, as the default values are hardcoded into mtoc++.
@@ -137,26 +185,4 @@
  * custom types like colvec or rowvec that can be used with the @@type tag for property, parameter or return value types.
  *
  * Add new classes to this file or change existing ones as you need.
- *
- * @section tools_docmaker Using the MatlabDocMaker
- * The most convenient way of using mtoc++ within your matlab project is to use the MatlabDocMaker class coming with mtoc++.
- * The MatlabDocMaker is a MatLab class that can be directly used from within MatLab in order to create the project documentation.
- *
- * Follow these simple steps in order to quickly get your first documentation:
- * - Place the MatlabDocMaker.m file somewhere on your project's MatLab path.
- * - Make appropriate changes to the MatlabDocMaker.getProjectName and MatlabDocMaker.getProjectVersion methods
- * - Copy the contents of the \c <mtoc++-source-dir>/tools/config folder into e.g. a subfolder of your MatLab project
- * - Call the MatlabDocMaker.setup method and use the folder from the previous step as your "documentation configuration files directory".
- * - Use the MatlabDocMaker.create method to generate your documentation and look at it in a web browser.
- *
- * See the MatlabDocMaker class description for more details on how to use it.
- * @note You may of course keep the MatlabDocMaker.m and the configuration files where you initially placed your mtoc++ source and point to the
- * appropriate directories during setup.<br>
- * However, if you want to use multiple projects with mtoc++ you probably want to have different configurations for each project, so that is why we recommend to create local copies of your
- * tools and configuration within each project.<br>
- * The way the MatlabDocMaker works it can be easily inserted into whatever versioning system your project uses.
- * As it stores important folders in MatLab preferences each developer will still have his local documentation settings.
- *
- * @section tools_python Using the python script from a unix shell
- * @todo python script, yet to come
  */

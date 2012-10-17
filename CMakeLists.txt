@@ -17,7 +17,7 @@ ENABLE_TESTING()
 
 FIND_PACKAGE(Ragel REQUIRED)
 FIND_PACKAGE(Doxygen REQUIRED)
-#FIND_PACKAGE(LATEX)
+FIND_PACKAGE(LATEX)
 
 IF(DOXYGEN_DOT_FOUND)
   SET(MTOC++_HAVE_DOT "YES")
@@ -72,13 +72,21 @@ ENDIF(CMAKE_CROSSCOMPILING)
 
 # add target for documentation
 ADD_CUSTOM_TARGET(documentation ALL
-  COMMENT "Creating documentation... (see ${CMAKE_CURRENT_BINARY_DIR}/docs/doxygen.log for warnings)"
+  COMMENT "Creating HTML documentation... (see ${CMAKE_CURRENT_BINARY_DIR}/docs/doxygen.log for warnings)"
   COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf
   COMMAND ${CMAKE_CURRENT_BINARY_DIR}/mtocpp_post ${CMAKE_CURRENT_BINARY_DIR}/docs
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/tabs.css ${CMAKE_CURRENT_BINARY_DIR}/docs/
   DEPENDS mtocpp mtocpp_post
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/docs"
 )
+
+IF(DEFINED LATEX_COMPILER)
+ADD_CUSTOM_TARGET(documentation_pdf ALL
+  COMMENT "Creating PDF documentation... (see ${CMAKE_CURRENT_BINARY_DIR}/docs/latex/refman.log for latex errors/warnings)"
+  COMMAND make
+  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docs/latex"
+)
+ENDIF(DEFINED LATEX_COMPILER)
 
 INSTALL(TARGETS mtocpp mtocpp_post DESTINATION bin)
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/License.txt DESTINATION ${CUSTOM_DOC_DIR})

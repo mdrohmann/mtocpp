@@ -1,4 +1,6 @@
-# DOXYGEN CONFIGURATION FILE (Doxygen version => 1.8.2)
+############################################################################
+# DOXYGEN CONFIGURATION FILE m4-TEMPLATE (Doxygen version => 1.8.2)
+############################################################################
 #
 # IMPORTANT NOTICE: This file is included with the tool "mtoc++", and contains some changes
 # in order to make mtoc++ run together with doxygen. The settings in this file are a default
@@ -16,9 +18,6 @@
 # config file in order to have mtoc++ running smoothly have been moved to the
 # END of the file in order to easily keep custom changes over new mtoc++ versions.
 #
-# You probably want to change the values for PROJECT_NAME, PROJECT_BRIEF and
-# PROJECT_LOGO as they are of course custom to each project.
-#
 # Depending on the output preferred style, checkout the 
 # OPTIMIZE_OUTPUT_FOR_C and OPTIMIZE_OUTPUT_FOR_JAVA settings.
 #
@@ -31,11 +30,14 @@
 #       this flexible as project versions change over time and the documentation
 #       should of course reflect that with minimum effort (thus, only a change
 #       inside Matlab is necessary, where you're expected to be working anyways)
+# - _ProjectDescription_: A short description of the project
+# - _ProjectLogo_: An absolute path to an image file to include as project logo
 # - _OutputDir_: The output directory for the created documentation
 # - _SourceDir_: The source directory containing the files of the project
 # - _ConfDir_: The configuration directory for mtoc++, containing this file
 #       and some more.
 # - _FileSep_: The file separator character, "/" for linux and "\" for windows.
+# - _GenLatex_: Switch to tell doxygen to also generate LaTeX output.
 # Use these tags wherever you would insert the respective values.
 #
 # Furthermore, there are some settings that are included as convenience
@@ -55,6 +57,9 @@
 ################## List of changes: #######################################
 #
 # mtoc++ 1.4: - Updated the doxyfile config to version 1.8.
+#             - Added placeholders for project description and logo
+#             - Set SOURCE_BROWSER = YES and FILTER_SOURCE_FILES = YES in
+#               order to have automatic inclusion of call graphs in the generated documentation.
 #
 # mtoc++ 1.4: - Added alias for an @events tag, creating a page of all events
 #			  - Changed naming convention for alias-tags new and change as newer doxygen
@@ -77,8 +82,12 @@
 #
 # mtoc++ 1.2: First version to contain this file.
 #
-###########################################################################
+################################################################################
 
+############### DEFAULT (DOXYGEN ONLY) CONFIGURATION ###########################
+# The following settings can be adjusted to customize doxygen's behaviour and 
+# hence the output when using the tools like MatlabDocMaker
+################################################################################
 #---------------------------------------------------------------------------
 # Project related configuration options
 #---------------------------------------------------------------------------
@@ -99,38 +108,6 @@
 # http://www.gnu.org/software/libiconv for the list of possible encodings.
 
 DOXYFILE_ENCODING      = UTF-8
-
-# The PROJECT_NAME tag is a single word (or a sequence of words surrounded
-# by quotes) that should identify the project.
-
-PROJECT_NAME           = _ProjectName_
-
-# The PROJECT_NUMBER tag can be used to enter a project or revision number.
-# This could be handy for archiving the generated documentation or
-# if some version control system is used.
-
-PROJECT_NUMBER         = _ProjectVersion_
-
-# Using the PROJECT_BRIEF tag one can provide an optional one line description
-# for a project that appears at the top of each page and should give viewer
-# a quick idea about the purpose of the project. Keep the description short.
-
-PROJECT_BRIEF          = "My brief description for the mtoc++ powered project"
-
-# With the PROJECT_LOGO tag one can specify an logo or icon that is
-# included in the documentation. The maximum height of the logo should not
-# exceed 55 pixels and the maximum width should not exceed 200 pixels.
-# Doxygen will copy the logo to the output directory.
-# Recall that you can use all the macros like _ConfDir_ at this setting, too.
-
-PROJECT_LOGO           =
-
-# The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute)
-# base path where the generated documentation will be put.
-# If a relative path is entered, it will be relative to the location
-# where doxygen was started. If left blank the current directory will be used.
-
-OUTPUT_DIRECTORY       = _OutputDir_
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create
 # 4096 sub-directories (in 2 levels) under the output directory of each output
@@ -771,7 +748,7 @@ INPUT_FILTER           =
 # INPUT_FILTER) will be used to filter the input files when producing source
 # files to browse (i.e. when SOURCE_BROWSER is set to YES).
 
-FILTER_SOURCE_FILES    = NO
+FILTER_SOURCE_FILES    = YES
 
 # The FILTER_SOURCE_PATTERNS tag can be used to specify source filters per file
 # pattern. A pattern will override the setting for FILTER_PATTERN (if any)
@@ -790,7 +767,7 @@ FILTER_SOURCE_PATTERNS =
 # Note: To get rid of all source code in the generated output, make sure also
 # VERBATIM_HEADERS is set to NO.
 
-SOURCE_BROWSER         = NO
+SOURCE_BROWSER         = YES
 
 # Setting the INLINE_SOURCES tag to YES will include the body
 # of functions and classes directly in the documentation.
@@ -863,17 +840,7 @@ IGNORE_PREFIX          =
 #---------------------------------------------------------------------------
 # configuration options related to the HTML output
 #---------------------------------------------------------------------------
-
-# If the GENERATE_HTML tag is set to YES (the default) Doxygen will
-# generate HTML output.
-
-GENERATE_HTML          = YES
-
-# The HTML_OUTPUT tag is used to specify where the HTML docs will be put.
-# If a relative path is entered the value of OUTPUT_DIRECTORY will be
-# put in front of it. If left blank `html' will be used as the default path.
-
-HTML_OUTPUT            = _OutputDir_
+# See on bottom of file for mtoc++ related HTML settings.
 
 # The HTML_FILE_EXTENSION tag can be used to specify the file extension for
 # each generated HTML page (for example: .htm,.php,.asp). If it is left blank
@@ -1201,11 +1168,6 @@ SERVER_BASED_SEARCH    = NO
 # configuration options related to the LaTeX output
 #---------------------------------------------------------------------------
 
-# If the GENERATE_LATEX tag is set to YES (the default) Doxygen will
-# generate Latex output.
-
-GENERATE_LATEX         = NO
-
 # The LATEX_OUTPUT tag is used to specify where the LaTeX docs will be put.
 # If a relative path is entered the value of OUTPUT_DIRECTORY will be
 # put in front of it. If left blank `latex' will be used as the default path.
@@ -1230,7 +1192,7 @@ MAKEINDEX_CMD_NAME     = makeindex
 # LaTeX documents. This may be useful for small projects and may help to
 # save some trees in general.
 
-COMPACT_LATEX          = NO
+COMPACT_LATEX          = YES
 
 # The PAPER_TYPE tag can be used to set the paper type that is used
 # by the printer. Possible values are: a4, letter, legal and
@@ -1568,13 +1530,6 @@ MSCGEN_PATH            =
 
 HIDE_UNDOC_RELATIONS   = YES
 
-# If you set the HAVE_DOT tag to YES then doxygen will assume the dot tool is
-# available from the path. This tool is part of Graphviz, a graph visualization
-# toolkit from AT&T and Lucent Bell Labs. The other options in this section
-# have no effect if this option is set to NO (the default)
-
-HAVE_DOT               = NO
-
 # The DOT_NUM_THREADS specifies the number of dot invocations doxygen is
 # allowed to run in parallel. When set to 0 (the default) doxygen will
 # base this on the number of processors available in the system. You can set it
@@ -1747,9 +1702,54 @@ GENERATE_LEGEND        = YES
 
 DOT_CLEANUP            = YES
 
-############### MTOC++ RELATED CONFIGURATION ##############################
-# The following tags should not be changed in order to keep mtoc++ running
-###########################################################################
+############### MTOC++ RELATED CONFIGURATION ###################################
+# The following are set by us or the tools (MatlabDocMaker) and should be 
+# changed with care in order to keep mtoc++ running
+################################################################################
+
+# The PROJECT_NAME tag is a single word (or a sequence of words surrounded
+# by quotes) that should identify the project.
+
+PROJECT_NAME           = "_ProjectName_"
+
+# The PROJECT_NUMBER tag can be used to enter a project or revision number.
+# This could be handy for archiving the generated documentation or
+# if some version control system is used.
+
+PROJECT_NUMBER         = _ProjectVersion_
+
+# Using the PROJECT_BRIEF tag one can provide an optional one line description
+# for a project that appears at the top of each page and should give viewer
+# a quick idea about the purpose of the project. Keep the description short.
+
+PROJECT_BRIEF          = "_ProjectDescription_"
+
+# With the PROJECT_LOGO tag one can specify an logo or icon that is
+# included in the documentation. The maximum height of the logo should not
+# exceed 55 pixels and the maximum width should not exceed 200 pixels.
+# Doxygen will copy the logo to the output directory.
+# Recall that you can use all the macros like _ConfDir_ at this setting, too.
+
+PROJECT_LOGO           = "_ProjectLogo_"
+
+# The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute)
+# base path where the generated documentation will be put.
+# If a relative path is entered, it will be relative to the location
+# where doxygen was started. If left blank the current directory will be used.
+
+OUTPUT_DIRECTORY       = "_OutputDir_"
+
+# What to generate? HTML by default, directly into _OutputDir_
+GENERATE_HTML          = YES
+HTML_OUTPUT            = "_OutputDir_"
+
+# Latex is an extra option.
+GENERATE_LATEX         = _GenLatex_
+
+# NO causes LaTeX to stop when errors occur, so they can be displayed.
+# (This is YES for HTML-LaTeX formulas independently)
+LATEX_BATCHMODE        = NO
+
 # This tag can be used to specify a number of aliases that acts
 # as commands in the documentation. An alias has the form "name=value".
 # For example adding "sideeffect=\par Side Effects:\n" will allow you to
@@ -1769,7 +1769,18 @@ ALIASES                = "synupdate=\xrefitem synupdate \"Syntax Update\" \"Synt
                          "new{4} = \newxref{\1,\2} (\ref \3, \4) " \
                          "new{3} = \newxref{\1,\2} (\ref \3, undated) " \
                          "propclass{1}=\xrefitem propclass_\1 \"Property class \1\" \"Properties with level \1\""
+
+# If you set the HAVE_DOT tag to YES then doxygen will assume the dot tool is
+# available from the path. This tool is part of Graphviz, a graph visualization
+# toolkit from AT&T and Lucent Bell Labs. The other options in this section
+# have no effect if this option is set to NO (the default)
+
+HAVE_DOT               = _HaveDot_
                          
+############### CRITICAL MTOC++ RELATED CONFIGURATION ##########################
+# The following tags should NOT be changed in order to keep mtoc++ running
+################################################################################
+
 # assign C++-styled code interpretion to .m files
 EXTENSION_MAPPING = .m=C++
 
@@ -1788,14 +1799,8 @@ FILE_PATTERNS     = *.m \
 # the link between mtoc++ and doxygen (the `' separates the macros)
 FILTER_PATTERNS   = *.m="_ConfDir_`'_FileSep_`'_MTOCFILTER_"
 
-# NO will cause doxygen to stop when LaTeX errors occur
-LATEX_BATCHMODE   = YES             		
-
 # latex styles inclusion file
 EXTRA_PACKAGES    = _LatexExtras_
 
 # leave empty so MatlabDocMaker can capture doxygen warnings
-WARN_LOGFILE      =		
-
-# disable latex stopping upon compile errors
-LATEX_BATCHMODE        = YES
+WARN_LOGFILE      = 

@@ -203,7 +203,7 @@ public:
     while ((dirp = readdir(dp)) != NULL) {
       file = string(dirp->d_name);
       // Process only html files
-      if (file.substr(file.find_last_of(".") + 1) == "html" && file.find("8rl") == string::npos) {
+      if (file.substr(file.find_last_of(".") + 1) == "tex" || (file.substr(file.find_last_of(".") + 1) == "html" && file.find("8rl") == string::npos)) {
         postprocess(docdir_ + string("/") + file);
       }
     }

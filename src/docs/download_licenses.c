@@ -18,7 +18,7 @@
  * recompile it when a new release is available. For more information about GIT checkout their <a href="http://git-scm.com/" target="_blank">website</a>
  *
  * The GIT repository can currently be found at http://www.ians.uni-stuttgart.de:8080/agh/gitblit/git/software/matlab/mtocpp.
- *
+ *                                
  * @section mtoc14 mtoc++ 1.4 (latest release)
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.4.tar.gz">Source tarball</a>
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win32bins_1.4.zip">Windows binaries (32bit)</a>
