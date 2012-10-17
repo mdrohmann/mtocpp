@@ -16,6 +16,13 @@
  * as an example. So the list below is not necessarily complete, but the sites
  * referenced above contain all new features / changes!
  *
+ * @change{1,4,dw,2012-10-17}
+ * - Using the new css-style from doxygen 1.8 for own docs
+ * - Added some troubleshooting feedback
+ * - Checked the CMake procedure on a Mac platform (MacBook pro), worked neatly.
+ * - Added an extra section @ref tools_direct for instructions on how to directly use mtoc++
+ * - Fixed broken links to MatLab method/property attributes in mtoc++ output
+ * 
  * @change{1,4,dw,2012-09-27} Optimized compilation under Visual Studio 2010, now can also build the mtoc++ documentation locally.
  *
  * @change{1,4,md,2012-09-27}

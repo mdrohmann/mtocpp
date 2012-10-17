@@ -25,7 +25,7 @@ protected:
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   */
 
 matlabtypesubstitute mixed_access2 = "test";
@@ -43,7 +43,7 @@ matlabtypesubstitute mixed_access2 = "test";
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: "test"
 */
 
@@ -59,7 +59,7 @@ matlabtypesubstitute mixed_access2 = "test";
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   */
 
 
@@ -71,7 +71,7 @@ matlabtypesubstitute SomeProp = struct("'xi',[],'ti',[],'mui',[]");
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: struct("'xi',[],'ti',[],'mui',[]")
 */
 
@@ -86,7 +86,7 @@ matlabtypesubstitute SomeOtherProp = struct("   \
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: struct("   \
       'xi', [], 'ti',    \
       []")
@@ -104,7 +104,7 @@ matlabtypesubstitute SteadyStates = "[[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDS
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: "[[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0   \
       [0, 3.0824e-5, 0.1713]*models.pcd.BasePCDSystem.ya0   \
       [.2, 0.1990, 0.0070]*models.pcd.BasePCDSystem.xi0   \
@@ -120,7 +120,7 @@ matlabtypesubstitute Property_without_semicolon;
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   */
 
 /*  garbage comment
@@ -219,14 +219,14 @@ matlabtypesubstitute antoheroneWITH;
   */
 
 
-matlabtypesubstitute complexpropertywithoutsemicolon_c = "[['af]a'§/$'''dgdg'\
+matlabtypesubstitute complexpropertywithoutsemicolon_c = "[['af]a'ï¿½/$'''dgdg'\
         'adgadg']]";
 /** @var complexpropertywithoutsemicolon_c
   * @brief  with comments version!
   *  with comments version! GRR
   *
   *
-  * <br/>@b Default: "[['af]a'§/$'''dgdg'\
+  * <br/>@b Default: "[['af]a'ï¿½/$'''dgdg'\
         'adgadg']]"
 */
 matlabtypesubstitute followingpropwithoutsemicolon_c = 4;
@@ -281,7 +281,7 @@ mlhsInnerSubst<matlabtypesubstitute,obj> foo(matlabtypesubstitute b,matlabtypesu
   * @retval obj    obj
   *
   * @note This method has the MATLAB method attribute @c Hidden set to true.
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">matlab documentation of method attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/method-attributes.html">matlab documentation of method attributes.</a>
   */
 
 
@@ -299,7 +299,7 @@ mlhsInnerSubst<matlabtypesubstitute,obj> bar(matlabtypesubstitute d,matlabtypesu
   * @retval obj    obj
   *
   * @note This method has the MATLAB method attribute @c Hidden set to true.
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">matlab documentation of method attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/method-attributes.html">matlab documentation of method attributes.</a>
   */
 
 mlhsInnerSubst<matlabtypesubstitute,obj> foobar()
@@ -321,7 +321,7 @@ mlhsInnerSubst<matlabtypesubstitute,obj> foobar()
   * @retval obj    obj
   *
   * @note This method has the MATLAB method attribute @c Hidden set to true.
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">matlab documentation of method attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/method-attributes.html">matlab documentation of method attributes.</a>
   */
 
 mlhsInnerSubst<matlabtypesubstitute,ret> mdecl(matlabtypesubstitute b);
@@ -336,7 +336,7 @@ classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
   * @param param2    param2
   *
   * @note This method has the MATLAB method attribute @c Hidden set to true.
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">matlab documentation of method attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/method-attributes.html">matlab documentation of method attributes.</a>
   */
 
 public:

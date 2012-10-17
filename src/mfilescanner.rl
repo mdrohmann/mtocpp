@@ -2817,7 +2817,7 @@ void MFileScanner::add_property_params_info()
     any_property_set = true;
 
   if (any_property_set)
-    docuextra_.push_back("@note <a href=\"http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html\">Matlab documentation of property attributes.</a>\n");
+    docuextra_.push_back("@note <a href=\"http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html\">Matlab documentation of property attributes.</a>\n");
 }
 
 void MFileScanner::add_method_params_info()
@@ -2839,7 +2839,7 @@ void MFileScanner::add_method_params_info()
     any_property_set = true;
 
   if (any_property_set)
-    docuextra_.push_back("@note <a href=\"http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html\">matlab documentation of method attributes.</a>\n");
+    docuextra_.push_back("@note <a href=\"http://www.mathworks.com/help/matlab/matlab_oop/method-attributes.html\">matlab documentation of method attributes.</a>\n");
 }
 
 // end a function and pretty print the documentation for this function
