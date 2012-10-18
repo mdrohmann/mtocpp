@@ -44,12 +44,15 @@ using std::endl;
 
   action echo {
     fout << fpc;
-    cout << fpc;
+    if (!quiet)
+      cout << fpc;
   }
 
   action st_tok { tmp_p = p; }
 
-  action echo_tok { fout.write(tmp_p, p - tmp_p); cout.write(tmp_p, p-tmp_p); }
+  action echo_tok { fout.write(tmp_p, p - tmp_p);
+                    if (!quiet)
+                      cout.write(tmp_p, p-tmp_p); }
 
   rettype:= |*
 
@@ -174,6 +177,7 @@ private:
   int          top;
   int          stack[5];
   bool         only_retval;
+  bool         quiet_;
 
 public:
   /**
@@ -183,11 +187,12 @@ public:
    * assuming the passed string to be a folder whos contents are to be postprocessed.
    */
   // constructor
-  PostProcess(const string &docdir) :
+  PostProcess(const string &docdir, const bool quiet_flag) :
     docdir_(docdir),
     line(1),
     ts(0), te(0), have(0),
-    top(0), only_retval(false)
+    top(0), only_retval(false),
+    quiet_(quiet_flag)
   { }
 
   int execute()
@@ -269,13 +274,15 @@ public:
 
 void usage()
 {
-  cout << "postprocess Version " << MTOCPP_VERSION_MAJOR << "."
+  cout << "mtocpp_post Version " << MTOCPP_VERSION_MAJOR << "."
     << MTOCPP_VERSION_MINOR << endl;
-  cout << "Usage: ./postprocess filename" << endl;
+  cout << "Usage: mtocpp_post [-q] filename" << endl;
+  cout << "\nOptions:\n  -q\t\tsuppresses debug output." << endl;
 }
 
 int main(int argc, char ** argv)
 {
+  bool quiet = false;
   string docdir;
   if(argc >= 2)
   {
@@ -284,17 +291,31 @@ int main(int argc, char ** argv)
       usage();
       return 0;
     }
-    docdir = argv[1];
+    if (argc == 3 && std::string("-q") == std::string(argv[1]))
+    {
+      quiet = true;
+      docdir = argv[2];
+    }
+    else if(argc == 2)
+      docdir = argv[1];
+    else
+    {
+      cerr << "wrong arguments!" << endl;
+      usage();
+      exit(-2);
+    }
   }
   else
   {
     cerr << "wrong number of arguments!" << endl;
+    usage();
     exit(-2);
   }
 
-  cout << "Running mtoc++ postprocessor on directory " << docdir << endl;
-  
-  PostProcess scanner(docdir);
+  if (!quiet)
+    cout << "Running mtoc++ postprocessor on directory " << docdir << endl;
+
+  PostProcess scanner(docdir, quiet);
   scanner.execute();
   return 0;
 }
