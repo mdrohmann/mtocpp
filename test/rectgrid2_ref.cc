@@ -514,7 +514,15 @@ rectgrid(matlabtypesubstitute varargin) {
   *         alpha * circumfere(T_i) <= h_i^(d-1) and
   *         alpha * h_i <= distance(midpoint i to any neigbour) )
   *
-  * @param varargin    @code FORMAT: varargin = ( xrange, yrange, xnumintervals,
+  * @param varargin     variable number of constructors. The constructor can be used
+  *              as
+  *      - rectgrid() : construction of a default rectgrid (2d unit square,
+  *                     2x2 elements with -1 as outer neighbour indices)
+  *      - rectgrid(rgrid) : copy-constructor
+  *      - rectgrid(options) : generate rectgrid with certain options, which
+  *      must be one of the following: 
+  *      .
+  * @code FORMAT: varargin = ( xrange, yrange, xnumintervals,
                       [ ynumintervals ],
                       "bnd_rect_corner1", bnd_rect_corner1_value, "bnd_rect_corner2", bnd_rect_corner2_value ) @endcode
   *
