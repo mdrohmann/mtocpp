@@ -322,6 +322,8 @@ public:
   typedef std :: map< std :: string, AltDocuList >                   AltDocuListMap;
   typedef std :: set< std :: string >                                GroupSet;
 
+  typedef ordered_map<std::pair<int, std::string> >        VararginParserValuesType;
+
 public:
   MFileScanner (std::istream & fin, std::ostream & fout,
                 const std::string & filename,
@@ -349,6 +351,8 @@ public:
 
 
 private:
+
+  void extract_default_argument_of_inputparser(std::string & last_args);
   void add_access_info(std::string);
   void add_property_params_info();
   void add_method_params_info();
@@ -360,6 +364,7 @@ private:
   void end_of_property_doc();
   void get_typename(const std::string &, std::string &, std::string voidtype = std::string("matlabtypesubstitute"));
   void get_default(const std::string &, std::string &);
+  void handle_param_list_for_varargin();
   void extract_typen(DocuBlock & db, std::string & typen, bool remove = false);
   void extract_default(DocuBlock &, std::string &);
   void update_method_params(const std::string & methodname);
@@ -443,7 +448,14 @@ private:
   std::map<std::string,std::string> param_type_map_;
   bool undoced_prop_;
   std::map<std::string, PropExtraInformation> specifier_;
+
+  std::string varargin_parser_candidate_;
+  VararginParserValuesType varargin_parser_values_;
 };
+
+extern const char * AccessEnumNames[];
+
+extern const char * ClassPartNames[];
 
 /* vim: set et sw=2: */
 #endif /* MFILESCANNER_H_ */

@@ -51,7 +51,7 @@ CONFIGURE_FILE(
 INCLUDE_DIRECTORIES("${CMAKE_CURRENT_BINARY_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 # Ragel preprocessing
-RAGEL_PARSER(src/mfilescanner)
+RAGEL_PARSER(src/mfilescanner_parser)
 RAGEL_PARSER(src/confscanner)
 RAGEL_PARSER(src/postprocess)
 
@@ -61,7 +61,7 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_BINARY_DIR})
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_BINARY_DIR})
 
 # create mtocpp
-ADD_EXECUTABLE(mtocpp src/mtocpp.cc mfilescanner.cc confscanner.cc)
+ADD_EXECUTABLE(mtocpp src/mtocpp.cc mfilescanner_parser.cc src/mfilescanner.cc confscanner.cc)
 # create mtocpp_post
 ADD_EXECUTABLE(mtocpp_post postprocess.cc)
 
