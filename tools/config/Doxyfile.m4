@@ -38,6 +38,7 @@
 #       and some more.
 # - _FileSep_: The file separator character, "/" for linux and "\" for windows.
 # - _GenLatex_: Switch to tell doxygen to also generate LaTeX output.
+# - _HaveDot_: "YES" or "NO" depending on automatic GraphViz detection on MatlabDocMaker.create
 # Use these tags wherever you would insert the respective values.
 #
 # Furthermore, there are some settings that are included as convenience

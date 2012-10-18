@@ -35,6 +35,9 @@ classdef MatlabDocMaker
 % the create method creates the LaTeX version of the documentation in a folder "latex" in the
 % OutputDirectory (default behaviour)
 %
+% @change{1,4,dw,2012-09-27} Added automatic dot Graphviz tool detection on
+% call to create.
+%
 % @change{1,3,dw,2012-02-16}
 % - Now also collecting error messages from mtocpp_post and adding them to
 % the warnings.log file.
@@ -97,7 +100,8 @@ classdef MatlabDocMaker
             % Return values:
             % name: The project name @type char
             
-            error('Please replace this by returning your project name as string.');
+            name = 'KerMor';
+            %error('Please replace this by returning your project name as string.');
             % Example:
             % name = 'My mtoc++-powered project';
         end
@@ -545,7 +549,7 @@ classdef MatlabDocMaker
             if st == 0
                 fprintf(' found %s\n',vers(1:end-1));
             else
-                fprintf(2,'dot Graphviz tool not found!\nSet HAVE_DOT = NO in Doxyfile.m4 or install dot for nice diagrams.\n');
+                fprintf(2,'dot Graphviz tool not found!\nInstall dot for nicer class diagrams.\n');
             end
             fprintf('[Recommended] Checking for latex... ');
             [st, vers] = system('latex --version');

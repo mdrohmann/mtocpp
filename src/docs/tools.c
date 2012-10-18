@@ -48,7 +48,8 @@
  * @subsection tools_direct Using mtoc++ directly
  * Okay, so you're a crack and want to control everything. That's fine with us!
  * In this case we also assume you're familiar with whatever your operating environment is and you have solid knowledge of what's going on.
- * First, you could simply reverse-engineer what the MatlabDocMaker is doing, otherwise, here are the basic steps required to get started with mtoc++ directly:
+ * First, you could simply reverse-engineer what the MatlabDocMaker is doing (it automatically generates and inserts the correct scripts read by doxygen), otherwise, here are the basic steps required to get started with mtoc++ directly.
+ * In short, this happens by including mtoc++ as a filter for *.m files:
  * - Compile things as necessary and make binaries accessible
  * - Modify your \c doxygen configuration file:
  *  - Setup your doxygen as usual, including the sources and output directories
@@ -60,6 +61,19 @@
  * - Run \c mtocpp_post passing the folder containing your HTML output as argument
  * - Look at some nice documentation, be happy!
  * - If your'e not happy, try starting with the provided Doxyfile.m4 in the \c tools/ directory and inserting proper values for all the placeholders we're using.
+ * Everything related to mtoc++ has been put to the very bottom of the file, most critically:
+ * @code
+ * EXTENSION_MAPPING = .m=C++
+ * INPUT             = _SourceDir_ _ConfDir_
+ * FILE_PATTERNS     = *.m
+ * FILTER_PATTERNS   = *.m="_ConfDir_`'_FileSep_`'_MTOCFILTER_"
+ * @endcode
+ * Here, the underscored values need to be replaced manually in order to insert the correct values.
+ * Essentially:
+ *  - \c EXTENSION_MAPPING tells doxygen to regard \c .m-Files as if they were \c C++ files, style-wise.
+ *  - \c INPUT tells doxygen where to look for files.
+ *  - \c FILE_PATTERNS lets doxygen also look for \c .m-Files.
+ *  - \c FILTER_PATTERNS is the most important line of the configuration. Here, you need to define scripts that should be called by doxygen before certain files are processed.
  *
  * @subsection tools_python Using the python script from a unix shell
  * @todo python script, yet to come
@@ -88,10 +102,18 @@
  *
  * See http://www.stack.nl/~dimitri/doxygen/config.html for more information on doxygen configuration.
  *
+ *
  * @subsection config_mtocpp Configuration options for the mtoc++ filter
  * The file \c mtocpp.conf contains additional configuration for the mtoc++ parser.
  *
- * The following is a short list of options that can be specified for the mtoc++ filter.
+ * @note The mtoc++ filter takes exactly two arguments, of which the first is the file to process, and the second is an optional configuration file.
+ * So if you dont want to customize mtoc++ because the default settings are just fine, there is nothing to do (you simply can set the filter target in doxygen to the \c mtocpp binary for the manual config case).
+ * Otherwise, if you want to provide a config file to mtoc++, depending on your platform, you have to write a shell/batch script that
+ * is included as filter callback in doxygen's configuration file. Inside the script, the first argument is forwarded to \c mtocpp
+ * and the second configuration file path is provided statically in the script.<br>
+ * We recommend to use the MatlabDocMaker tool described in @ref tools_docmaker, as it does all that for you.
+ *
+ * The following is a short list of options that can be specified in the configuration file for the mtoc++ filter.
  * All options are declared by the syntax @code <option> := <value> @endcode and are optional, as the default values are hardcoded into mtoc++.
  * - \c ALL - File Patterns
  * - \c PRINT_FIELDS - Flag indicating whether automatic struct fields or object member documentation is generated. Default \c true.
@@ -181,7 +203,7 @@
  * \usepackage{bbm} @endcode
  *
  * @subsection config_fakeclasses Fake classes for typical MatLab data types
- * This c-file includes some class descriptions for typical MatLab data types like handle or logical, but also introduces
+ * The file \c class_substitutes.c includes some class descriptions for typical MatLab data types like handle or logical, but also introduces
  * custom types like colvec or rowvec that can be used with the @@type tag for property, parameter or return value types.
  *
  * Add new classes to this file or change existing ones as you need.

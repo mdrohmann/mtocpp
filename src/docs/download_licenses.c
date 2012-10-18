@@ -17,7 +17,8 @@
  * In order to always stay up-to-date with the latest (development) mtoc++ versions, simply pull it from our GIT repository and
  * recompile it when a new release is available. For more information about GIT checkout their <a href="http://git-scm.com/" target="_blank">website</a>
  *
- * The GIT repository can currently be found at http://www.ians.uni-stuttgart.de:8080/agh/gitblit/git/software/matlab/mtocpp.
+ * The GIT repository can currently be found at http://www.ians.uni-stuttgart.de:8080/agh/gitblit/ and a direct clone is possible via
+ * @code git clone http://www.ians.uni-stuttgart.de:8080/agh/gitblit/git/software/matlab/mtocpp mtocpp @endcode
  *                                
  * @section mtoc14 mtoc++ 1.4 (latest release)
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.4.tar.gz">Source tarball</a>
