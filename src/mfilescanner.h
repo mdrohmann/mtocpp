@@ -223,6 +223,10 @@ public:
 /**
  * @class MFileScanner
  *
+ * @change{1,4,md,2012-10-17} implemented varargin handling by Matlab
+ * inputParser, as suggested here:
+ * http://www.mathworks.de/de/help/matlab/ref/inputparser.parse.html
+ *
  * @change{1,4,md,2012-02-24} ignore comments in front of classdef (fixes
  * Grrr message from Jesse Hopkins)
  *
