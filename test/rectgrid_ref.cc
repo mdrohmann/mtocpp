@@ -522,9 +522,9 @@ rectgrid(matlabtypesubstitute varargin) {
   *      - rectgrid(options) : generate rectgrid with certain options, which
   *      must be one of the following: 
   *      .
-  * @code FORMAT: varargin = ( xrange, yrange, xnumintervals,
-                      [ ynumintervals ],
-                      "bnd_rect_corner1", bnd_rect_corner1_value, "bnd_rect_corner2", bnd_rect_corner2_value ) @endcode
+  * @code rectgrid ( xrange, yrange, xnumintervals,
+           [ ynumintervals
+           [, "bnd_rect_corner1", bnd_rect_corner1_value [, "bnd_rect_corner2", bnd_rect_corner2_value ] ] ] ) @endcode
   * <i>Required Parameters for varargin:</i>
   * - <span class="paramname"> xrange</span>     interval covered along the x-axes
   * - <span class="paramname"> yrange</span>     interval covered along the y-axes
