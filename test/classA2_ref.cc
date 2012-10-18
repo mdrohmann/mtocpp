@@ -167,14 +167,14 @@ matlabtypesubstitute followingpropwithoutsemicolon = 4;
 matlabtypesubstitute antoheroneWITH;
 
 
-matlabtypesubstitute complexpropertywithoutsemicolon_c = "[['af]a'ï¿½/$'''dgdg'\
+matlabtypesubstitute complexpropertywithoutsemicolon_c = "[['af]a'§/$'''dgdg'\
         'adgadg']]";
 /** @var complexpropertywithoutsemicolon_c
   * @brief  with comments version!
   *  with comments version! GRR
   *
   *
-  * <br/>@b Default: "[['af]a'ï¿½/$'''dgdg'\
+  * <br/>@b Default: "[['af]a'§/$'''dgdg'\
         'adgadg']]"
 */
 matlabtypesubstitute followingpropwithoutsemicolon_c = 4;
