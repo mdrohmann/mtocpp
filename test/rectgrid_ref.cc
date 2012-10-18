@@ -20,6 +20,12 @@ rectgrid(matlabtypesubstitute varargin) {
 */
 
 
+    
+    addRequired(p, 'xnumintervals');
+    addOptional(p, 'ynumintervals', 100);
+    addParamValue(p, 'bnd_rect_corner1', [-inf,-inf]);
+    addParamValue(p, 'bnd_rect_corner2', [+inf,+inf]);
+
 /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
 
@@ -445,11 +451,6 @@ rectgrid(matlabtypesubstitute varargin) {
   *  sorting of vertices is always counterclockwise SE,NE,NW,SW
   *  local edge j (1..4) is connecting points j and j+1
   * 
-  *  rectgrid() : construction of a default rectgrid (2d unit square,
-  *               2x2 elements with -1 as outer neighbour indices)
-  *  rectgrid(rgrid) : copy-constructor
-  *  rectgrid(params) : generate rectgrid with certain options.
-  * 
   * @par      optional fields
   *          bnd_rect_corner1: coordinates of lower corner of to be marked
   *                    boundaries
@@ -513,13 +514,24 @@ rectgrid(matlabtypesubstitute varargin) {
   *         alpha * circumfere(T_i) <= h_i^(d-1) and
   *         alpha * h_i <= distance(midpoint i to any neigbour) )
   *
-  * @param varargin    varargin
+  * @param varargin    @code FORMAT: varargin = ( xrange, yrange, xnumintervals,
+                      [ ynumintervals ],
+                      "bnd_rect_corner1", bnd_rect_corner1_value, "bnd_rect_corner2", bnd_rect_corner2_value ) @endcode
   *
-  * @par Required fields of params:
-  * @arg \c xnumintervals&nbsp;&mdash;&nbsp;     number of elements along x directions
-  * @arg \c ynumintervals&nbsp;&mdash;&nbsp;     number of elements along y directions
-  * @arg \c xrange&nbsp;&mdash;&nbsp;     interval covered along the x-axes
-  * @arg \c yrange&nbsp;&mdash;&nbsp;     interval covered along the y-axes
+  * @par Required Parameters for varargin
+  * - @c xrange     interval covered along the x-axes
+  * - @c yrange     interval covered along the y-axes
+  * - @c xnumintervals     number of elements along x directions
+  *
+  * @par Optional Parameters for varargin
+  * - @c ynumintervals     number of elements along y directions
+  *      ( @b Default: <tt>100</tt> )
+  *
+  * @par Named Parameters for varargin
+  * - @c bnd_rect_corner1    bnd rect corner1
+  *      ( @b Default: <tt>[-inf,-inf]</tt> )
+  * - @c bnd_rect_corner2    bnd rect corner2
+  *      ( @b Default: <tt>[+inf,+inf]</tt> )
   */
 
 noret::substitute demo()
