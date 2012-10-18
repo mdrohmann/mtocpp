@@ -10,7 +10,6 @@ classdef MatlabDocMaker
 % MatlabDocMaker.getConfigDirectory.
 % - \c mtocpp, \c mtocpp_post (the main tool)
 % - \c doxygen (mtoc++ is a filter for doxygen)
-% - \c m4: A macro processor
 %
 % Strongly recommended:
 % - \c latex Doxygen supports built-in latex formulas and
@@ -20,6 +19,9 @@ classdef MatlabDocMaker
 % collaboration diagrams with dot.
 %
 % @author Daniel Wirtz @date 2011-10-13
+%
+% @change{1,4,dw,2012-10-18} Removed \c m4 dependency and included constant properties for
+% configuration file names.
 %
 % @new{1,4,dw,2012-10-16}
 % - Added two more configuration variables "ProjectDescription" and "ProjectLogo" for easier
@@ -59,7 +61,7 @@ classdef MatlabDocMaker
 % - No longer storing the doxygen binary file in the prefs as a lot of
 % tools must be present on the path anyways. The new paradigm is to
 % expect all required 3rd-party programmes to be available on PATH. As
-% backup (especially for Win32/m4) the configuration files directory is
+% backup the configuration files directory is
 % added to the Matlab PATH environment \b nonpermanently and any
 % executables found there will thus also be usable.
 % - Included checks for \c dot and \c latex at the setup stage to
@@ -89,6 +91,31 @@ classdef MatlabDocMaker
 % modification, are permitted only in compliance with the BSD license, see
 % http://www.opensource.org/licenses/bsd-license.php
 
+    properties(Constant)
+        % File name for the doxygen configuration file processed by the MatlabDocMaker.
+        %
+        % Assumed to reside in the MatlabDocMaker.getConfigDirectory
+        %
+        % @type char @default 'Doxyfile.template'
+        DOXYFILE_TEMPLATE = 'Doxyfile.template';
+        
+        % File name for the latex extras style file processed by the MatlabDocMaker.
+        %
+        % Assumed to reside in the MatlabDocMaker.getConfigDirectory.
+        % If not found, no latex extras are used.
+        %
+        % @type char @default 'latexextras.template'
+        LATEXEXTRAS_TEMPLATE = 'latexextras.template';
+        
+        % File name the mtoc++ configuration file.
+        %
+        % Assumed to reside in the MatlabDocMaker.getConfigDirectory.
+        % If not found, no special configuration is used.
+        %
+        % @type char @default 'mtocpp.conf'
+        MTOCPP_CONFIGFILE = 'mtocpp.conf';
+    end
+
     methods(Static)
         function name = getProjectName
             % Returns the project name.
@@ -108,7 +135,7 @@ classdef MatlabDocMaker
     end
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %% End of user defined methods.
+    %% End of user defined part.
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     methods(Static, Sealed)
@@ -135,7 +162,7 @@ classdef MatlabDocMaker
             % configuration files reside
             %
             % This folder must contain at least the files "mtoc.conf" and
-            % "Doxyfile.m4"
+            % "Doxyfile.template"
             %
             % Return values:
             % dir: The documentation configuration directory @type char
@@ -169,7 +196,7 @@ classdef MatlabDocMaker
             % Returns the current version of the project.
             %
             % @note The built-in @@new and @@change tags from the
-            % Doxyfile.m4 support two-level versioning a la X.X.
+            % Doxyfile.template support two-level versioning a la X.X.
             %
             % Return values:
             % version: The project version @type char @default []
@@ -268,6 +295,7 @@ classdef MatlabDocMaker
             % latex: Set to true if `\text{\LaTeX}` output should be generated, too. @type logical
             % @default false
            
+            %% Preparations
             ip = inputParser;
             ip.addParamValue('open',false,@islogical);
             ip.addParamValue('latex',false,@islogical);
@@ -278,11 +306,32 @@ classdef MatlabDocMaker
             cdir = MatlabDocMaker.getConfigDirectory;
             srcdir = MatlabDocMaker.getSourceDirectory;
             outdir = MatlabDocMaker.getOutputDirectory;
+            % Check if doxygen config file template exists
+            doxyfile_in = fullfile(cdir,MatlabDocMaker.DOXYFILE_TEMPLATE);
+            if exist(doxyfile_in,'file') ~= 2
+                error('No doxygen configuration file template found at "%s"',doxyfile_in);
+            end
             
-            fprintf(['Starting creation of doxygen/mtoc++ powered documentation for "%s" (%s)\n'...
-                'Sources: %s\nOutput to: %s\nCreating config files...'],...
+            lstr = '';
+            if genlatex
+                lstr = '(+Latex)';
+            end
+            fprintf(['Starting creation of doxygen/mtoc++ powered HTML%s documentation for "%s" (%s)\n'...
+                'Sources: %s\nOutput to: %s\nCreating config files...'],lstr,...
                 MatlabDocMaker.getProjectName,MatlabDocMaker.getProjectVersion,...
                 srcdir,outdir);
+            
+            % Operation-system dependent strings
+            strs = struct;
+            if isunix
+                strs.null = '/dev/null';
+                strs.silencer = '';
+            elseif ispc
+                strs.null = 'NUL';
+                strs.silencer = '@'; % argh that took a while to remember..
+            else
+                error('Current platform not supported.');
+            end
             
             % Save current working dir and change into the KerMor home
             % directory; only from there all classes and packages are
@@ -294,35 +343,58 @@ classdef MatlabDocMaker
             pathadd = [pathsep cdir];
             setenv('PATH',[getenv('PATH') pathadd]);
             
-            % Operation-system dependent strings
-            strs = struct;
-            if isunix
-                strs.filter = 'mtocpp_filter.sh';
-                strs.farg = '$1';
-                strs.null = '/dev/null';
-                strs.silencer = '';
-            elseif ispc
-                strs.filter = 'mtocpp_filter.bat';
-                strs.farg = '%1';
-                strs.null = 'NUL';
-                strs.silencer = '@'; % argh that took a while to remember..
-            else
-                error('Current platform not supported.');
+            mtoc_conf = fullfile(cdir,MatlabDocMaker.MTOCPP_CONFIGFILE);
+            filter = sprintf('%smtocpp',strs.silencer);
+            if exist(mtoc_conf,'file')
+                if isunix
+                    strs.filter = 'mtocpp_filter.sh';
+                    strs.farg = '$1';
+                elseif ispc
+                    strs.filter = 'mtocpp_filter.bat';
+                    strs.farg = '%1';
+                else
+                    error('Current platform not supported.');
+                end
+                %% Creation part
+                cdir = MatlabDocMaker.getConfigDirectory;
+                % Create "configured" filter script for inclusion in doxygen 
+                filter = fullfile(cdir,strs.filter);
+                f = fopen(filter,'w');
+                fprintf(f,'%smtocpp %s %s',strs.silencer,strs.farg,mtoc_conf);
+                fclose(f);
+                if isunix
+                    unix(['chmod +x ' filter]);
+                end
             end
             
-            %% Actual creation
-            cdir = MatlabDocMaker.getConfigDirectory;
-            % Create "configured" filter script for inclusion in doxygen 
-            cbin = fullfile(cdir,strs.filter);
-            f = fopen(cbin,'w');
-            fprintf(f,'%smtocpp %s %s',strs.silencer,strs.farg,fullfile(cdir,'mtocpp.conf'));
-            fclose(f);
-            if isunix
-                unix(['chmod +x ' cbin]);
+            %% Prepare placeholders in the Doxyfile template
+            m = {'_OutputDir_' outdir; ...
+                 '_SourceDir_' MatlabDocMaker.getSourceDirectory;...
+                 '_ConfDir_' cdir;...
+                 '_ProjectName_' MatlabDocMaker.getProjectName; ...
+                 '_ProjectDescription_' MatlabDocMaker.getProjectDescription; ...
+                 '_ProjectLogo_' MatlabDocMaker.getProjectLogo; ...
+                 '_ProjectVersion_' MatlabDocMaker.getProjectVersion; ...
+                 '_MTOCFILTER_' filter; ...
+                 };
+             
+            % Check for latex extra stuff
+            texin = fullfile(cdir,MatlabDocMaker.LATEXEXTRAS_TEMPLATE);
+            latexextras = '';
+            if exist(texin,'file') == 2  
+                latexstr = strrep(fileread(texin),'_ConfDir_',strrep(cdir,'\','/'));
+                latexextras = fullfile(cdir,'latexextras.sty');
+                fid = fopen(latexextras,'w+'); fprintf(fid,'%s',latexstr); fclose(fid);
             end
+            % Always use "/" for latex usepackage commands, so replace "\" (effectively windows
+            % only) by "/"
+            m(end+1,:) = {'_LatexExtras_' strrep(latexextras,'\','/')};
+            L = 'NO';
+            if genlatex
+                L = 'YES';
+            end
+            m(end+1,:) = {'_GenLatex_',L};
             
-            % Process macros in the Doxyfile.m4 file using m4
-            doxyfile = fullfile(cdir,'Doxyfile');
             % Check how to set the HAVE_DOT flag
             [s, ~] = system('dot -V');
             if s == 0
@@ -331,40 +403,13 @@ classdef MatlabDocMaker
                 HD = 'NO';
                 fprintf('no "dot" found...');
             end
-            L = 'NO';
-            if genlatex
-                L = 'YES';
-            end
-            % Always use "/" for latex usepackage commands, so replace "\" (effectively windows
-            % only) by "/"
-            latexextras = [strrep(cdir,'\','/') '/latexextras'];
-            system(sprintf(['m4 -D _OutputDir_="%s" -D _SourceDir_="%s" '...
-                            '-D _ConfDir_="%s" -D _ProjectName_="%s" '...
-                            '-D _ProjectDescription_="%s" -D _ProjectLogo_="%s" '...
-                            '-D _ProjectVersion_="%s" -D _MTOCFILTER_=%s '...
-                            '-D _FileSep_=%s -D _LatexExtras_="%s" '...
-                            '-D _HaveDot_=%s -D _GenLatex_=%s '...
-                            '"%s.m4" > "%s"'],...
-                 outdir, ...
-                 MatlabDocMaker.getSourceDirectory, cdir,...
-                 MatlabDocMaker.getProjectName, ...
-                 MatlabDocMaker.getProjectDescription, ...
-                 MatlabDocMaker.getProjectLogo, ...
-                 MatlabDocMaker.getProjectVersion, ...
-                 strs.filter, filesep, latexextras, HD, L, ...
-                 doxyfile, doxyfile));
+            m(end+1,:) = {'_HaveDot_',HD};
             
-            % Process latex extras
-            texm4 = fullfile(cdir,'latexextras.m4');
-            tex = fullfile(cdir,'latexextras.sty');
-            if exist(texm4,'file') == 2
-                % # Parse the kermorlatex include style file
-                system(sprintf('m4 -D _ConfDir_="%s" "%s" > "%s"',strrep(cdir,'\','/'),texm4,tex));
-            else
-                % Create empty file
-                system(sprintf('echo "" > "%s"',tex));
-            end
-
+            % Read, replace & write doxygen config file
+            doxyfile = fullfile(cdir,'Doxyfile');
+            doxyconfstr = regexprep(fileread(doxyfile_in),m(:,1),m(:,2));
+            fid = fopen(doxyfile,'w'); fprintf(fid,'%s',doxyconfstr); fclose(fid);
+            
             % Fix for unix systems where the MatLab installation uses older
             % GLIBSTD libraries than doxygen/mtoc++
             ldpath = '';
@@ -406,8 +451,12 @@ classdef MatlabDocMaker
             
             % Tidy up
             fprintf('cleaning up...');
-            delete(cbin);
-            delete(tex);
+            if isfield(strs,'filter')
+                delete(filter);
+            end
+            if ~isempty(latexextras)
+                delete(latexextras);
+            end
             delete(doxyfile);
             
             %% Post generation phase 
@@ -532,14 +581,6 @@ classdef MatlabDocMaker
             [st, vers] = system(sprintf('%smtocpp --version',ldpath));
             if st == 0
                 fprintf(' found %s\n',vers(1:end-1));
-            else
-                fprintf(2,' not found!\n');
-                hasall = false;
-            end
-            fprintf('[Required] Checking for m4... ');
-            [st, vers] = system('m4 --version');
-            if st == 0
-                fprintf(' found %s\n',vers(1:18));
             else
                 fprintf(2,' not found!\n');
                 hasall = false;

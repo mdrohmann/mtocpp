@@ -60,7 +60,7 @@
  * - Run doxygen
  * - Run \c mtocpp_post passing the folder containing your HTML output as argument
  * - Look at some nice documentation, be happy!
- * - If your'e not happy, try starting with the provided Doxyfile.m4 in the \c tools/ directory and inserting proper values for all the placeholders we're using.
+ * - If your'e not happy, try starting with the provided Doxyfile.template in the \c tools/ directory and inserting proper values for all the placeholders we're using.
  * Everything related to mtoc++ has been put to the very bottom of the file, most critically:
  * @code
  * EXTENSION_MAPPING = .m=C++
@@ -82,13 +82,13 @@
  *
  * As the configuration of doxygen/mtoc++ is independent from the actual tool used we will explain it separately.
  * The involved files can again be found inside the \c /tools/config folder.
- * - \c Doxyfile.m4 - @ref config_doxy
+ * - \c Doxyfile.template - @ref config_doxy
  * - \c mtocpp.conf - @ref config_mtocpp
- * - \c latexextras.m4 - @ref config_latex
+ * - \c latexextras.template - @ref config_latex
  * - \c class_substitutes.c - @ref config_fakeclasses
  *
  *@attention USING MTOC++ DOES NOT EXCLUDE THE REQUIREMENT TO KNOW AND UNDERSTAND DOXYGEN ITSELF!<br>
- * The settings in the "Doxygen.m4" file inside the \c /tools/config folder are a default
+ * The settings in the "Doxygen.template" file inside the \c /tools/config folder are a default
  * configuration for Doxygen which we thought might be useful in a MatLab setting/project and 
  * contains some changes in order to make mtoc++ run together with doxygen.
  * We've had lots of feedback and problem reports which actually had to do with settings purely
@@ -96,12 +96,11 @@
  * references therein before contacting us. Thanks!
  *
  * @subsection config_doxy Configuration options for doxygen
- * The \c Doxyfile.m4 file will get parsed by m4 to replace tags for specific folders etc. and contains any other configuration settings you want doxygen to use.
+ * The \c Doxyfile.template file uses placeholders for specific folders etc. and contains any other configuration settings you want doxygen to use.
  * This way, the configuration files can be included into the versioning system as local developers paths are stored outside the configuration file
  * and are provided by the different tools coming with mtoc++.
  *
  * See http://www.stack.nl/~dimitri/doxygen/config.html for more information on doxygen configuration.
- *
  *
  * @subsection config_mtocpp Configuration options for the mtoc++ filter
  * The file \c mtocpp.conf contains additional configuration for the mtoc++ parser.
@@ -186,7 +185,7 @@
  * See the file itself for more detailed configuration options and examples.
  *
  * @subsection config_latex Extending default LaTeX environment for doxygen
- * The \c latexextras.m4 file is processed and included into the latex environment available to doxygen during the documentation creation.
+ * The \c latexextras.template file is processed and included into the latex environment available to doxygen during the documentation creation.
  * Insert here any commands or packages that you want latex to know for your documentation formulas.
  *
  * @attention When having errors inside an LaTeX formula, doxygen will complain upon finishing and tell you to look
@@ -195,7 +194,7 @@
  * We considered deleting all formula pngs before each re-creation, but decided not to do this for performance issues.
  * So just make sure you react to latex typos/errors immediately.
  *
- * The default packages that are included by the \c latexextras.m4 are
+ * The default packages that are included by the \c latexextras.template are
  * @code \usepackage{amsmath}
  * \usepackage{amssymb}
  * \usepackage{amsfonts}
