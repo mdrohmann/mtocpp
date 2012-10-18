@@ -1519,21 +1519,24 @@ void MFileScanner::handle_param_list_for_varargin()
                     runMode_.auto_add_params);
     if (!requiredParams.empty())
     {
-      fout_ << "*\n  * @par Required Parameters for varargin\n  ";
+      fout_ << "* <i>Required Parameters for varargin:</i>\n  ";
       write_docu_list(requiredParams, "- @c", cscan_.param_list_,
                       runMode_.auto_add_params);
+      fout_ << "* .\n  ";
     }
     if (!optionalParams.empty())
     {
-      fout_ << "*\n  * @par Optional Parameters for varargin\n  ";
+      fout_ << "* <i>Optional Parameters for varargin:</i>\n  ";
       write_docu_list(optionalParams, "- @c", cscan_.param_list_,
                       runMode_.auto_add_params);
+      fout_ << "* .\n  ";
     }
     if (!mappedParams.empty())
     {
-      fout_ << "*\n  * @par Named Parameters for varargin\n  ";
+      fout_ << "* <i>Named Parameters for varargin:</i>\n  ";
       write_docu_list(mappedParams, "- @c", cscan_.param_list_,
                       runMode_.auto_add_params);
+      fout_ << "* .\n  ";
     }
   }
   else
