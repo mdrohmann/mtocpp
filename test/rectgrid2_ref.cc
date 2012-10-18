@@ -525,21 +525,21 @@ rectgrid(matlabtypesubstitute varargin) {
   * @code FORMAT: varargin = ( xrange, yrange, xnumintervals,
                       [ ynumintervals ],
                       "bnd_rect_corner1", bnd_rect_corner1_value, "bnd_rect_corner2", bnd_rect_corner2_value ) @endcode
-  *
-  * @par Required Parameters for varargin
+  * <i>Required Parameters for varargin:</i>
   * - @c xrange     interval covered along the x-axes
   * - @c yrange     interval covered along the y-axes
   * - @c xnumintervals     number of elements along x directions
-  *
-  * @par Optional Parameters for varargin
+  * .
+  * <i>Optional Parameters for varargin:</i>
   * - @c ynumintervals     number of elements along y directions
   *      ( @b Default: <tt>100</tt> )
-  *
-  * @par Named Parameters for varargin
+  * .
+  * <i>Named Parameters for varargin:</i>
   * - @c bnd_rect_corner1    bnd rect corner1
   *      ( @b Default: <tt>[-inf,-inf]</tt> )
   * - @c bnd_rect_corner2    bnd rect corner2
   *      ( @b Default: <tt>[+inf,+inf]</tt> )
+  * .
   */
 
 noret::substitute demo()
