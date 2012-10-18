@@ -1520,22 +1520,23 @@ void MFileScanner::handle_param_list_for_varargin()
     if (!requiredParams.empty())
     {
       fout_ << "* <i>Required Parameters for varargin:</i>\n  ";
-      write_docu_list(requiredParams, "- @c", cscan_.param_list_,
-                      runMode_.auto_add_params);
+      write_docu_list(requiredParams, "- <span class=\"paramname\">", cscan_.param_list_,
+                      runMode_.auto_add_params, "</span>");
       fout_ << "* .\n  ";
     }
     if (!optionalParams.empty())
     {
       fout_ << "* <i>Optional Parameters for varargin:</i>\n  ";
-      write_docu_list(optionalParams, "- @c", cscan_.param_list_,
-                      runMode_.auto_add_params);
+      write_docu_list(optionalParams, "- <span class=\"paramname\">", cscan_.param_list_,
+                      runMode_.auto_add_params, "</span>");
       fout_ << "* .\n  ";
     }
     if (!mappedParams.empty())
     {
       fout_ << "* <i>Named Parameters for varargin:</i>\n  ";
-      write_docu_list(mappedParams, "- @c", cscan_.param_list_,
-                      runMode_.auto_add_params);
+      write_docu_list(mappedParams, "- <span class=\"paramname\">",
+                      cscan_.param_list_,
+                      runMode_.auto_add_params, "</span>");
       fout_ << "* .\n  ";
     }
   }
