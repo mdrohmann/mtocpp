@@ -1511,8 +1511,9 @@ void MFileScanner::handle_param_list_for_varargin()
 
     *oss << " ) @endcode\n";
     format.push_back(oss->str());
-    param_list_["varargin"] = format;
 
+    DocuBlock & varargin_docu = param_list_["varargin"];
+    varargin_docu.insert(varargin_docu.end(), format.begin(), format.end());
 
     write_docu_list(param_list_, "@param", cscan_.param_list_,
                     runMode_.auto_add_params);
