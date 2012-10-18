@@ -22,16 +22,19 @@ classdef rectgrid
     % sorting of vertices is always counterclockwise SE,NE,NW,SW
     % local edge j (1..4) is connecting points j and j+1
     %
-    % rectgrid() : construction of a default rectgrid (2d unit square,
-    %              2x2 elements with -1 as outer neighbour indices)
-    % rectgrid(rgrid) : copy-constructor
-    % rectgrid(params) : generate rectgrid with certain options.
-    %
-    %     required fields of params:
-    %         xnumintervals : number of elements along x directions
-    %         ynumintervals : number of elements along y directions
-    %         xrange : interval covered along the x-axes
-    %         yrange : interval covered along the y-axes
+    % Parameters:
+    %   varargin: variable number of constructors. The constructor can be used
+    %             as
+    %     - rectgrid() : construction of a default rectgrid (2d unit square,
+    %                    2x2 elements with -1 as outer neighbour indices)
+    %     - rectgrid(rgrid) : copy-constructor
+    %     - rectgrid(options) : generate rectgrid with certain options, which
+    %     must be one of the following: 
+    %     .
+    %   xrange : interval covered along the x-axes
+    %   yrange : interval covered along the y-axes
+    %   xnumintervals : number of elements along x directions
+    %   ynumintervals : number of elements along y directions
     %
     %     optional fields:
     %         bnd_rect_corner1: coordinates of lower corner of to be marked
@@ -97,6 +100,12 @@ classdef rectgrid
     %        alpha * h_i <= distance(midpoint i to any neigbour) )
 
     % Bernard Haasdonk 9.5.2007
+
+    p = inputParser;
+    addRequired(p, 'xnumintervals');
+    addOptional(p, 'ynumintervals', 100);
+    addParamValue(p, 'bnd_rect_corner1', [-inf,-inf]);
+    addParamValue(p, 'bnd_rect_corner2', [+inf,+inf]);
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % copy constructor
