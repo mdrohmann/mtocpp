@@ -172,7 +172,7 @@ using std::ostringstream;
     );
 
   # comment block in function body
-  comment_block = [ \t]* . '%' . is_doxy_comment;
+  comment_block = (( [ \t]* >(st_tok)  . '%') @{fout_.write(tmp_p, p - tmp_p);}) . is_doxy_comment;
 
   # an empty line
   empty_line = [\t ]* . EOL;
@@ -385,8 +385,8 @@ using std::ostringstream;
     # ('%' @{ tmp_p = p + 1; } . garble_comment_line);
     (comment_block)
       => {
-           assert(p >= tmp_p-1);
-           fout_.write(tmp_p, p - tmp_p+1);
+           assert(p >= tmp_p);
+           fout_.write(tmp_p, p - tmp_p);
            fcall in_comment_block;
          };
 
@@ -670,8 +670,8 @@ std::cerr << "Found param value for varargin: " << tmp_string2 << " with default
       # a comment block
       (comment_block)
         => {
-          assert(p+1 >= tmp_p);
-          fout_.write(tmp_p, p - tmp_p+1);
+          assert(p >= tmp_p);
+          fout_.write(tmp_p, p - tmp_p);
           fcall in_comment_block;
         };
 
