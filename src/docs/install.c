@@ -6,7 +6,6 @@
  * @section inst_req Software requirements and recommendations
  * The following programs need to be available on your machine in order to use mtoc++:
  * - \c doxygen (>=1.7.3): mtoc++ is a filter for doxygen. If not yet available, get it at http://www.doxygen.org
- * - \c m4: A macro processor http://www.gnu.org/s/m4/ (For Windows we included a m4 executable in the download!)
  *
  * The following programs will highly improve your documentation creation experience if available:
  * - \c dot: A Graphviz tool that allows doxygen to create nice graphics for inheritance trees and collaboration diagrams.
