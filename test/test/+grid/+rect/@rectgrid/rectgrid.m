@@ -103,9 +103,13 @@ classdef rectgrid
 
     p = inputParser;
     addRequired(p, 'xnumintervals');
+    p.addRequired('xnumintervals2');
     addOptional(p, 'ynumintervals', 100);
+    p.addOptional('ynumintervals2', 100);
     addParamValue(p, 'bnd_rect_corner1', [-inf,-inf]);
+    p.addParamValue('bnd_rect_corner21', [-inf,-inf]);
     addParamValue(p, 'bnd_rect_corner2', [+inf,+inf]);
+    p.addParamValue('bnd_rect_corner22', [+inf,+inf], @isnumeric);
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     % copy constructor

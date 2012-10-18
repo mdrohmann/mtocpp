@@ -411,6 +411,21 @@ using std::ostringstream;
  #endif
          }
        };
+     
+     ((IDENT %{tmp_string.assign(ts, p - ts);})
+         . '.addRequired' . [ \t]* . '(' . [ \t]* 
+         . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);}) . '\'' )
+       => {
+         fout_.write(ts, te-ts);
+         if (tmp_string == varargin_parser_candidate_ )
+         {
+           varargin_parser_values_[tmp_string2] = make_pair(0, "");
+ #ifdef DEBUG
+ std::cerr << "Found required varargin: " << tmp_string2 << std::endl;
+ #endif
+         }
+       };
+
 
     ('addOptional' . [ \t]* . '(' . [ \t]* . (IDENT > (st_tok) %{tmp_string.assign(tmp_p, p - tmp_p);})
       . [ \t]* . ',' . [ \t]* . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);} ) . '\''
@@ -428,6 +443,25 @@ std::cerr << "Found optional varargin: " << tmp_string2 << " with default value 
         if (*p == '\n')
           fgoto funcbody;
       };
+    
+    ((IDENT %{tmp_string.assign(ts, p - ts);})
+      . '.addOptional' . [ \t]* . '(' . [ \t]* 
+      . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);} ) . '\''
+      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . [;\n] )
+      => {
+        fout_.write(ts, te-ts);
+        if (tmp_string == varargin_parser_candidate_ )
+        {
+          extract_default_argument_of_inputparser(tmp_string3);
+          varargin_parser_values_[tmp_string2] = make_pair(1, tmp_string3);
+#ifdef DEBUG
+std::cerr << "Found optional varargin: " << tmp_string2 << " with default value " << tmp_string3 << std::endl;
+#endif
+        }
+        if (*p == '\n')
+          fgoto funcbody;
+      };
+
 
     ('addParamValue' . [ \t]* . '(' . [ \t]* . (IDENT > (st_tok) %{tmp_string.assign(tmp_p, p - tmp_p);})
       . [ \t]* . ',' . [ \t]* . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);}) . '\''
@@ -445,6 +479,25 @@ std::cerr << "Found param value for varargin: " << tmp_string2 << " with default
         if (*p == '\n')
           fgoto funcbody;
       };
+    
+    ((IDENT %{tmp_string.assign(ts, p - ts);})
+      . '.addParamValue' . [ \t]* . '(' . [ \t]*
+      . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);}) . '\''
+      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . [;\n] )
+      => {
+        fout_.write(ts, te-ts);
+        if (tmp_string == varargin_parser_candidate_ )
+        {
+          extract_default_argument_of_inputparser(tmp_string3);
+          varargin_parser_values_[tmp_string2] = make_pair(2, tmp_string3);
+#ifdef DEBUG
+std::cerr << "Found param value for varargin: " << tmp_string2 << " with default value " << tmp_string3 << std::endl;
+#endif
+        }
+        if (*p == '\n')
+          fgoto funcbody;
+      };
+
 
     # automatically add return value fields to retval_list_
     (

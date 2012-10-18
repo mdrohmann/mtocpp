@@ -22,9 +22,13 @@ rectgrid(matlabtypesubstitute varargin) {
 
     
     addRequired(p, 'xnumintervals');
+    p.addRequired('xnumintervals2');
     addOptional(p, 'ynumintervals', 100);
+    p.addOptional('ynumintervals2', 100);
     addParamValue(p, 'bnd_rect_corner1', [-inf,-inf]);
+    p.addParamValue('bnd_rect_corner21', [-inf,-inf]);
     addParamValue(p, 'bnd_rect_corner2', [+inf,+inf]);
+    p.addParamValue('bnd_rect_corner22', [+inf,+inf], @isnumeric);
 
 /* %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 */
@@ -522,23 +526,31 @@ rectgrid(matlabtypesubstitute varargin) {
   *      - rectgrid(options) : generate rectgrid with certain options, which
   *      must be one of the following: 
   *      .
-  * @code rectgrid ( xrange, yrange, xnumintervals,
-           [ ynumintervals
-           [, "bnd_rect_corner1", bnd_rect_corner1_value [, "bnd_rect_corner2", bnd_rect_corner2_value ] ] ] ) @endcode
+  * @code rectgrid ( xrange, yrange, xnumintervals, xnumintervals2,
+           [ ynumintervals [, ynumintervals2
+           [, "bnd_rect_corner1", bnd_rect_corner1_value [, "bnd_rect_corner21", bnd_rect_corner21_value
+           [, "bnd_rect_corner2", bnd_rect_corner2_value [, "bnd_rect_corner22", bnd_rect_corner22_value ] ... ] ) @endcode
   * <i>Required Parameters for varargin:</i>
   * - <span class="paramname"> xrange</span>     interval covered along the x-axes
   * - <span class="paramname"> yrange</span>     interval covered along the y-axes
   * - <span class="paramname"> xnumintervals</span>     number of elements along x directions
+  * - <span class="paramname"> xnumintervals2</span>    xnumintervals2
   * .
   * <i>Optional Parameters for varargin:</i>
   * - <span class="paramname"> ynumintervals</span>     number of elements along y directions
+  *      ( @b Default: <tt>100</tt> )
+  * - <span class="paramname"> ynumintervals2</span>    ynumintervals2
   *      ( @b Default: <tt>100</tt> )
   * .
   * <i>Named Parameters for varargin:</i>
   * - <span class="paramname"> bnd_rect_corner1</span>    bnd rect corner1
   *      ( @b Default: <tt>[-inf,-inf]</tt> )
+  * - <span class="paramname"> bnd_rect_corner21</span>    bnd rect corner21
+  *      ( @b Default: <tt>[-inf,-inf]</tt> )
   * - <span class="paramname"> bnd_rect_corner2</span>    bnd rect corner2
   *      ( @b Default: <tt>[+inf,+inf]</tt> )
+  * - <span class="paramname"> bnd_rect_corner22</span>    bnd rect corner22
+  *      ( @b Default: <tt>[+inf,+inf</tt> )
   * .
   */
 
