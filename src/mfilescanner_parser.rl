@@ -33,21 +33,26 @@ using std::ostringstream;
   # scanner for comment blocks
   in_comment_block :=
   (
+   ([ \t]* >{ tmp_p = p; } .
    # comment line begins with a percent sign
-   '%'
-     @{ tmp_p = p+1; fout_ << " *"; }
+   '%')
+     @{ fout_ << "\n";
+        fout_.write(tmp_p, p - tmp_p);
+        tmp_p = p+1; fout_ << " *";
+      }
    # and then some default characters
    . (default - '\n')* . EOL
-     @{ fout_.write(tmp_p, p - tmp_p+1); }
+     @{ fout_.write(tmp_p, p - tmp_p); }
   )*
   $!{
-    fout_ << "*/\n";
+    fout_ << " */\n";
     if(is_getter_ || is_setter_)
     {
-      fout_ << "/* ";
+      fout_ << "/*\n";
     }
     fhold;
-    fhold;
+    while (*p == ' ')
+      fhold;
     fret;
   };
 
@@ -193,7 +198,7 @@ using std::ostringstream;
         fout_.write(tmp_p, p - tmp_p) << "*/\n";
         if(is_getter_ || is_setter_)
         {
-          fout_ << "/* ";
+          fout_ << "/*\n";
         }
       };
   garble_comment_line_wo_eol =
@@ -668,7 +673,7 @@ std::cerr << "Found param value for varargin: " << tmp_string2 << " with default
         };
 
       # a comment block
-      (comment_block)
+      ( ([ \t]* . '%' @{ fout_.write(ts, p - ts); }) . is_doxy_comment)
         => {
           assert(p >= tmp_p);
           fout_.write(tmp_p, p - tmp_p);
@@ -1360,7 +1365,7 @@ debug_output("in funcbody: goto main", p);
     # a comment block
     (comment_block)
       => {
-        fout_.write(tmp_p, p - tmp_p+1);
+        fout_.write(tmp_p, p - tmp_p);
         fcall in_comment_block;
       };
 
@@ -1723,6 +1728,18 @@ int MFileScanner :: execute()
 {
   std::ios::sync_with_stdio(false);
 
+  fout_ << "/* NB: This source code has been filtered by the mtocpp executable.\n";
+  fout_ << " * It comprises code that can be interpreted by the doxygen documentation\n";
+  fout_ << " * tool. On the other hand, it can neither be interpreted by MATLAB, nor\n";
+  fout_ << " * can it be compiled with a C++ compiler.\n";
+  fout_ << " * Except for the comments, the function bodies of your M-file functions\n";
+  fout_ << " * are untouched. Therefor, you might want to activate the\n";
+  fout_ << " * FILTER_SOURCE_FILES doxygen switch. Then, links in the doxygen generated\n";
+  fout_ << " * documentation to the source code of functions and class members refer to\n";
+  fout_ << " * the correct spots in the source code browser.\n";
+  fout_ << " * BUT: The line numbers most likely do not correspond to the line numbers in\n";
+  fout_ << " * the original MATLAB source files. */\n";
+  
   %% write init;
 
   /* Do the first read. */

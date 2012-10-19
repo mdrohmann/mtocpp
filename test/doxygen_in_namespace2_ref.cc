@@ -1,33 +1,34 @@
 namespace grid{
 namespace rect{
+/* NB: This source code has been filtered by the mtocpp executable.
+ * It comprises code that can be interpreted by the doxygen documentation
+ * tool. On the other hand, it can neither be interpreted by MATLAB, nor
+ * can it be compiled with a C++ compiler.
+ * Except for the comments, the function bodies of your M-file functions
+ * are untouched. Therefor, you might want to activate the
+ * FILTER_SOURCE_FILES doxygen switch. Then, links in the doxygen generated
+ * documentation to the source code of functions and class members refer to
+ * the correct spots in the source code browser.
+ * BUT: The line numbers most likely do not correspond to the line numbers in
+ * the original MATLAB source files. */
 mlhsInnerSubst<void> doxygen(matlabtypesubstitute param1,matlabtypesubstitute param2,::othergrid auto_param) {
 
 
-/*  After the first non-comment line the function body begins:
-*/
-
+/*  After the first non-comment line the function body begins: */
 
 /** Comment blocks starting with %| are interpreted as Doxygen documentation
- *  blocks and can include doxygen commands like
-*/
+ *  blocks and can include doxygen commands like */
 
-
-/** \todo There needs to be done something in this file
-*/
-
+/** \todo There needs to be done something in this file */
 
 /*  fields of parameters that are used in the function body are added to the
- * required fileds list automatically, if they are not documentated yet.
-*/
-
+ * required fileds list automatically, if they are not documentated yet. */
 param1.auto_added;
 
 param2.auto_added;
 
 /*  fields of return values that are assigned somewhere in the function body are
- * also added automatically to the list of generated fields
-*/
-
+ * also added automatically to the list of generated fields */
 rv.auto_added= 1;
 rv.sub.auto_added= 2;
 
@@ -157,9 +158,7 @@ mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f>
    {
 
 
-/** \docupdate
-*/
-
+/** \docupdate */
 
 }
 /** @fn mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_without_parameters()
