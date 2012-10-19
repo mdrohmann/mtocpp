@@ -1513,11 +1513,11 @@ void MFileScanner::handle_param_list_for_varargin()
         *oss << " [ ";
 
       first = 0;
-      *oss << '"' << mappedParams.at(i).first << "\", " << mappedParams.at(i).first << "_value";
+      *oss << '"' << mappedParams.at(i).first << "\", " << mappedParams.at(i).first << "_value ]";
     }
 
-    unsigned int nOptParams = optionalParams.size() + mappedParams.size();
-    if (nOptParams < 6)
+    unsigned int nOptParams = optionalParams.size();
+    if (nOptParams < 5)
       for (unsigned int count = 0; count < nOptParams; ++count)
         *oss << " ]";
     else
