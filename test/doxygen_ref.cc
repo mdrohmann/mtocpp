@@ -1,3 +1,4 @@
+
 /* NB: This source code has been filtered by the mtocpp executable.
  * It comprises code that can be interpreted by the doxygen documentation
  * tool. On the other hand, it can neither be interpreted by MATLAB, nor
@@ -144,9 +145,11 @@ auto_param.auto_field;
   * @arg \c auto_added&nbsp;&mdash;&nbsp;    auto added
   * @arg \c sub.auto_added&nbsp;&mdash;&nbsp;    sub.auto added
   */
+
 mlhsInnerSubst<matlabtypesubstitute,c> mtoc_subst_doxygen_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b) {
 
 }
+
 mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,e> ,mlhsInnerSubst<matlabtypesubstitute,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(matlabtypesubstitute unused1,::rectgrid auto_param,matlabtypesubstitute unused2,matlabtypesubstitute unused3) {
 
 
@@ -157,15 +160,17 @@ mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubst
 body(string, with, double quote, and percent sign, "  '%s'} ") /*  a real comment } */
 
 }
-mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,unused1> ,mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,unused2> ,mlhsInnerSubst<matlabtypesubstitute,unused3> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
-   {
+
+mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,unused1> ,mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,unused2> ,mlhsInnerSubst<matlabtypesubstitute,unused3> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters() {
 
 
 }
+
 noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters(::bool uml,::bool open) {
 
 
 }
+
 noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml,::bool open) {
 
 
@@ -173,3 +178,4 @@ noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml
 /** \docupdate */
 
 }
+

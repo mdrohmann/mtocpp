@@ -1,3 +1,4 @@
+
 /* NB: This source code has been filtered by the mtocpp executable.
  * It comprises code that can be interpreted by the doxygen documentation
  * tool. On the other hand, it can neither be interpreted by MATLAB, nor
@@ -137,9 +138,11 @@ auto_param.auto_field;
   * @par Generated fields of rv:
   * @arg \c RB&nbsp;&mdash;&nbsp;     Description for generated field rv.RB
   */
+
 mlhsInnerSubst<void> mtoc_subst_doxygen_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b) {
 
 }
+
 mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_with_sev_retvals(matlabtypesubstitute unused1,::rectgrid auto_param,matlabtypesubstitute unused2,matlabtypesubstitute unused3) {
 
 
@@ -158,18 +161,18 @@ body(string, with, double quote, and percent sign, "  '%s'} ") /*  a real commen
   *
   * @retval d     a return value
   */
-mlhsSubst<mlhsInnerSubst<void,unused1> ,mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,unused2> ,mlhsInnerSubst<void,unused3> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
-   {
+
+mlhsSubst<mlhsInnerSubst<void,unused1> ,mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,unused2> ,mlhsInnerSubst<void,unused3> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters() {
 
 
 }
 /** @fn mlhsSubst<mlhsInnerSubst<void,unused1> ,mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,unused2> ,mlhsInnerSubst<void,unused3> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters()
-  
   * @brief  a third (private) function in the test file without parameters
   *
   *
   * @retval d     a return value
   */
+
 noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters(::bool uml,::bool open) {
 
 
@@ -184,6 +187,7 @@ noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters(::bool uml,
   *         successful compilation 
   *          @b Default: [1;2;3] 
   */
+
 noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml,::bool open) {
 
 
@@ -201,3 +205,4 @@ noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml
   *         successful compilation 
   *         
   */
+

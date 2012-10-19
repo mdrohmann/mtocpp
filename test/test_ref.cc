@@ -1,6 +1,7 @@
 #include "rectgrid.m"
 namespace grid{
 namespace rect{
+
 /* NB: This source code has been filtered by the mtocpp executable.
  * It comprises code that can be interpreted by the doxygen documentation
  * tool. On the other hand, it can neither be interpreted by MATLAB, nor
@@ -29,5 +30,6 @@ end
   *
   * @retval ret    ret
   */
+
 };
 };

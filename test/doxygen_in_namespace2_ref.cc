@@ -1,5 +1,6 @@
 namespace grid{
 namespace rect{
+
 /* NB: This source code has been filtered by the mtocpp executable.
  * It comprises code that can be interpreted by the doxygen documentation
  * tool. On the other hand, it can neither be interpreted by MATLAB, nor
@@ -139,9 +140,11 @@ auto_param.auto_field;
   * @par Generated fields of rv:
   * @arg \c RB&nbsp;&mdash;&nbsp;     Description for generated field rv.RB
   */
+
 mlhsInnerSubst<void> mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_second_function_without_docu(matlabtypesubstitute a,matlabtypesubstitute b) {
 
 }
+
 mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_with_sev_retvals(::othergrid auto_param) {
 
 
@@ -154,19 +157,19 @@ mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f>
   *
   * @retval d     a return value
   */
-mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_without_parameters()
-   {
+
+mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_without_parameters() {
 
 
 /** \docupdate */
 
 }
 /** @fn mlhsSubst<mlhsInnerSubst<void,d> ,mlhsInnerSubst<void,e> ,mlhsInnerSubst<void,f> > mtoc_subst_doxygen_in_namespace_m_tsbus_cotm_third_function_without_parameters()
-  
   * @brief  a third (private) function in the test file without parameters
   *
   *
   * @retval d     a return value
   */
+
 };
 };
