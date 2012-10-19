@@ -1,3 +1,4 @@
+
 /* NB: This source code has been filtered by the mtocpp executable.
  * It comprises code that can be interpreted by the doxygen documentation
  * tool. On the other hand, it can neither be interpreted by MATLAB, nor
@@ -26,7 +27,9 @@ class classA
   * @note This class has the class property <tt>Sealed</tt> and cannot be derived from.*/
 
 
-protected:
+
+protected: /* ( Transient ) */
+
 
 ::gridbase::gridbase mixed_access;
 /** @var mixed_access
@@ -114,7 +117,9 @@ matlabtypesubstitute Property_without_semicolon;
 
  /*  garbage comment */
 
-public:
+
+public: /* ( Constant ) */
+
 static const matlabtypesubstitute aConstant = 1;
 /** @var aConstant
   * @brief  help text
@@ -154,7 +159,9 @@ static const matlabtypesubstitute dConstant = {" [ 1, 2, 3, 4], 'test', [ 1 2, [
 static const matlabtypesubstitute dConstant = struct("'a', [], 'b', {'c', 'd'}, 'e', [1 2 3]");
 
 
+
 public:
+
 matlabtypesubstitute public_access;
 /** @var public_access
   * @brief  short help for public_access
@@ -196,7 +203,9 @@ matlabtypesubstitute followingpropwithoutsemicolon_c = 4;
 matlabtypesubstitute antoheroneWITH_c;
 
 
+
 protected:
+
 matlabtypesubstitute protected_access;
 /** @var protected_access
   * @brief  short help for protected_access
@@ -212,7 +221,9 @@ matlabtypesubstitute protected_access2;
   */
 
 
-public:
+
+public: /* ( Hidden ) */
+
 
 mlhsInnerSubst<void> foo(matlabtypesubstitute b,matlabtypesubstitute c) {
 
@@ -234,6 +245,7 @@ mlhsInnerSubst<void> foo(matlabtypesubstitute b,matlabtypesubstitute c) {
   */
 
 
+
 mlhsInnerSubst<void> bar(matlabtypesubstitute d,matlabtypesubstitute e) {
 
       foo;
@@ -248,15 +260,14 @@ mlhsInnerSubst<void> bar(matlabtypesubstitute d,matlabtypesubstitute e) {
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">matlab documentation of method attributes.</a>
   */
 
-mlhsInnerSubst<void> foobar()
-   {
+
+mlhsInnerSubst<void> foobar() {
 
 
      test
 
 }
 /** @fn mlhsInnerSubst<void> foobar()
-  
   * @brief  last function comment above
   *  brief for foobar
   *
@@ -268,6 +279,7 @@ mlhsInnerSubst<void> foobar()
   * @note This method has the MATLAB method attribute @c Hidden set to true.
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">matlab documentation of method attributes.</a>
   */
+
 
 mlhsInnerSubst<void> mdecl(matlabtypesubstitute b);
 
@@ -282,10 +294,12 @@ classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">matlab documentation of method attributes.</a>
   */
 
+
+
 public:
+
 /* 
-mlhsInnerSubst<void> protected_access()
-   {
+mlhsInnerSubst<void> protected_access() {
 
       if a==b
         do something;
@@ -301,10 +315,10 @@ mlhsInnerSubst<void> protected_access()
 }
 */
 /** @fn mlhsInnerSubst<void> protected_access()
-  
   * @brief  getter enriching property help text of protected_access
   *
   */
+
 
 /* 
 noret::substitute protected_access(matlabtypesubstitute value) {
@@ -316,6 +330,7 @@ noret::substitute protected_access(matlabtypesubstitute value) {
   * @brief  setter comment is parsed too
   *
   */
+
 
 
 /* 
@@ -330,6 +345,7 @@ if ~isdir(ds)
 }
 */
 
+
 /* 
 noret::substitute protected_access2(matlabtypesubstitute value) {
 
@@ -338,7 +354,10 @@ noret::substitute protected_access2(matlabtypesubstitute value) {
 */
 
 
-public:
+
+
+public: /* ( Static ) */
+
 static mlhsSubst<mlhsInnerSubst<void,a> ,mlhsInnerSubst<void,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c) {
 }
 /** @fn mlhsSubst<mlhsInnerSubst<void,a> ,mlhsInnerSubst<void,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c)
@@ -347,6 +366,7 @@ static mlhsSubst<mlhsInnerSubst<void,a> ,mlhsInnerSubst<void,b> > static_method(
   *
   *
   */
+
 
 static mlhsInnerSubst<void> test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c) {
 }
@@ -363,7 +383,10 @@ static mlhsInnerSubst<void> test(::gridbase::gridbase auto_param,matlabtypesubst
   * 
   */
 
-public:
+
+
+public: /* ( Abstract, Static ) */
+
 static mlhsSubst<mlhsInnerSubst<void,a> ,mlhsInnerSubst<void,b> > static_abstract_method(matlabtypesubstitute this,matlabtypesubstitute c) = 0;
 /** @fn mlhsSubst<mlhsInnerSubst<void,a> ,mlhsInnerSubst<void,b> > static_abstract_method(matlabtypesubstitute this,matlabtypesubstitute c)
   * @brief  a static abstract method
@@ -373,7 +396,10 @@ static mlhsSubst<mlhsInnerSubst<void,a> ,mlhsInnerSubst<void,b> > static_abstrac
   */
 
 
-public:
+
+
+public: /* ( Abstract ) */
+
 
 virtual mlhsInnerSubst<::classA::mixed_access> abstract_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;
 /** @fn mlhsInnerSubst<::classA::mixed_access> abstract_method(matlabtypesubstitute d,matlabtypesubstitute e)
@@ -391,9 +417,12 @@ virtual mlhsInnerSubst<::classA::mixed_access> abstract_method(matlabtypesubstit
   */
 
 
+
 virtual mlhsInnerSubst<void> undocumented_abstract_method(matlabtypesubstitute b,matlabtypesubstitute f) = 0;
 
+
 virtual mlhsSubst<mlhsInnerSubst<void,b> ,mlhsInnerSubst<void,c> ,mlhsInnerSubst<void,d> > another_undocumented_abstract_method(matlabtypesubstitute b,matlabtypesubstitute c) = 0;
+
 
 virtual mlhsInnerSubst<void> followed_by_document_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;
 /** @fn mlhsInnerSubst<void> followed_by_document_method(matlabtypesubstitute d,matlabtypesubstitute e)
@@ -403,7 +432,10 @@ virtual mlhsInnerSubst<void> followed_by_document_method(matlabtypesubstitute d,
   *
   */
 
-public:
+
+
+public: /* ( Abstract ) */
+
 
 EVENT documentedEvent;
 /** @var documentedEvent

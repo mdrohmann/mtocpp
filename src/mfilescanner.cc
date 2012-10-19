@@ -124,7 +124,7 @@ void MFileScanner :: print_pure_function_synopsis()
   fout_ << cfuncname_;
 
   if(paramlist_.size() == 0)
-    fout_ << "()\n  ";
+    fout_ << "()";
   else
   {
 #if DEBUG
@@ -201,10 +201,17 @@ std::string MFileScanner :: access_specifier_string(AccessEnum & access)
   return "";
 }
 
-void MFileScanner :: print_access_specifier(AccessEnum & access)
+void MFileScanner :: print_access_specifier(AccessEnum & access, MethodParams & mp, PropParams & pp)
 {
   const std::string ass = access_specifier_string(access);
-  fout_ << ass << ":\n";
+  const std::string mp_list = mp.print_list();
+  const std::string pp_list = pp.print_list();
+  fout_ << "\n" << ass << ":";
+  if (!mp_list.empty())
+    fout_ << " /* " << mp_list << " */";
+  if (!pp_list.empty())
+    fout_ << " /* " << pp_list << " */";
+  fout_ << "\n\n";
 }
 
 // constructor
@@ -266,6 +273,7 @@ MFileScanner :: MFileScanner(istream & fin, ostream & fout,
   for (list<string>::iterator it = namespaces_.begin();
        it != namespaces_.end(); ++it)
     fout_ << "namespace " << *it << "{" << endl;
+  fout_ << "\n";
 
   found = fnname_.rfind("/");
   if(found != string::npos)
@@ -1321,6 +1329,8 @@ void MFileScanner::end_function()
 
   is_setter_ = false; is_getter_ = false;
   cfuncname_.clear();
+
+  fout_ << "\n";
 }
 
 void MFileScanner::debug_output(const std::string & msg, char * p)

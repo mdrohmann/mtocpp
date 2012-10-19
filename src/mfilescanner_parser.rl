@@ -1250,7 +1250,7 @@ debug_output("in funcbody: goto main", p);
   methodsheader := (
     [ \t]* . methodparams? . [ \t;]* . ( '%' . garble_comment_line_wo_eol )? . EOL
          @{
-            print_access_specifier(access_.full);
+            print_access_specifier(access_.full, methodparams_, propertyparams_);
             fgoto methods;
           }
               );
@@ -1351,7 +1351,7 @@ debug_output("in funcbody: goto main", p);
 
   properties := ( (
     WSOC* . propertyparams? . [ \t;]* . ('%' . garble_comment_line_wo_eol )? . EOL @{
-        print_access_specifier(access_.full);
+        print_access_specifier(access_.full, methodparams_, propertyparams_);
         }
     . propertybody* )
       );

@@ -122,6 +122,44 @@ struct PropParams
       return "";
   }
 
+  std::string print_list()
+  {
+    std::ostringstream oss;
+    char pre = '(';
+    if(constant)
+    {
+      oss << pre << " Constant";
+      pre = ',';
+    }
+    if(transient)
+    {
+      oss << pre << " Transient";
+      pre = ',';
+    }
+    if(dependent)
+    {
+      oss << pre << " Dependent";
+      pre = ',';
+    }
+    if(hidden)
+    {
+      oss << pre << " Hidden";
+      pre = ',';
+    }
+    if(setObservable)
+    {
+      oss << pre << " setObservable";
+      pre = ',';
+    }
+    if(abstr)
+    {
+      oss << pre << " Abstract";
+      pre = ',';
+    }
+    if(pre == ',') oss << " )";
+    return oss.str();
+  }
+
 public:
   PropParams()
     : constant(false),
@@ -172,6 +210,34 @@ struct MethodParams
       return ";";
   }
 
+  std::string print_list()
+  {
+    std::ostringstream oss;
+    char pre = '(';
+    if(abstr)
+    {
+      oss << pre << " Abstract";
+      pre = ',';
+    }
+    if(statical)
+    {
+      oss << pre << " Static";
+      pre = ',';
+    }
+    if(hidden)
+    {
+      oss << pre << " Hidden";
+      pre = ',';
+    }
+    if(sealed)
+    {
+      oss << pre << " Sealed";
+      pre = ',';
+    }
+    if(pre == ',') oss << " )";
+    return oss.str();
+
+  }
 public:
   MethodParams()
     : abstr(false),
@@ -362,7 +428,7 @@ private:
   void add_method_params_info();
   void end_of_class_doc();
   std::string access_specifier_string(AccessEnum & access);
-  void print_access_specifier(AccessEnum & access);
+  void print_access_specifier(AccessEnum & access, MethodParams & mp, PropParams & pp);
   void print_pure_function_synopsis();
   void print_function_synopsis();
   void end_of_property_doc();

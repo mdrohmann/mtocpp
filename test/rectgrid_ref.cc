@@ -1,5 +1,6 @@
 namespace grid{
 namespace rect{
+
 /* NB: This source code has been filtered by the mtocpp executable.
  * It comprises code that can be interpreted by the doxygen documentation
  * tool. On the other hand, it can neither be interpreted by MATLAB, nor
@@ -22,7 +23,9 @@ class rectgrid {
  */
 
 
+
 public:
+
 
 rectgrid(matlabtypesubstitute varargin) {
 
@@ -401,11 +404,10 @@ rectgrid(matlabtypesubstitute varargin) {
   * .
   */
 
-noret::substitute demo()
-  ;
 
-noret::substitute display()
-  ;
+noret::substitute demo();
+
+noret::substitute display();
 
 noret::substitute gridpart(matlabtypesubstitute eind);
 
@@ -413,7 +415,9 @@ mlhsInnerSubst<matlabtypesubstitute,p> plot(::plot_params params);
 
 noret::substitute set_enbi(matlabtypesubstitute nbind,matlabtypesubstitute values);
 
-public:
+
+public: /* ( Static ) */
+
 static mlhsInnerSubst<matlabtypesubstitute,ret> test(::othergrid auto_param,matlabtypesubstitute b,::test c);
 
 };
