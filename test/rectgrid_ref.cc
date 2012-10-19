@@ -528,8 +528,8 @@ rectgrid(matlabtypesubstitute varargin) {
   *      .
   * @code rectgrid ( xrange, yrange, xnumintervals, xnumintervals2,
            [ ynumintervals [, ynumintervals2
-           [, "bnd_rect_corner1", bnd_rect_corner1_value [, "bnd_rect_corner21", bnd_rect_corner21_value
-           [, "bnd_rect_corner2", bnd_rect_corner2_value [, "bnd_rect_corner22", bnd_rect_corner22_value ] ... ] ) @endcode
+           [, "bnd_rect_corner1", bnd_rect_corner1_value ] [, "bnd_rect_corner21", bnd_rect_corner21_value ]
+           [, "bnd_rect_corner2", bnd_rect_corner2_value ] [, "bnd_rect_corner22", bnd_rect_corner22_value ] ] ] ) @endcode
   * <i>Required Parameters for varargin:</i>
   * - <span class="paramname"> xrange</span>     interval covered along the x-axes
   * - <span class="paramname"> yrange</span>     interval covered along the y-axes
