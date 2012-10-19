@@ -57,7 +57,7 @@ using std::endl;
   rettype:= |*
 
     # matlab is typeless, so discard the type
-    ('matlabtypesubstitute') => {fout << " ";};
+    ('matlabtypesubstitute' . (' '?)) => {};
 
     # replace all "::" by "."
     ('::' . [A-Z\\a-z\-_]) => { fout << '.' << *(te-1); };
@@ -144,11 +144,11 @@ using std::endl;
    ('::mtoc_subst_') => { fout << '.'; fgoto mtocsubst; };
 
    # matlab is typeless, so discard the type
-   ('matlabtypesubstitute') => {fout << " ";};
+   ('matlabtypesubstitute'. (' '?)) => {};
 
    # remove leading "::" (global namespace identifier)
-   ([(,>] . '::') => { fout.write(ts, 1); fout << " "; };
-   ('&lt;' . '::') => { fout.write(ts, 4); fout << " ";};
+   ([(,>] . '::') => { fout.write(ts, 1); };
+   ('&lt;' . '::') => { fout.write(ts, 4); };
 
    # replace all "::" by "."
    ('::' . [A-Z\\a-z\-_]) => { fout << '.' << *(te-1); };
