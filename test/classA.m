@@ -138,6 +138,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
         do something;
       % the following end needs to be indented correctly
       end % garble this correctly
+
 %|
 % \todo this is a test
 
