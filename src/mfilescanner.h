@@ -289,6 +289,10 @@ public:
 /**
  * @class MFileScanner
  *
+ * @change{1,4,md,2012-10-19} prettify the output of postprocessed source
+ * for source code browsing in doxygen. Now, we recommend the usage of the
+ * FILTER_SOURCE_FILES doxygen switch.
+ *
  * @change{1,4,md,2012-10-17} implemented varargin handling by Matlab
  * inputParser, as suggested here:
  * http://www.mathworks.de/de/help/matlab/ref/inputparser.parse.html
