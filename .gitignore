@@ -1,4 +1,5 @@
 .gdbinit
+.settings
 *.o
 mtoc
 postprocess

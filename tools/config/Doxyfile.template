@@ -61,6 +61,7 @@
 #             - Added placeholders for project description and logo
 #             - Set SOURCE_BROWSER = YES and FILTER_SOURCE_FILES = YES in
 #               order to have automatic inclusion of call graphs in the generated documentation.
+#             - Set EXLUDE_SYMLINKS = YES as default
 #
 # mtoc++ 1.4: - Added alias for an @events tag, creating a page of all events
 #			  - Changed naming convention for alias-tags new and change as newer doxygen
@@ -690,7 +691,7 @@ EXCLUDE                =
 # directories that are symbolic links (a Unix file system feature) are excluded
 # from the input.
 
-EXCLUDE_SYMLINKS       = NO
+EXCLUDE_SYMLINKS       = YES
 
 # If the value of the INPUT tag contains directories, you can use the
 # EXCLUDE_PATTERNS tag to specify one or more wildcard patterns to exclude
