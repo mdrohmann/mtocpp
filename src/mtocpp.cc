@@ -46,6 +46,8 @@ void usage()
 }
 
 /**
+ * @change{1,4,dw,2012-10-22} Added an additional comment about indentation in matlab on parse errors
+ *
  * @change{1,2,dw,2011-11-27} Included a new option \c --verbose for short mtoc++ version output.
  */
 // main routine

@@ -1728,17 +1728,15 @@ int MFileScanner :: execute()
 {
   std::ios::sync_with_stdio(false);
 
-  fout_ << "/* NB: This source code has been filtered by the mtocpp executable.\n";
-  fout_ << " * It comprises code that can be interpreted by the doxygen documentation\n";
-  fout_ << " * tool. On the other hand, it can neither be interpreted by MATLAB, nor\n";
-  fout_ << " * can it be compiled with a C++ compiler.\n";
-  fout_ << " * Except for the comments, the function bodies of your M-file functions\n";
-  fout_ << " * are untouched. Therefor, you might want to activate the\n";
-  fout_ << " * FILTER_SOURCE_FILES doxygen switch. Then, links in the doxygen generated\n";
-  fout_ << " * documentation to the source code of functions and class members refer to\n";
-  fout_ << " * the correct spots in the source code browser.\n";
-  fout_ << " * BUT: The line numbers most likely do not correspond to the line numbers in\n";
-  fout_ << " * the original MATLAB source files. */\n";
+  fout_ << "\n/* (Autoinserted by mtoc++)\n * This source code has been filtered by the mtoc++ executable,\n";
+  fout_ << " * which generates code that can be processed by the doxygen documentation tool.\n *\n";
+  fout_ << " * On the other hand, it can neither be interpreted by MATLAB, nor can it be compiled with a C++ compiler.\n";
+  fout_ << " * Except for the comments, the function bodies of your M-file functions are untouched.\n";
+  fout_ << " * Consequently, the FILTER_SOURCE_FILES doxygen switch (default in our Doxyfile.template) will produce\n";
+  fout_ << " * attached source files that are highly readable by humans.\n *\n";
+  fout_ << " * Additionally, links in the doxygen generated documentation to the source code of functions and class members refer to\n";
+  fout_ << " * the correct locations in the source code browser.\n";
+  fout_ << " * However, the line numbers most likely do not correspond to the line numbers in the original MATLAB source files.\n */\n\n";
   
   %% write init;
 
@@ -1804,7 +1802,7 @@ int MFileScanner :: execute()
     if ( cs == MFileScanner_error )
     {
       /* Machine failed before finding a token. */
-      cerr << "MTOCPP:" << std::string(filename_) << ": PARSE ERROR in line " << line << endl;
+      cerr << "MTOCPP:" << std::string(filename_) << ": PARSE ERROR in line " << line << " (Most common issue: wrong MatLab-indentation)" << endl;
       debug_output("Grrrr!!!!", p);
       exit(-1);
     }
