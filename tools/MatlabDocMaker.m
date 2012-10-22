@@ -127,8 +127,7 @@ classdef MatlabDocMaker
             % Return values:
             % name: The project name @type char
             
-            name = 'KerMor';
-            %error('Please replace this by returning your project name as string.');
+            error('Please replace this by returning your project name as string.');
             % Example:
             % name = 'My mtoc++-powered project';
         end
