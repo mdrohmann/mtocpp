@@ -1,4 +1,5 @@
 
+
 /* (Autoinserted by mtoc++)
  * This source code has been filtered by the mtoc++ executable,
  * which generates code that can be processed by the doxygen documentation tool.
@@ -12,6 +13,7 @@
  * the correct locations in the source code browser.
  * However, the line numbers most likely do not correspond to the line numbers in the original MATLAB source files.
  */
+
 class classA
   :public ::general::reference::classB,
    public ::a::b::c,
