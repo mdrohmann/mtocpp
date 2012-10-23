@@ -1,6 +1,7 @@
 namespace grid{
 namespace rect{
 
+
 /* (Autoinserted by mtoc++)
  * This source code has been filtered by the mtoc++ executable,
  * which generates code that can be processed by the doxygen documentation tool.
@@ -14,6 +15,7 @@ namespace rect{
  * the correct locations in the source code browser.
  * However, the line numbers most likely do not correspond to the line numbers in the original MATLAB source files.
  */
+
 class rectgrid {
 /** @class "grid::rect::rectgrid"
   * @ingroup test
