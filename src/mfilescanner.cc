@@ -146,11 +146,13 @@ void MFileScanner :: print_pure_function_synopsis()
       get_default(paramlist_[i], defvalue);
       if (defvalue.empty())
       {
-        if (is_default_necessary)
+        if (is_default_necessary && paramlist_[i] != "varargin")
         {
-          std::cerr << "MTOC++: Warning: Default value for optional parameter "
-                    << paramlist_[i] << " in method "
-                    << cfuncname_ << " has not been specified\n";
+          std::ostringstream oss;
+          oss << "Default value for optional parameter "
+              << paramlist_[i] << " in method "
+              << cfuncname_ << " has not been specified\n";
+          print_warning(oss.str());
         }
       }
       else
@@ -166,6 +168,14 @@ void MFileScanner :: print_pure_function_synopsis()
 */
     fout_ << ")";
   }
+}
+
+void MFileScanner :: print_warning(const std::string & message)
+{
+  std::cerr << "In file " << filename_ << ", near line " << line << ":\n"
+      << "    MTOC++: Warning: " << message;
+
+  warning_buffer_ << "MTOC++: Warning: " << message << "\n";
 }
 
 void MFileScanner :: print_function_synopsis()
@@ -893,8 +903,10 @@ void MFileScanner::end_method()
       }
       catch (ifstream::failure e)
       {
-        std::cerr << "MTOCPP Warning: No definition for function " << cfuncname_
-          << " found in class " << classname_ << "!\n";
+        std::ostringstream oss;
+        oss << "No definition for function " << cfuncname_
+            << " found in class " << classname_ << "!\n";
+        print_warning(oss.str());
       }
     }
 
@@ -1331,6 +1343,14 @@ void MFileScanner::end_function()
   cfuncname_.clear();
 
   fout_ << "\n";
+
+  std::string warnings = warning_buffer_.str();
+  if (!warnings.empty())
+  {
+    fout_ << "/* " << warnings << " */";
+  }
+  warning_buffer_.str("");
+  warning_buffer_.clear();
 }
 
 void MFileScanner::debug_output(const std::string & msg, char * p)

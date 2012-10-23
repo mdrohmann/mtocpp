@@ -455,6 +455,7 @@ private:
 
   const std::string & escape_chars(std::string & s);
 
+  void print_warning(const std::string &);
   void write_docu_block(const DocuBlock & block);
 
   void write_docu_list(const DocuList & list,
@@ -525,6 +526,8 @@ private:
 
   std::string varargin_parser_candidate_;
   VararginParserValuesType varargin_parser_values_;
+  std::ostringstream warning_buffer_;
+
 };
 
 extern const char * AccessEnumNames[];
