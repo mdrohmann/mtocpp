@@ -718,6 +718,14 @@ void MFileScanner::end_of_class_doc()
     cout_docuextra();
     fout_ << "*/\n";
   }
+
+  const std::string & warnings = warning_buffer_.str();
+  if (!warnings.empty())
+  {
+    fout_ << "/* " << warnings << " */";
+  }
+  warning_buffer_.str("");
+  warning_buffer_.clear();
 }
 
 
