@@ -1802,7 +1802,7 @@ int MFileScanner :: execute()
     if ( cs == MFileScanner_error )
     {
       /* Machine failed before finding a token. */
-      cerr << "MTOCPP:" << std::string(filename_) << ": PARSE ERROR in line " << line << " (Most common issue: wrong MatLab-indentation)" << endl;
+      cerr << "MTOC++:" << std::string(filename_) << ": PARSE ERROR in line " << line << " (Most common issue: wrong MatLab-indentation)" << endl;
       debug_output("Grrrr!!!!", p);
       exit(-1);
     }
