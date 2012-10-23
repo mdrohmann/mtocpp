@@ -183,6 +183,5 @@ noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters2(::bool uml
 
 }
 
-/* MTOC++: Warning: Default value for optional parameter open in method default_parameters2 has not been specified
-
+/* mtoc++ warning: Optional parameter 'open' of method 'default_parameters2' has no specified default value
  */
