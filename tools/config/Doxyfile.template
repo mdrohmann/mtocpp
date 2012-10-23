@@ -1748,9 +1748,8 @@ HTML_OUTPUT            = "_OutputDir_"
 # Latex is an extra option.
 GENERATE_LATEX         = _GenLatex_
 
-# NO causes LaTeX to stop when errors occur, so they can be displayed.
-# (This is YES for HTML-LaTeX formulas independently)
-LATEX_BATCHMODE        = NO
+# NO causes LaTeX to stop when errors occur
+LATEX_BATCHMODE        = YES
 
 # This tag can be used to specify a number of aliases that acts
 # as commands in the documentation. An alias has the form "name=value".

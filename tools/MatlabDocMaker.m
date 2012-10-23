@@ -386,8 +386,8 @@ classdef MatlabDocMaker
                 fid = fopen(latexextras,'w+'); fprintf(fid,'%s',latexstr); fclose(fid);
             end
             % Always use "/" for latex usepackage commands, so replace "\" (effectively windows
-            % only) by "/"
-            m(end+1,:) = {'_LatexExtras_' strrep(latexextras,'\','/')};
+            % only) by "/", and dont pass the extension ".sty" as latex automatically adds it.
+            m(end+1,:) = {'_LatexExtras_' strrep(latexextras(1:end-4),'\','/')};
             L = 'NO';
             if genlatex
                 L = 'YES';
@@ -471,15 +471,21 @@ classdef MatlabDocMaker
             if ~isempty(warn)
                 dispwarn = [warn(1:min(showchars,length(warn))) ' [...]'];
                 fprintf('First %d characters of warnings generated during documentation creation:\n%s\n',showchars,dispwarn);
-                % Write to log file later
+                % Write to log file
                 log = fullfile(outdir,'warnings.log');
                 f = fopen(log,'w'); fprintf(f,'%s',warn); fclose(f);
+                fprintf(2,'MatlabDocMaker finished with warnings!\n');
                 fprintf('Complete log file at <a href="matlab:edit(''%s'')">%s</a>.\n',log,log);
+                % Check for latex log file
+                log = fullfile(outdir,'_formulas.log');
+                if exist(log,'file')
+                    fprintf('Found LaTeX formula log file. Check <a href="matlab:edit(''%s'')">%s</a> for any errors.\n',log,log);
+                end
+                % Check for errors on latex generation
                 if genlatex && latexerr
                     log = fullfile(latexdir,'refman.log');
                     fprintf('There have been errors with LaTeX compilation. See log file at <a href="matlab:edit(''%s'')">%s</a>.\n',log,log);
                 end
-                fprintf(2,'MatlabDocMaker finished with warnings!\n');
             else
                 fprintf('MatlabDocMaker finished with no warnings!\n');
             end
