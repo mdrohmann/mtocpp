@@ -46,10 +46,10 @@ using std::ostringstream;
   )*
   $!{
     fout_ << " */\n";
-    if(is_getter_ || is_setter_)
-    {
-      fout_ << "/*\n";
-    }
+//    if(is_getter_ || is_setter_)
+//    {
+//      fout_ << "*/\n";
+//    }
     fhold;
     while (*p == ' ')
       fhold;
@@ -147,10 +147,11 @@ using std::ostringstream;
     (
     # RAGEL comment: if percent character is followed by a bar we make the comment a doxygen
     # comment
-     '|' @{ if(is_getter_ || is_setter_)
-            {
-              fout_ << "*/";
-            }
+     '|' @{ 
+//    if(is_getter_ || is_setter_)
+//            {
+//              fout_ << "*/";
+//            }
             fout_ << "/**"; tmp_p = p+1;
           }
      . (default - '\n')*
@@ -166,10 +167,10 @@ using std::ostringstream;
     # RAGEL comment: else: a regular comment
      ( (default - '|')
        @{
-         if(is_getter_ || is_setter_)
-         {
-           fout_ << "*/";
-         }
+//         if(is_getter_ || is_setter_)
+//         {
+//           fout_ << "\n#endif\n";
+//         }
          fout_ << "/* ";
          tmp_p = p;
          } )
@@ -189,17 +190,17 @@ using std::ostringstream;
   garble_comment_line =
     ( (default - [\r\n])* . EOL )
       @{
-        if(is_getter_ || is_setter_)
-        {
-          fout_ << "*/";
-        }
+//        if(is_getter_ || is_setter_)
+//        {
+//          fout_ << "\n#endif\n";
+//        }
         fout_ << "/* ";
         assert( p >= tmp_p );
         fout_.write(tmp_p, p - tmp_p) << "*/\n";
-        if(is_getter_ || is_setter_)
-        {
-          fout_ << "/*\n";
-        }
+//        if(is_getter_ || is_setter_)
+//        {
+//          fout_ << "\n#if 0\n";
+//        }
       };
   garble_comment_line_wo_eol =
     (default - [\r\n])*;
@@ -1467,6 +1468,19 @@ debug_output("in funcbody: goto main", p);
   )
  $!{
     fhold;
+    {
+      int i = 0;
+      for (i = 0; *(p-i) == ' ' || *(p-i) == '\t'; ++i)
+        ;
+      std::string whitespaces(i, ' ');
+//    if (string(p, 5) == " if ~")
+//    {
+//      debug_output("break;", p);
+//      fout_ << "/* start */";
+//    }
+//    for (char * i = p; *i == ' ' || *i == '\t'; --i)
+//      fout_ << *i;
+//     fout_ << "/* end */"; 
 #ifdef DEBUG
     debug_output("stopping expect_doxyblock", p);
 #endif
@@ -1493,6 +1507,7 @@ debug_output("in funcbody: goto main", p);
         else
         {
           print_function_synopsis();
+          fout_ << whitespaces;
           fgoto funcbody;
         }
       }
@@ -1514,7 +1529,9 @@ debug_output("in funcbody: goto main", p);
       if(runMode_.mode == RunMode::ParseParams)
         return 1;
       print_function_synopsis();
+      fout_ << whitespaces;
       fgoto funcbody;
+    }
     }
   };
   #}}}2

@@ -179,7 +179,7 @@ void MFileScanner :: print_function_synopsis()
 {
   if(is_getter_ || is_setter_)
   {
-   fout_ << "/* \n";
+   fout_ << "\n#if 0 \n";
   }
   if(is_class_ && (class_part_ == Method
                    || class_part_ == AtMethod
@@ -1249,7 +1249,7 @@ void MFileScanner::end_function()
   if(!is_method || !methodparams_.abstr)
     fout_ << string(funcindent_, ' ') << "}\n";
   if(is_getter_ || is_setter_)
-    fout_ << "*/\n";
+    fout_ << "\n#endif\n";
   if(is_setter_)
     specifier_[cfuncname_].setter = true;
   if(is_getter_)
