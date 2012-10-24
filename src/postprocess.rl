@@ -63,30 +63,36 @@ using std::endl;
     ('::' . [A-Z\\a-z\-_]) => { fout << '.' << *(te-1); };
 
     # a word
-    (any - [\n <>\&:,\t])+ => { fout.write(ts, te-ts); };
+    (any - [\n <>\&\$:,\t])+ => { fout.write(ts, te-ts); };
 
     # word separators
-    ([\n <>\&:\t]) => {fout << *ts;};
+    ([\n <>\&\$:\t]) => {fout << *ts;};
 
     # bugfix: allow '>' in the end of typenames for Daniel's generic types
-    ('&lt;' . [^&]* . '&gt;') => { fout.write(ts, te-ts); };
+    (('&lt;'|'$<$') . [^&$]* . ('$>$'|'&gt;')) => { fout.write(ts, te-ts); };
 
     # comma or &gt; end the type
     (',') => { fhold; fret; };
-    ('&gt;') => { p -=4; fret; };
+    ('&gt;'|'$>$') => { p -=4; fret; };
   *|;
 
   # reconstruct return values
   retval:= |*
-    ('&lt;' . ('::')?) => { fcall rettype; };
+    (('&lt;'|'$<$') . ('::')?) => { fcall rettype; };
 
     # matlab identifier (1 return value)
 #    ('&lt;' . (default - [,&])*) => { cerr.write(ts+4, te - ts-4); cerr << std::endl; fout.write(ts+4, te - ts-4); };
 
-    (',' . (default - '\&')*) => { fout << " <span class=\"paramname\">"; fout.write(ts+1, te-ts-1); fout << "</span>"; };
+    (',' . (default - ('\&'|'\$'))*) => {
+      if (*p == '\&')
+        fout << " <span class=\"paramname\">";
+      fout.write(ts+1, te-ts-1);
+      if (*p == '\&')
+        fout << "</span>";
+    };
 
     # end of return value
-    ('&gt;') => {
+    ('&gt;'|'$>$') => {
                   if(only_retval) { fout << " ="; }
                   fret;
                 };
@@ -99,16 +105,18 @@ using std::endl;
 
     # other tags
     #(ANY_TAG) => { fout.write(ts, te-ts); };
+    
+    ('\\\*') => {};
 
   *|;
 
   retvals := |*
 
-    ('&lt;') => {};
+    ('&lt;' | '$<$') => {};
 
-    ('mlhsInnerSubst') => { fcall retval; };
+    ('mlhs' . '\\\-'? . 'Inner' . '\\\-'? . 'Subst' . '\\\*'?) => { fcall retval; };
 
-    ('&gt;') => { fout << "] ="; fgoto main; };
+    ('&gt;' | '$>$') => { fout << "] ="; fgoto main; };
 
     # white spaces and commata
     ([ \t\n]*) => { fout.write(ts, te - ts); };
@@ -117,49 +125,54 @@ using std::endl;
 
     # other tags
     (ANY_TAG) => { fout.write(ts, te-ts); };
+    
+    ('\\\*') => {};
 
   *|;
 
   # function name
   mtocsubst:= |*
-    '_';
+    ('_' | '\\_');
 
     (IDENT_WO_US) => { fout.write(ts, te-ts); };
 
-    '_m_tsbus_cotm_' => { fout << "&gt;"; fgoto main; };
+    ('_m_tsbus_cotm_' )  => { fout << "&gt;"; fgoto main; };
+    
+    ( '\\-m\\-\\_\\-tsbus\\-\\_\\-cotm') => { fgoto main; };
   *|;
 
   main:= |*
    # list of return values
-   ('mlhsSubst') => { fout << "function ["; only_retval = false; fgoto retvals; };
+   ('mlhs' . ('\\-')? . 'Subst') => { fout << "function ["; only_retval = false; fgoto retvals; };
 
    # one return value
-   ('mlhsInnerSubst') => { fout << "function "; only_retval = true; fcall retval; fout << " ="; };
+   ('mlhs' . ('\\-')? . 'Inner' . ('\\-')? . 'Subst' . ('\\\*')?) => { fout << "function "; only_retval = true; fcall retval; fout << " ="; };
 
    # no return values
-   ('noret::substitute') => {fout << "function ";};
+   ('noret::' . ('\\-')? . 'substitute' . ('\\\*')?) => {fout << "function ";};
 
    # function name
-   ('mtoc_subst_') => { fgoto mtocsubst; };
-   ('::mtoc_subst_') => { fout << '.'; fgoto mtocsubst; };
+   ('mtoc_subst_' | 'mtoc\\-\\_\\-subst\\-\\_\\-') => { fgoto mtocsubst; };
+   
+   ('::mtoc_subst_' | ('\\-'? . '::' . '\\-' . 'mtoc\\-\\_\\-subst\\-\\_')) => { fout << '.'; fgoto mtocsubst; };
 
    # matlab is typeless, so discard the type
    ('matlabtypesubstitute'. (' '?)) => {};
 
    # remove leading "::" (global namespace identifier)
    ([(,>] . '::') => { fout.write(ts, 1); };
-   ('&lt;' . '::') => { fout.write(ts, 4); };
+   ( ('&lt;' '$<$') . '::') => { fout.write(ts, 4); };
 
    # replace all "::" by "."
    ('::' . [A-Z\\a-z\-_]) => { fout << '.' << *(te-1); };
 
    # a word
-   (any - [\n <>()[\]{}\&:.,;_\t])+ => { fout.write(ts, te-ts); };
+   (any - [\n <>()[\]{}\&\$:.,;_\t\-])+ => { fout.write(ts, te-ts); };
 
    (')=0') => { fout << ")"; };
 
    # word separators
-   ([\n <>()[\]{}\t:.;,_\&]) => {fout << *ts;};
+   ([\n <>()[\]{}\t:.;,_\&\$\-]) => {fout << *ts;};
 
    # a single dot stays a dot
    ('.') => {fout << '.';};
@@ -178,6 +191,7 @@ private:
   int          stack[5];
   bool         only_retval;
   bool         quiet_;
+  bool         dry_run_;
 
 public:
   /**
@@ -187,12 +201,13 @@ public:
    * assuming the passed string to be a folder whos contents are to be postprocessed.
    */
   // constructor
-  PostProcess(const string &docdir, const bool quiet_flag) :
+  PostProcess(const string &docdir, const bool quiet_flag, const bool dry_run_flag) :
     docdir_(docdir),
     line(1),
     ts(0), te(0), have(0),
     top(0), only_retval(false),
-    quiet_(quiet_flag)
+    quiet_(quiet_flag),
+    dry_run_(dry_run_flag)
   { }
 
   int execute()
@@ -242,13 +257,25 @@ public:
     is.read(buf, length);
     is.close();
     
-    ofstream fout;
-    try {
-      fout.open(file.c_str(), ios_base::trunc);
-    } catch (std::ofstream::failure e) {
-      cerr << "Exception opening/writing file";
-      exit(-1);
+    
+    ofstream fout2;
+    if (!dry_run_)
+    {
+      try {
+        fout2.open(file.c_str(), ios_base::trunc);
+      } catch (std::ofstream::failure e) {
+        cerr << "Exception opening/writing file";
+        exit(-1);
+      }
     }
+    
+    std::ostream * fout_ptr;
+    
+    if (dry_run_)
+      fout_ptr = &std::cout;
+    else
+      fout_ptr = &fout2;
+    std::ostream & fout = *fout_ptr; 
 
     int len = is.gcount();
     char *pe = p + len;
@@ -265,7 +292,8 @@ public:
       exit(-1);
     }
 
-    fout.close();
+    if (!dry_run_)
+      fout2.close();
     delete buf;
 
     return 0;
@@ -283,6 +311,7 @@ void usage()
 int main(int argc, char ** argv)
 {
   bool quiet = false;
+  bool dry_run = false;
   string docdir;
   if(argc >= 2)
   {
@@ -294,6 +323,11 @@ int main(int argc, char ** argv)
     if (argc == 3 && std::string("-q") == std::string(argv[1]))
     {
       quiet = true;
+      docdir = argv[2];
+    }
+    else if (argc == 3 && std::string("-d") == std::string(argv[1]))
+    {
+      dry_run = true;
       docdir = argv[2];
     }
     else if(argc == 2)
@@ -315,7 +349,7 @@ int main(int argc, char ** argv)
   if (!quiet)
     cout << "Running mtoc++ postprocessor on directory " << docdir << endl;
 
-  PostProcess scanner(docdir, quiet);
+  PostProcess scanner(docdir, quiet, dry_run);
   scanner.execute();
   return 0;
 }
