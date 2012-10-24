@@ -403,7 +403,7 @@ class rectgrid {
   * - <span class="paramname"> bnd_rect_corner2</span>    bnd rect corner2
   *      ( @b Default: <tt>[+inf,+inf]</tt> )
   * - <span class="paramname"> bnd_rect_corner22</span>    bnd rect corner22
-  *      ( @b Default: <tt>[+inf,+inf</tt> )
+  *      ( @b Default: <tt>[+inf,+inf]</tt> )
   * .
   */
 

@@ -1383,13 +1383,13 @@ void MFileScanner::extract_default_argument_of_inputparser(std::string & last_ar
     else
     {
       string::size_type comma = last_args.find_last_of(",", brace);
-      last_args = last_args.substr(0, comma-1);
+      last_args = last_args.substr(0, comma);
     }
   }
   else
   {
     string::size_type comma = last_args.find_last_of(",", at_sign);
-    last_args = last_args.substr(0, comma-1);
+    last_args = last_args.substr(0, comma);
   }
 }
 
