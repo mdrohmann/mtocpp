@@ -17,8 +17,8 @@
 class classA
   :public ::general::reference::classB,
    public ::a::b::c,
-   public ::d::e::f,
-   public ::g::h::i,
+       public ::d::e::f    ,
+   public ::g::h::i    ,
    public ::grid::rect::rectgrid {
 /** @class "classA"
   * @ingroup test
@@ -31,11 +31,10 @@ class classA
   * @note This class has the class property <tt>Sealed</tt> and cannot be derived from.*/
 
 
+  protected: /* ( Transient ) */
 
-protected: /* ( Transient ) */
 
-
-::gridbase::gridbase mixed_access;
+    ::gridbase::gridbase mixed_access;
 /** @var mixed_access
   * @brief  variable  storing a grid.
   *
@@ -46,7 +45,7 @@ protected: /* ( Transient ) */
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
   */
 
-matlabtypesubstitute mixed_access2 = "test";
+    matlabtypesubstitute mixed_access2 = "test";
 /** @var mixed_access2
   * @brief  longer help with @f$default@f$ value
   *  what is this??
@@ -66,7 +65,7 @@ matlabtypesubstitute mixed_access2 = "test";
 */
 
 
-::SpecialType DataStoreDirectory = "";
+    ::SpecialType DataStoreDirectory = "";
 /** @var DataStoreDirectory
   * @brief  This documentation is a test for the type keyword.
   *
@@ -81,7 +80,7 @@ matlabtypesubstitute mixed_access2 = "test";
   */
 
 
-matlabtypesubstitute SomeProp = struct("'xi',[],'ti',[],'mui',[]");
+    matlabtypesubstitute SomeProp = struct("'xi',[],'ti',[],'mui',[]");
 /** @var SomeProp
   * @brief SomeProp
   *
@@ -94,7 +93,7 @@ matlabtypesubstitute SomeProp = struct("'xi',[],'ti',[],'mui',[]");
 */
 
 
-matlabtypesubstitute SomeOtherProp = struct("   \
+    matlabtypesubstitute SomeOtherProp = struct("   \
       'xi', [], 'ti',    \
       []");
 /** @var SomeOtherProp
@@ -111,7 +110,7 @@ matlabtypesubstitute SomeOtherProp = struct("   \
 */
 
 
-matlabtypesubstitute SteadyStates = "[[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0   \
+    matlabtypesubstitute SteadyStates = "[[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0   \
       [0, 3.0824e-5, 0.1713]*models.pcd.BasePCDSystem.ya0   \
       [.2, 0.1990, 0.0070]*models.pcd.BasePCDSystem.xi0   \
       [.2, 0.2, 0.0287]*models.pcd.BasePCDSystem.yi0]";
@@ -130,7 +129,7 @@ matlabtypesubstitute SteadyStates = "[[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDS
 */
 
 
-matlabtypesubstitute Property_without_semicolon;
+    matlabtypesubstitute Property_without_semicolon;
 /** @var Property_without_semicolon
   * @brief  commented anyways
   *
@@ -141,12 +140,11 @@ matlabtypesubstitute Property_without_semicolon;
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
   */
 
- /*  garbage comment */
+   /*  garbage comment */
 
+  public: /* ( Constant ) */
 
-public: /* ( Constant ) */
-
-static const matlabtypesubstitute aConstant = 1;
+    static const matlabtypesubstitute aConstant = 1;
 /** @var aConstant
   * @brief  help text
   *
@@ -154,7 +152,7 @@ static const matlabtypesubstitute aConstant = 1;
   * <br/>@b Default: 1
 */
 
-static const matlabtypesubstitute bConstant = 2;
+    static const matlabtypesubstitute bConstant = 2;
 /** @var bConstant
   * @brief  help text for bConstant
   *
@@ -163,7 +161,7 @@ static const matlabtypesubstitute bConstant = 2;
 */
 
 
-static const matlabtypesubstitute cConstant = 3;
+    static const matlabtypesubstitute cConstant = 3;
 /** @var cConstant
   * @brief  help text for cConstant
   *
@@ -171,7 +169,7 @@ static const matlabtypesubstitute cConstant = 3;
   * <br/>@b Default: 3
 */
 
-static const matlabtypesubstitute vectorConst = "[ 1, 2, 3 ]";
+    static const matlabtypesubstitute vectorConst = "[ 1, 2, 3 ]";
 /** @var vectorConst
   * @brief vectorConst
   *
@@ -179,7 +177,7 @@ static const matlabtypesubstitute vectorConst = "[ 1, 2, 3 ]";
   * <br/>@b Default: "[ 1, 2, 3 ]"
 */
 
-static const matlabtypesubstitute dConstant = {" [ 1, 2, 3, 4], 'test', [ 1 2, [ [3 [3 [3 4] 4] ] ] ] "};
+    static const matlabtypesubstitute dConstant = {" [ 1, 2, 3, 4], 'test', [ 1 2, [ [3 [3 [3 4] 4] ] ] ] "};
 /** @var dConstant
   * @brief  test
   *
@@ -188,7 +186,7 @@ static const matlabtypesubstitute dConstant = {" [ 1, 2, 3, 4], 'test', [ 1 2, [
 */
 
 
-static const matlabtypesubstitute dConstant = struct("'a', [], 'b', {'c', 'd'}, 'e', [1 2 3]");
+    static const matlabtypesubstitute dConstant = struct("'a', [], 'b', {'c', 'd'}, 'e', [1 2 3]");
 /** @var dConstant
   * @brief dConstant
   *
@@ -196,18 +194,17 @@ static const matlabtypesubstitute dConstant = struct("'a', [], 'b', {'c', 'd'}, 
   * <br/>@b Default: struct("'a', [], 'b', {'c', 'd'}, 'e', [1 2 3]")
 */
 
+  
+  public:
 
-
-public:
-
-matlabtypesubstitute public_access;
+    matlabtypesubstitute public_access;
 /** @var public_access
   * @brief  short help for public_access
   *
   *
   */
 
-matlabtypesubstitute public_access2;
+    matlabtypesubstitute public_access2;
 /** @var public_access2
   * @brief  longer help for public_access2
   *
@@ -215,7 +212,7 @@ matlabtypesubstitute public_access2;
   */
 
 
-matlabtypesubstitute complexpropertywithoutsemicolon = "[['af]adgdg'\
+        matlabtypesubstitute complexpropertywithoutsemicolon = "[['af]adgdg'\
         'adgadg']]";
 /** @var complexpropertywithoutsemicolon
   * @brief complexpropertywithoutsemicolon
@@ -224,7 +221,7 @@ matlabtypesubstitute complexpropertywithoutsemicolon = "[['af]adgdg'\
   * <br/>@b Default: "[['af]adgdg'\
         'adgadg']]"
 */
-matlabtypesubstitute followingpropwithoutsemicolon = 4;
+    matlabtypesubstitute followingpropwithoutsemicolon = 4;
 /** @var followingpropwithoutsemicolon
   * @brief followingpropwithoutsemicolon
   *
@@ -239,7 +236,7 @@ matlabtypesubstitute antoheroneWITH;
   */
 
 
-matlabtypesubstitute complexpropertywithoutsemicolon_c = "[['af]a'§/$'''dgdg'\
+        matlabtypesubstitute complexpropertywithoutsemicolon_c = "[['af]a'§/$'''dgdg'\
         'adgadg']]";
 /** @var complexpropertywithoutsemicolon_c
   * @brief  with comments version!
@@ -249,7 +246,7 @@ matlabtypesubstitute complexpropertywithoutsemicolon_c = "[['af]a'§/$'''dgdg'\
   * <br/>@b Default: "[['af]a'§/$'''dgdg'\
         'adgadg']]"
 */
-matlabtypesubstitute followingpropwithoutsemicolon_c = 4;
+    matlabtypesubstitute followingpropwithoutsemicolon_c = 4;
 /** @var followingpropwithoutsemicolon_c
   * @brief  with comments version
   *
@@ -263,30 +260,28 @@ matlabtypesubstitute antoheroneWITH_c;
   *
   */
 
+  
+  protected:
 
-
-protected:
-
-matlabtypesubstitute protected_access;
+    matlabtypesubstitute protected_access;
 /** @var protected_access
   * @brief  short help for protected_access
   *
   *
   */
 
-matlabtypesubstitute protected_access2;
+    matlabtypesubstitute protected_access2;
 /** @var protected_access2
   * @brief  longer help text for protected_access2
   *
   *
   */
 
+  
+  public: /* ( Hidden ) */
 
 
-public: /* ( Hidden ) */
-
-
-mlhsInnerSubst<matlabtypesubstitute,obj> foo(matlabtypesubstitute b,matlabtypesubstitute c) {
+   mlhsInnerSubst<matlabtypesubstitute,obj> foo(matlabtypesubstitute b,matlabtypesubstitute c) {
 
       function private_function
 
@@ -294,7 +289,7 @@ mlhsInnerSubst<matlabtypesubstitute,obj> foo(matlabtypesubstitute b,matlabtypesu
       end
 
       bar;
-}
+    }
 /** @fn mlhsInnerSubst<matlabtypesubstitute,obj> foo(matlabtypesubstitute b,matlabtypesubstitute c)
   * @brief  brief doc for foo
   *
@@ -310,10 +305,10 @@ mlhsInnerSubst<matlabtypesubstitute,obj> foo(matlabtypesubstitute b,matlabtypesu
 
 
 
-mlhsInnerSubst<matlabtypesubstitute,obj> bar(matlabtypesubstitute d,matlabtypesubstitute e) {
+   mlhsInnerSubst<matlabtypesubstitute,obj> bar(matlabtypesubstitute d,matlabtypesubstitute e) {
 
       foo;
-}
+    }
 /** @fn mlhsInnerSubst<matlabtypesubstitute,obj> bar(matlabtypesubstitute d,matlabtypesubstitute e)
   * @brief  brief doc for bar
   *
@@ -328,12 +323,12 @@ mlhsInnerSubst<matlabtypesubstitute,obj> bar(matlabtypesubstitute d,matlabtypesu
   */
 
 
-mlhsInnerSubst<matlabtypesubstitute,obj> foobar() {
+   mlhsInnerSubst<matlabtypesubstitute,obj> foobar() {
 
 
      test
 
-}
+    }
 /** @fn mlhsInnerSubst<matlabtypesubstitute,obj> foobar()
   * @brief  last function comment above
   *  brief for foobar
@@ -349,10 +344,10 @@ mlhsInnerSubst<matlabtypesubstitute,obj> foobar() {
   */
 
 
-mlhsInnerSubst<matlabtypesubstitute,ret> mdecl(matlabtypesubstitute b);
+    mlhsInnerSubst<matlabtypesubstitute,ret> mdecl(matlabtypesubstitute b);
 
-classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
-}
+   classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
+    }
 /** @fn classA(matlabtypesubstitute param1,matlabtypesubstitute param2)
   * @brief  bigger constructor
   *
@@ -365,10 +360,9 @@ classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
   */
 
 
+  public:
 
-public:
-
-/* 
+   /* 
 mlhsInnerSubst<matlabtypesubstitute,value> protected_access() {
 
       if a==b
@@ -382,7 +376,7 @@ mlhsInnerSubst<matlabtypesubstitute,value> protected_access() {
  *  \todo this is a test */
 /*
 
-}
+    }
 */
 /** @fn mlhsInnerSubst<matlabtypesubstitute,value> protected_access()
   * @brief  getter enriching property help text of protected_access
@@ -390,11 +384,11 @@ mlhsInnerSubst<matlabtypesubstitute,value> protected_access() {
   */
 
 
-/* 
+   /* 
 noret::substitute protected_access(matlabtypesubstitute value) {
 
       a;
-}
+    }
 */
 /** @fn noret::substitute protected_access(matlabtypesubstitute value)
   * @brief  setter comment is parsed too
@@ -403,7 +397,7 @@ noret::substitute protected_access(matlabtypesubstitute value) {
 
 
 
-/* 
+   /* 
 noret::substitute DataStoreDirectory(matlabtypesubstitute ds) {
 if ~isdir(ds)
         fprintf(" Creating directory %s\n ",ds);
@@ -412,7 +406,7 @@ if ~isdir(ds)
       setpref(" KERMOR "," DATASTORE ",ds);
       this.DataStoreDirectory= ds;
       fprintf(" Simulation and model data: %s\n ",ds);
-}
+    }
 */
 /** @fn noret::substitute DataStoreDirectory(matlabtypesubstitute ds)
   * @brief DataStoreDirectory
@@ -420,11 +414,11 @@ if ~isdir(ds)
   */
 
 
-/* 
+   /* 
 noret::substitute protected_access2(matlabtypesubstitute value) {
 
        a;
-}
+    }
 */
 /** @fn noret::substitute protected_access2(matlabtypesubstitute value)
   * @brief protected access2
@@ -433,11 +427,10 @@ noret::substitute protected_access2(matlabtypesubstitute value) {
 
 
 
+  public: /* ( Static ) */
 
-public: /* ( Static ) */
-
-static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c) {
-}
+   static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c) {
+    }
 /** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c)
   * @brief  a static method
   *
@@ -450,8 +443,8 @@ static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabty
   */
 
 
-static mlhsInnerSubst<matlabtypesubstitute,ret> test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c) {
-}
+   static mlhsInnerSubst<matlabtypesubstitute,ret> test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c) {
+    }
 /** @fn mlhsInnerSubst<matlabtypesubstitute,ret> test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c)
   * @brief  @copybrief grid::rect::rectgrid::test()
   *
@@ -466,10 +459,9 @@ static mlhsInnerSubst<matlabtypesubstitute,ret> test(::gridbase::gridbase auto_p
   */
 
 
+  public: /* ( Abstract, Static ) */
 
-public: /* ( Abstract, Static ) */
-
-static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_abstract_method(matlabtypesubstitute this,matlabtypesubstitute c) = 0;
+    static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_abstract_method(matlabtypesubstitute this,matlabtypesubstitute c) = 0;
 /** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_abstract_method(matlabtypesubstitute this,matlabtypesubstitute c)
   * @brief  a static abstract method
   *
@@ -483,11 +475,10 @@ static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabty
 
 
 
+  public: /* ( Abstract ) */
 
-public: /* ( Abstract ) */
 
-
-virtual mlhsInnerSubst<::classA::mixed_access,a> abstract_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;
+    virtual mlhsInnerSubst<::classA::mixed_access,a> abstract_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;
 /** @fn mlhsInnerSubst<::classA::mixed_access,a> abstract_method(matlabtypesubstitute d,matlabtypesubstitute e)
   * @brief  an abstract method comment above
   *  an abstract method comment below
@@ -504,7 +495,7 @@ virtual mlhsInnerSubst<::classA::mixed_access,a> abstract_method(matlabtypesubst
 
 
 
-virtual mlhsInnerSubst<matlabtypesubstitute,a> undocumented_abstract_method(matlabtypesubstitute b,matlabtypesubstitute f) = 0;
+    virtual mlhsInnerSubst<matlabtypesubstitute,a> undocumented_abstract_method(matlabtypesubstitute b,matlabtypesubstitute f) = 0;
 /** @fn mlhsInnerSubst<matlabtypesubstitute,a> undocumented_abstract_method(matlabtypesubstitute b,matlabtypesubstitute f)
   * @brief undocumented abstract method
   *
@@ -516,7 +507,7 @@ virtual mlhsInnerSubst<matlabtypesubstitute,a> undocumented_abstract_method(matl
   */
 
 
-virtual mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,b> ,mlhsInnerSubst<matlabtypesubstitute,c> ,mlhsInnerSubst<matlabtypesubstitute,d> > another_undocumented_abstract_method(matlabtypesubstitute b,matlabtypesubstitute c) = 0;
+    virtual mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,b> ,mlhsInnerSubst<matlabtypesubstitute,c> ,mlhsInnerSubst<matlabtypesubstitute,d> > another_undocumented_abstract_method(matlabtypesubstitute b,matlabtypesubstitute c) = 0;
 /** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,b> ,mlhsInnerSubst<matlabtypesubstitute,c> ,mlhsInnerSubst<matlabtypesubstitute,d> > another_undocumented_abstract_method(matlabtypesubstitute b,matlabtypesubstitute c)
   * @brief another undocumented abstract method
   *
@@ -530,7 +521,7 @@ virtual mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,b> ,mlhsInnerSubst<matlabt
   */
 
 
-virtual mlhsInnerSubst<matlabtypesubstitute,c> followed_by_document_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;
+    virtual mlhsInnerSubst<matlabtypesubstitute,c> followed_by_document_method(matlabtypesubstitute d,matlabtypesubstitute e) = 0;
 /** @fn mlhsInnerSubst<matlabtypesubstitute,c> followed_by_document_method(matlabtypesubstitute d,matlabtypesubstitute e)
   * @brief  documentation for next method
   *
@@ -542,11 +533,10 @@ virtual mlhsInnerSubst<matlabtypesubstitute,c> followed_by_document_method(matla
   */
 
 
+  public: /* ( Abstract ) */
 
-public: /* ( Abstract ) */
 
-
-EVENT documentedEvent;
+    EVENT documentedEvent;
 /** @var documentedEvent
   * @brief  a documented event
   *
@@ -554,7 +544,7 @@ EVENT documentedEvent;
   * @event documentedEvent
   */
 
-EVENT undocumentedEvent;
+        EVENT undocumentedEvent;
 /** @var undocumentedEvent
   * @brief undocumentedEvent
   *
@@ -569,7 +559,7 @@ EVENT followingUndocumentedEvent;
   * @event followingUndocumentedEvent
   */
 
-
+  
 /** @var DataStoreDirectory
  *
  *@note This property has custom functionality when its value is changed.

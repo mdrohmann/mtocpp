@@ -27,11 +27,10 @@ class rectgrid {
  */
 
 
+  public:
 
-public:
 
-
-rectgrid(matlabtypesubstitute varargin) {
+   rectgrid(matlabtypesubstitute varargin) {
 
 
     /*  Bernard Haasdonk 9.5.2007 */
@@ -60,8 +59,8 @@ rectgrid(matlabtypesubstitute varargin) {
         params.xrange= [0,1];
         params.yrange= [0,1];
         /*  mark element in rectangle from [-1,-1] to [+2,+2] with index -1 */
-        params.bnd_rect_corner1= [-1,-1]';
-        params.bnd_rect_corner2= [2 2]';
+        params.bnd_rect_corner1= [-1,-1]^t;
+        params.bnd_rect_corner2= [2 2]^t;
         params.bnd_rect_index= [-1];
         params.verbose= 0;
       else
@@ -90,7 +89,7 @@ rectgrid(matlabtypesubstitute varargin) {
       grid.Ainv= grid.A.^(-1);
 
       /*  set vertex coordinates */
-      vind = (1:(nx+1)*(ny+1))';
+      vind = (1:(nx+1)*(ny+1))^t;
       grid.X= mod(vind-1,nx+1) * dx + params.xrange(1);
       grid.Y= floor((vind-1)/(nx+1))*dy  + params.yrange(1);
 
@@ -122,8 +121,8 @@ rectgrid(matlabtypesubstitute varargin) {
            ny+dy/2+ params.yrange(1);
       CY = repmat(CY,nx,1);
       grid.CY= CY(:);
-      /* disp('stopping after COG computation');
-       *keyboard; */
+      disp(" stopping after COG computation ");
+      /* keyboard; */
 
       /*  check consistency: grid-midpoints and vertices */
       xdiff1 = max(abs(grid.CX + dx/2 -grid.X(grid.VI(:,1))));
@@ -162,7 +161,7 @@ rectgrid(matlabtypesubstitute varargin) {
       grid.ECY= [grid.CY, grid.CY + dy/2,grid.CY,grid.CY-dy/2];
 
       /* %% determine indices of neighbouring elements, */
-      NBI = repmat((1:nx*ny)',1,4);
+      NBI = repmat((1:nx*ny)^t,1,4);
       /*  first column: +x direction: cyclical shift +1 of indices */
       NBI(:,1) = NBI(:,1)+1;
       /*  second column: +y direction */
@@ -200,10 +199,10 @@ rectgrid(matlabtypesubstitute varargin) {
           error(" boundary indices must be negative! ");
         end;
         if size(params.bnd_rect_corner1,1) == 1
-          params.bnd_rect_corner1= params.bnd_rect_corner1';
+          params.bnd_rect_corner1= params.bnd_rect_corner1^t;
         end;
         if size(params.bnd_rect_corner2,1) == 1
-          params.bnd_rect_corner2= params.bnd_rect_corner2';
+          params.bnd_rect_corner2= params.bnd_rect_corner2^t;
         end;
         for i = 1:length(params.bnd_rect_index)
           indx = (SX > params.bnd_rect_corner1(1,i)) & ...
@@ -220,10 +219,10 @@ rectgrid(matlabtypesubstitute varargin) {
       iend2 = iend1 + length(bnd_i2);
       iend3 = iend2 + length(bnd_i3);
       iend4 = iend3 + length(bnd_i4);
-      NBI(bnd_i1,1) = bnd_ind(1:iend1)'; /*  set right border-neigbours to boundary */
-      NBI(bnd_i2,2) = bnd_ind((iend1+1):iend2)'; /*  set neighbours to boundary */
-      NBI(bnd_i3,3) = bnd_ind((iend2+1):iend3)'; /*  set neigbours to boundary */
-      NBI(bnd_i4,4) = bnd_ind((iend3+1):iend4)'; /*  set neighbours to boundary */
+      NBI(bnd_i1,1) = bnd_ind(1:iend1)^t; /*  set right border-neigbours to boundary */
+      NBI(bnd_i2,2) = bnd_ind((iend1+1):iend2)^t; /*  set neighbours to boundary */
+      NBI(bnd_i3,3) = bnd_ind((iend2+1):iend3)^t; /*  set neigbours to boundary */
+      NBI(bnd_i4,4) = bnd_ind((iend3+1):iend4)^t; /*  set neighbours to boundary */
 
       grid.NBI= NBI;
 
@@ -291,7 +290,7 @@ rectgrid(matlabtypesubstitute varargin) {
 
       grid = class(grid," rectgrid ");
 
-}
+    }
 /** @fn rectgrid(matlabtypesubstitute varargin)
   * @brief  constructor of rectgrid
   *
@@ -409,20 +408,19 @@ rectgrid(matlabtypesubstitute varargin) {
   */
 
 
-noret::substitute demo();
+    noret::substitute demo();
 
-noret::substitute display();
+    noret::substitute display();
 
-noret::substitute gridpart(matlabtypesubstitute eind);
+    noret::substitute gridpart(matlabtypesubstitute eind);
 
-mlhsInnerSubst<void> plot(::plot_params params);
+    mlhsInnerSubst<void> plot(::plot_params params);
 
-noret::substitute set_enbi(matlabtypesubstitute nbind,matlabtypesubstitute values);
+    noret::substitute set_enbi(matlabtypesubstitute nbind,matlabtypesubstitute values);
 
+  public: /* ( Static ) */
 
-public: /* ( Static ) */
-
-static mlhsInnerSubst<void> test(::othergrid auto_param,matlabtypesubstitute b,::test c);
+    static mlhsInnerSubst<void> test(::othergrid auto_param,matlabtypesubstitute b,::test c);
 
 };
 }
