@@ -213,7 +213,7 @@ void MFileScanner :: print_access_specifier(AccessEnum & access, MethodParams & 
   const std::string ass = access_specifier_string(access);
   const std::string mp_list = mp.print_list();
   const std::string pp_list = pp.print_list();
-  fout_ << "\n" << ass << ":";
+  fout_ << ass << ":";
   if (!mp_list.empty())
     fout_ << " /* " << mp_list << " */";
   if (!pp_list.empty())

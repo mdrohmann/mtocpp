@@ -187,7 +187,7 @@ classdef rectgrid
            ny+dy/2+ params.yrange(1);
       CY = repmat(CY,nx,1);
       grid.CY = CY(:);
-      %disp('stopping after COG computation');
+      disp('stopping after COG computation');
       %keyboard;
 
       % check consistency: grid-midpoints and vertices
