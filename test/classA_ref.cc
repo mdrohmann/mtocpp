@@ -281,7 +281,7 @@ matlabtypesubstitute antoheroneWITH_c;
   public: /* ( Hidden ) */
 
 
-   mlhsInnerSubst<matlabtypesubstitute,obj> foo(matlabtypesubstitute b,matlabtypesubstitute c) {
+    mlhsInnerSubst<matlabtypesubstitute,obj> foo(matlabtypesubstitute b,matlabtypesubstitute c) {
 
       function private_function
 
@@ -305,7 +305,7 @@ matlabtypesubstitute antoheroneWITH_c;
 
 
 
-   mlhsInnerSubst<matlabtypesubstitute,obj> bar(matlabtypesubstitute d,matlabtypesubstitute e) {
+    mlhsInnerSubst<matlabtypesubstitute,obj> bar(matlabtypesubstitute d,matlabtypesubstitute e) {
 
       foo;
     }
@@ -323,7 +323,7 @@ matlabtypesubstitute antoheroneWITH_c;
   */
 
 
-   mlhsInnerSubst<matlabtypesubstitute,obj> foobar() {
+    mlhsInnerSubst<matlabtypesubstitute,obj> foobar() {
 
 
      test
@@ -346,7 +346,7 @@ matlabtypesubstitute antoheroneWITH_c;
 
     mlhsInnerSubst<matlabtypesubstitute,ret> mdecl(matlabtypesubstitute b);
 
-   classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
+    classA(matlabtypesubstitute param1,matlabtypesubstitute param2) {
     }
 /** @fn classA(matlabtypesubstitute param1,matlabtypesubstitute param2)
   * @brief  bigger constructor
@@ -362,7 +362,7 @@ matlabtypesubstitute antoheroneWITH_c;
 
   public:
 
-   /* 
+    /* 
 mlhsInnerSubst<matlabtypesubstitute,value> protected_access() {
 
       if a==b
@@ -384,7 +384,7 @@ mlhsInnerSubst<matlabtypesubstitute,value> protected_access() {
   */
 
 
-   /* 
+    /* 
 noret::substitute protected_access(matlabtypesubstitute value) {
 
       a;
@@ -397,7 +397,7 @@ noret::substitute protected_access(matlabtypesubstitute value) {
 
 
 
-   /* 
+    /* 
 noret::substitute DataStoreDirectory(matlabtypesubstitute ds) {
 if ~isdir(ds)
         fprintf(" Creating directory %s\n ",ds);
@@ -414,7 +414,7 @@ if ~isdir(ds)
   */
 
 
-   /* 
+    /* 
 noret::substitute protected_access2(matlabtypesubstitute value) {
 
        a;
@@ -429,7 +429,7 @@ noret::substitute protected_access2(matlabtypesubstitute value) {
 
   public: /* ( Static ) */
 
-   static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c) {
+    static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c) {
     }
 /** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c)
   * @brief  a static method
@@ -443,7 +443,7 @@ noret::substitute protected_access2(matlabtypesubstitute value) {
   */
 
 
-   static mlhsInnerSubst<matlabtypesubstitute,ret> test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c) {
+    static mlhsInnerSubst<matlabtypesubstitute,ret> test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c) {
     }
 /** @fn mlhsInnerSubst<matlabtypesubstitute,ret> test(::gridbase::gridbase auto_param,matlabtypesubstitute b,::test2 c)
   * @brief  @copybrief grid::rect::rectgrid::test()

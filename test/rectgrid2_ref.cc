@@ -30,7 +30,7 @@ class rectgrid {
   public:
 
 
-   rectgrid(matlabtypesubstitute varargin) {
+    rectgrid(matlabtypesubstitute varargin) {
 
 
     /*  Bernard Haasdonk 9.5.2007 */
