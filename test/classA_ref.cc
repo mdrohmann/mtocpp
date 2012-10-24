@@ -362,34 +362,35 @@ matlabtypesubstitute antoheroneWITH_c;
 
   public:
 
-    /* 
+    
+#if 0 
 mlhsInnerSubst<matlabtypesubstitute,value> protected_access() {
 
       if a==b
         do something;
-      *//*  the following end needs to be indented correctly */
-/*
-      end *//*  garble this correctly */
-/*
+      /*  the following end needs to be indented correctly */
+      end /*  garble this correctly */
 
-*//**
+/**
  *  \todo this is a test */
-/*
 
     }
-*/
+
+#endif
 /** @fn mlhsInnerSubst<matlabtypesubstitute,value> protected_access()
   * @brief  getter enriching property help text of protected_access
   *
   */
 
 
-    /* 
+    
+#if 0 
 noret::substitute protected_access(matlabtypesubstitute value) {
 
       a;
     }
-*/
+
+#endif
 /** @fn noret::substitute protected_access(matlabtypesubstitute value)
   * @brief  setter comment is parsed too
   *
@@ -397,9 +398,10 @@ noret::substitute protected_access(matlabtypesubstitute value) {
 
 
 
-    /* 
+    
+#if 0 
 noret::substitute DataStoreDirectory(matlabtypesubstitute ds) {
-if ~isdir(ds)
+      if ~isdir(ds)
         fprintf(" Creating directory %s\n ",ds);
         mkdir(ds);
       end
@@ -407,19 +409,22 @@ if ~isdir(ds)
       this.DataStoreDirectory= ds;
       fprintf(" Simulation and model data: %s\n ",ds);
     }
-*/
+
+#endif
 /** @fn noret::substitute DataStoreDirectory(matlabtypesubstitute ds)
   * @brief DataStoreDirectory
   *
   */
 
 
-    /* 
+    
+#if 0 
 noret::substitute protected_access2(matlabtypesubstitute value) {
 
        a;
     }
-*/
+
+#endif
 /** @fn noret::substitute protected_access2(matlabtypesubstitute value)
   * @brief protected access2
   *
