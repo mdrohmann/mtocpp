@@ -28,7 +28,7 @@ using std::ostringstream;
   default = ^0;
 
   # end of line character
-  EOL = ('\r'? . '\n') @{line++;};
+  EOL = ('\r'? . '\n') %{ ++line; };
 
   # scanner for comment blocks
   in_comment_block :=
@@ -239,17 +239,14 @@ using std::ostringstream;
   IDENT_W_DOT = [A-Za-z_][A-Za-z0-9_.]**;
 
   # default arguments in function declarations
-  default_arg = [^,)]** @echo;
+  default_arg = ([^,)\n] | EOL)** @echo;
 
   #}}}2
 
   # parameter list for functions {{{2
   paramlist =
     (
-     (WSOC | [,\n]
-#       @{if(*p=='\n' || paramlist_.size() != 1 || paramlist_[0] != string("this" )) {
-#         //buffer_.append(std::string(*p));
-#         } }
+     (WSOC | ',' | EOL
      | ( '=' . default_arg ) )+
      |
      # matlab identifier (parameter)
@@ -314,9 +311,9 @@ using std::ostringstream;
 
   
   matrix_or_cell := (
-      '[' . ( [^[{\]] | [[{] @{fhold; fcall matrix_or_cell;} )* . ']' @{ fret; }
+      '[' . ( [^[{\]\n] | EOL | [[{] @{fhold; fcall matrix_or_cell;} )* . ']' @{ fret; }
       |
-      '{' . ( [^[{}]  | [[{] @{fhold; fcall matrix_or_cell;} )* . '}' @{ fret; }
+      '{' . ( [^[{}\n] | EOL | [[{] @{fhold; fcall matrix_or_cell;} )* . '}' @{ fret; }
       );
 
   matrix = ([[{] @{fhold; fcall matrix_or_cell;} );
@@ -324,7 +321,7 @@ using std::ostringstream;
   
   # return parameter list for functions
   lparamlist =
-    ( (WSOC | [\n])+
+    ( (WSOC | EOL )+
       | ','
       # matlab identifier (return value)
       | ( (IDENT | '~') > st_tok
@@ -447,7 +444,7 @@ using std::ostringstream;
 
     ('addOptional' . [ \t]* . '(' . [ \t]* . (IDENT > (st_tok) %{tmp_string.assign(tmp_p, p - tmp_p);})
       . [ \t]* . ',' . [ \t]* . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);} ) . '\''
-      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . [;\n] )
+      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . (';' | EOL) )
       => {
         fout_.write(ts, te-ts);
         if (tmp_string == varargin_parser_candidate_ )
@@ -465,7 +462,7 @@ std::cerr << "Found optional varargin: " << tmp_string2 << " with default value 
     ((IDENT %{tmp_string.assign(ts, p - ts);})
       . '.addOptional' . [ \t]* . '(' . [ \t]* 
       . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);} ) . '\''
-      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . [;\n] )
+      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . (';' | EOL) )
       => {
         fout_.write(ts, te-ts);
         if (tmp_string == varargin_parser_candidate_ )
@@ -483,7 +480,7 @@ std::cerr << "Found optional varargin: " << tmp_string2 << " with default value 
 
     ('addParamValue' . [ \t]* . '(' . [ \t]* . (IDENT > (st_tok) %{tmp_string.assign(tmp_p, p - tmp_p);})
       . [ \t]* . ',' . [ \t]* . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);}) . '\''
-      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . [;\n] )
+      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . (';' | EOL ) )
       => {
         fout_.write(ts, te-ts);
         if (tmp_string == varargin_parser_candidate_ )
@@ -501,7 +498,7 @@ std::cerr << "Found param value for varargin: " << tmp_string2 << " with default
     ((IDENT %{tmp_string.assign(ts, p - ts);})
       . '.addParamValue' . [ \t]* . '(' . [ \t]*
       . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);}) . '\''
-      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . [;\n] )
+      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . (';' | EOL) )
       => {
         fout_.write(ts, te-ts);
         if (tmp_string == varargin_parser_candidate_ )
@@ -682,7 +679,7 @@ std::cerr << "Found param value for varargin: " << tmp_string2 << " with default
   funcbody := |*
 
       # things that got replaced in function body {{{4
-      ('% TO BE ADJUSTED TO NEW SYNTAX\n')
+      ('% TO BE ADJUSTED TO NEW SYNTAX' . EOL)
         => {
           new_syntax_ = true;
           fout_ << "*/\n"; //fout_ << "add to special group */\n";
@@ -1128,19 +1125,19 @@ debug_output("in funcbody: goto main", p);
   methodparam =
    (
     ( paramaccess )
-    | ( ( 'Abstract' . [^,)]* )
+    | ( ( 'Abstract' . ([^,)\n] | EOL)* )
         @{
            methodparams_.abstr = true;
          } )
-    | ( ( 'Static' . [^,)]* )
+    | ( ( 'Static' . ([^,)\n] | EOL)* )
         @{
            methodparams_.statical = true;
          } )
-    | ( ('Hidden' . [^,)]* )
+    | ( ('Hidden' . ([^,)\n] | EOL)* )
         @{
            methodparams_.hidden = true;
          } )
-    | ( ( 'Sealed' . [^,)]* )
+    | ( ( 'Sealed' . ([^,)\n] | EOL)* )
         @{
            methodparams_.sealed = true;
          } )
@@ -1149,31 +1146,31 @@ debug_output("in funcbody: goto main", p);
   propertyparam =
    (
     ( paramaccess )
-    | ( ( 'Constant' . [^,)]* )
+    | ( ( 'Constant' . ([^,)\n] | EOL)* )
         @{
            propertyparams_.constant = true;
          } )
-    | ( ( 'Transient' . [^,)]* )
+    | ( ( 'Transient' . ([^,)\n] | EOL)* )
         @{
            propertyparams_.transient = true;
          } )
-    | ( ( 'Dependent' . [^,)]* )
+    | ( ( 'Dependent' . ([^,)\n] | EOL)* )
         @{
            propertyparams_.dependent = true;
          } )
-    | ( ( 'Hidden' . [^,)]* )
+    | ( ( 'Hidden' . ([^,)\n] | EOL)* )
         @{
            propertyparams_.hidden = true;
          } )
-    | ( ( 'SetObservable' . [^,)]* )
+    | ( ( 'SetObservable' . ([^,)\n] | EOL)* )
         @{
            propertyparams_.setObservable = true;
          } )
-    | ( ( 'Abstract' . [^,)]* )
+    | ( ( 'Abstract' . ([^,)\n] | EOL)* )
         @{
            propertyparams_.abstr = true;
          } )
-    | ( ( 'AbortSet' . [^,)]* )
+    | ( ( 'AbortSet' . ([^,)\n] | EOL)* )
         @{
            propertyparams_.abortSet = true;
          } )
