@@ -1247,7 +1247,7 @@ void MFileScanner::end_function()
   }
   // end function
   if(!is_method || !methodparams_.abstr)
-    fout_ << "}\n";
+    fout_ << string(funcindent_, ' ') << "}\n";
   if(is_getter_ || is_setter_)
     fout_ << "*/\n";
   if(is_setter_)

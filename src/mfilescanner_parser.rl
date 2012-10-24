@@ -1212,7 +1212,7 @@ debug_output("in funcbody: goto main", p);
       => {
         tmp_string.assign(ts, te - ts+1);
         funcindent_ = tmp_string.find_first_not_of(" \t");
-        fout_ << string(ts, ts+funcindent_-1);
+        fout_ << string(ts, ts+funcindent_);
         #if DEBUG
             {
               ostringstream oss;
