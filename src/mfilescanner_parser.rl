@@ -206,7 +206,19 @@ using std::ostringstream;
 
   # white space or comment
   WSOC =
-    ( [ \t]+
+    ( ([ \t]+ 
+       @{
+          {
+            int i=0;
+            if (*(p+1) != ' ' && *(p+1) != '\t')
+            {
+              while (*(p-i) == ' ' || *(p-i) == '\t')
+                i++;
+              if (*(p-i) == '\n')
+                fout_ << std::string(i, ' ');
+            }
+          }
+        })
       | ('%' @{ tmp_p = p+1; } . garble_comment_line)
       | ('...'.[ \t]*.EOL)
     );
@@ -650,9 +662,12 @@ std::cerr << "Found param value for varargin: " << tmp_string2 << " with default
 
     ('}')
       => { fout_ << ']'; };
+    
+    ('\'')
+      => { fout_ << "^t"; };
 
     # simply output all other characters
-    (default - [\n{}])
+    (default - [\n{}\'])
       => { fout_ << fc; };
 
     # after EOL try to check for new function
@@ -1197,6 +1212,7 @@ debug_output("in funcbody: goto main", p);
       => {
         tmp_string.assign(ts, te - ts+1);
         funcindent_ = tmp_string.find_first_not_of(" \t");
+        fout_ << string(ts, ts+funcindent_-1);
         #if DEBUG
             {
               ostringstream oss;
@@ -1260,6 +1276,12 @@ debug_output("in funcbody: goto main", p);
   # single property {{{4
   prop = ( ( [ \t]* . (IDENT) >st_tok
             %{
+              {
+                char *i = tmp_p-1;
+                for (; *i == ' ' || *i == '\t'; --i)
+                  fout_ << *i;
+              }
+              
               end_of_property_doc();
               string s(tmp_p, p - tmp_p);
               if (s == "end")
@@ -1369,7 +1391,7 @@ debug_output("in funcbody: goto main", p);
         fcall in_comment_block;
       };
 
-    (WSOC) => { fout_.write(ts, te-ts); };
+    (WSOC); # => { fout_.write(ts, te-ts); };
 
     (EOL) => { fout_ << "\n"; };
 
