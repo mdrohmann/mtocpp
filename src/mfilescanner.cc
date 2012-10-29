@@ -175,11 +175,15 @@ void MFileScanner :: print_warning(const std::string & message)
   warning_buffer_ << "mtoc++ warning: " << message << "\n";
 }
 
+/*
+ * @change{1,4,dw,2012-10-29} Added a short comment after inclusion of getter/setter sources
+ */
 void MFileScanner :: print_function_synopsis()
 {
-  if(is_getter_ || is_setter_)
-  {
-   fout_ << "\n#if 0 \n";
+  if(is_getter_) {
+   	fout_ << "\n#if 0 //mtoc++: 'get." << cfuncname_ << "'\n";
+  } else if (is_setter_){
+    fout_ << "\n#if 0 //mtoc++: 'set." << cfuncname_ << "'\n";
   }
   if(is_class_ && (class_part_ == Method
                    || class_part_ == AtMethod

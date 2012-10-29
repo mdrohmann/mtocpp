@@ -84,6 +84,7 @@ IF(DEFINED LATEX_COMPILER)
 ADD_CUSTOM_TARGET(documentation_pdf ALL
   COMMENT "Creating PDF documentation... (see ${CMAKE_CURRENT_BINARY_DIR}/docs/latex/refman.log for latex errors/warnings)"
   COMMAND make
+  COMMAND ${CMAKE_COMMAND} -E echo "PDF docs at ${CMAKE_CURRENT_BINARY_DIR}/docs/latex/refman.pdf!"
   WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docs/latex"
 )
 ENDIF(DEFINED LATEX_COMPILER)
