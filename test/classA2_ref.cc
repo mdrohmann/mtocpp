@@ -184,14 +184,14 @@ class classA
 matlabtypesubstitute antoheroneWITH;
 
 
-        matlabtypesubstitute complexpropertywithoutsemicolon_c = "[['af]a'ง/$'''dgdg'\
+        matlabtypesubstitute complexpropertywithoutsemicolon_c = "[['af]a'ยง/$'''dgdg'\
         'adgadg']]";
 /** @var complexpropertywithoutsemicolon_c
   * @brief  with comments version!
   *  with comments version! GRR
   *
   *
-  * <br/>@b Default: "[['af]a'ง/$'''dgdg'\
+  * <br/>@b Default: "[['af]a'ยง/$'''dgdg'\
         'adgadg']]"
 */
     matlabtypesubstitute followingpropwithoutsemicolon_c = 4;
@@ -297,7 +297,7 @@ matlabtypesubstitute antoheroneWITH_c;
   public:
 
     
-#if 0 
+#if 0 //mtoc++: 'get.protected_access'
 mlhsInnerSubst<void> protected_access() {
 
       if a==b
@@ -318,7 +318,7 @@ mlhsInnerSubst<void> protected_access() {
 
 
     
-#if 0 
+#if 0 //mtoc++: 'set.protected_access'
 noret::substitute protected_access(matlabtypesubstitute value) {
 
       a;
@@ -333,7 +333,7 @@ noret::substitute protected_access(matlabtypesubstitute value) {
 
 
     
-#if 0 
+#if 0 //mtoc++: 'set.DataStoreDirectory'
 noret::substitute DataStoreDirectory(matlabtypesubstitute ds) {
       if ~isdir(ds)
         fprintf(" Creating directory %s\n ",ds);
@@ -348,7 +348,7 @@ noret::substitute DataStoreDirectory(matlabtypesubstitute ds) {
 
 
     
-#if 0 
+#if 0 //mtoc++: 'set.protected_access2'
 noret::substitute protected_access2(matlabtypesubstitute value) {
 
        a;

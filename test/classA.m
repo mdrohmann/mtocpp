@@ -72,7 +72,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
     antoheroneWITH;
 
     % with comments version!
-    complexpropertywithoutsemicolon_c = [['af]a"ง/$"''dgdg'
+    complexpropertywithoutsemicolon_c = [['af]a"ยง/$"''dgdg'
         'adgadg']]
     % with comments version! GRR
     followingpropwithoutsemicolon_c = 4
