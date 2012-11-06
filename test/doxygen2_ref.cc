@@ -161,7 +161,10 @@ body(string, with, double quote, and percent sign, "  '%s'} ") /*  a real commen
   * @brief  a third (private) function in the test file with serveral return values
   *
   *
+  * @param unused1 Marked as "~" in original m-file.
   * @param auto_param     object  which is not used! This documentation is added automatically! 
+  * @param unused2 Marked as "~" in original m-file.
+  * @param unused3 Marked as "~" in original m-file.
   *
   * @retval d     a return value
   */
@@ -174,7 +177,10 @@ mlhsSubst<mlhsInnerSubst<void,unused1> ,mlhsInnerSubst<void,d> ,mlhsInnerSubst<v
   * @brief  a third (private) function in the test file without parameters
   *
   *
+  * @retval unused1 Marked as "~" in original m-file.
   * @retval d     a return value
+  * @retval unused2 Marked as "~" in original m-file.
+  * @retval unused3 Marked as "~" in original m-file.
   */
 
 noret::substitute mtoc_subst_doxygen_m_tsbus_cotm_default_parameters(::bool uml,::bool open) {
