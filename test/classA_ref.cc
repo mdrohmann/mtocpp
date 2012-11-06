@@ -300,7 +300,7 @@ matlabtypesubstitute antoheroneWITH_c;
   * @retval obj    obj
   *
   * @note This method has the MATLAB method attribute @c Hidden set to true.
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">matlab documentation of method attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/method-attributes.html">matlab documentation of method attributes.</a>
   */
 
 
@@ -319,7 +319,7 @@ matlabtypesubstitute antoheroneWITH_c;
   * @retval obj    obj
   *
   * @note This method has the MATLAB method attribute @c Hidden set to true.
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">matlab documentation of method attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/method-attributes.html">matlab documentation of method attributes.</a>
   */
 
 
@@ -340,7 +340,7 @@ matlabtypesubstitute antoheroneWITH_c;
   * @retval obj    obj
   *
   * @note This method has the MATLAB method attribute @c Hidden set to true.
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">matlab documentation of method attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/method-attributes.html">matlab documentation of method attributes.</a>
   */
 
 
@@ -356,7 +356,7 @@ matlabtypesubstitute antoheroneWITH_c;
   * @param param2    param2
   *
   * @note This method has the MATLAB method attribute @c Hidden set to true.
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjv0d.html">matlab documentation of method attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/method-attributes.html">matlab documentation of method attributes.</a>
   */
 
 
