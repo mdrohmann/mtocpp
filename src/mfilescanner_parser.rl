@@ -296,6 +296,10 @@ using std::ostringstream;
            if(param_list_.find(s) == param_list_.end())
            {
              param_list_[s] = DocuBlock();
+             if (s==std::string("~"))
+             {
+               param_list_[s].push_back("This parameter is marked as \"~\" in the original m-File and thus not used.");
+             }
            }
 #ifdef DEBUG
 {
@@ -334,6 +338,10 @@ using std::ostringstream;
             if(return_list_.find(s) == return_list_.end())
             {
               return_list_[s] = DocuBlock();
+              if (s==std::string("~"))
+              {
+                return_list_[s].push_back("This parameter is marked as \"~\" in the original m-File and thus not used.");
+              }
             }
           }
         )
@@ -357,6 +365,11 @@ using std::ostringstream;
              if(return_list_.find(s) == return_list_.end())
              {
                return_list_[s] = DocuBlock();
+               if (s==std::string("~"))
+               {
+                 return_list_[s].push_back("This parameter is marked as \"~\" in the original m-File and thus not used.");
+               }
+
              }
 #ifdef DEBUG
   cerr << "\n In return list: " << endl;
