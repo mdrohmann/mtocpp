@@ -581,9 +581,12 @@ void MFileScanner::write_docu_block(const DocuBlock & block_orig)
   }
 }
 
-// pretty print the documentation block list \a list for the list item named \a
-// item_text. If docu blocks are empty, \a alternative is used. The alternative
-// is normally read in by the confscanner.
+/* pretty print the documentation block list \a list for the list item named \a
+ * item_text. If docu blocks are empty, \a alternative is used. The alternative
+ * is normally read in by the confscanner.
+ *
+ * @change{1,4,dw,2012-11-06} Now auto-adding a comment for unused parameters to the processed file.
+ */
 void MFileScanner::write_docu_list(const DocuList & list,
                                    const string & item_text,
                                    const AltDocuList & alternative,
@@ -598,9 +601,17 @@ void MFileScanner::write_docu_list(const DocuList & list,
   for(; lit != list.end(); ++lit)
   {
     std::string name = (*lit).first;
+    /*
+     * Special treatment for ~ parameters; here we just display a hint that this parameter is marked as unused
+     * in the source m-file.
+     */
     if (name.substr(0, 6) == std::string("unused")
-        && name.find_first_not_of("0123456789", 7) == std::string::npos)
+        && name.find_first_not_of("0123456789", 7) == std::string::npos) {
+    	ostringstream oss;
+    	oss << "* " << item_text << " " << name << separator << " Marked as \"~\" in original m-file.\n  ";
+    	fout_ << oss.str();
       continue;
+    }
     ostringstream oss;
     oss << "* " << item_text << " " << name << separator << "    ";
     const DocuBlock & block = (*lit).second;
