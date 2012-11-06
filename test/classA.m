@@ -169,7 +169,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
   end
 
   methods (Static) ;;; % garbage comment
-    function [a,b] = static_method(notthis,c)
+    function [a,b] = static_method(notthis,c,~)
       % a static method
     end
 

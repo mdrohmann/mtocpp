@@ -434,14 +434,15 @@ noret::substitute protected_access2(matlabtypesubstitute value) {
 
   public: /* ( Static ) */
 
-    static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c) {
+    static mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c,matlabtypesubstitute unused1) {
     }
-/** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c)
+/** @fn mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,a> ,mlhsInnerSubst<matlabtypesubstitute,b> > static_method(matlabtypesubstitute notthis,matlabtypesubstitute c,matlabtypesubstitute unused1)
   * @brief  a static method
   *
   *
   * @param notthis    notthis
   * @param c    c
+  * @param unused1 Marked as "~" in original m-file.
   *
   * @retval a    a
   * @retval b    b
