@@ -70,7 +70,7 @@ void MFileScanner :: update_method_params(const std::string & methodname)
     scanner.execute();
     methodparams_ = scanner.getMethodParams();
   }
-  catch (ifstream::failure e)
+  catch (const ifstream::failure & e)
   {
     std::cerr << "MTOCPP Warning: No method params for @-function " << methodname << " found!\n";
   }
@@ -921,7 +921,7 @@ void MFileScanner::end_method()
         scanner.execute();
         param_list_ = scanner.getParamList();
       }
-      catch (ifstream::failure e)
+      catch (const ifstream::failure & e)
       {
         std::ostringstream oss;
         oss << "Class " << classname_ << " misses definition of function " << cfuncname_ << "!";
@@ -1508,72 +1508,83 @@ void MFileScanner::handle_param_list_for_varargin()
 
     }
 
-    ostringstream * oss = new ostringstream;
-
-    *oss << "@code " << cfuncname_ << " ( ";
-    if (param_list_.size() > 1)
-      *oss << "..., ";
+    unsigned long int req_param_size = requiredParams.size();
+    unsigned long int opt_param_size = optionalParams.size();
+    unsigned long int mapped_param_size = mappedParams.size();
 
     DocuBlock format;
-    int first = 0;
-    for (unsigned int i = 0; i < requiredParams.size(); ++i)
-    {
-      if (i > 0)
-        *oss << ", ";
 
-      first = 1;
-      *oss << requiredParams.at(i).first;
-    }
-    for (unsigned int i = 0; i < optionalParams.size(); ++i)
+
+    if (req_param_size + opt_param_size + mapped_param_size > 0)
     {
-      if (first == 1)
+      ostringstream * oss = new ostringstream;
+
+      *oss << "@code " << cfuncname_ << " ( ";
+      if (param_list_.size() > 1)
+        *oss << "..., ";
+      int first = 0;
+      for (unsigned int i = 0; i < req_param_size; ++i)
       {
-        *oss << ",\n";
-        format.push_back(oss->str());
-        delete oss; oss = new ostringstream;
-        *oss << std::string(cfuncname_.size()-1, ' ') << "[ ";
-      }
-      else if (i > 0)
-        *oss << " [, ";
-      else
-        *oss << " [ ";
+        if (i > 0)
+          *oss << ", ";
 
-      first = 2;
-      *oss << optionalParams.at(i).first;
-    }
-    for (unsigned int i = 0; i < mappedParams.size(); ++i)
-    {
-      if (first > 0 || (i> 0 && i % 2 == 0) )
+        first = 1;
+        *oss << requiredParams.at(i).first;
+      }
+
+      for (unsigned int i = 0; i < opt_param_size; ++i)
       {
         if (first == 1)
+        {
           *oss << ",\n";
+          format.push_back(oss->str());
+          delete oss; oss = new ostringstream;
+          *oss << std::string(cfuncname_.size()-1, ' ') << "[ ";
+        }
+        else if (i > 0)
+          *oss << " [, ";
         else
-          *oss << "\n";
+          *oss << " [ ";
 
-        format.push_back(oss->str());
-        delete oss; oss = new ostringstream;
-        *oss << std::string(cfuncname_.size()-1, ' ');
-        if (first != 1)
-          *oss << "[, ";
+        first = 2;
+        *oss << optionalParams.at(i).first;
       }
-      else if (i > 0)
-        *oss << " [, ";
+
+      for (unsigned int i = 0; i < mapped_param_size; ++i)
+      {
+        if (first > 0 || (i> 0 && i % 2 == 0) )
+        {
+          if (first == 1)
+            *oss << ",\n";
+          else
+            *oss << "\n";
+
+          format.push_back(oss->str());
+          delete oss; oss = new ostringstream;
+          *oss << std::string(cfuncname_.size()-1, ' ');
+          if (first != 1)
+            *oss << "[, ";
+        }
+        else if (i > 0)
+          *oss << " [, ";
+        else
+          *oss << " [ ";
+
+        first = 0;
+        *oss << '"' << mappedParams.at(i).first << "\", " << mappedParams.at(i).first << "_value ]";
+      }
+
+      unsigned int nOptParams = optionalParams.size();
+      if (nOptParams < 5)
+        for (unsigned int count = 0; count < nOptParams; ++count)
+          *oss << " ]";
       else
-        *oss << " [ ";
+        *oss << " ] ... ]";
 
-      first = 0;
-      *oss << '"' << mappedParams.at(i).first << "\", " << mappedParams.at(i).first << "_value ]";
+      *oss << " ) @endcode\n";
+      format.push_back(oss->str());
+      delete oss;
     }
-
-    unsigned int nOptParams = optionalParams.size();
-    if (nOptParams < 5)
-      for (unsigned int count = 0; count < nOptParams; ++count)
-        *oss << " ]";
-    else
-      *oss << " ] ... ]";
-
-    *oss << " ) @endcode\n";
-    format.push_back(oss->str());
 
     DocuBlock & varargin_docu = param_list_["varargin"];
     varargin_docu.insert(varargin_docu.end(), format.begin(), format.end());
