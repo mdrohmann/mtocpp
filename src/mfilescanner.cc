@@ -951,7 +951,7 @@ void MFileScanner::end_method()
   docuextra_.clear();
 }
 
-void MFileScanner::extract_default(DocuBlock & db, std::string & defvalue)
+const std::string & MFileScanner::extract_default(DocuBlock & db, std::string & defvalue)
 {
   typedef DocuBlock :: iterator                                      DBIt;
 
@@ -998,6 +998,7 @@ void MFileScanner::extract_default(DocuBlock & db, std::string & defvalue)
       }
     }
   }
+  return defvalue;
 }
 
 void MFileScanner::get_default(const std::string & paramname, std::string & defvalue)
@@ -1450,6 +1451,8 @@ void MFileScanner::handle_param_list_for_varargin()
     for (;last_param_tmp_it != param_list_.end(); last_param_tmp_it++)
     {
       last_param_item_tmp = *last_param_tmp_it;
+      std::string defval_temp;
+      bool hasUserDefault = (extract_default(last_param_item_tmp.second, defval_temp) != "");
       string last_paramname_tmp = last_param_item_tmp.first;
       ItType pvit = varargin_parser_values_.find(last_paramname_tmp);
       if (pvit == varargin_parser_values_.end() || (*pvit).second.first == 0)
@@ -1460,7 +1463,7 @@ void MFileScanner::handle_param_list_for_varargin()
       {
         string & defaultval = (*pvit).second.second;
         optionalParams[last_paramname_tmp] = last_param_item_tmp.second;
-        if (!defaultval.empty())
+        if (!defaultval.empty() && !hasUserDefault)
           optionalParams[last_paramname_tmp].push_back(string("     ( @b Default: <tt>") + defaultval + "</tt> )\n");
 
 
@@ -1469,7 +1472,7 @@ void MFileScanner::handle_param_list_for_varargin()
       {
         string & defaultval = (*pvit).second.second;
         mappedParams[last_paramname_tmp] = last_param_item_tmp.second;
-        if (!defaultval.empty())
+        if (!defaultval.empty() && !hasUserDefault)
           mappedParams[last_paramname_tmp].push_back(string("     ( @b Default: <tt>") + defaultval + "</tt> )\n");
 
       }
