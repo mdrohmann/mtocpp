@@ -440,7 +440,7 @@ private:
   void get_default(const std::string &, std::string &);
   void handle_param_list_for_varargin();
   void extract_typen(DocuBlock & db, std::string & typen, bool remove = false);
-  void extract_default(DocuBlock &, std::string &);
+  const std::string & extract_default(DocuBlock &, std::string &);
   void update_method_params(const std::string & methodname);
 
   void end_method();
