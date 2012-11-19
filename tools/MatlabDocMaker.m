@@ -281,7 +281,19 @@ classdef MatlabDocMaker
         
         function open
             % Opens the generated documentation.
-            web(fullfile(MatlabDocMaker.getOutputDirectory, 'index.html'));
+            %
+            % Depending on the system's type the generated index.html is opened in the system's
+            % default browser.
+            index = fullfile(MatlabDocMaker.getOutputDirectory, 'index.html');
+            if ispc
+                winopen(index);
+            else
+                [s, m] = system(sprintf('xdg-open "%s"',index));
+                if s ~= 0
+                    fprintf(2,'Could not find/execute xdg-open: %s',m);
+                    web(index);
+                end
+            end
         end
         
         function create(varargin)
@@ -316,7 +328,7 @@ classdef MatlabDocMaker
                 lstr = '(+Latex)';
             end
             fprintf(['Starting creation of doxygen/mtoc++ powered HTML%s documentation for "%s" (%s)\n'...
-                'Sources: %s\nOutput to: %s\nCreating config files...'],lstr,...
+                'Sources: %s\nOutput to: <a href="matlab:MatlabDocMaker.open">%s</a>\nCreating config files...'],lstr,...
                 MatlabDocMaker.getProjectName,MatlabDocMaker.getProjectVersion,...
                 srcdir,outdir);
             
