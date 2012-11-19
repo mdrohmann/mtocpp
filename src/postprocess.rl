@@ -304,14 +304,19 @@ void usage()
 {
   cout << "mtocpp_post Version " << MTOCPP_VERSION_MAJOR << "."
     << MTOCPP_VERSION_MINOR << endl;
-  cout << "Usage: mtocpp_post [-q] filename" << endl;
-  cout << "\nOptions:\n  -q\t\tsuppresses debug output." << endl;
+  cout << "Usage: mtocpp_post [-q] target" << endl;
+  cout << "\nOptions:\n  -q\t\tsuppresses debug output.\n" << endl;
+  cout << "  -f\t\tsingle file argument instead of directory." << endl;
 }
 
+/**
+ * @change{dw,1,4,2012-11-19} Added the possibility to directly specify a file target instead of a whole folder.
+ */
 int main(int argc, char ** argv)
 {
   bool quiet = false;
   bool dry_run = false;
+  bool isfile = false;
   string docdir;
   if(argc >= 2)
   {
@@ -330,6 +335,17 @@ int main(int argc, char ** argv)
       dry_run = true;
       docdir = argv[2];
     }
+    else if (argc == 3 && std::string("-f") == std::string(argv[1]))
+	{
+	  isfile = true;
+	  docdir = argv[2];
+	}
+    else if (argc == 3 && (std::string("-qf") == std::string(argv[1]) || std::string("-fq") == std::string(argv[1])))
+	{
+	  isfile = true;
+	  quiet = true;
+	  docdir = argv[2];
+	}
     else if(argc == 2)
       docdir = argv[1];
     else
@@ -346,11 +362,20 @@ int main(int argc, char ** argv)
     exit(-2);
   }
 
-  if (!quiet)
-    cout << "Running mtoc++ postprocessor on directory " << docdir << endl;
+  if (!quiet) {
+	  if (isfile) {
+		  cout << "Running mtoc++ postprocessor on file " << docdir << endl;
+	  } else {
+		  cout << "Running mtoc++ postprocessor on directory " << docdir << endl;
+	  }
+  }
 
   PostProcess scanner(docdir, quiet, dry_run);
-  scanner.execute();
+  if (isfile) {
+	  scanner.postprocess(docdir);
+  } else {
+	  scanner.execute();
+  }
   return 0;
 }
 
