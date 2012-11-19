@@ -312,7 +312,7 @@ void usage()
 }
 
 /**
- * @change{dw,1,4,2012-11-19} Added the possibility to directly specify a file target instead of a whole folder.
+ * @change{dw,1,4,2012-11-19} Re-Added the possibility to directly specify a file target instead of a whole folder.
  */
 int main(int argc, char ** argv)
 {

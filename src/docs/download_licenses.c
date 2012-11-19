@@ -20,10 +20,11 @@
  * The GIT repository can currently be found at http://www.ians.uni-stuttgart.de:8080/agh/gitblit/ and a direct clone is possible via
  * @code git clone http://www.ians.uni-stuttgart.de:8080/agh/gitblit/git/software/matlab/mtocpp mtocpp @endcode
  *                                
- * @section mtoc14 mtoc++ 1.4 (latest release)
+ * @section mtocrelease mtoc++ 1.4 (latest release)
+ * - <a href="http://www.morepas.org/software/mtocpp/docs/manual.pdf">This documentation as PDF</a>.
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.4.tar.gz">Source tarball</a>
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win32bins_1.4.zip">Windows binaries (32bit)</a>
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win32_1.4.zip">Windows binaries (32bit)</a> (including tools)
+ * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win_1.4.zip">Windows binaries (32/64bit) and tools</a>
+ * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win_binaries_1.4.zip">Windows binaries (32/64bit)</a>
  *
  * @page licensing mtoc++ license conditions
  * @short This software is available under the BSD license http://www.opensource.org/licenses/bsd-license.php

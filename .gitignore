@@ -24,3 +24,6 @@ published/
 website
 problems/
 Debug/
+morepas_web
+old_versions
+make*.sh
