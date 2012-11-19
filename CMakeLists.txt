@@ -2,7 +2,7 @@ PROJECT (MTOC++)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
 SET(MTOC++_VERSION_MAJOR 1)
-SET(MTOC++_VERSION_MINOR 4)
+SET(MTOC++_VERSION_MINOR 5)
 
 # Default install prefix is "/usr/local"
 SET(CUSTOM_DOC_DIR "share/doc/mtocpp"
@@ -80,12 +80,15 @@ ADD_CUSTOM_TARGET(documentation ALL
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/docs"
 )
 
+# add target for pdf documentation
 IF(DEFINED LATEX_COMPILER)
 ADD_CUSTOM_TARGET(documentation_pdf ALL
   COMMENT "Creating PDF documentation... (see ${CMAKE_CURRENT_BINARY_DIR}/docs/latex/refman.log for latex errors/warnings)"
   COMMAND make
-  COMMAND ${CMAKE_COMMAND} -E echo "PDF docs at ${CMAKE_CURRENT_BINARY_DIR}/docs/latex/refman.pdf!"
-  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docs/latex"
+  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/docs/latex/refman.pdf ${CMAKE_CURRENT_BINARY_DIR}/docs/manual.pdf
+  COMMAND ${CMAKE_COMMAND} -E echo "PDF docs at ${CMAKE_CURRENT_BINARY_DIR}/docs/manual.pdf!"
+  COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_BINARY_DIR}/docs/latex/
+  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docs/latex/"
 )
 ENDIF(DEFINED LATEX_COMPILER)
 

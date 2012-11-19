@@ -1,4 +1,6 @@
 #!/bin/bash
-rm -rf ~/aghwww/MoRePaS/software/mtocpp/docs/current
-cmake -DCMAKE_INSTALL_PREFIX="~/agh" -DCUSTOM_DOC_DIR="~/aghwww/MoRePaS/software/mtocpp/docs/current" ..
+DIR=../morepas_web/software/mtocpp/docs
+cd build
+rm -rf $DIR
+cmake -DCMAKE_INSTALL_PREFIX="~/agh" -DCUSTOM_DOC_DIR="$DIR" ..
 make install

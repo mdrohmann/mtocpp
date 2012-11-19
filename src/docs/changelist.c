@@ -7,6 +7,7 @@
  * - @subpage newfeat1_2  - @subpage changelog1_2
  * - @subpage newfeat1_3  - @subpage changelog1_3
  * - @subpage newfeat1_4  - @subpage changelog1_4
+ * - @subpage newfeat1_5  - @subpage changelog1_5
  *
  * @attention The repeated occurence of the new features/changes in this
  * specific site below is just due to the fact that the mtoc++ features/changes
@@ -108,13 +109,22 @@
  * See also @ref newfeat1_3
  *
  * @page newfeat1_4 New features in mtoc++ 1.4
- * @short Current development
+ * @short Included basic source browsing, handling of varargin-parameters, basic LaTeX generation support
  *
  * See also @ref changelog1_4
  *
- *
  * @page changelog1_4 Changes in mtoc++ 1.4
- * @short Current development
+ * @short Many bugfixes due to detailed feedback! Thanks!
  *
  * See also @ref newfeat1_4
+ *
+ * @page newfeat1_5 New features in mtoc++ 1.5
+ * @short Current development
+ *
+ * See also @ref changelog1_5
+ *
+ * @page changelog1_5 Changes in mtoc++ 1.5
+ * @short Current development
+ *
+ * See also @ref newfeat1_5
  */
