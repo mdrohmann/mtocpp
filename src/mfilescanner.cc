@@ -169,9 +169,13 @@ void MFileScanner :: print_pure_function_synopsis()
   }
 }
 
+/**
+ * @change{1,4,dw,2012-11-19} Removed the current line from warning messages, as the line numbers are sometimes grossly
+ * wrong due to the way Ragel "counts" them
+ */
 void MFileScanner :: print_warning(const std::string & message)
 {
-  std::cerr << "mtoc++ warning in " << filename_ << ":" << line << " : " << message << "\n";
+  std::cerr << "mtoc++ warning in " << filename_ << ": " << message << "\n";
   warning_buffer_ << "mtoc++ warning: " << message << "\n";
 }
 
