@@ -1678,11 +1678,16 @@ debug_output("in funcbody: goto main", p);
 
   classdef := (
       'classdef' . WSOC* . ('(' . WSOC*
-        . ( 'Sealed'
+        . (( 'Sealed'
           @{
             docuextra_.push_back(std::string("@note This class has the class property 'Sealed' and cannot be derived from."));
            }
-          ) . [^)]* . ')')? . WSOC* .
+          )
+		  |( 'Hidden'
+          @{
+            docuextra_.push_back(std::string("@note This class has the class property 'Hidden' and is invisible."));
+           }
+          ) ) . [^)]* . ')')? . WSOC* .
       # matlab identifier (class name stored in classname_)
       ( IDENT
           >st_tok
