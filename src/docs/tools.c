@@ -41,7 +41,7 @@
  * @note You may of course keep the MatlabDocMaker.m and the configuration files where you initially placed your mtoc++ source and point to the
  * appropriate directories during setup.<br>
  * However, if you want to use multiple projects with mtoc++ you probably want to have different configurations for each project, so that is why we recommend to create local copies of your
- * tools and configuration within each project.<br>
+ * tools and configuration within each project. (The MatlabDocMaker stores its setting dependent on the name you specify for the project!)<br>
  * The way the MatlabDocMaker works it can be easily inserted into whatever versioning system your project uses.
  * As it stores important folders in MatLab preferences each developer will still have his local documentation settings (after running MatlabDocMaker.setup on each machine, of course).
  *

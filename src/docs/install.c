@@ -24,23 +24,24 @@
  * @subsection inst_binaries_win Windows users
  *
  * If you are a windows user you can directly download the binaries at @ref download.
- * Note that you might need to install the Microsoft Visual C++ 2010 redistributables first,
- * which can be found <a href="http://www.microsoft.com/download/en/confirmation.aspx?id=8328" target="_blank">here</a>.
- * Then simply place the binaries in a folder of your choice and add them to the PATH environment variable.
- *
- * @note Doxygen and mtoc++ expect certain programs to be available via the PATH environment variable, e.g. \c latex.exe or \c gswin32c.exe
- * must be present in order for doxygen to work. Make sure that you have all requirements available. You can check/change your Windows
- * PATH environment variable via the sequence
- * @code Computer \ Properties \ Advanced system settings \ Environment Variables \ Edit Path @endcode
- * If you intend to use the MatlabDocMaker, you can also copy the binaries into the "documentation configuration files" folder
+ * Then simply place the binaries in a folder of your choice and add the folder to the PATH environment variable.
+ * If you intend to use the MatlabDocMaker, you can also copy the mtoc++ binaries into the "documentation configuration files" folder
  * for your/each project, this path will be added to PATH by MatLab locally.
+ *
+ * @note Depending on your system setup, you might need to install the Microsoft Visual C++ 2010 redistributables,
+ * which can be found <a href="http://www.microsoft.com/download/en/confirmation.aspx?id=8328" target="_blank">here</a>.
+ *
+ * @attention mtoc++ as well as doxygen expect all required programs (see \ref inst_req) to be available via the PATH environment variable, e.g. \c latex.exe or \c gswin32c.exe
+ * must be present in order for doxygen to work with LaTeX output. Make sure that you have all requirements available, otherwise doxygen or the MatlabDocMaker will complain soon enough.
+ * You can check/change your Windows PATH environment variable via the sequence
+ * @code Computer \ Properties \ Advanced system settings \ Environment Variables \ Edit Path @endcode
  *
  * We are trying to always compile current Windows binaries for \c mtocpp and \c mtocpp_post and include them for direct download.
  *
  * @subsection inst_binaries_unix Unix binaries
  * For unix users we recommend to compile the sources following @ref inst_comp.
- * However, we also plan to provide some precompiled linux binaries/packages soon.
  *
+ * However, we also plan to provide some precompiled linux binaries/packages soon.
  * If you find a matching choice you can use it and all you have to do is to ensure that the binaries can be found on the environment PATH.
  *
  * @section inst_comp Compiling mtoc++ from source

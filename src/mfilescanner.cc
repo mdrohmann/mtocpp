@@ -232,7 +232,7 @@ void MFileScanner :: print_access_specifier(AccessEnum & access, MethodParams & 
 /*
  * constructor
  *
- * @change{1,4,dw,2013-07-01} Included the class modifier "Hidden" for parsing.
+ * @change{1,5,dw,2013-07-01} Included the class modifier "Hidden" for parsing.
  * Thanks to MathWorks Pilot Engineer '''Arvind Jayaraman''' for providing the feedback and code!
  *
  */

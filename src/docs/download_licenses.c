@@ -5,7 +5,6 @@
  * The sources for mtoc++ are accessible as
  * - Source tarball
  * - Windows binaries
- * - Precompiled Debian packages
  * - Via the <a href="http://git-scm.com/" target="_blank">GIT</a> versioning system
  *
  * Once you've obtained your copy check out the @ref install
@@ -20,16 +19,16 @@
  * The GIT repository can currently be found at http://www.ians.uni-stuttgart.de:8080/agh/gitblit/ and a direct clone is possible via
  * @code git clone http://www.ians.uni-stuttgart.de:8080/agh/gitblit/git/software/matlab/mtocpp mtocpp @endcode
  *                                
- * @section mtocrelease mtoc++ 1.4 (latest release)
+ * @section mtocrelease mtoc++ 1.5
  * - <a href="http://www.morepas.org/software/mtocpp/docs/manual.pdf">This documentation as PDF</a>.
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.4.tar.gz">Source tarball</a>
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win_1.4.zip">Windows binaries (32/64bit) and tools</a>
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win_binaries_1.4.zip">Windows binaries (32/64bit)</a>
+ * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.5.tar.gz">Source tarball</a>
+ * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win_1.5.zip">Windows binaries (32/64bit) and tools</a>
+ * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win_binaries_1.5.zip">Windows binaries (32/64bit)</a>
  *
  * @page licensing mtoc++ license conditions
  * @short This software is available under the BSD license http://www.opensource.org/licenses/bsd-license.php
  *
- * Copyright (c) 2011, Martin Drohmann, Daniel Wirtz
+ * Copyright (c) 2010-2013, Martin Drohmann, Daniel Wirtz
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:

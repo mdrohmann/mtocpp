@@ -17,6 +17,8 @@
  * as an example. So the list below is not necessarily complete, but the sites
  * referenced above contain all new features / changes!
  *
+ * @new{1,5,dw,2013-02-21} Added '*.mex' files to the types of files parsed by default in Doxyfile.template
+ *
  * @change{1,4,dw,2012-10-17}
  * - Using the new css-style from doxygen 1.8 for own docs
  * - Added some troubleshooting feedback
