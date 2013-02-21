@@ -20,7 +20,13 @@ classdef MatlabDocMaker
 %
 % @author Daniel Wirtz @date 2011-10-13
 %
-% @change{1,4,dw,2013-07-01} Included some backslash escaping for paths on windows platforms.
+% @change{1,5,dw,2013-02-21} Fixed the callback for suggested direct documentation creation
+% after MatlabDocMaker.setup (Thanks to Aurelien Queffurust)
+%
+% @change{1,5,dw,2013-02-12} Also added the escaping for the Logo file. Thanks to Chris Olien
+% for the hint.
+%
+% @change{1,5,dw,2013-01-07} Included some backslash escaping for paths on windows platforms.
 % Thanks to MathWorks Pilot Engineer '''Arvind Jayaraman''' for providing the feedback and code!
 %
 % @change{1,4,dw,2012-10-18} Removed \c m4 dependency and included constant properties for
@@ -387,7 +393,7 @@ classdef MatlabDocMaker
                  '_ConfDir_' strrep(cdir,'\','\\');...
                  '_ProjectName_' MatlabDocMaker.getProjectName; ...
                  '_ProjectDescription_' MatlabDocMaker.getProjectDescription; ...
-                 '_ProjectLogo_' MatlabDocMaker.getProjectLogo; ...
+                 '_ProjectLogo_' strrep(MatlabDocMaker.getProjectLogo,'\','\\'); ...
                  '_ProjectVersion_' MatlabDocMaker.getProjectVersion; ...
                  '_MTOCFILTER_' strrep(filter,'\','\\'); ...
                  };
@@ -624,7 +630,7 @@ classdef MatlabDocMaker
                 fprintf(2,'Please make sure all prerequisites can be found on PATH or copy the executables into %s.\n',confdir);
                 fprintf('<<<< MatlabDocMaker setup finished with warnings. >>>>\n');
             else
-                fprintf('<<<< MatlabDocMaker setup successful. >>>>\nYou can now create your projects documentation by running <a href="matlab:MatlabDocMaker.create(true)">MatlabDocMaker.create</a>!\n');
+                fprintf('<<<< MatlabDocMaker setup successful. >>>>\nYou can now create your projects documentation by running <a href="matlab:MatlabDocMaker.create(''open'',true)">MatlabDocMaker.create</a>!\n');
             end
         end
     end

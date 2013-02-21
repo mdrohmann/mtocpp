@@ -10,6 +10,7 @@ body, table, div, p, dl {
 h1 {
 	font-size: 170%;
 	color: #1C833E;
+	border-bottom: 2px solid #8BB9E0;
 }
 
 h1.groupheader {
@@ -24,10 +25,9 @@ h1.groupheader {
 }
 
 h2 {
-	font-size: 160%;
+	font-size: 150%;
 	padding-top: 10px;
 	padding-bottom: 0px;
-	border-bottom: 2px solid #8BB9E0;
 	color: #1C833E;
 }
 
