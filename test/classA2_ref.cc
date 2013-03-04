@@ -42,6 +42,8 @@ class classA
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note This property has class specific access specifiers: 
+  * - Objects of type Test have full access on this property
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
   */
 
@@ -60,6 +62,8 @@ class classA
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note This property has class specific access specifiers: 
+  * - Objects of type Test have full access on this property
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: "test"
 */
@@ -76,6 +80,8 @@ class classA
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note This property has class specific access specifiers: 
+  * - Objects of type Test have full access on this property
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
   */
 
@@ -99,6 +105,8 @@ class classA
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note This property has class specific access specifiers: 
+  * - Objects of type Test have full access on this property
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: "[[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0   \
       [0, 3.0824e-5, 0.1713]*models.pcd.BasePCDSystem.ya0   \
@@ -115,6 +123,8 @@ class classA
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note This property has class specific access specifiers: 
+  * - Objects of type Test have full access on this property
   * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
   */
 
@@ -127,6 +137,10 @@ class classA
   * @brief  help text
   *
   *
+  *
+  * @note This property has class specific access specifiers: 
+  * - Objects of type Test1,  have SetAccess on this property
+  * - Objects of type Test2 have SetAccess on this property
   * <br/>@b Default: 1
 */
 
@@ -135,6 +149,10 @@ class classA
   * @brief  help text for bConstant
   *
   *
+  *
+  * @note This property has class specific access specifiers: 
+  * - Objects of type Test1,  have SetAccess on this property
+  * - Objects of type Test2 have SetAccess on this property
   * <br/>@b Default: 2
 */
 
@@ -144,6 +162,10 @@ class classA
   * @brief  help text for cConstant
   *
   *
+  *
+  * @note This property has class specific access specifiers: 
+  * - Objects of type Test1,  have SetAccess on this property
+  * - Objects of type Test2 have SetAccess on this property
   * <br/>@b Default: 3
 */
 
@@ -154,6 +176,10 @@ class classA
   * @brief  test
   *
   *
+  *
+  * @note This property has class specific access specifiers: 
+  * - Objects of type Test1,  have SetAccess on this property
+  * - Objects of type Test2 have SetAccess on this property
   * <br/>@b Default: {" [ 1, 2, 3, 4], 'test', [ 1 2, [ [3 [3 [3 4] 4] ] ] ] "}
 */
 

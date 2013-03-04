@@ -1144,6 +1144,20 @@ void MFileScanner::add_access_info(std::string what)
     docuextra_.push_back(std::string("SetAccess = ") + setAccess + ", "
                        + std::string("GetAccess = ") + getAccess + std::string("</tt>\n"));
   }
+
+  if (!access_.classMemberAccess.empty())
+  {
+    docuextra_.push_back(std::string("@note This ") + what + std::string(" has class specific access specifiers: \n"));
+    for (size_t i = 0; i < access_.classMemberAccess.size(); ++i)
+    {
+      MatlabAccessEnum maccess = access_.classMemberAccess[i].first;
+      std::ostringstream oss;
+      oss << maccess;
+      const std::string & classMember = access_.classMemberAccess[i].second;
+      docuextra_.push_back("- Objects of type " + classMember + " have " +
+                           oss.str() + " on this " + what + "\n");
+    }
+  }
 }
 
 /** adds a block at the end of the documentation with information on uesed
@@ -1640,6 +1654,30 @@ std::ostream & operator<<(std::ostream & os, AccessStruct & as)
 {
   os << "AccessStruct: full = " << AccessEnumNames[as.full] << " get  = " <<
     AccessEnumNames[as.get] << " set  = " << AccessEnumNames[as.set] << "\n";
+  if (!as.classMemberAccess.empty())
+  {
+    for (size_t i = 0; i < as.classMemberAccess.size(); ++i)
+    {
+      os << "AccessStruct: classMember = " << as.classMemberAccess[i].second << "\n";
+    }
+  }
+  return os;
+}
+
+std::ostream & operator<<(std::ostream & os, MatlabAccessEnum & mae)
+{
+  switch(mae)
+  {
+  case Access:
+    os << "full access";
+    break;
+  case SetAccess:
+    os << "SetAccess";
+    break;
+  case GetAccess:
+    os << "GetAccess";
+    break;
+  }
   return os;
 }
 

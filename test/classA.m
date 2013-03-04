@@ -8,7 +8,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
   %
   % bigger help for classA
 
-  properties ( SetAccess = private, GetAccess = protected, Transient);% garbage comment
+  properties ( SetAccess = 'private', Access = ?Test, GetAccess = protected, Transient);% garbage comment
 
     mixed_access; % variable of type gridbase.gridbase storing a grid.
 
@@ -44,7 +44,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
 
   end; % garbage comment
 
-  properties (Constant); % garbage comment
+  properties (Constant, SetAccess = {?Test1, ?Test2}); % garbage comment
     aConstant = 1; % help text
 
     % help text for bConstant

@@ -1067,56 +1067,79 @@ debug_output("in funcbody: goto main", p);
       }
    ); #}}}2
 
+  classmemberaccessrec =
+  ( ( ('?' . (IDENT) >st_tok . WSOC* . ','? . WSOC* )
+         %{
+            tmp_string.assign(tmp_p, p - tmp_p);
+            access_.classMemberAccess.push_back(make_pair(access_.state, tmp_string));
+         } )
+  );
+
+  classmemberaccess =
+  ( ( ('?' . (IDENT) >st_tok . WSOC* )
+         %{
+            tmp_string.assign(tmp_p, p - tmp_p);
+            cerr << access_.state << "\n";
+            access_.classMemberAccess.push_back(make_pair(access_.state, tmp_string));
+         } )
+    |
+    ('{' . classmemberaccessrec+ . '}')
+  );
+
+
   # helper for setting the access specifier {{{2
   paramaccess =
-    ( ('SetAccess' . WSOC* . '=' . WSOC*
-      . ( (/public/i
-            @{ access_.full = Public;
+    ( ('SetAccess' @{ access_.state = SetAccess; } . WSOC* . '=' . WSOC*
+      . ( ( (['"]? . /public/i . ['"]?)
+            %{ access_.full = Public;
                access_.set = Public;
              } )
-        | ( /protected/i
-            @{ access_.full =
+        | ( (['"]? . /protected/i . ['"]?)
+            %{ access_.full =
                  (access_.get == Public ? Public : Protected );
                access_.set = Protected;
              } )
-        | ( /private/i
-            @{ access_.full = access_.get;
+        | ( (['"]? . /private/i . ['"]?)
+            %{ access_.full = access_.get;
                access_.set = Private;
              } )
+        | classmemberaccess
         )
       )
-     | ( 'GetAccess' . WSOC* . '=' . WSOC*
-      . ( ( /public/i
-            @{ access_.full = Public;
+     | ( 'GetAccess' @{ access_.state = GetAccess; } . WSOC* . '=' . WSOC*
+      . ( ( (['"]? . /public/i . ['"]?)
+            %{ access_.full = Public;
                access_.get = Public;
              } )
-        | ( /protected/i
-            @{ access_.full =
+        | ( (['"]? . /protected/i . ['"]?)
+            %{ access_.full =
                  (access_.set == Public ? Public : Protected );
                access_.get = Protected;
              } )
-        | ( /private/i
-            @{ access_.full = access_.set;
+        | ( (['"]? . /private/i . ['"]?)
+            %{ access_.full = access_.set;
                access_.get = Private;
              } )
+        | classmemberaccess
         )
        )
-     | ( 'Access' . WSOC* . '=' . WSOC*
-      . ( ( /public/i
-            @{ access_.full = Public;
+     | ( 'Access' @{ access_.state = Access; } . WSOC* . '=' . WSOC*
+      . ( ( (['"]? . /public/i . ['"]?)
+            %{ access_.full = Public;
                access_.get = Public;
                access_.set = Public;
              } )
-        | ( /protected/i
-            @{ access_.full = Protected;
+        | ( (['"]? . /protected/i . ['"]?)
+            %{ access_.full = Protected;
                access_.get = Protected;
                access_.set = Protected;
              } )
-        | ( /private/i
-            @{ access_.full = Private;
+        | ( (['"]? . /private/i . ['"]?)
+            %{ access_.full = Private;
                access_.get = Private;
                access_.set = Private;
              } )
+         | classmemberaccess
         )
        )
       ); #}}}2
@@ -1683,9 +1706,14 @@ debug_output("in funcbody: goto main", p);
             docuextra_.push_back(std::string("@note This class has the class property 'Sealed' and cannot be derived from."));
            }
           )
-		  |( 'Hidden'
+          |( 'Hidden'
           @{
             docuextra_.push_back(std::string("@note This class has the class property 'Hidden' and is invisible."));
+           }
+          )
+          |( 'Abstract'
+          @{
+            docuextra_.push_back(std::string("@note This class has the class property 'Abstract'."));
            }
           ) ) . [^)]* . ')')? . WSOC* .
       # matlab identifier (class name stored in classname_)
