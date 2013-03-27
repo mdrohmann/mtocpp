@@ -42,7 +42,7 @@ class classA
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   */
 
     matlabtypesubstitute mixed_access2 = "test";
@@ -60,7 +60,7 @@ class classA
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: "test"
 */
 
@@ -76,7 +76,7 @@ class classA
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   */
 
 
@@ -99,7 +99,7 @@ class classA
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: "[[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0   \
       [0, 3.0824e-5, 0.1713]*models.pcd.BasePCDSystem.ya0   \
       [.2, 0.1990, 0.0070]*models.pcd.BasePCDSystem.xi0   \
@@ -115,7 +115,7 @@ class classA
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
   * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
-  * @note <a href="http://www.mathworks.de/help/techdoc/matlab_oop/brjjwby.html">Matlab documentation of property attributes.</a>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   */
 
    /*  garbage comment */

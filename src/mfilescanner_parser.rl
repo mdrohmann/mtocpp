@@ -1067,56 +1067,83 @@ debug_output("in funcbody: goto main", p);
       }
    ); #}}}2
 
+  # access specifier expressions
+  spec_public = ( 'public'i | "'public'"i );
+  spec_protected = ( 'protected'i | "'protected'"i );
+  spec_private = ( 'private'i | "'private'"i );
+  
+  spec_class_single = '?' . IDENT_W_DOT . WS*;
+  spec_class_multi = '{' . WS* . spec_class_single . ( [,; ] . WS* . spec_class_single )* . '}';
+  spec_class = ( 
+		   (spec_class_single >(st_tok) %(string_tok) ) 
+		  | 
+		   ( spec_class_multi >(st_tok) %(string_tok) )
+		  );
+    
   # helper for setting the access specifier {{{2
   paramaccess =
-    ( ('SetAccess' . WSOC* . '=' . WSOC*
-      . ( (/public/i
+    ( ('SetAccess' . WS* . '=' . WS*
+      . ( ( spec_public 
             @{ access_.full = Public;
                access_.set = Public;
              } )
-        | ( /protected/i
+        | ( spec_protected
             @{ access_.full =
                  (access_.get == Public ? Public : Protected );
                access_.set = Protected;
              } )
-        | ( /private/i
+        | ( spec_private
             @{ access_.full = access_.get;
                access_.set = Private;
              } )
+		| ( spec_class
+		    @{ access_.full = SpecificClasses;
+		       access_.set = SpecificClasses;
+			   access_.set_class_spec = tmp_string;
+			 } )
         )
       )
-     | ( 'GetAccess' . WSOC* . '=' . WSOC*
-      . ( ( /public/i
+     | ( 'GetAccess' . WS* . '=' . WS*
+      . ( ( spec_public
             @{ access_.full = Public;
                access_.get = Public;
              } )
-        | ( /protected/i
+        | ( spec_protected
             @{ access_.full =
                  (access_.set == Public ? Public : Protected );
                access_.get = Protected;
              } )
-        | ( /private/i
+        | ( spec_private
             @{ access_.full = access_.set;
                access_.get = Private;
              } )
+		| ( spec_class
+			@{ access_.full = SpecificClasses;
+		       access_.get = SpecificClasses;
+			   access_.get_class_spec = tmp_string;
+			 } )
         )
        )
-     | ( 'Access' . WSOC* . '=' . WSOC*
-      . ( ( /public/i
+     | ( 'Access' . WS* . '=' . WS*
+      . ( ( spec_public
             @{ access_.full = Public;
                access_.get = Public;
                access_.set = Public;
              } )
-        | ( /protected/i
+        | ( spec_protected
             @{ access_.full = Protected;
                access_.get = Protected;
                access_.set = Protected;
              } )
-        | ( /private/i
+        | ( spec_private
             @{ access_.full = Private;
                access_.get = Private;
                access_.set = Private;
              } )
+		| ( spec_class
+			@{ access_.full = SpecificClasses;
+			   access_.full_class_spec = tmp_string;
+			 } )
         )
        )
       ); #}}}2
@@ -1678,16 +1705,21 @@ debug_output("in funcbody: goto main", p);
 
   classdef := (
       'classdef' . WSOC* . ('(' . WSOC*
-        . (( 'Sealed'
+        . (( 'Sealed'i
           @{
             docuextra_.push_back(std::string("@note This class has the class property 'Sealed' and cannot be derived from."));
            }
           )
-		  |( 'Hidden'
+		  |( 'Hidden'i
           @{
             docuextra_.push_back(std::string("@note This class has the class property 'Hidden' and is invisible."));
            }
-          ) ) . [^)]* . ')')? . WSOC* .
+          )
+          |( 'Abstract'i
+		  @{
+		    docuextra_.push_back(std::string("@note This class has the class property 'Abstract' and needs to be inherited in order to be instantiable."));
+		   }
+		   )) . [^)]* . ')')? . WSOC* .
       # matlab identifier (class name stored in classname_)
       ( IDENT
           >st_tok
