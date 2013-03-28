@@ -136,12 +136,6 @@ void MFileScanner::print_pure_function_synopsis() {
 
 			fout_ << typen << " " << paramlist_[i];
 		}
-		/*    for(unsigned int i=0; i < returnlist_.size(); ++i)
-		 {
-		 std::string typen;// = "matlabtypesubstitute";
-		 get_typename(returnlist_[i], typen);
-		 }
-		 */
 		fout_ << ")";
 	}
 }
@@ -191,6 +185,10 @@ std::string MFileScanner::access_specifier_string(AccessEnum & access) {
 	return "";
 }
 
+/*
+ * Convention: For class specific access specifiers we use "protected".
+ * See also the Ragel parser machine "paramaccess"
+ */
 void MFileScanner::print_access_specifier(AccessEnum & access,
 		MethodParams & mp, PropParams & pp) {
 	const std::string ass = access_specifier_string(access);
@@ -986,8 +984,6 @@ void MFileScanner::extract_typen(DocuBlock & db, std::string & typen,
 					if (typen.at(i) == '.')
 						typen.replace(i, 1, std::string("::"));
 				typen = string("::") + typen;
-
-//        (*dit).replace(typenstart, typenend - typenstart, typen);
 			}
 			if (remove) {
 				(*dit).erase(found, typenend - found);
@@ -996,6 +992,9 @@ void MFileScanner::extract_typen(DocuBlock & db, std::string & typen,
 	}
 }
 
+/*
+ * @change{1,5,dw,2013-03-28} Included support for access modifiers specific to certain classes. Thanks to Pete for pointing out.
+ */
 void MFileScanner::add_access_info(std::string what) {
 	if (access_.get != access_.set || !access_.classMemberAccess.empty()) {
 		docuextra_.push_back(

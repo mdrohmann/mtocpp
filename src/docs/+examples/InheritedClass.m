@@ -81,50 +81,36 @@ classdef InheritedClass < Class
             % The first argument corresponds to the auto-included object self-reference and is not processed but removed by mtoc++.
         end
     end
-    
-    %     events
-    %         % This is the Test event's commentary.
-    %         Test;
-    %     end
-    
+  
     methods(Access=?Class)
         function mySpecClassFun(a, b)
+            % You can also define methods that may be accessed by specific classes.
+            
             % do something
         end
         
         function mySpecClassFun2(a, b)
+            % You can also define methods that may be accessed by specific classes.
+            
+            % Do even more.
         end
     end
     
-    properties(SetAccess=?example.Class, GetAccess=private)
-        % Comment!
+    % This can be mixed..
+    properties(SetAccess=?example.Class, GetAccess='protected')
+        % You can also mix the access restrictions.
+        % Note the "note" tag below.
         %
         % @type integer
-        SomeFirstSpecialProp;
+        VerySpecificProperty;
     end
     
-    properties(SetAccess=?Class, GetAccess={?Class, ?example.Class})
-        % Comment!
+    properties(SetAccess='private', GetAccess={?Class, ?example.Class})
+        % You can also specify multiple access restrictions in a cell array of metaclasses.
+        % Note the "note" tag below.
         %
         % @type integer
-        SomeSpecialProp;
+        VerySpecificPropertyAccessibleByMoreClasses;
     end
-    
-    % garbage comment
-    properties(SetAccess='protected', GetAccess={?example.pkg.Class  ?example.Class  }  )
-        % Comment!
-        SomeSpecialProp2;
-        
-        % garbage comment
-    end
-    
-    % garbage
-    properties(SetAccess= {    ?Class;...
-            ?Foo   ;    ?some.package.Bar  }, GetAccess={?Class, ...
-            ?example.Class})
-        % Comment 2!
-        SomeSpecialProp3;
-    end
-    
 end
 
