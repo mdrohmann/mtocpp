@@ -289,6 +289,9 @@ public:
 /**
  * @class MFileScanner
  *
+ * @change{1,5,dw,2013-03-28} Merged together simultaneous contributions from Martin and me regarding the FEX feedback from Pete.
+ * Now also allowing e.g. 'protected' as access modifier string and the 'Abstract' class modifier is also recognized.
+ *
  * @change{1,4,md,2012-10-19} prettify the output of postprocessed source
  * for source code browsing in doxygen. Now, we recommend the usage of the
  * FILTER_SOURCE_FILES doxygen switch.
