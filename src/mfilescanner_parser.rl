@@ -1072,81 +1072,61 @@ debug_output("in funcbody: goto main", p);
   spec_protected = ( 'protected'i | "'protected'"i );
   spec_private = ( 'private'i | "'private'"i );
   
-  spec_class_single = '?' . IDENT_W_DOT . WS*;
+  spec_class_single = 
+	 (
+	   ('?' . (IDENT_W_DOT**) >st_tok )
+	   %{
+			tmp_string.assign(tmp_p, p - tmp_p);
+			//cerr << "Detected " << access_.state << " modifier by class " << tmp_string << "\n";
+			access_.classMemberAccess.push_back(make_pair(access_.state, tmp_string));
+        }
+     ) . WS*;
+  
   spec_class_multi = '{' . WS* . spec_class_single . ( [,; ] . WS* . spec_class_single )* . '}';
-  spec_class = ( 
-		   (spec_class_single >(st_tok) %(string_tok) ) 
-		  | 
-		   ( spec_class_multi >(st_tok) %(string_tok) )
-		  );
+  
+  spec_classes = ( spec_class_single | spec_class_multi );
     
   # helper for setting the access specifier {{{2
   paramaccess =
-    ( ('SetAccess' . WS* . '=' . WS*
+    ( ('SetAccess' @{ access_.state = SetAccess; } . WS* . '=' . WS*
       . ( ( spec_public 
-            @{ access_.full = Public;
-               access_.set = Public;
+            %{ access_.full = Public; access_.set = Public;
              } )
-        | ( spec_protected
-            @{ access_.full =
-                 (access_.get == Public ? Public : Protected );
+        | ( ( spec_protected | spec_classes )
+            %{ access_.full = (access_.get == Public ? Public : Protected );
                access_.set = Protected;
              } )
         | ( spec_private
-            @{ access_.full = access_.get;
-               access_.set = Private;
+            %{ access_.full = access_.get; access_.set = Private;
              } )
-		| ( spec_class
-		    @{ access_.full = SpecificClasses;
-		       access_.set = SpecificClasses;
-			   access_.set_class_spec = tmp_string;
-			 } )
         )
       )
-     | ( 'GetAccess' . WS* . '=' . WS*
+     | ( 'GetAccess' @{ access_.state = GetAccess; } . WS* . '=' . WS*
       . ( ( spec_public
-            @{ access_.full = Public;
-               access_.get = Public;
+            %{ access_.full = Public; access_.get = Public;
              } )
-        | ( spec_protected
-            @{ access_.full =
-                 (access_.set == Public ? Public : Protected );
+        | ( ( spec_protected | spec_classes )
+            %{ access_.full = (access_.set == Public ? Public : Protected );
                access_.get = Protected;
              } )
         | ( spec_private
-            @{ access_.full = access_.set;
-               access_.get = Private;
+            %{ access_.full = access_.set; access_.get = Private;
              } )
-		| ( spec_class
-			@{ access_.full = SpecificClasses;
-		       access_.get = SpecificClasses;
-			   access_.get_class_spec = tmp_string;
-			 } )
         )
        )
-     | ( 'Access' . WS* . '=' . WS*
+     | ( 'Access' @{ access_.state = Access; } . WS* . '=' . WS*
       . ( ( spec_public
-            @{ access_.full = Public;
-               access_.get = Public;
-               access_.set = Public;
+            %{ access_.full = Public; access_.get = Public; access_.set = Public;
              } )
-        | ( spec_protected
-            @{ access_.full = Protected;
-               access_.get = Protected;
-               access_.set = Protected;
+        | ( ( spec_protected | spec_classes )
+            %{ access_.full = Protected; access_.get = Protected; access_.set = Protected;
              } )
         | ( spec_private
-            @{ access_.full = Private;
-               access_.get = Private;
-               access_.set = Private;
+            %{ access_.full = Private; access_.get = Private; access_.set = Private;
              } )
-		| ( spec_class
-			@{ access_.full = SpecificClasses;
-			   access_.full_class_spec = tmp_string;
-			 } )
-        )
-       )
-      ); #}}}2
+	  )
+     )
+    ); #}}}2
 
   # method and property params {{{2
   methodparam =
@@ -1710,6 +1690,7 @@ debug_output("in funcbody: goto main", p);
             docuextra_.push_back(std::string("@note This class has the class property 'Sealed' and cannot be derived from."));
            }
           )
+
 		  |( 'Hidden'i
           @{
             docuextra_.push_back(std::string("@note This class has the class property 'Hidden' and is invisible."));

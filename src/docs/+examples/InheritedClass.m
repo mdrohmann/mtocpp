@@ -87,5 +87,44 @@ classdef InheritedClass < Class
     %         Test;
     %     end
     
+    methods(Access=?Class)
+        function mySpecClassFun(a, b)
+            % do something
+        end
+        
+        function mySpecClassFun2(a, b)
+        end
+    end
+    
+    properties(SetAccess=?example.Class, GetAccess=private)
+        % Comment!
+        %
+        % @type integer
+        SomeFirstSpecialProp;
+    end
+    
+    properties(SetAccess=?Class, GetAccess={?Class, ?example.Class})
+        % Comment!
+        %
+        % @type integer
+        SomeSpecialProp;
+    end
+    
+    % garbage comment
+    properties(SetAccess='protected', GetAccess={?example.pkg.Class  ?example.Class  }  )
+        % Comment!
+        SomeSpecialProp2;
+        
+        % garbage comment
+    end
+    
+    % garbage
+    properties(SetAccess= {    ?Class;...
+            ?Foo   ;    ?some.package.Bar  }, GetAccess={?Class, ...
+            ?example.Class})
+        % Comment 2!
+        SomeSpecialProp3;
+    end
+    
 end
 

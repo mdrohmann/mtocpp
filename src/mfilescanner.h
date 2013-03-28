@@ -71,10 +71,17 @@ struct RunMode {
 };
 
 typedef enum {
+	Access,
+	SetAccess,
+	GetAccess
+} MatlabAccessEnum;
+
+std::ostream & operator<<(std::ostream & os, MatlabAccessEnum & mae);
+
+typedef enum {
 	Public = 0,
 	Protected,
-	Private,
-	SpecificClasses
+	Private
 } AccessEnum;
 
 /*extern const char * AccessEnumNames[];*/
@@ -93,20 +100,17 @@ typedef enum {
 
 struct AccessStruct {
 	AccessEnum full;
-	std::string full_class_spec;
 	AccessEnum get;
-	std::string get_class_spec;
 	AccessEnum set;
-	std::string set_class_spec;
+	std::vector<std::pair<MatlabAccessEnum, std::string> > classMemberAccess;
+	MatlabAccessEnum state;
 
 public:
 	AccessStruct() :
 			full(Public),
-			full_class_spec("<full>"),
 			get(Public),
-			get_class_spec("<get>"),
 			set(Public),
-			set_class_spec("<set>") {
+			state(Access) {
 	}
 	;
 
@@ -168,7 +172,8 @@ public:
 			dependent(false),
 			hidden(false),
 			setObservable(false),
-			abstr(false) {
+			abstr(false),
+			abortSet(false) {
 	}
 	;
 
