@@ -41,7 +41,7 @@ class classA
   *
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
-  * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note This property has non-standard access specifiers: <tt>Access = (Test)</tt>
   * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   */
 
@@ -59,7 +59,7 @@ class classA
   *
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
-  * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note This property has non-standard access specifiers: <tt>Access = (Test)</tt>
   * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: "test"
 */
@@ -75,7 +75,7 @@ class classA
   *
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
-  * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note This property has non-standard access specifiers: <tt>Access = (Test)</tt>
   * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   */
 
@@ -87,7 +87,7 @@ class classA
   *
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
-  * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note This property has non-standard access specifiers: <tt>Access = (Test)</tt>
   * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: struct("'xi',[],'ti',[],'mui',[]")
 */
@@ -102,7 +102,7 @@ class classA
   *
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
-  * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note This property has non-standard access specifiers: <tt>Access = (Test)</tt>
   * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: struct("   \
       'xi', [], 'ti',    \
@@ -120,7 +120,7 @@ class classA
   *
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
-  * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note This property has non-standard access specifiers: <tt>Access = (Test)</tt>
   * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: "[[0, 9.8153e-4, 0.1930]*models.pcd.BasePCDSystem.xa0   \
       [0, 3.0824e-5, 0.1713]*models.pcd.BasePCDSystem.ya0   \
@@ -136,7 +136,7 @@ class classA
   *
   *
   * @note This property has the MATLAB attribute @c Transient set to true.
-  * @note This property has non-unique access specifier: <tt>SetAccess = private, GetAccess = protected</tt>
+  * @note This property has non-standard access specifiers: <tt>Access = (Test)</tt>
   * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   */
 
@@ -149,6 +149,9 @@ class classA
   * @brief  help text
   *
   *
+  *
+  * @note This property has non-standard access specifiers: <tt>SetAccess = (Test1, Test2), GetAccess = Public</tt>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: 1
 */
 
@@ -157,6 +160,9 @@ class classA
   * @brief  help text for bConstant
   *
   *
+  *
+  * @note This property has non-standard access specifiers: <tt>SetAccess = (Test1, Test2), GetAccess = Public</tt>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: 2
 */
 
@@ -166,6 +172,9 @@ class classA
   * @brief  help text for cConstant
   *
   *
+  *
+  * @note This property has non-standard access specifiers: <tt>SetAccess = (Test1, Test2), GetAccess = Public</tt>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: 3
 */
 
@@ -174,6 +183,9 @@ class classA
   * @brief vectorConst
   *
   *
+  *
+  * @note This property has non-standard access specifiers: <tt>SetAccess = (Test1, Test2), GetAccess = Public</tt>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: "[ 1, 2, 3 ]"
 */
 
@@ -182,6 +194,9 @@ class classA
   * @brief  test
   *
   *
+  *
+  * @note This property has non-standard access specifiers: <tt>SetAccess = (Test1, Test2), GetAccess = Public</tt>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: {" [ 1, 2, 3, 4], 'test', [ 1 2, [ [3 [3 [3 4] 4] ] ] ] "}
 */
 
@@ -191,6 +206,9 @@ class classA
   * @brief dConstant
   *
   *
+  *
+  * @note This property has non-standard access specifiers: <tt>SetAccess = (Test1, Test2), GetAccess = Public</tt>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * <br/>@b Default: struct("'a', [], 'b', {'c', 'd'}, 'e', [1 2 3]")
 */
 
@@ -538,8 +556,91 @@ noret::substitute protected_access2(matlabtypesubstitute value) {
   * @retval c    c
   */
 
+  
+  protected:
 
-  public: /* ( Abstract ) */
+  	noret::substitute mySpecClassFun(matlabtypesubstitute b) {
+   }
+/** @fn noret::substitute mySpecClassFun(matlabtypesubstitute b)
+  * @brief  do something
+  *
+  *
+  * @param b    b
+  *
+  * @note This method has non-standard access specifiers: <tt>Access = (Class)</tt>
+  */
+
+
+  	noret::substitute mySpecClassFun2(matlabtypesubstitute b) {
+   }
+/** @fn noret::substitute mySpecClassFun2(matlabtypesubstitute b)
+  * @brief mySpecClassFun2
+  *
+  *
+  * @param b    b
+  *
+  * @note This method has non-standard access specifiers: <tt>Access = (Class)</tt>
+  */
+
+  
+  protected:
+
+    ::integer SomeFirstSpecialProp;
+/** @var SomeFirstSpecialProp
+  * @brief  Comment!
+  *
+  *
+  *  
+  *
+  *
+  * @note This property has non-standard access specifiers: <tt>SetAccess = (Class), GetAccess = Private</tt>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
+  */
+
+    
+  protected:
+
+    ::integer SomeSpecialProp;
+/** @var SomeSpecialProp
+  * @brief  Comment!
+  *
+  *
+  *  
+  *
+  *
+  * @note This property has non-standard access specifiers: <tt>SetAccess = (Class), GetAccess = (Class, example.Class)</tt>
+  */
+
+    
+    /*  garbage comment */
+  protected:
+
+    matlabtypesubstitute SomeSpecialProp2;
+/** @var SomeSpecialProp2
+  * @brief  Comment!
+  *
+  *
+  *
+  * @note This property has non-standard access specifiers: <tt>SetAccess = Protected, GetAccess = (example.pkg.Class, example.Class)</tt>
+  */
+
+
+    
+    /*  garbage */
+  protected:
+
+    matlabtypesubstitute SomeSpecialProp3;
+/** @var SomeSpecialProp3
+  * @brief  garbage comment
+  *  Comment 2!
+  *
+  *
+  *
+  * @note This property has non-standard access specifiers: <tt>SetAccess = (Class, Foo, some.package.Bar), GetAccess = (Class, example.Class)</tt>
+  */
+
+    
+  public:
 
 
     EVENT documentedEvent;

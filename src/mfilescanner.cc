@@ -185,9 +185,9 @@ std::string MFileScanner::access_specifier_string(AccessEnum & access) {
 		return "protected";
 	else if (access == Private)
 		return "private";
-	else if (access == SpecificClasses) {
-		return "protected";
-	}
+	//else if (access == SpecificClasses) {
+	//	return "protected";
+	//}
 	return "";
 }
 
@@ -997,28 +997,43 @@ void MFileScanner::extract_typen(DocuBlock & db, std::string & typen,
 }
 
 void MFileScanner::add_access_info(std::string what) {
-	if (access_.get != access_.set || access_.full == SpecificClasses
-			|| access_.set == SpecificClasses
-			|| access_.get == SpecificClasses) {
+	if (access_.get != access_.set || !access_.classMemberAccess.empty()) {
 		docuextra_.push_back(
 				std::string("@note This ") + what
 						+ std::string(
 								" has non-standard access specifiers: <tt>"));
+
+		std::stringstream get, set, full;
+		std::stringstream *tmp;
+		for (size_t i = 0; i < access_.classMemberAccess.size(); ++i) {
+			if (access_.classMemberAccess[i].first == GetAccess)
+				tmp = &get;
+			else if (access_.classMemberAccess[i].first == SetAccess)
+				tmp = &set;
+			else
+				tmp = &full;
+			if ((*tmp).tellp() > 0)
+				*tmp << ", ";
+			*tmp << access_.classMemberAccess[i].second;
+		}
 		std::stringstream str;
-		if (access_.get != access_.set) {
-			str << "SetAccess = "
-					<< ((access_.set == SpecificClasses) ?
-							access_.set_class_spec :
-							AccessEnumNames[access_.set]) << ", ";
-			str << "GetAccess = "
-					<< ((access_.get == SpecificClasses) ?
-							access_.get_class_spec :
-							AccessEnumNames[access_.get]);
+		if (access_.get != access_.set || set.tellp() > 0 || get.tellp() > 0) {
+			str << "SetAccess = ";
+			if (set.tellp() > 0)
+				str << "(" << set.str() << ")";
+			else
+				str << AccessEnumNames[access_.set];
+			str << ", GetAccess = ";
+			if (get.tellp() > 0)
+				str << "(" << get.str() << ")";
+			else
+				str << AccessEnumNames[access_.get];
 		} else {
-			str << "Access = "
-					<< ((access_.full == SpecificClasses) ?
-							access_.full_class_spec :
-							AccessEnumNames[access_.full]);
+			str << "Access = ";
+			if (full.tellp() > 0)
+				str << "(" << full.str() << ")";
+			else
+				str << AccessEnumNames[access_.full];
 		}
 		docuextra_.push_back(str.str() + std::string("</tt>\n"));
 	}
@@ -1153,7 +1168,7 @@ void MFileScanner::end_function() {
 		if (class_part_ == Method)
 			is_method = true;
 	}
-	// end function
+// end function
 	if (!is_method || !methodparams_.abstr)
 		fout_ << string(funcindent_, ' ') << "}\n";
 	if (is_getter_ || is_setter_)
@@ -1484,19 +1499,30 @@ void MFileScanner::handle_param_list_for_varargin() {
 }
 
 std::ostream & operator<<(std::ostream & os, AccessStruct & as) {
-	os << "AccessStruct: full:" << AccessEnumNames[as.full];
-	if (as.full == SpecificClasses) {
-		os << "=" << as.full_class_spec;
+	os << "AccessStruct: full = " << AccessEnumNames[as.full] << " get  = "
+			<< AccessEnumNames[as.get] << " set  = " << AccessEnumNames[as.set]
+			<< "\n";
+	if (!as.classMemberAccess.empty()) {
+		for (size_t i = 0; i < as.classMemberAccess.size(); ++i) {
+			os << "AccessStruct: classMember = "
+					<< as.classMemberAccess[i].second << "\n";
+		}
 	}
-	os << " get:" << AccessEnumNames[as.get];
-	if (as.full == SpecificClasses) {
-		os << "=" << as.get_class_spec;
+	return os;
+}
+
+std::ostream & operator<<(std::ostream & os, MatlabAccessEnum & mae) {
+	switch (mae) {
+	case Access:
+		os << "full access";
+		break;
+	case SetAccess:
+		os << "SetAccess";
+		break;
+	case GetAccess:
+		os << "GetAccess";
+		break;
 	}
-	os << " set:" << AccessEnumNames[as.set];
-	if (as.full == SpecificClasses) {
-		os << "=" << as.set_class_spec;
-	}
-	os << "\n";
 	return os;
 }
 
