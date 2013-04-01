@@ -73,7 +73,9 @@ struct RunMode {
 typedef enum {
 	Access,
 	SetAccess,
-	GetAccess
+	GetAccess,
+	ListenAccess,
+	NotifyAccess
 } MatlabAccessEnum;
 
 std::ostream & operator<<(std::ostream & os, MatlabAccessEnum & mae);
@@ -125,6 +127,7 @@ struct PropParams {
 	bool setObservable;
 	bool abstr;
 	bool abortSet;
+	bool event;
 
 	std::string ccprefix() {
 		if (constant)
@@ -289,8 +292,13 @@ public:
 /**
  * @class MFileScanner
  *
- * @change{1,5,dw,2013-03-28} Merged together simultaneous contributions from Martin and me regarding the FEX feedback from Pete.
- * Now also allowing e.g. 'protected' as access modifier string and the 'Abstract' class modifier is also recognized.
+ * @change{1,5,md,2013-04-01} Parse event attributes (ListenAccess,
+ * NotifyAccess, Hidden) correctly - as pointed out by Evgeny Pr on FEX
+ *
+ * @change{1,5,dw,2013-03-28} Merged together simultaneous contributions from
+ * Martin and me regarding the FEX feedback from Pete.  Now also allowing e.g.
+ * 'protected' as access modifier string and the 'Abstract' class modifier is
+ * also recognized.
  *
  * @change{1,4,md,2012-10-19} prettify the output of postprocessed source
  * for source code browsing in doxygen. Now, we recommend the usage of the

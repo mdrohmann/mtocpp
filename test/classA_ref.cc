@@ -640,7 +640,7 @@ noret::substitute protected_access2(matlabtypesubstitute value) {
   */
 
     
-  public:
+  public: /* ( Hidden ) */
 
 
     EVENT documentedEvent;
@@ -648,6 +648,10 @@ noret::substitute protected_access2(matlabtypesubstitute value) {
   * @brief  a documented event
   *
   *
+  *
+  * @note This event has the MATLAB attribute @c Hidden set to true.
+  * @note This event has non-standard access specifiers: <tt>SetAccess = Public, GetAccess = Private</tt>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * @event documentedEvent
   */
 
@@ -656,6 +660,10 @@ noret::substitute protected_access2(matlabtypesubstitute value) {
   * @brief undocumentedEvent
   *
   *
+  *
+  * @note This event has the MATLAB attribute @c Hidden set to true.
+  * @note This event has non-standard access specifiers: <tt>SetAccess = Public, GetAccess = Private</tt>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * @event undocumentedEvent
   */
 EVENT followingUndocumentedEvent;
@@ -663,6 +671,10 @@ EVENT followingUndocumentedEvent;
   * @brief followingUndocumentedEvent
   *
   *
+  *
+  * @note This event has the MATLAB attribute @c Hidden set to true.
+  * @note This event has non-standard access specifiers: <tt>SetAccess = Public, GetAccess = Private</tt>
+  * @note <a href="http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html">Matlab documentation of property attributes.</a>
   * @event followingUndocumentedEvent
   */
 

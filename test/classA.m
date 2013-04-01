@@ -258,7 +258,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
     SomeSpecialProp3;
   end
   
-  events
+  events (Hidden=true, ListenAccess=private)
 
     % a documented event
     documentedEvent
