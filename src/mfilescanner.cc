@@ -1046,11 +1046,14 @@ void MFileScanner::add_access_info(std::string what) {
  */
 void MFileScanner::add_property_params_info() {
 	bool any_property_set = false;
+	std::string noun = "property";
+	if (propertyparams_.event)
+		noun = "event";
 	if (propertyparams_.hidden) {
 		any_property_set = true;
 		docuextra_.push_back(
 				std::string(
-						"@note This property has the MATLAB attribute @c Hidden set to true.\n"));
+						"@note This " + noun + " has the MATLAB attribute @c Hidden set to true.\n"));
 	}
 	if (propertyparams_.transient) {
 		any_property_set = true;
@@ -1083,7 +1086,7 @@ void MFileScanner::add_property_params_info() {
 						"@note This property has the MATLAB attribute @c AbortSet set to true.\n"));
 	}
 
-	add_access_info("property");
+	add_access_info(noun);
 
 	if (access_.get != access_.set)
 		any_property_set = true;
@@ -1520,6 +1523,12 @@ std::ostream & operator<<(std::ostream & os, MatlabAccessEnum & mae) {
 		break;
 	case GetAccess:
 		os << "GetAccess";
+		break;
+	case ListenAccess:
+		os << "ListenAccess";
+		break;
+	case NotifyAccess:
+		os << "NotifyAccess";
 		break;
 	}
 	return os;

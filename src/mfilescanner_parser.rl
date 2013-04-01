@@ -1124,9 +1124,42 @@ debug_output("in funcbody: goto main", p);
         | ( spec_private
             %{ access_.full = Private; access_.get = Private; access_.set = Private;
              } )
-	  )
+          )
      )
     ); #}}}2
+
+  eventparam =
+    ( ('ListenAccess' @{ access_.state = ListenAccess; } . WS* . '=' . WS*
+      . ( ( spec_public
+            %{ access_.full = Public; access_.get = Public;
+             } )
+        | ( ( spec_protected | spec_classes )
+            %{ access_.full = (access_.set == Public ? Public : Protected );
+               access_.get = Protected;
+             } )
+        | ( spec_private
+            %{ access_.full = access_.set; access_.get = Private;
+             } )
+        )
+      )
+     | ( 'NotifyAccess' @{ access_.state = NotifyAccess; } . WS* . '=' . WS*
+      . ( ( spec_public
+            %{ access_.full = Public; access_.set = Public;
+             } )
+        | ( ( spec_protected | spec_classes )
+            %{ access_.full = (access_.get == Public ? Public : Protected );
+               access_.set = Protected;
+             } )
+        | ( spec_private
+            %{ access_.full = access_.get; access_.set = Private;
+             } )
+        )
+       )
+     | ( ( 'Hidden' . ([^,)\n] | EOL)* )
+        @{
+           propertyparams_.hidden = true;
+         } )
+     );
 
   # method and property params {{{2
   methodparam =
@@ -1189,6 +1222,13 @@ debug_output("in funcbody: goto main", p);
     . methodparam
     . ( WSOC* . ',' . WSOC* . methodparam )* . WSOC* . ')'
    );
+
+  eventparams =
+   (
+    '(' . WSOC*
+    . eventparam
+    . ( WSOC* . ',' . WSOC* . eventparam )* . WSOC* . ')'
+   ); #}}}2
 
   propertyparams =
    (
@@ -1274,7 +1314,7 @@ debug_output("in funcbody: goto main", p);
             print_access_specifier(access_.full, methodparams_, propertyparams_);
             fgoto methods;
           }
-              );
+          );
 
    #}}}4
 
@@ -1382,6 +1422,22 @@ debug_output("in funcbody: goto main", p);
         }
     . propertybody* )
       );
+
+  #property body {{{4
+  eventbody = (
+    (prop)
+    |
+    ( (empty_line) @{ end_of_property_doc(); fout_ << "\n";} )
+    |
+    ( ([ \t]* . '%') @{ fhold; fgoto expect_doxyblock; } )
+    );
+
+  events := ((
+    WSOC* . eventparams? . [ \t;]* . ('%' . garble_comment_line_wo_eol )? . EOL @{
+        print_access_specifier(access_.full, methodparams_, propertyparams_);
+        }
+    . eventbody* )
+      );
   #}}}4
 
   #}}}2
@@ -1452,9 +1508,10 @@ debug_output("in funcbody: goto main", p);
     ([ \t]* . 'events')
       => {
         propertyparams_ = PropParams();
+        propertyparams_.event = true;
         access_ = AccessStruct();
         class_part_ = Event;
-        fgoto properties;
+        fgoto events;
       };
   *|; #}}}2
 
