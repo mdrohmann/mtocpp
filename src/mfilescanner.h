@@ -202,6 +202,9 @@ struct MethodParams {
 	bool statical;
 	bool hidden;
 	bool sealed;
+	bool test;
+	bool testMethodSetup;
+	bool testMethodTeardown;
 
 	std::string ccprefix() {
 		if (statical)
@@ -235,6 +238,18 @@ struct MethodParams {
 		}
 		if (sealed) {
 			oss << pre << " Sealed";
+			pre = ',';
+		}
+		if (test) {
+			oss << pre << " Test";
+			pre = ',';
+		}
+		if (testMethodSetup) {
+			oss << pre << " TestMethodSetup";
+			pre = ',';
+		}
+		if (testMethodTeardown) {
+			oss << pre << " TestMethodTeardown";
 			pre = ',';
 		}
 		if (pre == ',')
