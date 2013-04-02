@@ -1053,7 +1053,8 @@ void MFileScanner::add_property_params_info() {
 		any_property_set = true;
 		docuextra_.push_back(
 				std::string(
-						"@note This " + noun + " has the MATLAB attribute @c Hidden set to true.\n"));
+						"@note This " + noun
+								+ " has the MATLAB attribute @c Hidden set to true.\n"));
 	}
 	if (propertyparams_.transient) {
 		any_property_set = true;
@@ -1093,7 +1094,9 @@ void MFileScanner::add_property_params_info() {
 
 	if (any_property_set)
 		docuextra_.push_back(
-				"@note <a href=\"http://www.mathworks.com/help/matlab/matlab_oop/property-attributes.html\">Matlab documentation of property attributes.</a>\n");
+				"@note <a href=\"http://www.mathworks.com/help/matlab/matlab_oop/"
+						+ noun + "-attributes.html\">Matlab documentation of "
+						+ noun + " attributes.</a>\n");
 }
 
 void MFileScanner::add_method_params_info() {
