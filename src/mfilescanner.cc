@@ -1110,6 +1110,12 @@ void MFileScanner::add_method_params_info() {
 				std::string(
 						"@note This method has the MATLAB method attribute @c Sealed set to true. It cannot be overwritten.\n"));
 	}
+	if (methodparams_.test) {
+		any_property_set = true;
+		docuextra_.push_back(
+				std::string(
+						"@test This is a test case of the matlab test class " + classname_ + ".\n"));
+	}
 	add_access_info("method");
 
 	if (access_.get != access_.set)

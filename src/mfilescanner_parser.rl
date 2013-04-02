@@ -1181,6 +1181,18 @@ debug_output("in funcbody: goto main", p);
         @{
            methodparams_.sealed = true;
          } )
+    | ( ( 'Test' . ([^,)\n] | EOL)* )
+        @{
+           methodparams_.test = true;
+         } )
+    | ( ( 'TestMethodSetup' . ([^,)\n] | EOL)* )
+        @{
+           methodparams_.testMethodSetup = true;
+         } )
+    | ( ( 'TestMethodTeardown' . ([^,)\n] | EOL)* )
+        @{
+           methodparams_.testMethodTeardown = true;
+         } )
    );
 
   propertyparam =
