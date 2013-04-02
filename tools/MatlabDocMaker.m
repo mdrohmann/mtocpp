@@ -637,7 +637,10 @@ classdef MatlabDocMaker
     
     methods(Static, Access=private)
         function value = getProjPrefTag
-            str = regexprep(strrep(strtrim(MatlabDocMaker.getProjectName),' ','_'),'[^\d\w~-]','');
+            % Gets the tag for the MatLab preferences struct.
+            % 
+            % @change{0,7,dw,2013-04-02} Now also removing "~" and "-" characters from ProjectName tags for preferences.
+            str = regexprep(strrep(strtrim(MatlabDocMaker.getProjectName),' ','_'),'[^\d\w]','');
             value = sprintf('MatlabDocMaker_on_%s',str);
         end
         
