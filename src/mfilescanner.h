@@ -262,7 +262,10 @@ public:
 			abstr(false),
 			statical(false),
 			hidden(false),
-			sealed(false) {
+			sealed(false),
+			test(false),
+			testMethodSetup(false),
+			testMethodTeardown(false) {
 	}
 	;
 
