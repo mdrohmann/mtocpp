@@ -106,7 +106,10 @@ function rv = doxygen(param1, param2, auto_param)
 % required fileds list automatically, if they are not documentated yet.
 param1.auto_added;
 
+%@@remove
+% test
 param2.auto_added;
+%@@endremove
 
 % fields of return values that are assigned somewhere in the function body are
 % also added automatically to the list of generated fields
