@@ -171,7 +171,8 @@ using std::ostringstream;
 //         {
 //           fout_ << "\n#endif\n";
 //         }
-         fout_ << "/* ";
+         if (string(p, 8) != string("@@remove"))
+           fout_ << "/* ";
          tmp_p = p;
          } )
      . (default - '\n')* . EOL
@@ -684,6 +685,8 @@ std::cerr << "Found param value for varargin: " << tmp_string2 << " with default
           new_syntax_ = true;
           fout_ << "*/\n"; //fout_ << "add to special group */\n";
         };
+
+      ([ \t]* . '%@@remove' . ((default - '%') | ('%' . (default - '@')) | ('%' . '@' .  (default -'@')))* . '%@@endremove');
 
       # a comment block
       ( ([ \t]* . '%' @{ fout_.write(ts, p - ts); }) . is_doxy_comment)
