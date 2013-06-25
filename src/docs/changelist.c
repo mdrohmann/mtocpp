@@ -17,7 +17,13 @@
  * as an example. So the list below is not necessarily complete, but the sites
  * referenced above contain all new features / changes!
  *
+ * @change{1,5,dw,2013-06-25} mtocpp_post/postprocess.rl: Increased robustness. If processing a directory,
+ * the postprocessor does not completely stop on (rare) parse errors but continues to loop through the directory.
+ * This way all files are at least tried to be processed.
+ *
  * @new{1,5,dw,2013-02-21} Added '*.mex' files to the types of files parsed by default in Doxyfile.template
+ *
+ * @change{1,4,dw,2012-11-19} mtocpp_post/postprocess.rl: Re-Added the possibility to directly specify a file target instead of a whole folder.
  *
  * @change{1,4,dw,2012-10-17}
  * - Using the new css-style from doxygen 1.8 for own docs

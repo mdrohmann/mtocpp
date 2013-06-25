@@ -220,17 +220,18 @@ public:
 
     struct dirent* dirp;
     string file;
+    int cnt = 0;
     while ((dirp = readdir(dp)) != NULL) {
       file = string(dirp->d_name);
       // Process only html files
       if (file.substr(file.find_last_of(".") + 1) == "tex"
     		  || file.substr(file.find_last_of(".") + 1) == "js"
     		  || (file.substr(file.find_last_of(".") + 1) == "html" && file.find("8rl") == string::npos)) {
-        postprocess(docdir_ + string("/") + file);
+        cnt += postprocess(docdir_ + string("/") + file);
       }
     }
     closedir(dp);
-    return 0;
+    return cnt;
   }
 
   // run postprocessor
@@ -244,8 +245,8 @@ public:
     try {
       is.open(file.c_str());
     } catch (std::ifstream::failure e) {
-      cerr << "Exception opening/reading file";
-      exit(-1);
+      cerr << "Exception opening/reading file: " << file << endl;
+      return -1;
     }
 
     is.seekg(0, ios_base::end);
@@ -254,11 +255,9 @@ public:
 
     char* buf = new char[(int)(1.1*length)];
     char* p = buf;
-//    char * tmp_p = p;
 
     is.read(buf, length);
     is.close();
-    
     
     ofstream fout2;
     if (!dry_run_)
@@ -266,8 +265,8 @@ public:
       try {
         fout2.open(file.c_str(), ios_base::trunc);
       } catch (std::ofstream::failure e) {
-        cerr << "Exception opening/writing file";
-        exit(-1);
+        cerr << "Exception opening/writing file:" << file << endl;
+        return -1;
       }
     }
     
@@ -291,7 +290,7 @@ public:
       /* Machine failed before finding a token. */
       cerr << file << ": PARSE ERROR " << endl;
       cerr.write(p, 100);
-      exit(-1);
+      return -1;
     }
 
     if (!dry_run_)
@@ -311,9 +310,6 @@ void usage()
   cout << "  -f\t\tsingle file argument instead of directory." << endl;
 }
 
-/**
- * @change{dw,1,4,2012-11-19} Re-Added the possibility to directly specify a file target instead of a whole folder.
- */
 int main(int argc, char ** argv)
 {
   bool quiet = false;
@@ -374,11 +370,10 @@ int main(int argc, char ** argv)
 
   PostProcess scanner(docdir, quiet, dry_run);
   if (isfile) {
-	  scanner.postprocess(docdir);
+	  return scanner.postprocess(docdir);
   } else {
-	  scanner.execute();
+	  return scanner.execute();
   }
-  return 0;
 }
 
 /* vim: set et sw=2 ft=ragel: */

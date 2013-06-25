@@ -29,7 +29,7 @@
  * @par Documentation
  * This documentation can also be <a href="http://www.morepas.org/software/mtocpp/docs/manual.pdf">downloaded as (doxygen/mtoc++ generated) PDF</a>.
  *
- * @par Release 1.5 (2013/02/21)
+ * @par Release 1.5 (2013/06/25)
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.5.tar.gz">Source tarball</a>
  * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win_1.5.zip">Windows binaries and tools</a>
  *
