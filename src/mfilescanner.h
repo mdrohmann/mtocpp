@@ -262,7 +262,10 @@ public:
 			abstr(false),
 			statical(false),
 			hidden(false),
-			sealed(false) {
+			sealed(false),
+			test(false),
+			testMethodSetup(false),
+			testMethodTeardown(false) {
 	}
 	;
 
@@ -306,6 +309,8 @@ public:
 
 /**
  * @class MFileScanner
+ *
+ * @change{1,5,md,2013-05-16} Added code removal feature as requested by Maxime.
  *
  * @change{1,5,md,2013-04-01} Parse event attributes (ListenAccess,
  * NotifyAccess, Hidden) correctly - as pointed out by Evgeny Pr on FEX

@@ -28,7 +28,7 @@ mlhsInnerSubst<void> doxygen(::testnamespace::testclass param1,matlabtypesubstit
  * required fileds list automatically, if they are not documentated yet. */
 param1.auto_added;
 
-param2.auto_added;
+
 
 /*  fields of return values that are assigned somewhere in the function body are
  * also added automatically to the list of generated fields */
@@ -131,8 +131,6 @@ auto_param.auto_field;
   *
   * @par Required fields of param1:
   * @arg \c test&nbsp;&mdash;&nbsp;     Description for required field param1.test
-  *
-  * @par Required fields of param2:
   *
   * @par Required fields of auto_param:
   *
