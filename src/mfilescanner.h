@@ -320,6 +320,8 @@ public:
  * 'protected' as access modifier string and the 'Abstract' class modifier is
  * also recognized.
  *
+ * @change{1,4,dw,2012-10-22} Added an additional comment about indentation in matlab on parse errors
+ *
  * @change{1,4,md,2012-10-19} prettify the output of postprocessed source
  * for source code browsing in doxygen. Now, we recommend the usage of the
  * FILTER_SOURCE_FILES doxygen switch.
@@ -395,6 +397,8 @@ public:
  *
  * @change{1,2,md,2011-11-28}
  * Allow long (including line breaks) default values for properties
+ *
+ * @change{1,2,dw,2011-11-27} Included a new option \c --verbose for short mtoc++ version output.
  *
  * @change{1,2,md,2011-11-17} Fixed a bug that messed up the documentation if a
  * new line was started after a @@type tag and added a test case to classA.m
