@@ -516,6 +516,7 @@ private:
 	int top;
 	int stack[10];
 	bool opt;
+	bool extra_hold_in_cblock;
 	bool new_syntax_;
 	DocuListMap required_list_;
 	DocuListMap optional_list_;
