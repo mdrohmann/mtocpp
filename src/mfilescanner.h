@@ -310,6 +310,9 @@ public:
 /**
  * @class MFileScanner
  *
+ * @change{1,5,md,2013-07-08} Bugfix: End of line comment in line before
+ * function ending broke the parser.
+ *
  * @change{1,5,md,2013-05-16} Added code removal feature as requested by Maxime.
  *
  * @change{1,5,md,2013-04-01} Parse event attributes (ListenAccess,
