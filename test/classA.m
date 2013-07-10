@@ -117,8 +117,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
     %
     % detail for foobar
 
-     test
-
+     test %boolean switch
     end %garbage comment
 
     % this is only a declaration without definition of a method

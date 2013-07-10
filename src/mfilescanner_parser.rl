@@ -53,6 +53,12 @@ using std::ostringstream;
     fhold;
     while (*p == ' ')
       fhold;
+    if (extra_hold_in_cblock)
+    {
+      fhold;
+      --line;
+      extra_hold_in_cblock = false;
+    }
     fret;
   };
 
@@ -403,6 +409,7 @@ using std::ostringstream;
       => {
            assert(p >= tmp_p);
            fout_.write(tmp_p, p - tmp_p);
+           extra_hold_in_cblock = true;
            fcall in_comment_block;
          };
 
