@@ -17,6 +17,8 @@
  * as an example. So the list below is not necessarily complete, but the sites
  * referenced above contain all new features / changes!
  *
+ * @new{1,5,dw,2013-07-22} Added a FAQ: @ref faq
+ *
  * @change{1,5,dw,2013-06-25} mtocpp_post/postprocess.rl: Increased robustness. If processing a directory,
  * the postprocessor does not completely stop on (rare) parse errors but continues to loop through the directory.
  * This way all files are at least tried to be processed.
