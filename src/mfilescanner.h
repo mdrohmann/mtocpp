@@ -310,6 +310,9 @@ public:
 /**
  * @class MFileScanner
  *
+ * @change{1,5,md,2013-08-20} Bugfix: incorrect usage of addOptional does not
+ * break mtocpp (pointed out by Alexander on FEX)
+ *
  * @change{1,5,md,2013-07-08} Bugfix: End of line comment in line before
  * function ending broke the parser.
  *

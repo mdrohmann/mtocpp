@@ -135,6 +135,8 @@ using std::ostringstream;
 
   action st_tok { tmp_p = p; }
 
+  action st_tok2 { tmp_p2 = p; }
+
   action echo_tok {
     assert (p >= tmp_p);
     fout_.write(tmp_p, p - tmp_p);
@@ -450,9 +452,9 @@ using std::ostringstream;
        };
 
 
-    ('addOptional' . [ \t]* . '(' . [ \t]* . (IDENT > (st_tok) %{tmp_string.assign(tmp_p, p - tmp_p);})
-      . [ \t]* . ',' . [ \t]* . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);} ) . '\''
-      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . (';' | EOL) )
+    ('addOptional' . [ \t]* . '(' . [ \t]* . (IDENT > (st_tok2) %{tmp_string.assign(tmp_p2, p - tmp_p2);})
+      . [ \t]* . ',' . [ \t]* . '\'' . (IDENT > (st_tok2) %{tmp_string2.assign(tmp_p2, p - tmp_p2);} ) . '\''
+      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok2) %{tmp_string3.assign(tmp_p2, p - tmp_p2);}) . (';' | EOL) )
       => {
         fout_.write(ts, te-ts);
         if (tmp_string == varargin_parser_candidate_ )
@@ -469,8 +471,8 @@ std::cerr << "Found optional varargin: " << tmp_string2 << " with default value 
     
     ((IDENT %{tmp_string.assign(ts, p - ts);})
       . '.addOptional' . [ \t]* . '(' . [ \t]* 
-      . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);} ) . '\''
-      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . (';' | EOL) )
+      . '\'' . (IDENT > (st_tok2) %{tmp_string2.assign(tmp_p2, p - tmp_p2);} ) . '\''
+      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok2) %{tmp_string3.assign(tmp_p2, p - tmp_p2);}) . (';' | EOL) )
       => {
         fout_.write(ts, te-ts);
         if (tmp_string == varargin_parser_candidate_ )
@@ -486,9 +488,9 @@ std::cerr << "Found optional varargin: " << tmp_string2 << " with default value 
       };
 
 
-    ('addParamValue' . [ \t]* . '(' . [ \t]* . (IDENT > (st_tok) %{tmp_string.assign(tmp_p, p - tmp_p);})
-      . [ \t]* . ',' . [ \t]* . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);}) . '\''
-      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . (';' | EOL ) )
+    ('addParamValue' . [ \t]* . '(' . [ \t]* . (IDENT > (st_tok2) %{tmp_string.assign(tmp_p2, p - tmp_p2);})
+      . [ \t]* . ',' . [ \t]* . '\'' . (IDENT > (st_tok2) %{tmp_string2.assign(tmp_p2, p - tmp_p2);}) . '\''
+      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok2) %{tmp_string3.assign(tmp_p2, p - tmp_p2);}) . (';' | EOL ) )
       => {
         fout_.write(ts, te-ts);
         if (tmp_string == varargin_parser_candidate_ )
@@ -505,8 +507,8 @@ std::cerr << "Found param value for varargin: " << tmp_string2 << " with default
     
     ((IDENT %{tmp_string.assign(ts, p - ts);})
       . '.addParamValue' . [ \t]* . '(' . [ \t]*
-      . '\'' . (IDENT > (st_tok) %{tmp_string2.assign(tmp_p, p - tmp_p);}) . '\''
-      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok) %{tmp_string3.assign(tmp_p, p - tmp_p);}) . (';' | EOL) )
+      . '\'' . (IDENT > (st_tok2) %{tmp_string2.assign(tmp_p2, p - tmp_p2);}) . '\''
+      . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok2) %{tmp_string3.assign(tmp_p2, p - tmp_p2);}) . (';' | EOL) )
       => {
         fout_.write(ts, te-ts);
         if (tmp_string == varargin_parser_candidate_ )
