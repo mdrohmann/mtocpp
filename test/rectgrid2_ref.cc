@@ -173,9 +173,13 @@ class rectgrid {
 
       /*  correct boundary elements neighbour-indices: */
       bnd_i1 = (1:ny)*nx; /*  indices of right-column elements */
+
       bnd_i2 = (1:nx)+ nx*(ny-1); /*  indices of upper el */
+
       bnd_i3 = (1:ny)*nx-nx+1; /*  indices of left-column */
+
       bnd_i4 = 1:nx; /*  indices of lower row elements */
+
       SX = [grid.ECX(bnd_i1,1); grid.ECX(bnd_i2,2); grid.ECX(bnd_i3,3); grid.ECX(bnd_i4, 4)];
       SY = [grid.ECY(bnd_i1,1); grid.ECY(bnd_i2,2); grid.ECY(bnd_i3,3); grid.ECY(bnd_i4, 4)];
 
@@ -220,9 +224,13 @@ class rectgrid {
       iend3 = iend2 + length(bnd_i3);
       iend4 = iend3 + length(bnd_i4);
       NBI(bnd_i1,1) = bnd_ind(1:iend1)^t; /*  set right border-neigbours to boundary */
+
       NBI(bnd_i2,2) = bnd_ind((iend1+1):iend2)^t; /*  set neighbours to boundary */
+
       NBI(bnd_i3,3) = bnd_ind((iend2+1):iend3)^t; /*  set neigbours to boundary */
+
       NBI(bnd_i4,4) = bnd_ind((iend3+1):iend4)^t; /*  set neighbours to boundary */
+
 
       grid.NBI= NBI;
 
@@ -234,8 +242,11 @@ class rectgrid {
 
       /*  check grid consistency: */
       nonzero = find(NBI>0); /*  vector with vector-indices */
+
       [i,j] = ind2sub(size(NBI), nonzero); /*  vectors with matrix indices */
+
       NBIind = NBI(nonzero); /*  vector with global neighbour indices */
+
       INBind = INB(nonzero);
       i2 = sub2ind(size(NBI),NBIind, INBind);
       i3 = NBI(i2);
@@ -249,7 +260,9 @@ class rectgrid {
     			        * CAUTION: this geometry bound is
                                     * adapted to triangles, should be extended
     			        * properly to rectangles */
+
       alpha1 = dx * dy/(dx^2+dy^2); /*  geometry bound */
+
       alpha2 = sqrt(dx^2+dy^2)/(2*dx + 2*dy);
       alpha3 = dx / sqrt(dx^2+dy^2);
       grid.alpha= min([alpha1,alpha2,alpha3]);	
@@ -259,9 +272,13 @@ class rectgrid {
 
       /* averaging over all pairs is required */
       nonzero = find(grid.NBI>0); /*  vector with vector-indices */
+
       [i,j] = ind2sub(size(grid.NBI), nonzero); /*  vectors with matrix indices */
+
       NBIind = NBI(nonzero); /*  vector with global neighbour indices */
+
       INBind = INB(nonzero); /*  vector with local edge indices */
+
       i2 = sub2ind(size(NBI),NBIind, INBind);
       /*  determine maximum difference in edge-midpoints, but exclude
        * symmetry boundaries by relative error < 0.0001 */
