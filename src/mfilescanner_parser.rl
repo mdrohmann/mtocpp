@@ -41,7 +41,7 @@ using std::ostringstream;
         tmp_p = p+1; fout_ << " *";
       }
    # and then some default characters
-   . (default - '\n')* . EOL
+   . (default - [\r\n])* . EOL
      @{ fout_.write(tmp_p, p - tmp_p); }
   )*
   $!{
@@ -162,7 +162,7 @@ using std::ostringstream;
 //            }
             fout_ << "/**"; tmp_p = p+1;
           }
-     . (default - '\n')*
+     . (default - [\r\n])*
      . ( EOL . [ \t]*
        . '%' @{
                 assert(p >= tmp_p -1);
@@ -170,7 +170,7 @@ using std::ostringstream;
                 fout_ << " * ";
                 tmp_p = p+1;
               }
-     . (default - '\n')* )* . EOL
+     . (default - [\r\n])* )* . EOL
      |
     # RAGEL comment: else: a regular comment
      ( (default - '|')
@@ -183,7 +183,7 @@ using std::ostringstream;
            fout_ << "/* ";
          tmp_p = p;
          } )
-     . (default - '\n')* . EOL
+     . (default - [\r\n])* . EOL
     );
 
   # comment block in function body
@@ -675,7 +675,7 @@ std::cerr << "Found param value for varargin: " << tmp_string2 << " with default
       => { fout_ << "^t"; };
 
     # simply output all other characters
-    (default - [\n{}\'])
+    (default - [\r\n{}\'])
       => { fout_ << fc; };
 
     # after EOL try to check for new function
@@ -785,7 +785,7 @@ debug_output("in funcbody: goto main", p);
   # match an argument
   ( doc_begin . [ \t]*
     . "'"? . ( ([A-Za-z][A-Za-z0-9_{},()[\].]*)  >{tmp_p3 = p;} %{tmp_p2 = p;} ) . "'"? . [ \t]* . ":" @(st_tok)
-    . ( default - '\n' )* . EOL
+    . ( default - [\r\n] )* . EOL
   )
     => {
       assert(tmp_p2 >= tmp_p3);
@@ -804,7 +804,7 @@ debug_output("in funcbody: goto main", p);
     (
      EOL
      |
-     [ \t]+ . (EOL | [^ \r\n\t:] . (default - '\n')* . EOL)
+     [ \t]+ . (EOL | [^ \r\n\t:] . (default - [\r\n])* . EOL)
      # [ \t] . (default - '\n')* . EOL
     )
   )
@@ -969,7 +969,7 @@ debug_output("in funcbody: goto main", p);
   # doxy header parsing {{{2
   # swallow the synopsis line
   doxyfunction_garble := |*
-    garbage = ( (default - '\n' )* -- '...' );
+    garbage = ( (default - [\r\n] )* -- '...' );
 
     ( doc_begin . (garbage . '...')+ . [\t ]* .  EOL );
 
@@ -983,7 +983,7 @@ debug_output("in funcbody: goto main", p);
 
     # read in one comment line
     ( doc_begin . [\t ]*
-      . (default - [\r\n\t ]) . (default - '\n')* . EOL
+      . (default - [\r\n\t ]) . (default - [\r\n])* . EOL
     )
       => {
         /* fout_ << "*"; fout_.write(tmp_p, p - tmp_p+1); */
