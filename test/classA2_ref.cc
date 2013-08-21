@@ -275,7 +275,7 @@ matlabtypesubstitute antoheroneWITH_c;
     mlhsInnerSubst<void> foobar() {
 
 
-     test
+     test /* boolean switch */
 
     }
 /** @fn mlhsInnerSubst<void> foobar()
@@ -316,6 +316,7 @@ mlhsInnerSubst<void> protected_access() {
         do something;
       /*  the following end needs to be indented correctly */
       end /*  garble this correctly */
+
 
 /**
  *  \todo this is a test */

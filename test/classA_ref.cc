@@ -344,7 +344,7 @@ matlabtypesubstitute antoheroneWITH_c;
     mlhsInnerSubst<matlabtypesubstitute,obj> foobar() {
 
 
-     test
+     test /* boolean switch */
 
     }
 /** @fn mlhsInnerSubst<matlabtypesubstitute,obj> foobar()
@@ -388,6 +388,7 @@ mlhsInnerSubst<matlabtypesubstitute,value> protected_access() {
         do something;
       /*  the following end needs to be indented correctly */
       end /*  garble this correctly */
+
 
 /**
  *  \todo this is a test */

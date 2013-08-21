@@ -162,6 +162,7 @@ mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubst
 
 body(string, with, double quote, and percent sign, "  '%s'} ") /*  a real comment } */
 
+
 }
 
 mlhsSubst<mlhsInnerSubst<matlabtypesubstitute,unused1> ,mlhsInnerSubst<matlabtypesubstitute,d> ,mlhsInnerSubst<matlabtypesubstitute,unused2> ,mlhsInnerSubst<matlabtypesubstitute,unused3> > mtoc_subst_doxygen_m_tsbus_cotm_third_function_without_parameters() {
