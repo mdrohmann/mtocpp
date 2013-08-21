@@ -1,4 +1,4 @@
-classdef Class
+classdef Class < handle
     % Doxygen documentation guidlines example class
     %
     % This is the documentation guideline file for class and function
@@ -208,6 +208,32 @@ classdef Class
             %| @todo There needs to be done something in this file. (included
             % after main comment block)
             sdflkdjsf
+        end
+        
+        function val1 = inputParserDemoFun(this, arg1, varargin)
+            % This is a function demonstrating the inputParser-mtoc++
+            % interaction.
+            %
+            % Parameters:
+            % arg1: Some number @type integer @default 1
+            % varargin: Extra parameters. In detail
+            % Number: Some number @type integer @default 1
+            % Second: Some char array @type char @default 'foo'
+            %
+            % Return values:
+            % val1: The result of this demo function. @type integer
+            
+            if nargin < 2
+                arg1 = 1;
+            end
+            
+            i = inputParser;
+            i.addParamValue('Number',1,@(v)isposintscalar(v));
+            i.addParamValue('Second','foo',@(v)ischar(v));
+            res = i.parse(varargin{:});
+            
+            this.SomeProp = res.Second;
+            val1 = res.Number * arg1;
         end
 
         function [ret1, ret2, ret3] = many_return_args(this, arg1, arg2)%#ok
