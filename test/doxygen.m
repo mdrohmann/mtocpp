@@ -17,6 +17,8 @@ function rv = doxygen(param1, param2, auto_param)
 % Words prepended by \\b are written in a \b bold font.
 % Words prepended by \\em are written in an \em emphasized font.
 %
+% Chinese character: 書
+%
 % Blocks starting with @@verbatim or @@code and are ended with @@endverbatim or
 % @@endcode are written unformatted in a type-writer font and are not
 % interpreted by doxygen.
