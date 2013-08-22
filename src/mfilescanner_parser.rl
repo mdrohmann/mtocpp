@@ -41,8 +41,9 @@ using std::ostringstream;
         tmp_p = p+1; fout_ << " *";
       }
    # and then some default characters
-   . (default - [\r\n])* . EOL
-     @{ fout_.write(tmp_p, p - tmp_p); }
+   . ( ( (default - [\r\n])* )
+     %{ fout_.write(tmp_p, p - tmp_p); } )
+     . EOL
   )*
   $!{
     fout_ << " */\n";
@@ -127,7 +128,10 @@ using std::ostringstream;
   action in_c_block
   {
     assert(p >= tmp_p-1);
-    fout_.write(tmp_p, p-tmp_p+1);
+    if (*p == '\r')
+      fout_.write(tmp_p, p-tmp_p);
+    else
+      fout_.write(tmp_p, p-tmp_p+1);
     fcall in_comment_block;
   }
 
@@ -205,7 +209,11 @@ using std::ostringstream;
 //        }
         fout_ << "/* ";
         assert( p >= tmp_p );
-        fout_.write(tmp_p, p - tmp_p) << "*/\n";
+        if (*(p-1) == '\r')
+          fout_.write(tmp_p, p - tmp_p -2) << "*/\n";
+        else
+          fout_.write(tmp_p, p - tmp_p -2) << "*/\n";
+
 //        if(is_getter_ || is_setter_)
 //        {
 //          fout_ << "\n#if 0\n";
@@ -410,7 +418,10 @@ using std::ostringstream;
     (comment_block)
       => {
            assert(p >= tmp_p);
-           fout_.write(tmp_p, p - tmp_p);
+           if (*(p-1) == '\r')
+             fout_.write(tmp_p, p - tmp_p-1);
+           else
+             fout_.write(tmp_p, p - tmp_p);
            extra_hold_in_cblock = true;
            fcall in_comment_block;
          };
@@ -701,7 +712,10 @@ std::cerr << "Found param value for varargin: " << tmp_string2 << " with default
       ( ([ \t]* . '%' @{ fout_.write(ts, p - ts); }) . is_doxy_comment)
         => {
           assert(p >= tmp_p);
-          fout_.write(tmp_p, p - tmp_p);
+          if (*(p-1) == '\r')
+            fout_.write(tmp_p, p - tmp_p - 1);
+          else
+            fout_.write(tmp_p, p - tmp_p);
           fcall in_comment_block;
         };
 
@@ -1472,7 +1486,10 @@ debug_output("in funcbody: goto main", p);
     # a comment block
     (comment_block)
       => {
-        fout_.write(tmp_p, p - tmp_p);
+        if (*(p-1) == '\r')
+          fout_.write(tmp_p, p - tmp_p - 1);
+        else
+          fout_.write(tmp_p, p - tmp_p);
         fcall in_comment_block;
       };
 
