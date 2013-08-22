@@ -8,7 +8,9 @@ classdef Class < handle
     % files. Doxygen commands always begin with an at-character(\@) OR a
     % backslash(\\).
     %
+    % @htmlonly
     % Multibyte characters should work as well: 書 엄한국말
+    % @endhtmlonly
     %
     % For a full list of commands supported by doxygen look up
     % http://www.stack.nl/~dimitri/doxygen/commands.html.
