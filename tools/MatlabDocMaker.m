@@ -20,6 +20,10 @@ classdef MatlabDocMaker
 %
 % @author Daniel Wirtz @date 2011-10-13
 %
+% @change{1,5,dw,2013-12-03} Fixed default value selection for properties,
+% now not having set a description or logo does not cause an error to be
+% thrown.
+% 
 % @change{1,5,dw,2013-02-21} Fixed the callback for suggested direct documentation creation
 % after MatlabDocMaker.setup (Thanks to Aurelien Queffurust)
 %
@@ -184,7 +188,7 @@ classdef MatlabDocMaker
             % desc: The short project description @type char @default []
             %
             % See also: setProjectDescription
-            desc =  MatlabDocMaker.getPref('proj_desc', false);
+            desc =  MatlabDocMaker.getPref('proj_desc', '');
         end
         
         function setProjectDescription(value)
@@ -210,7 +214,7 @@ classdef MatlabDocMaker
             % version: The project version @type char @default []
             %
             % See also: setProjectVersion
-            version = MatlabDocMaker.getPref('proj_ver', false);
+            version = MatlabDocMaker.getPref('proj_ver', '0');
         end
         
         function setProjectVersion(value)
@@ -235,7 +239,7 @@ classdef MatlabDocMaker
             % logoFile: The projects logo image file. @type char @default []
             %
             % See also: setProjectLogo
-            logoFile = MatlabDocMaker.getPref('proj_logo',false);
+            logoFile = MatlabDocMaker.getPref('proj_logo','');
             fullPath = '';
             if ~isempty(logoFile)
                 if isempty(fileparts(logoFile))
@@ -527,7 +531,7 @@ classdef MatlabDocMaker
             
             %% Setup directories
             % Source directory
-            srcdir = MatlabDocMaker.getPref('srcdir',false);
+            srcdir = MatlabDocMaker.getPref('srcdir','');
             word = 'keep';
             if isempty(srcdir) || exist(srcdir,'dir') ~= 7
                 srcdir = pwd;
@@ -545,7 +549,7 @@ classdef MatlabDocMaker
             MatlabDocMaker.setPref('srcdir',srcdir);
             
             % Config directory
-            confdir = MatlabDocMaker.getPref('confdir',false);
+            confdir = MatlabDocMaker.getPref('confdir','');
             word = 'keep';
             if isempty(confdir) || exist(confdir,'dir') ~= 7
                 confdir = fullfile(srcdir,'documentation');
@@ -563,7 +567,7 @@ classdef MatlabDocMaker
             MatlabDocMaker.setPref('confdir',confdir);
             
             % Output directory
-            outdir = MatlabDocMaker.getPref('outdir',false);
+            outdir = MatlabDocMaker.getPref('outdir','');
             word = 'keep';
             if isempty(outdir) || exist(outdir,'dir') ~= 7
                 outdir = confdir;
@@ -659,12 +663,14 @@ classdef MatlabDocMaker
             value = sprintf('MatlabDocMaker_on_%s',str);
         end
         
-        function value = getPref(name, required)
+        function value = getPref(name, default)
             if nargin < 2
-                required = true;
+                def = [];
+            else 
+                def = default;
             end
-            value = getpref(MatlabDocMaker.getProjPrefTag,name,[]);
-            if required && isempty(value)
+            value = getpref(MatlabDocMaker.getProjPrefTag,name,def);
+            if nargin < 2 && isempty(value)
                 error('MatlabDocMaker preferences not found/set correctly. (Re-)Run the MatlabDocMaker.setup method.');
             end
         end
