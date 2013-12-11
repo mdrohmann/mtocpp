@@ -27,4 +27,8 @@
  *
  * @section faq_windows Windows-related questions
  *
+ * @section todo_collection ToDo-Collection
+ * @todo disable mtoc++ processing in @verbatim environments (at least via switch in mtocpp.conf)
+ * @todo finish enum support (simple list is working, but mtocpp breaks if comments are present)
+ *
  */

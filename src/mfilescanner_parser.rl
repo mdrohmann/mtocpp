@@ -957,12 +957,16 @@ debug_output("in funcbody: goto main", p);
 	  @{ if(docline)
 		 {
 		   assert(ts > tmp_p);
-		   docubody_.push_back("@par " + string(tmp_p+1, ts - tmp_p-1)+"\n");
+		   docubody_.push_back((!is_verbatim ? "@par ":"") + string(tmp_p+1, ts - tmp_p-1)+(is_verbatim ? ":":"")+"\n");
 		   docline = false;
 		 }
 	   };
 	# }}}6
 	# }}}4
+
+	# verbatim switches
+	( ('\verbatim' | '@verbatim') @{is_verbatim=true;} );
+	( ('\endverbatim' | '@endverbatim') @{is_verbatim=false;} );
 
 	# end of line {{{4
 	( EOL )
