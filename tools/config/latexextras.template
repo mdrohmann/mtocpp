@@ -11,4 +11,5 @@
 %\usepackage{bbm}
 
 % Inclusion example:
-%\input{_ConfDir_/myexternalstyle.sty}
+% Please note that, independent of windows or unix, latex uses forward-slash-type paths in bibliography.
+%\input{_ConfDirFwdSlash_/myexternalstyle.sty}

@@ -95,7 +95,8 @@ typedef enum {
 	AtMethod,
 	MethodDeclaration,
 	Property,
-	Event
+	Event,
+	Enumeration
 } ClassPart;
 
 /*extern const char * ClassPartNames[];*/
@@ -472,6 +473,7 @@ private:
 	void print_pure_function_synopsis();
 	void print_function_synopsis();
 	void end_of_property_doc();
+	void end_of_enum_doc();
 	void get_typename(const std::string &, std::string &, std::string voidtype =
 			std::string("matlabtypesubstitute"));
 	void get_default(const std::string &, std::string &);

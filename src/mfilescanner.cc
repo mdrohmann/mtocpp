@@ -710,6 +710,47 @@ void MFileScanner::end_of_property_doc() {
 	undoced_prop_ = false;
 }
 
+/**
+ 
+*/
+void MFileScanner::end_of_enum_doc() {
+	if (undoced_prop_) {
+		add_property_params_info();
+		typedef DocuBlock::iterator DBIt;
+		
+		fout_ << propertyparams_.ccprefix()  << " "
+				<< property_list_.back();
+		//if (!last)
+			fout_ << ",\n";
+
+		string defval;
+		extract_default(docubody_, defval);
+		if (!defval.empty())
+			defaultprop_.clear();
+
+		if (!docuheader_.empty() || runMode_.auto_add_class_properties
+				|| class_part_ == Event) {
+			fout_ << "/** @var " << property_list_.back() << "\n  ";
+			fout_ << "* @brief ";
+			cout_docuheader(property_list_.back());
+			fout_ << "*\n  ";
+			cout_docubody();
+			fout_ << "*\n  ";
+			cout_docuextra();
+			if (!defaultprop_.empty()) {
+				fout_ << "* <br/>@b Default: " << defaultprop_ << "\n";
+			}
+			if (class_part_ == Event)
+				fout_ << "* @event " << property_list_.back() << "\n  ";
+			fout_ << "*/\n";
+		}
+		docuheader_.clear();
+		docubody_.clear();
+		docuextra_.clear();
+	}
+	undoced_prop_ = false;
+}
+
 void MFileScanner::cout_docuheader(string altheader, bool clear) {
 	if (docuheader_.empty() && cscan_.docuheader_.empty()) {
 		fout_ << replace_underscore(altheader) << "\n  ";
