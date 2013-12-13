@@ -93,6 +93,10 @@ using std::ostringstream;
 		{
 		  fgoto propertybody;
 		}
+		else if(class_part_ == Enumeration)
+		{
+		  fgoto enumerationbody;
+		}
 		else if(class_part_ == InClassComment)
 		{
 		  class_part_ = Method;
@@ -196,8 +200,12 @@ using std::ostringstream;
   # an empty line
   empty_line = [\t ]* . EOL;
 
-  # documentation line begin
-  doc_begin = [\t ]* . '%' @{ tmp_p = p + 1; };
+  # documentation line begin pattern: if found, automatically set the character pointer to the current position (plus one)
+  doc_begin = [\t ]* . '%' @{
+	if (!docline) {
+		tmp_p = p + 1;
+	}
+  };
 
   # swallow a comment line till the end of the line (make it a c comment)
   garble_comment_line =
@@ -918,9 +926,25 @@ debug_output("in funcbody: goto main", p);
 		docline = false;
 	  };
 
+	# paragraph line with second % in text (matlab comment in comment)
+	( [ \t]* . '%' . [ \t]* . '%' )
+	  => {
+		if(!docline)
+		{
+		  docubody_.push_back("%");
+		  docline = true;
+		  tmp_p = p;
+		}
+	  };
+
 	# paragraph line
 	( [ \t]* . '%' )
 	  => {
+		/*
+		 ostringstream oss;
+		 oss << "(parline! dl:" << docline << ")";
+		 docubody_.push_back(oss.str());
+		*/
 		if(!docline)
 		{
 		  docline = true;
@@ -938,6 +962,34 @@ debug_output("in funcbody: goto main", p);
 		tmp_p = p;
 	  };
 
+	# verbatim or code switches
+	( [\\@] .
+		(/verbatim/i
+		@{ 
+			is_voc=true;
+			//docubody_.push_back("@verbatim");
+		}
+		|
+		/code/i
+		@{ 
+			is_voc=true;
+			//docubody_.push_back("@code");
+		}
+		));
+	( [\\@] .
+		(/endverbatim/i
+		@{ 
+			is_voc=false;
+			//docubody_.push_back("@endverbatim");
+		}
+		|
+		/endcode/i
+		@{ 
+			is_voc=false;
+			//docubody_.push_back("@endcode");
+		}
+		) );
+
 	# lines that could end doxyblock {{{6
 	# words
 	#  RAGEL comment:  ( default - [ \t:%'`\n] )+
@@ -946,7 +998,6 @@ debug_output("in funcbody: goto main", p);
 	# non-words/non-whitespace
 	#  RAGEL comment:  ([:'`]) => {
 	(':') @(end_doxy_block) ;
-
 
 	# whitespace only
 	( [ \t] );
@@ -957,16 +1008,12 @@ debug_output("in funcbody: goto main", p);
 	  @{ if(docline)
 		 {
 		   assert(ts > tmp_p);
-		   docubody_.push_back((!is_verbatim ? "@par ":"") + string(tmp_p+1, ts - tmp_p-1)+(is_verbatim ? ":":"")+"\n");
+		   docubody_.push_back((!is_voc ? "@par ":"") + string(tmp_p+1, ts - tmp_p-1)+(is_voc ? ":":"")+"\n");
 		   docline = false;
 		 }
 	   };
 	# }}}6
 	# }}}4
-
-	# verbatim switches
-	( ('\verbatim' | '@verbatim') @{is_verbatim=true;} );
-	( ('\endverbatim' | '@endverbatim') @{is_verbatim=false;} );
 
 	# end of line {{{4
 	( EOL )

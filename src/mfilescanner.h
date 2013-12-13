@@ -526,7 +526,7 @@ private:
 	bool opt;
 	bool extra_hold_in_cblock;
 	bool new_syntax_;
-	bool is_verbatim;
+	bool is_voc;
 	DocuListMap required_list_;
 	DocuListMap optional_list_;
 	DocuListMap retval_list_;

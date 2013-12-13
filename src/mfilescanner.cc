@@ -205,6 +205,9 @@ void MFileScanner::print_access_specifier(AccessEnum & access,
 /*
  * constructor
  *
+ * @change{1,7,dw,2013-12-10} Included a preliminary "is_verbose" check to stop mtoc++ processing inside @verbatim environments. not yet
+ * complete in the sense that only "@par" is not inserted when reading ": " at EOL.
+ *
  * @change{1,5,dw,2012-07-01} Included the class modifier "Hidden" for parsing.
  * Thanks to MathWorks Pilot Engineer '''Arvind Jayaraman''' for providing the feedback and code!
  *
@@ -228,7 +231,7 @@ MFileScanner::MFileScanner(istream & fin, ostream & fout,
 		opt(false),
 		extra_hold_in_cblock(false),
 		new_syntax_(false),
-		is_verbatim(false),
+		is_voc(false),
 		is_script_(false),
 		is_first_function_(true),
 		is_class_(false),
