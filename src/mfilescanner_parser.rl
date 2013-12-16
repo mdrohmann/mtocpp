@@ -940,11 +940,6 @@ debug_output("in funcbody: goto main", p);
 	# paragraph line
 	( [ \t]* . '%' )
 	  => {
-		/*
-		 ostringstream oss;
-		 oss << "(parline! dl:" << docline << ")";
-		 docubody_.push_back(oss.str());
-		*/
 		if(!docline)
 		{
 		  docline = true;
