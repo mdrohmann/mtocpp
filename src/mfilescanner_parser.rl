@@ -1534,7 +1534,7 @@ debug_output("in funcbody: goto main", p);
 			  end_of_enum_doc();
 			  string s(tmp_p, p - tmp_p);
 			  if (s == "end") {
-				fout_ << "\n} " << classname_ << "Enum;\n";
+				fout_ << "\n} " << classname_ << "Instances;\n";
 				fgoto classbody;
 			  }
 			  property_list_.push_back(s);
