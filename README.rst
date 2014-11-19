@@ -7,6 +7,8 @@ and classes (including packages) using a doxygen_ filter named mtoc++.
 Moreover, a tool/class named ``MatlabDocMaker`` allows to create the documentation
 from within MatLab.  For Windows, Mac and Unix!
 
+The project is also hosted on the `Mathworks File Exchange`_.
+
 Rough feature list
 ==================
 
@@ -93,6 +95,7 @@ Martin Drohmann and `Daniel Wirtz`_
 
 We welcome any improvement suggestions and critics.
 
+.. _Mathworks File Exchange: http://www.mathworks.com/matlabcentral/fileexchange/33826-mtoc++-doxygen-filter-for-matlab-and-tools
 .. _doxygen: http://www.doxygen.org
 .. _download page: http://www.morepas.org/software/mtocpp/docs/download.html
 .. _Daniel Wirtz: http://www.mechbau.uni-stuttgart.de/ls2/jrg/people/academic_staff/wirtz/
