@@ -1142,7 +1142,7 @@ debug_output("in funcbody: goto main", p);
   # access specifier expressions
   spec_public = ( 'public'i | "'public'"i );
   spec_protected = ( 'protected'i | "'protected'"i );
-  spec_private = ( 'private'i | "'private'"i );
+  spec_private = ( 'private'i | "'private'"i | 'immutable'i | "'immutable'"i );
   
   spec_class_single = 
 	 (

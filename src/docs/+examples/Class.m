@@ -228,8 +228,8 @@ classdef Class < handle
             if nargin < 2
                 arg1 = 1;
             end
-            
-            i = inputParser;
+             
+            i = inputParser; 
             i.addParamValue('Number',1,@(v)isposintscalar(v));
             i.addParamValue('Second','foo',@(v)ischar(v));
             res = i.parse(varargin{:});
@@ -277,6 +277,7 @@ classdef Class < handle
             % Blah. Blah.
             returnarg = arg1;
         end
+
     end
     
     methods(Sealed, Access=protected)
@@ -289,6 +290,11 @@ classdef Class < handle
             % @change{0,1,dw,2011-03-22} You can even specify/log changes
             % on a function or property level!
         end
+    end
+    
+    methods
+        test1(a,b);
+        test2(c,d);
     end
 
     events
