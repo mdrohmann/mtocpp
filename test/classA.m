@@ -190,7 +190,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
 
   methods (Static, Abstract)
     % a static abstract method
-    [a,b] = static_abstract_method(this, c);
+    [a,b] = static_abstract_method(this, c),
 
   end
 
@@ -219,7 +219,7 @@ classdef(Sealed=Initialize) classA < general.reference.classB & a.b.c & ...
   end
   
   methods(Access=?Class)
-  	function mySpecClassFun(a, b)
+  	function mySpecClassFun(a, b),
   		% do something
   	end
   	

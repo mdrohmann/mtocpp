@@ -1771,7 +1771,7 @@ debug_output("in funcbody: goto main", p);
 			   }
 			 )
 		   . ')' . ( [ \t] | ('%' @{ tmp_p=p; comment_found=true; }
-			 . garble_comment_line_wo_eol) | ( ';' ) )*
+			 . garble_comment_line_wo_eol) | ( ';' ) | ( ',' ) )*
 		   . EOL
 		   @{
 			 if(comment_found)
@@ -1803,7 +1803,7 @@ debug_output("in funcbody: goto main", p);
 		| (( [ \t]
 			  |
 			 ('%' @{ tmp_p=p; comment_found=true; }
-			  . garble_comment_line_wo_eol) | ( ';' ) )* . EOL)
+			  . garble_comment_line_wo_eol) | ( ';' ) | ( ',' ) )* . EOL)
 			@{
 				 if(comment_found)
 				 {
