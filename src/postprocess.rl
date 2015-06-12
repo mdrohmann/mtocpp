@@ -101,7 +101,7 @@ using std::endl;
     ([ \t\n]*) => { fout.write(ts, te - ts); };
 
     # typebreak
-    ('<br class="typebreak"/>') => {};
+    ('<br class="typebreak"'. [ \t\n]* .'/>') => {};
 
     # other tags
     #(ANY_TAG) => { fout.write(ts, te-ts); };
