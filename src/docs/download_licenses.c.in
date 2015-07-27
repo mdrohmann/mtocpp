@@ -1,5 +1,5 @@
 /**
- * @page download Downloading mtoc++
+ * @page download Downloading mtoc++ ${MTOC++_VERSION}
  * @short mtoc++ download sources and variants
  *
  * The sources for mtoc++ are accessible as
@@ -19,11 +19,11 @@
  * The GIT repository can currently be found at https://github.com/mdrohmann and a direct clone is possible via
  * @code git clone https://github.com/mdrohmann/mtocpp.git mtocpp @endcode
  *                                
- * @section mtocrelease mtoc++ 1.5
+ * @section mtocrelease mtoc++ ${MTOC++_VERSION}
  * - <a href="manual.pdf">This documentation as PDF</a>.
- * - <a href="../mtoc++_src_1.5.tar.gz">Source tarball</a>
- * - <a href="../mtoc++_win_1.5.zip">Windows binaries (32/64bit) and tools</a>
- * - <a href="../mtoc++_win_binaries_1.5.zip">Windows binaries (32/64bit)</a>
+ * - <a href="../mtoc++_src_${MTOC++_VERSION}.tar.gz">Source tarball</a>
+ * - <a href="../mtoc++_win_${MTOC++_VERSION}.zip">Windows binaries (32/64bit) and tools</a>
+ * - <a href="../mtoc++_win_binaries_${MTOC++_VERSION}.zip">Windows binaries (32/64bit)</a>
  *
  * @page licensing mtoc++ license conditions
  * @short This software is available under the BSD license http://www.opensource.org/licenses/bsd-license.php

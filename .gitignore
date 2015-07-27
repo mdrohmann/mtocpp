@@ -27,3 +27,5 @@ Debug/
 morepas_web
 old_versions
 make*.sh
+src/docs/download_licenses.c
+src/docs/mainpage.c

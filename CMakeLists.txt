@@ -64,17 +64,11 @@ IF(CMAKE_CROSSCOMPILING OR MINGW)
 ENDIF()
 
 # Get current date
-if(WIN32)
-    execute_process(COMMAND "cmd" " /C date /T" OUTPUT_VARIABLE CURRENT_DATE)
-elseif(UNIX)
-    execute_process(COMMAND "date" "+%d/%m/%Y" OUTPUT_VARIABLE CURRENT_DATE)
-else()
-    message(WARNING "Could not compute current date.")
-    set(CURRENT_DATE "00.00.0000")    
-endif()
+string(TIMESTAMP CURRENT_DATE "%d-%m-%Y")
 
 # add target for HTML documentation
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mainpage.c.in ${CMAKE_CURRENT_SOURCE_DIR}/mainpage.c)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/docs/mainpage.c.in ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/mainpage.c)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/docs/download_licenses.c.in ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/download_licenses.c)
 add_custom_target(documentation_html ALL
   COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf
   COMMAND mtocpp_post -q ${CMAKE_CURRENT_BINARY_DIR}/docs

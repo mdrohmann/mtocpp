@@ -29,7 +29,7 @@
  * @par Documentation
  * This documentation can also be <a href="manual.pdf">downloaded as (doxygen/mtoc++ generated) PDF</a>.
  *
- * @par Release 1.5 (2013/06/25)
+ * @par Release ${MTOC++_VERSION} (${CURRENT_DATE})
  * - <a href="https://github.com/mdrohmann/mtocpp.git" target="_blank">GitHub</a>
  * - <a href="../mtoc++_src_${MTOC++_VERSION}.tar.gz">Source tarball</a>
  * - <a href="../mtoc++_win_${MTOC++_VERSION}.zip">Windows binaries and tools</a>
