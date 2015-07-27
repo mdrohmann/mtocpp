@@ -1,5 +1,5 @@
 /**
- * @mainpage mtoc++ 1.5 Software Documentation
+ * @mainpage mtoc++ ${MTOC++_VERSION} Software Documentation
  * @section intro Introduction
  *
  * The mtoc++ software comprises two programs to build nice Doxygen documentation for Matlab projects.
@@ -22,16 +22,16 @@
  * - @subpage changes
  * - @subpage licensing
  * - @subpage troubleshooting
- * - @subpage faq
  *
  * @section Downloads
  * For all available downloads check @ref download. The most current (official) release can be downloaded below.
  *
  * @par Documentation
- * This documentation can also be <a href="http://www.morepas.org/software/mtocpp/docs/manual.pdf">downloaded as (doxygen/mtoc++ generated) PDF</a>.
+ * This documentation can also be <a href="manual.pdf">downloaded as (doxygen/mtoc++ generated) PDF</a>.
  *
  * @par Release 1.5 (2013/06/25)
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.5.tar.gz">Source tarball</a>
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win_1.5.zip">Windows binaries and tools</a>
+ * - <a href="https://github.com/mdrohmann/mtocpp.git" target="_blank">GitHub</a>
+ * - <a href="../mtoc++_src_${MTOC++_VERSION}.tar.gz">Source tarball</a>
+ * - <a href="../mtoc++_win_${MTOC++_VERSION}.zip">Windows binaries and tools</a>
  *
  */

@@ -9,26 +9,26 @@
  *
  * Once you've obtained your copy check out the @ref install
  *
- * @note For Windows binaries from this page you might need to install the Microsoft Visual C++ 2010 redistributables,
- * which can be found <a href="http://www.microsoft.com/download/en/confirmation.aspx?id=8328" target="_blank">here</a>.
+ * @note For Windows binaries from this page you might need to install the 
+ * <a href="https://www.microsoft.com/en-US/download/confirmation.aspx?id=30679" target="_blank">Microsoft Visual C++ 2012 redistributables</a>.
  *
  * @section git Obtaining mtoc++ via the GIT versioning system
  * In order to always stay up-to-date with the latest (development) mtoc++ versions, simply pull it from our GIT repository and
  * recompile it when a new release is available. For more information about GIT checkout their <a href="http://git-scm.com/" target="_blank">website</a>
  *
- * The GIT repository can currently be found at http://www.ians.uni-stuttgart.de:8080/agh/gitblit/ and a direct clone is possible via
- * @code git clone http://www.ians.uni-stuttgart.de:8080/agh/gitblit/git/software/matlab/mtocpp mtocpp @endcode
+ * The GIT repository can currently be found at https://github.com/mdrohmann and a direct clone is possible via
+ * @code git clone https://github.com/mdrohmann/mtocpp.git mtocpp @endcode
  *                                
  * @section mtocrelease mtoc++ 1.5
- * - <a href="http://www.morepas.org/software/mtocpp/docs/manual.pdf">This documentation as PDF</a>.
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_src_1.5.tar.gz">Source tarball</a>
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win_1.5.zip">Windows binaries (32/64bit) and tools</a>
- * - <a href="http://www.morepas.org/software/mtocpp/mtoc++_win_binaries_1.5.zip">Windows binaries (32/64bit)</a>
+ * - <a href="manual.pdf">This documentation as PDF</a>.
+ * - <a href="../mtoc++_src_1.5.tar.gz">Source tarball</a>
+ * - <a href="../mtoc++_win_1.5.zip">Windows binaries (32/64bit) and tools</a>
+ * - <a href="../mtoc++_win_binaries_1.5.zip">Windows binaries (32/64bit)</a>
  *
  * @page licensing mtoc++ license conditions
  * @short This software is available under the BSD license http://www.opensource.org/licenses/bsd-license.php
  *
- * Copyright (c) 2010-2013, Martin Drohmann, Daniel Wirtz
+ * Copyright (c) 2010-2015, Martin Drohmann, Daniel Wirtz
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:

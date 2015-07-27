@@ -1,9 +1,13 @@
 cmake_minimum_required(VERSION 3.0)
 project(MTOC++ LANGUAGES CXX VERSION 1.5)
 
-# Default install prefix is "/usr/local"
-set(CUSTOM_DOC_DIR "share/doc/mtocpp"
-  CACHE PATH "Custom directory where the documentation files will be installed")
+# This is the default location for docs.
+# Note that ${CMAKE_INSTALL_PREFIX} will be prepended automatically
+# unless this is set to an absolute path.
+if (NOT CUSTOM_DOC_DIR)
+    set(CUSTOM_DOC_DIR "/share/doc/mtocpp"
+      CACHE PATH "Custom directory where the documentation files will be installed")
+endif()
 
 set(CMAKE_CXX_FLAGS "-Wall")
 # path to FindRagel.cmake and WindowsToolChain.cmake
@@ -49,43 +53,90 @@ RAGEL_PARSER(src/mfilescanner_parser)
 RAGEL_PARSER(src/confscanner)
 RAGEL_PARSER(src/postprocess)
 
-# Explicitly define where the binaries should go (needed for custom target documentation)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_CURRENT_BINARY_DIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_CURRENT_BINARY_DIR})
-
 # create mtocpp
 ADD_EXECUTABLE(mtocpp src/mtocpp.cc mfilescanner_parser.cc src/mfilescanner.cc confscanner.cc)
 # create mtocpp_post
 ADD_EXECUTABLE(mtocpp_post postprocess.cc)
 
 # add options for cross compilation on windows
-IF(CMAKE_CROSSCOMPILING)
+IF(CMAKE_CROSSCOMPILING OR MINGW)
   TARGET_LINK_LIBRARIES(mtocpp -lshlwapi)
 ENDIF()
 
-# add target for documentation
-ADD_CUSTOM_TARGET(documentation ALL
-  COMMENT "Creating HTML documentation... (see ${CMAKE_CURRENT_BINARY_DIR}/docs/doxygen.log for warnings)"
+# Get current date
+if(WIN32)
+    execute_process(COMMAND "cmd" " /C date /T" OUTPUT_VARIABLE CURRENT_DATE)
+elseif(UNIX)
+    execute_process(COMMAND "date" "+%d/%m/%Y" OUTPUT_VARIABLE CURRENT_DATE)
+else()
+    message(WARNING "Could not compute current date.")
+    set(CURRENT_DATE "00.00.0000")    
+endif()
+
+# add target for HTML documentation
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mainpage.c.in ${CMAKE_CURRENT_SOURCE_DIR}/mainpage.c)
+add_custom_target(documentation_html ALL
   COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/doxygen.conf
-  COMMAND ${CMAKE_CURRENT_BINARY_DIR}/mtocpp_post -q ${CMAKE_CURRENT_BINARY_DIR}/docs
+  COMMAND mtocpp_post -q ${CMAKE_CURRENT_BINARY_DIR}/docs
   COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_SOURCE_DIR}/src/docs/tabs.css ${CMAKE_CURRENT_BINARY_DIR}/docs/
   DEPENDS mtocpp mtocpp_post
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/src/docs"
+  COMMENT "Creating HTML documentation... (see ${CMAKE_CURRENT_BINARY_DIR}/docs/doxygen.log for warnings)"
 )
 
 # add target for pdf documentation
-IF(DEFINED LATEX_COMPILER)
-ADD_CUSTOM_TARGET(documentation_pdf ALL
-  COMMENT "Creating PDF documentation... (see ${CMAKE_CURRENT_BINARY_DIR}/docs/latex/refman.log for latex errors/warnings)"
-  COMMAND make
-  COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/docs/latex/refman.pdf ${CMAKE_CURRENT_BINARY_DIR}/docs/manual.pdf
-  COMMAND ${CMAKE_COMMAND} -E echo "PDF docs at ${CMAKE_CURRENT_BINARY_DIR}/docs/manual.pdf!"
-  COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_BINARY_DIR}/docs/latex/
-  DEPENDS documentation
-  WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/docs/latex/"
-)
-ENDIF()
+if(LATEX_COMPILER)
+    add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/latex/refman.pdf
+      COMMAND make
+      COMMENT "Creating PDF documentation... (see ${CMAKE_CURRENT_BINARY_DIR}/latex/refman.log for latex errors/warnings)"
+      WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/latex/"
+    )
+    add_custom_target(documentation_pdf ALL
+      COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/latex/refman.pdf ${CMAKE_CURRENT_BINARY_DIR}/docs/manual.pdf
+      COMMAND ${CMAKE_COMMAND} -E echo "PDF docs at ${CMAKE_CURRENT_BINARY_DIR}/docs/manual.pdf!"
+      #COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_CURRENT_BINARY_DIR}/docs/latex
+      DEPENDS documentation_html ${CMAKE_CURRENT_BINARY_DIR}/latex/refman.pdf
+    )
+endif()
+
+# Developer use only. Used to easily maintain the documentation website & tarballs.
+if (EXISTS ${WS_SRC})
+    find_package(Java REQUIRED)
+    
+    add_custom_target(create_sourcetar
+        COMMAND ${CMAKE_COMMAND} -E tar "czf" 
+            ${WS_SRC}/mtoc++_src_${MTOC++_VERSION}.tar.gz cmake/ src/ tools/ test/ CMakeLists.txt INSTALL LICENSE
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+    
+    add_custom_target(create_win_binaries_packages
+        COMMAND "${Java_JAR_EXECUTABLE}" cfM 
+            ${WS_SRC}/mtoc++_win_${MTOC++_VERSION}.zip win32/ win64/ tools/ INSTALL LICENSE
+        COMMAND "${Java_JAR_EXECUTABLE}" cfM
+            ${WS_SRC}/mtoc++_win_binaries_${MTOC++_VERSION}.zip win32/ win64/ INSTALL LICENSE
+        
+        # MatLab FEX file 
+        COMMAND "${Java_JAR_EXECUTABLE}" cfM
+            mtoc++_fex_${MTOC++_VERSION}.zip cmake/ src/ tools/ test/ CMakeLists.txt INSTALL ${CMAKE_CURRENT_BINARY_DIR}/docs/manual.pdf
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+    add_custom_target(create_fex_package
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/docs/manual.pdf .
+        # MatLab FEX file 
+        COMMAND "${Java_JAR_EXECUTABLE}" cfM
+            mtoc++_mlfex_${MTOC++_VERSION}.zip cmake/ src/ tools/ test/ CMakeLists.txt INSTALL manual.pdf
+        COMMAND ${CMAKE_COMMAND} -E remove manual.pdf
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+    add_custom_target(update_website
+        # Copy the documentation
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_BINARY_DIR}/docs ${WS_SRC}/docs
+        # Copy the license file
+        COMMAND ${CMAKE_COMMAND} -E copy LICENSE ${WS_SRC}/License.txt
+        DEPENDS create_sourcetar create_win_binaries_packages
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+endif()
 
 INSTALL(TARGETS mtocpp mtocpp_post DESTINATION bin)
 INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/License.txt DESTINATION ${CUSTOM_DOC_DIR})
@@ -104,11 +155,12 @@ ADD_TEST(NAME MTOCPP_DOXYTEST COMMAND ${DOXYGEN_EXECUTABLE} "${CMAKE_CURRENT_SOU
 # enable dashboard scripting
 INCLUDE (CTest)
 SET (CTEST_PROJECT_NAME "MTOC++")
+
 # build a CPack driven installer package
 SET (CPACK_GENERATOR "DEB;TGZ")
 SET (CPACK_SOURCE_GENERATOR "TGZ")
 SET (CPACK_RESOURCE_FILE_LICENSE
-  "${CMAKE_CURRENT_SOURCE_DIR}/License.txt")
+  "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 SET (CPACK_PACKAGE_VERSION_MAJOR "${MTOC++_VERSION_MAJOR}")
 SET (CPACK_PACKAGE_VERSION_MINOR "${MTOC++_VERSION_MINOR}")
 SET (CPACK_PACKAGE_VENDOR "MDDW")
