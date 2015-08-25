@@ -507,7 +507,7 @@ std::cerr << "Found optional varargin: " << tmp_string2 << " with default value 
 	  };
 
 
-	('addParamValue' . [ \t]* . '(' . [ \t]* . (IDENT > (st_tok2) %{tmp_string.assign(tmp_p2, p - tmp_p2);})
+	('addParam' . ('eter'|'Value') . [ \t]* . '(' . [ \t]* . (IDENT > (st_tok2) %{tmp_string.assign(tmp_p2, p - tmp_p2);})
 	  . [ \t]* . ',' . [ \t]* . '\'' . (IDENT > (st_tok2) %{tmp_string2.assign(tmp_p2, p - tmp_p2);}) . '\''
 	  . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok2) %{tmp_string3.assign(tmp_p2, p - tmp_p2);}) . (';' | EOL ) )
 	  => {
@@ -525,7 +525,7 @@ std::cerr << "Found param value for varargin: " << tmp_string2 << " with default
 	  };
 	
 	((IDENT %{tmp_string.assign(ts, p - ts);})
-	  . '.addParamValue' . [ \t]* . '(' . [ \t]*
+	  . '.addParam' . ('eter' | 'Value' ) . [ \t]* . '(' . [ \t]*
 	  . '\'' . (IDENT > (st_tok2) %{tmp_string2.assign(tmp_p2, p - tmp_p2);}) . '\''
 	  . [ \t]* . ',' . [ \t]* . ( [^;\n]* > (st_tok2) %{tmp_string3.assign(tmp_p2, p - tmp_p2);}) . (';' | EOL) )
 	  => {

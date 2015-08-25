@@ -230,8 +230,8 @@ classdef Class < handle
             end
             
             i = inputParser;
-            i.addParamValue('Number',1,@(v)isposintscalar(v));
-            i.addParamValue('Second','foo',@(v)ischar(v));
+            i.addParameter('Number',1,@(v)isposintscalar(v));
+            i.addParameter('Second','foo',@(v)ischar(v));
             res = i.parse(varargin{:});
             
             this.SomeProp = res.Second;
